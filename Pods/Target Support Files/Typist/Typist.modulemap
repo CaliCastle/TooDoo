@@ -1,0 +1,6 @@
+framework module Typist {
+  umbrella header "Typist-umbrella.h"
+
+  export *
+  module * { export * }
+}

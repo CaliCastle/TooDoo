@@ -1,0 +1,29 @@
+PODS:
+  - AnimatedCollectionViewLayout (0.3.0)
+  - BouncyLayout (2.0.0)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
+  - Haptica (2.0.0)
+  - Hero (1.0.0-alpha.4)
+  - Typist (1.1.0)
+
+DEPENDENCIES:
+  - AnimatedCollectionViewLayout
+  - BouncyLayout
+  - ChameleonFramework/Swift
+  - Haptica
+  - Hero (= 1.0.0-alpha.4)
+  - Typist
+
+SPEC CHECKSUMS:
+  AnimatedCollectionViewLayout: 504b992a4258eb39d2dd2b2b48e84b4b95860fd7
+  BouncyLayout: f64872d6b2a3e41bb8c89e24d0ff08e2dbeeb304
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
+  Hero: 6ab58fdfb16c75ce9c6bfad48ef6abb54780b263
+  Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
+
+PODFILE CHECKSUM: dc1905ff22efb19005414753267e4155183ea700
+
+COCOAPODS: 1.3.1
