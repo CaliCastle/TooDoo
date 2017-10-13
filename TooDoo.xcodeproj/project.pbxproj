@@ -13,6 +13,7 @@
 		8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */; };
 		8D4784D11F9077820067E0FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D4784D01F9077820067E0FE /* Assets.xcassets */; };
 		8D4784D41F9077820067E0FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */; };
+		8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784E41F9078450067E0FE /* RPCircularProgress.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		8D4784D01F9077820067E0FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D4784D31F9077820067E0FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D4784D51F9077820067E0FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D4784E41F9078450067E0FE /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,88 @@
 		8D4784C51F9077820067E0FE /* TooDoo */ = {
 			isa = PBXGroup;
 			children = (
-				8D4784C61F9077820067E0FE /* AppDelegate.swift */,
-				8D4784C81F9077820067E0FE /* ViewController.swift */,
-				8D4784CA1F9077820067E0FE /* Main.storyboard */,
-				8D4784D01F9077820067E0FE /* Assets.xcassets */,
-				8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */,
-				8D4784D51F9077820067E0FE /* Info.plist */,
-				8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */,
+				8D4784E21F9077DF0067E0FE /* Application Delegate */,
+				8D4784E11F9077D50067E0FE /* Storyboards */,
+				8D4784E01F9077CF0067E0FE /* View Controllers */,
+				8D4784DF1F9077C20067E0FE /* Extensions */,
+				8D4784DE1F9077BB0067E0FE /* Helpers */,
+				8D4784DD1F9077B30067E0FE /* Resources */,
+				8D4784DC1F9077AC0067E0FE /* Core Data */,
+				8D4784DB1F9077A40067E0FE /* Supporting Files */,
 			);
 			path = TooDoo;
+			sourceTree = "<group>";
+		};
+		8D4784DB1F9077A40067E0FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784D51F9077820067E0FE /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8D4784DC1F9077AC0067E0FE /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		8D4784DD1F9077B30067E0FE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784D01F9077820067E0FE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8D4784DE1F9077BB0067E0FE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784E31F90782F0067E0FE /* Views */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8D4784DF1F9077C20067E0FE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8D4784E01F9077CF0067E0FE /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784C81F9077820067E0FE /* ViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8D4784E11F9077D50067E0FE /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784CA1F9077820067E0FE /* Main.storyboard */,
+				8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8D4784E21F9077DF0067E0FE /* Application Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784C61F9077820067E0FE /* AppDelegate.swift */,
+			);
+			path = "Application Delegate";
+			sourceTree = "<group>";
+		};
+		8D4784E31F90782F0067E0FE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8D4784E41F9078450067E0FE /* RPCircularProgress.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +217,7 @@
 				8D4784C91F9077820067E0FE /* ViewController.swift in Sources */,
 				8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
+				8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +356,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LAAKXKAVC9;
-				INFOPLIST_FILE = TooDoo/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TooDoo/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -295,7 +372,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LAAKXKAVC9;
-				INFOPLIST_FILE = TooDoo/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TooDoo/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
