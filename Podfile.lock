@@ -6,6 +6,8 @@ PODS:
     - ChameleonFramework/Default
   - Haptica (2.0.0)
   - Hero (1.0.0-alpha.4)
+  - M13Checkbox (3.2.1)
+  - SkyFloatingLabelTextField (3.2.1)
   - Typist (1.1.0)
 
 DEPENDENCIES:
@@ -14,6 +16,8 @@ DEPENDENCIES:
   - ChameleonFramework/Swift
   - Haptica
   - Hero (= 1.0.0-alpha.4)
+  - M13Checkbox
+  - SkyFloatingLabelTextField (~> 3.0)
   - Typist
 
 SPEC CHECKSUMS:
@@ -22,8 +26,10 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
   Hero: 6ab58fdfb16c75ce9c6bfad48ef6abb54780b263
+  M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
+  SkyFloatingLabelTextField: 71d28906024e7d7e4460099b342f3ca7036a2e24
   Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
 
-PODFILE CHECKSUM: dc1905ff22efb19005414753267e4155183ea700
+PODFILE CHECKSUM: 9f79756f9dbec0fdfbb42e4dbb49c8977c890f26
 
 COCOAPODS: 1.3.1

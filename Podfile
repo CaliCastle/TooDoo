@@ -9,11 +9,13 @@ target 'TooDoo' do
   use_frameworks!
 
   # Pods for TooDoo
+  pod 'M13Checkbox'
   pod 'ChameleonFramework/Swift'
   pod 'AnimatedCollectionViewLayout'
   pod 'BouncyLayout'
   pod 'Typist'
   pod 'Haptica'
   pod 'Hero', '1.0.0-alpha.4'
+  pod 'SkyFloatingLabelTextField', '~> 3.0'
   
 end
