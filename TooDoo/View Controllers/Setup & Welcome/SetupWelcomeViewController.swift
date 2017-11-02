@@ -15,6 +15,7 @@ class SetupWelcomeViewController: UIViewController {
     
     static let identifier = "Welcome"
     
+    /// Greeting labels
     @IBOutlet var greetingLabel: UILabel!
     @IBOutlet var greetingMessageLabel: UILabel!
     
@@ -29,7 +30,34 @@ class SetupWelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+        animateViews()
+    }
+    
+    func setupViews() {
+        greetingLabel.transform = .init(scaleX: 0, y: 0)
+        greetingLabel.alpha = 0
         
+        greetingMessageLabel.alpha = 0
+        greetingMessageLabel.transform = .init(translationX: 0, y: 50)
+    }
+    
+    func animateViews() {
+        // Animate greetingLabel
+        UIView.animate(withDuration: 0.5, delay: 0.3, options: [.curveEaseInOut], animations: {
+            self.greetingLabel.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.8, initialSpringVelocity: 2, options: [], animations: {
+            self.greetingLabel.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        
+        // Animate greetingMessageLabel
+        UIView.animate(withDuration: 0.5, delay: 0.65, options: [.curveEaseInOut], animations: {
+            self.greetingMessageLabel.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 0.65, usingSpringWithDamping: 0.9, initialSpringVelocity: 1.5, options: [], animations: {
+            self.greetingMessageLabel.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
     }
     
     /// Set status bar to white
