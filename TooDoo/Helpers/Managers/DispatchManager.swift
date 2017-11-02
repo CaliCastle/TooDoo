@@ -37,7 +37,7 @@ final class DispatchManager {
         
         guard let _ = UserDefaultManager.string(forKey: .UserName) else {
             guard let appDelegate = application.delegate as? AppDelegate else { return }
-            let welcomeViewController = StoryboardManager.viewController(identifier: WelcomeViewController.identifier) as! WelcomeViewController
+            let welcomeViewController = StoryboardManager.initiateViewController(in: .Setup) as! SetupWelcomeViewController
             
             welcomeViewController.managedObjectContext = managedObjectContext
             

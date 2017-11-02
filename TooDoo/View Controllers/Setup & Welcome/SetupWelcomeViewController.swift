@@ -1,5 +1,5 @@
 //
-//  WelcomeViewController.swift
+//  SetupWelcomeViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 10/15/17.
@@ -9,11 +9,14 @@
 import UIKit
 import CoreData
 
-class WelcomeViewController: UIViewController {
+class SetupWelcomeViewController: UIViewController {
 
     /// Storyboard identifier
     
     static let identifier = "Welcome"
+    
+    @IBOutlet var greetingLabel: UILabel!
+    @IBOutlet var greetingMessageLabel: UILabel!
     
     // MARK: - Properties
     
@@ -27,6 +30,12 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         
         
+    }
+    
+    /// Set status bar to white
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 }

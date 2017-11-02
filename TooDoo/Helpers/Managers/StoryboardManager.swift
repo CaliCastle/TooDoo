@@ -15,18 +15,29 @@ final class StoryboardManager {
     /// Storyboard names
     ///
     /// - Main: Main storyboard
+    /// - Setup: Setup storyboard
     
     enum Storyboard: String {
         case Main = "Main"
+        case Setup = "Setup"
     }
     
     /// Get storyboard file name in string
     ///
-    /// - Parameter name: Storyboard Name
-    /// - Returns: The String Representation of the Storyboard
+    /// - Parameter name: Storyboard name
+    /// - Returns: The string representation of the storyboard
     
     class func storyboard(name: Storyboard) -> String {
         return name.rawValue
+    }
+    
+    /// Get storyboard instance
+    ///
+    /// - Parameter name: Storyboard name
+    /// - Returns: The storyboard's UIStoryboard instance
+    
+    class func storyboardInstance(name: Storyboard) -> UIStoryboard {
+        return UIStoryboard(name: storyboard(name: name), bundle: Bundle.main)
     }
     
     /// Get the main storyboard
@@ -39,11 +50,22 @@ final class StoryboardManager {
     
     /// Get view controller by its identifier
     ///
-    /// - Parameter identifier: Identifier configured in the storyboard
+    /// - Parameters:
+    ///   - identifier: Identifier configured in the storyboard
+    ///   - storyboard: Storyboard instance
     /// - Returns: The view controller instance
     
-    class func viewController(identifier: String) -> UIViewController {
-        return main().instantiateViewController(withIdentifier: identifier)
+    class func viewController(identifier: String, in storyboardName: Storyboard = .Main) -> UIViewController {
+        return storyboardInstance(name: storyboardName).instantiateViewController(withIdentifier: identifier)
+    }
+    
+    /// Get initiate view controller
+    ///
+    /// - Parameter storyboard: Storyboard instance
+    /// - Returns: The view controller instance
+    
+    class func initiateViewController(in storyboardName: Storyboard = .Main) -> UIViewController {
+        return storyboardInstance(name: storyboardName).instantiateInitialViewController()!
     }
     
     // Private init
