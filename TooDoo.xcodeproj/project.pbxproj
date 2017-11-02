@@ -68,13 +68,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8D1599061FAAEB4C0004846F /* Step 1 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Step 1";
-			sourceTree = "<group>";
-		};
 		8D4784BA1F9077820067E0FE = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +180,6 @@
 		8D6A13A01F93EB97004238D8 /* Setup & Welcome */ = {
 			isa = PBXGroup;
 			children = (
-				8D1599061FAAEB4C0004846F /* Step 1 */,
 				8D6A13A21F93EC24004238D8 /* SetupWelcomeViewController.swift */,
 			);
 			path = "Setup & Welcome";
