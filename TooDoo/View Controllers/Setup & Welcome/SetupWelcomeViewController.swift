@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Photos
 import Haptica
 import CoreData
+import BulletinBoard
 import ChameleonFramework
 
 class SetupWelcomeViewController: UIViewController {
@@ -17,25 +19,35 @@ class SetupWelcomeViewController: UIViewController {
     
     static let identifier = "Welcome"
     
-    /// Greeting labels
+    /// Welcome outlets
     @IBOutlet var greetingLabel: UILabel!
     @IBOutlet var greetingMessageLabel: UILabel!
+    // Gradient backgrounds
     @IBOutlet var gradientBackgroundViewWelcome: GradientView!
     @IBOutlet var gradientBackgroundViewStep1: GradientView!
     @IBOutlet var gradientBackgroundViewStep2: GradientView!
     @IBOutlet var gradientBackgroundViewComplete: GradientView!
+    // Step 1 outlets
     @IBOutlet var step1QuestionLabel: UILabel!
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var step1CompleteTitleLabel: UILabel!
     @IBOutlet var step1CompleteMessageLabel: UILabel!
+    // Step 2 outlets
+    @IBOutlet var step2TitleLabel: UILabel!
+    @IBOutlet var step2MessageLabel: UILabel!
+    @IBOutlet var step2BoyAvatarImageView: UIImageView!
+    @IBOutlet var step2GirlAvatarImageView: UIImageView!
+    @IBOutlet var step2CustomizeButton: CornerRadiusButton!
+    @IBOutlet var step2SkipButton: UIButton!
+    
     
     // MARK: - Properties
     
-    /// Dependency Injection for Managed Object Context
+    /// Dependency Injection for Managed Object Context.
     
     var managedObjectContext: NSManagedObjectContext?
     
-    /// User attributes
+    /// User attributes.
     
     var userName: String? {
         didSet {
@@ -46,6 +58,52 @@ class SetupWelcomeViewController: UIViewController {
     
     var userAvatar = ""
     
+    /// The image picker controller for choosing avatar.
+    
+    lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "black-background"), for: .default)
+        imagePickerController.navigationBar.shadowImage = UIImage()
+        imagePickerController.setStatusBarStyle(.lightContent)
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        imagePickerController.modalPresentationStyle = .popover
+        
+        return imagePickerController
+    }()
+    
+    /// The bulletin manager that manages page bulletin items.
+    
+    lazy var bulletinManager: BulletinManager = {
+        // TODO: Localization
+        let rootItem = PageBulletinItem(title: "No Photo Access")
+        rootItem.image = #imageLiteral(resourceName: "no-photo-access")
+        rootItem.descriptionText = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos"
+        rootItem.actionButtonTitle = "Give access"
+        rootItem.alternativeButtonTitle = "Not now"
+        
+        rootItem.shouldCompactDescriptionText = true
+        rootItem.isDismissable = true
+        
+        // Take user to the settings page
+        rootItem.actionHandler = { item in
+            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
+            
+            if UIApplication.shared.canOpenURL(openSettingsURL) {
+                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
+            }
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        rootItem.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return BulletinManager(rootItem: rootItem)
+    }()
     
     // MARK: - View Life Cycle
     
@@ -59,7 +117,14 @@ class SetupWelcomeViewController: UIViewController {
     /// Configure view properties.
     
     func setupViews() {
-        // Configure welcome views
+        setupWelcomeViews()
+        setupStep1Views()
+        setupStep2Views()
+    }
+    
+    /// Configure welcome views.
+    
+    func setupWelcomeViews() {
         gradientBackgroundViewWelcome.alpha = 1
         
         greetingLabel.transform = .init(scaleX: 0, y: 0)
@@ -67,8 +132,11 @@ class SetupWelcomeViewController: UIViewController {
         
         greetingMessageLabel.alpha = 0
         greetingMessageLabel.transform = .init(translationX: 0, y: 30)
-        
-        // Configure step1 views
+    }
+    
+    /// Configure step1 views.
+    
+    func setupStep1Views() {
         gradientBackgroundViewStep1.alpha = 1
         
         step1QuestionLabel.alpha = 0
@@ -83,6 +151,33 @@ class SetupWelcomeViewController: UIViewController {
         
         step1CompleteMessageLabel.alpha = 0
         step1CompleteMessageLabel.transform = .init(translationX: 0, y: 50)
+    }
+    
+    /// Configure step2 views.
+    
+    func setupStep2Views() {
+        gradientBackgroundViewStep2.alpha = 1
+        
+        step2TitleLabel.alpha = 0
+        step2TitleLabel.transform = .init(translationX: 0, y: 45)
+        
+        step2BoyAvatarImageView.alpha = 0
+        step2BoyAvatarImageView.layer.cornerRadius = step2BoyAvatarImageView.frame.width / 2
+        step2BoyAvatarImageView.layer.masksToBounds = true
+        step2BoyAvatarImageView.transform = .init(scaleX: 0, y: 0)
+        
+        step2GirlAvatarImageView.alpha = 0
+        step2GirlAvatarImageView.layer.cornerRadius = step2GirlAvatarImageView.frame.width / 2
+        step2GirlAvatarImageView.layer.masksToBounds = true
+        step2GirlAvatarImageView.transform = .init(scaleX: 0, y: 0)
+        
+        step2MessageLabel.alpha = 0
+        
+        step2CustomizeButton.alpha = 0
+        step2CustomizeButton.transform = .init(scaleX: 0, y: 0)
+        
+        step2SkipButton.alpha = 0
+        step2SkipButton.transform = .init(translationX: 0, y: -15)
     }
     
     // MARK: - Handle Actions.
@@ -110,6 +205,68 @@ class SetupWelcomeViewController: UIViewController {
             // Send error haptic feedback
             Haptic.notification(.error).generate()
         }
+    }
+    
+    /// User selected boy avatar.
+    
+    @IBAction func boyAvatarSelected(_ sender: Any) {
+        print("Boy selected.")
+    }
+    
+    /// User selected girl avatar.
+    
+    @IBAction func girlAvatarSelected(_ sender: Any) {
+        print("Girl selected.")
+    }
+    
+    /// User tapped customize avatar.
+    
+    @IBAction func customizeAvatarTapped(_ sender: CornerRadiusButton) {
+        // Configure image picker for iPad with Popover
+        imagePickerController.popoverPresentationController?.delegate = self
+        imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Check for access authorization
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status {
+                
+            case .authorized:
+                // Access is granted by user.
+                DispatchQueue.main.async() {
+                    // Generate haptic feedback
+                    Haptic.impact(.medium).generate()
+                    
+                    // Present image picker
+                    self.present(self.imagePickerController, animated: true, completion: nil)
+                }
+                break
+                
+            case .notDetermined:
+                // It is not determined until now.
+                fallthrough
+            case .restricted:
+                // User do not have access to photo album.
+                fallthrough
+            case .denied:
+                // User has denied the permission.
+                // Present bulletin
+                DispatchQueue.main.async() {
+                    // Generate haptic feedback
+                    Haptic.notification(.warning).generate()
+                    
+                    self.bulletinManager.backgroundViewStyle = .blurredDark
+                    self.bulletinManager.prepare()
+                    self.bulletinManager.presentBulletin(above: self)
+                }
+                break
+            }
+        }
+    }
+    
+    /// User tapped skip button.
+    
+    @IBAction func skipTapped(_ sender: UIButton) {
+        Haptic.impact(.light).generate()
     }
     
     /// Set status bar to white.
@@ -240,16 +397,16 @@ extension SetupWelcomeViewController {
     
     func animateStep1Complete() {
         // Fade in title
-        UIView.animate(withDuration: 0.5, delay: 0.2, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear, animations: {
             self.step1CompleteTitleLabel.alpha = 1
         }, completion: nil)
         // Scale up title
-        UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
             self.step1CompleteTitleLabel.transform = .init(scaleX: 1, y: 1)
         }) {
             if $0 {
                 // Once finished, animate out
-                UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseInOut, animations: {
+                UIView.animate(withDuration: 0.5, delay: 1.45, options: .curveEaseInOut, animations: {
                     self.step1CompleteTitleLabel.alpha = 0
                     self.step1CompleteTitleLabel.transform = .init(scaleX: 0.05, y: 0.05)
                 }, completion: nil)
@@ -266,7 +423,7 @@ extension SetupWelcomeViewController {
         }) {
             if $0 {
                 // Once finished, animate out
-                UIView.animate(withDuration: 0.5, delay: 1.6, options: .curveEaseInOut, animations: {
+                UIView.animate(withDuration: 0.4, delay: 1.4, options: .curveEaseInOut, animations: {
                     self.step1CompleteMessageLabel.alpha = 0
                     self.step1CompleteMessageLabel.transform = .init(translationX: 0, y: -50)
                     self.gradientBackgroundViewStep1.alpha = 0
@@ -283,12 +440,55 @@ extension SetupWelcomeViewController {
     /// Animate step 2 views in.
     
     func animateStep2ViewsIn() {
-        
+        // Fade in and move up title
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.4, initialSpringVelocity: 2, options: [], animations: {
+            self.step2TitleLabel.alpha = 1
+            self.step2TitleLabel.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
+        // Fade in and scale up boy image
+        UIView.animate(withDuration: 0.45, delay: 0.4, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.5, options: [], animations: {
+            self.step2BoyAvatarImageView.alpha = 1
+            self.step2BoyAvatarImageView.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        // Fade in and scale up girl image
+        UIView.animate(withDuration: 0.45, delay: 0.5, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.5, options: [], animations: {
+            self.step2GirlAvatarImageView.alpha = 1
+            self.step2GirlAvatarImageView.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        // Fade in message
+        UIView.animate(withDuration: 0.35, delay: 0.7, options: .curveEaseInOut, animations: {
+            self.step2MessageLabel.alpha = 1
+        }, completion: nil)
+        // Fade in and scale up customize button
+        UIView.animate(withDuration: 0.45, delay: 0.8, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.75, options: [], animations: {
+            self.step2CustomizeButton.alpha = 1
+            self.step2CustomizeButton.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        // Fade in and move down skip button
+        UIView.animate(withDuration: 0.5, delay: 2, options: .curveEaseInOut, animations: {
+            self.step2SkipButton.alpha = 1
+            self.step2SkipButton.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
     }
     
     /// Animate step 2 views out.
     
     func animateStep2ViewsOut() {
         
+    }
+}
+
+// MARK: - Image Picker Delegate methods.
+
+extension SetupWelcomeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true) {
+            self.animateStep2ViewsOut()
+        }
     }
 }

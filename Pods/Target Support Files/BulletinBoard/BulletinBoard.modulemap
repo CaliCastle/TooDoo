@@ -1,0 +1,6 @@
+framework module BulletinBoard {
+  umbrella header "BulletinBoard-umbrella.h"
+
+  export *
+  module * { export * }
+}

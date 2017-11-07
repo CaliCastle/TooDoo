@@ -51,6 +51,7 @@ final class AppearanceManager {
         // Set to white tint and title color
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white, .font: font(size: 18, weight: .DemiBold)]
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font: font()], for: .normal)
     }
     
     // Private init
