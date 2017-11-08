@@ -35,7 +35,8 @@ final class DispatchManager {
     class func configureRootViewController(for application: UIApplication) {
         let managedObjectContext = configureCoreDataManager()
         
-        guard let _ = UserDefaultManager.string(forKey: .UserName) else {
+//        guard let _ = UserDefaultManager.string(forKey: .UserName) else {
+        if true {
             guard let appDelegate = application.delegate as? AppDelegate else { return }
             let welcomeViewController = StoryboardManager.initiateViewController(in: .Setup) as! SetupWelcomeViewController
             

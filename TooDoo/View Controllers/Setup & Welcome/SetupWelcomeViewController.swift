@@ -39,6 +39,11 @@ class SetupWelcomeViewController: UIViewController {
     @IBOutlet var step2GirlAvatarImageView: UIImageView!
     @IBOutlet var step2CustomizeButton: CornerRadiusButton!
     @IBOutlet var step2SkipButton: UIButton!
+    // Step complete outlets
+    @IBOutlet var stepCompleteTitleLabel: UILabel!
+    @IBOutlet var stepCompleteAvatarImageView: CornerRadiusImageView!
+    @IBOutlet var stepCompleteMessageLabel: UILabel!
+    @IBOutlet var stepCompleteGetStartedButton: CornerRadiusButton!
     
     
     // MARK: - Properties
@@ -56,7 +61,27 @@ class SetupWelcomeViewController: UIViewController {
         }
     }
     
-    var userAvatar = ""
+    /// Avatar type selection enum.
+    ///
+    /// - Boy: Boy avatar selected
+    /// - Girl: Girl avatar selected
+    /// - Custom: Custom avatar selected
+    /// - Skipped: Skipped avatar selection
+    
+    enum AvatarType {
+        case Boy
+        case Girl
+        case Custom
+        case Skipped
+    }
+    
+    /// User selected avatar type.
+    
+    var userAvatarType: AvatarType?
+    
+    /// For storing selected avatar.
+    
+    var userSelectedImage: UIImage?
     
     /// The image picker controller for choosing avatar.
     
@@ -120,6 +145,7 @@ class SetupWelcomeViewController: UIViewController {
         setupWelcomeViews()
         setupStep1Views()
         setupStep2Views()
+        setupStepCompleteViews()
     }
     
     /// Configure welcome views.
@@ -180,6 +206,76 @@ class SetupWelcomeViewController: UIViewController {
         step2SkipButton.transform = .init(translationX: 0, y: -15)
     }
     
+    /// Set up step complete views properties.
+    
+    func setupStepCompleteViews() {
+        gradientBackgroundViewComplete.alpha = 1
+        
+        stepCompleteTitleLabel.alpha = 0
+        stepCompleteTitleLabel.transform = .init(translationX: -35, y: 0)
+        
+        stepCompleteAvatarImageView.layer.cornerRadius = stepCompleteAvatarImageView.frame.width / 2
+        stepCompleteAvatarImageView.layer.masksToBounds = true
+        stepCompleteAvatarImageView.alpha = 0
+        stepCompleteAvatarImageView.transform = .init(scaleX: 0, y: 0)
+        
+        stepCompleteMessageLabel.alpha = 0
+        stepCompleteMessageLabel.transform = .init(scaleX: 0.2, y: 0.2)
+        
+        stepCompleteGetStartedButton.alpha = 0
+        stepCompleteGetStartedButton.transform = .init(translationX: 0, y: 40)
+    }
+    
+    /// Configure views accordingly to avatar selection.
+    
+    func configureStepCompleteViews() {
+        guard let userAvatarType = userAvatarType else { return }
+        
+        // Check user avatar selection
+        switch userAvatarType {
+        case .Boy, .Girl:
+            stepCompleteAvatarImageView.image = (userAvatarType == .Boy) ? #imageLiteral(resourceName: "avatar_boy") : #imageLiteral(resourceName: "avatar_girl")
+            fallthrough
+        case .Skipped:
+            // TODO: Localization
+            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nLet's start using TooDoo"
+        case .Custom:
+            // TODO: Localization
+            stepCompleteTitleLabel.text = "👀 Nice pic!"
+            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nAnd no worries! I don't judge 🙈"
+            stepCompleteAvatarImageView.image = userSelectedImage
+            stepCompleteAvatarImageView.layer.shadowColor = UIColor(hexString: "111111", withAlpha: 0.35).cgColor
+            stepCompleteAvatarImageView.layer.shadowRadius = 30
+            stepCompleteAvatarImageView.layer.shadowOffset = CGSize(width: 0, height: 5)
+            stepCompleteAvatarImageView.layer.shadowOpacity = 1
+        }
+    }
+    
+    /// Save the user data.
+    
+    func saveUserData() {
+        // Save user name
+        UserDefaultManager.set(value: userName, forKey: .UserName)
+        
+        var userAvatar = #imageLiteral(resourceName: "avatar_default")
+        
+        // Adjust user avatar
+        if let userAvatarType = userAvatarType {
+            switch userAvatarType {
+            case .Boy:
+                userAvatar = #imageLiteral(resourceName: "avatar_boy")
+            case .Girl:
+                userAvatar = #imageLiteral(resourceName: "avatar_girl")
+            case .Custom:
+                userAvatar = userSelectedImage!
+            case .Skipped:
+                break
+            }
+        }
+        // Save user avatar
+        UserDefaultManager.set(image: userAvatar, forKey: .UserAvatar)
+    }
+    
     // MARK: - Handle Actions.
     
     @IBAction func nameEntered(_ sender: UITextField) {
@@ -210,13 +306,15 @@ class SetupWelcomeViewController: UIViewController {
     /// User selected boy avatar.
     
     @IBAction func boyAvatarSelected(_ sender: Any) {
-        print("Boy selected.")
+        userAvatarType = .Boy
+        animateStep2ViewsOut()
     }
     
     /// User selected girl avatar.
     
     @IBAction func girlAvatarSelected(_ sender: Any) {
-        print("Girl selected.")
+        userAvatarType = .Girl
+        animateStep2ViewsOut()
     }
     
     /// User tapped customize avatar.
@@ -249,11 +347,10 @@ class SetupWelcomeViewController: UIViewController {
                 fallthrough
             case .denied:
                 // User has denied the permission.
-                // Present bulletin
                 DispatchQueue.main.async() {
                     // Generate haptic feedback
                     Haptic.notification(.warning).generate()
-                    
+                    // Present bulletin
                     self.bulletinManager.backgroundViewStyle = .blurredDark
                     self.bulletinManager.prepare()
                     self.bulletinManager.presentBulletin(above: self)
@@ -266,7 +363,11 @@ class SetupWelcomeViewController: UIViewController {
     /// User tapped skip button.
     
     @IBAction func skipTapped(_ sender: UIButton) {
+        userAvatarType = .Skipped
+        
         Haptic.impact(.light).generate()
+        
+        animateStep2ViewsOut()
     }
     
     /// Set status bar to white.
@@ -474,6 +575,79 @@ extension SetupWelcomeViewController {
     /// Animate step 2 views out.
     
     func animateStep2ViewsOut() {
+        // Configure the step complete views before showing
+        configureStepCompleteViews()
+        // Persist to user defaults
+        saveUserData()
+        
+        // Fade out and move up title
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.4, initialSpringVelocity: 2, options: [], animations: {
+            self.step2TitleLabel.alpha = 0
+            self.step2TitleLabel.transform = .init(translationX: 0, y: -40)
+        }, completion: nil)
+        // Fade out and move down skip button
+        UIView.animate(withDuration: 0.5, delay: 0.25, options: .curveEaseInOut, animations: {
+            self.step2SkipButton.alpha = 0
+            self.step2SkipButton.transform = .init(translationX: 0, y: 20)
+        }, completion: nil)
+        // Fade out and scale down boy image
+        UIView.animate(withDuration: 0.45, delay: 0.4, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.5, options: [], animations: {
+            self.step2BoyAvatarImageView.alpha = 0
+            self.step2BoyAvatarImageView.transform = .init(scaleX: 0.09, y: 0.09)
+        }, completion: nil)
+        // Fade out and scale down girl image
+        UIView.animate(withDuration: 0.45, delay: 0.5, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.5, options: [], animations: {
+            self.step2GirlAvatarImageView.alpha = 0
+            self.step2GirlAvatarImageView.transform = .init(scaleX: 0.09, y: 0.09)
+        }, completion: nil)
+        // Fade out message
+        UIView.animate(withDuration: 0.35, delay: 0.7, options: .curveEaseInOut, animations: {
+            self.step2MessageLabel.alpha = 0
+        }, completion: nil)
+        // Fade out and scale up customize button
+        UIView.animate(withDuration: 0.45, delay: 0.8, usingSpringWithDamping: 0.75, initialSpringVelocity: 1.75, options: [], animations: {
+            self.step2CustomizeButton.alpha = 0
+            self.step2CustomizeButton.transform = .init(scaleX: 0.05, y: 0.05)
+        }) {
+            if $0 {
+                // Once finished, start animating complete views in
+                // Fade out background gradient
+                UIView.transition(with: self.gradientBackgroundViewStep2, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    self.gradientBackgroundViewStep2.alpha = 0
+                }, completion: nil)
+                self.animateStepCompleteViewsIn()
+            }
+        }
+    }
+    
+    /// Animate step complete views in.
+    
+    func animateStepCompleteViewsIn() {
+        // Generate success haptic
+        Haptic.notification(.success).generate()
+        
+        UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 1.3, options: [], animations: {
+            self.stepCompleteTitleLabel.alpha = 1
+            self.stepCompleteTitleLabel.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.35, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
+            self.stepCompleteAvatarImageView.alpha = 1
+            self.stepCompleteAvatarImageView.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 0.35, delay: 0.6, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
+            self.stepCompleteMessageLabel.alpha = 1
+            self.stepCompleteMessageLabel.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+        
+        UIView.animate(withDuration: 0.3, delay: 0.75, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
+            self.stepCompleteGetStartedButton.alpha = 1
+            self.stepCompleteGetStartedButton.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
+    }
+    
+    func animateStepCompleteViewsOut() {
         
     }
 }
@@ -482,11 +656,20 @@ extension SetupWelcomeViewController {
 
 extension SetupWelcomeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
     
+    /// User cancels selection.
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
+    /// User selected a photo
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        
+        userAvatarType = .Custom
+        userSelectedImage = image
+        
         picker.dismiss(animated: true) {
             self.animateStep2ViewsOut()
         }
