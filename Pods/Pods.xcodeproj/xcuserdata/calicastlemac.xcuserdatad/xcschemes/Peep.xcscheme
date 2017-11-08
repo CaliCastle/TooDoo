@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "52A29AFE0C8713045CEE1F2CD19EE968"
-               BuildableName = "Typist.framework"
-               BlueprintName = "Typist"
+               BlueprintIdentifier = "359E77D4E000AA42ECAC99F46947F627"
+               BuildableName = "Peep.framework"
+               BlueprintName = "Peep"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "52A29AFE0C8713045CEE1F2CD19EE968"
-            BuildableName = "Typist.framework"
-            BlueprintName = "Typist"
+            BlueprintIdentifier = "359E77D4E000AA42ECAC99F46947F627"
+            BuildableName = "Peep.framework"
+            BlueprintName = "Peep"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

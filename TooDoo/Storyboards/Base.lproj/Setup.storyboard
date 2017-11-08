@@ -197,7 +197,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <inset key="contentEdgeInsets" minX="50" minY="20" maxX="50" maxY="20"/>
-                                <state key="normal" title="START TooDooing">
+                                <state key="normal" title="I'm Ready!">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -205,6 +205,10 @@
                                         <real key="value" value="34"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="getStartedTapped:" destination="cXi-fh-WMJ" eventType="touchUpInside" id="3rq-zx-9zR"/>
+                                    <segue destination="kYS-8f-qTM" kind="show" id="dVH-ar-peE"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="kYe-2b-Hek" customClass="CornerRadiusImageView" customModule="TooDoo" customModuleProvider="target">
                                 <rect key="frame" x="102.66666666666669" y="254.33333333333337" width="170" height="170"/>
@@ -315,6 +319,14 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-79.200000000000003" y="162.5615763546798"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="iz5-Rg-h0g">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="kYS-8f-qTM" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l6w-nO-P2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="501" y="163"/>
         </scene>
     </scenes>
     <resources>

@@ -18,5 +18,6 @@ target 'TooDoo' do
   pod 'Hero', '1.0.0-alpha.4'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'BulletinBoard', '~> 1.3'
+  pod 'Peep'
   
 end

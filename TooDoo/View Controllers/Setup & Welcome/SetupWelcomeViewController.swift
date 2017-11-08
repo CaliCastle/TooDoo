@@ -89,11 +89,11 @@ class SetupWelcomeViewController: UIViewController {
         let imagePickerController = UIImagePickerController()
         imagePickerController.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "black-background"), for: .default)
         imagePickerController.navigationBar.shadowImage = UIImage()
+        imagePickerController.modalPresentationStyle = .popover
         imagePickerController.setStatusBarStyle(.lightContent)
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
-        imagePickerController.modalPresentationStyle = .popover
         
         return imagePickerController
     }()
@@ -283,8 +283,9 @@ class SetupWelcomeViewController: UIViewController {
         
         if username.trimmingCharacters(in: .whitespaces).count != 0 && username.trimmingCharacters(in: .whitespaces).count < 30 {
             // Validation passed
-            // Send success haptic feedback
+            // Send success haptic feedback and play sound fx
             Haptic.notification(.success).generate()
+            SoundManager.play(soundEffect: .Success)
             // Animate text to green color
             UIView.transition(with: sender, duration: 0.45, options: [.transitionFlipFromBottom, .curveEaseInOut], animations: {
                 sender.textColor = HexColor(hexString: "86F9C0")
@@ -308,6 +309,9 @@ class SetupWelcomeViewController: UIViewController {
     @IBAction func boyAvatarSelected(_ sender: Any) {
         userAvatarType = .Boy
         animateStep2ViewsOut()
+        
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
     }
     
     /// User selected girl avatar.
@@ -315,6 +319,9 @@ class SetupWelcomeViewController: UIViewController {
     @IBAction func girlAvatarSelected(_ sender: Any) {
         userAvatarType = .Girl
         animateStep2ViewsOut()
+        
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
     }
     
     /// User tapped customize avatar.
@@ -323,6 +330,9 @@ class SetupWelcomeViewController: UIViewController {
         // Configure image picker for iPad with Popover
         imagePickerController.popoverPresentationController?.delegate = self
         imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
         
         // Check for access authorization
         PHPhotoLibrary.requestAuthorization { (status) in
@@ -365,7 +375,10 @@ class SetupWelcomeViewController: UIViewController {
     @IBAction func skipTapped(_ sender: UIButton) {
         userAvatarType = .Skipped
         
+        // Generate haptic
         Haptic.impact(.light).generate()
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
         
         animateStep2ViewsOut()
     }
@@ -375,7 +388,6 @@ class SetupWelcomeViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
 }
 
 // MARK: - Animations
@@ -623,13 +635,17 @@ extension SetupWelcomeViewController {
     /// Animate step complete views in.
     
     func animateStepCompleteViewsIn() {
-        // Generate success haptic
-        Haptic.notification(.success).generate()
-        
         UIView.animate(withDuration: 0.4, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 1.3, options: [], animations: {
             self.stepCompleteTitleLabel.alpha = 1
             self.stepCompleteTitleLabel.transform = .init(translationX: 0, y: 0)
-        }, completion: nil)
+        }) {
+            if $0 {
+                // Generate success haptic
+                Haptic.notification(.success).generate()
+                // Play success sound
+                SoundManager.play(soundEffect: .Success)
+            }
+        }
         
         UIView.animate(withDuration: 0.5, delay: 0.35, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
             self.stepCompleteAvatarImageView.alpha = 1
@@ -646,10 +662,6 @@ extension SetupWelcomeViewController {
             self.stepCompleteGetStartedButton.transform = .init(translationX: 0, y: 0)
         }, completion: nil)
     }
-    
-    func animateStepCompleteViewsOut() {
-        
-    }
 }
 
 // MARK: - Image Picker Delegate methods.
@@ -662,7 +674,7 @@ extension SetupWelcomeViewController: UIImagePickerControllerDelegate, UINavigat
         picker.dismiss(animated: true, completion: nil)
     }
     
-    /// User selected a photo
+    /// User selected a photo.
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }

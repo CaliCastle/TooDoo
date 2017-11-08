@@ -1,0 +1,6 @@
+framework module Peep {
+  umbrella header "Peep-umbrella.h"
+
+  export *
+  module * { export * }
+}
