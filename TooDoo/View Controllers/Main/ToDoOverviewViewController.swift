@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import AnimatedCollectionViewLayout
 
 class ToDoOverviewViewController: UIViewController {
 
@@ -28,7 +27,7 @@ class ToDoOverviewViewController: UIViewController {
     /// Dependency Injection for Managed Object Context
     var managedObjectContext: NSManagedObjectContext?
     
-    fileprivate let sectionInsects = UIEdgeInsets(top: 50, left: 20, bottom: 50, right: 20)
+    fileprivate let sectionInsects = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
     
     // MARK: - View Life Cycle
     
@@ -72,7 +71,7 @@ class ToDoOverviewViewController: UIViewController {
     /// Set up todos collection view properties.
     
     func setupTodosCollectionView() {
-        
+        todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
     /// Configure user information to the designated views.
@@ -106,7 +105,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -117,11 +116,16 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
 }
 
 extension ToDoOverviewViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//    }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 280, height: 400)
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsects
+        var insets = collectionView.contentInset
+        let spacing = (view.frame.size.width - (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) / 2
+        insets.left = spacing
+        insets.right = spacing
+        
+        return insets
     }
 }
