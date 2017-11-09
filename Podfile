@@ -11,7 +11,7 @@ target 'TooDoo' do
   # Pods for TooDoo
   pod 'M13Checkbox'
   pod 'ChameleonFramework/Swift'
-  pod 'AnimatedCollectionViewLayout'
+  pod 'CenteredCollectionView'
   pod 'BouncyLayout'
   pod 'Typist'
   pod 'Haptica'

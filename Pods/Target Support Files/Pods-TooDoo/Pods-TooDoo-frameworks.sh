@@ -102,9 +102,9 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BouncyLayout/BouncyLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/CenteredCollectionView/CenteredCollectionView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hero/Hero.framework"
@@ -114,9 +114,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Typist/Typist.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BouncyLayout/BouncyLayout.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/CenteredCollectionView/CenteredCollectionView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hero/Hero.framework"

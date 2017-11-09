@@ -37,9 +37,11 @@ final class UserDefaultManager {
     /// - Parameter key: The User Default Key
     /// - Returns: Image result
     
-//    class func image(forKey key: Key) -> UIImage? {
-//        return UserDefaults.standard.data(forKey: key.rawValue)
-//    }
+    class func image(forKey key: Key) -> UIImage? {
+        guard let imageData = UserDefaults.standard.data(forKey: key.rawValue) else { return nil }
+        
+        return UIImage(data: imageData)
+    }
     
     /// Get boolean for a User Defaults key
     ///

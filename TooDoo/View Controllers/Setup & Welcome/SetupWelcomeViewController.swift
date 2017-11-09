@@ -45,6 +45,13 @@ class SetupWelcomeViewController: UIViewController {
     @IBOutlet var stepCompleteMessageLabel: UILabel!
     @IBOutlet var stepCompleteGetStartedButton: CornerRadiusButton!
     
+    /// Segue enum
+    ///
+    /// - GetStarted: GetStarted segue to show Main.storyboard
+    
+    enum Segue: String {
+        case GetStarted = "GetStarted"
+    }
     
     // MARK: - Properties
     
@@ -87,10 +94,10 @@ class SetupWelcomeViewController: UIViewController {
     
     lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
+        imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(.lightContent)
         imagePickerController.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "black-background"), for: .default)
         imagePickerController.navigationBar.shadowImage = UIImage()
         imagePickerController.modalPresentationStyle = .popover
-        imagePickerController.setStatusBarStyle(.lightContent)
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
@@ -381,6 +388,23 @@ class SetupWelcomeViewController: UIViewController {
         SoundManager.play(soundEffect: .Click)
         
         animateStep2ViewsOut()
+    }
+    
+    /// Prepare for segue.
+    ///
+    /// - Parameters:
+    ///   - segue: The segue to be performed
+    ///   - sender: The sender
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else { return }
+        
+        if identifier == Segue.GetStarted.rawValue {
+            let destination = segue.destination as! UINavigationController
+            let mainController = destination.topViewController as! ToDoOverviewViewController
+            
+            mainController.managedObjectContext = managedObjectContext
+        }
     }
     
     /// Set status bar to white.
@@ -681,6 +705,8 @@ extension SetupWelcomeViewController: UIImagePickerControllerDelegate, UINavigat
         
         userAvatarType = .Custom
         userSelectedImage = image
+        
+        SoundManager.play(soundEffect: .Click)
         
         picker.dismiss(animated: true) {
             self.animateStep2ViewsOut()

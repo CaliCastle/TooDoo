@@ -1,7 +1,7 @@
 PODS:
-  - AnimatedCollectionViewLayout (0.3.0)
   - BouncyLayout (2.0.0)
   - BulletinBoard (1.3.0)
+  - CenteredCollectionView (1.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
@@ -13,9 +13,9 @@ PODS:
   - Typist (1.1.0)
 
 DEPENDENCIES:
-  - AnimatedCollectionViewLayout
   - BouncyLayout
   - BulletinBoard (~> 1.3)
+  - CenteredCollectionView
   - ChameleonFramework/Swift
   - Haptica
   - Hero (= 1.0.0-alpha.4)
@@ -25,9 +25,9 @@ DEPENDENCIES:
   - Typist
 
 SPEC CHECKSUMS:
-  AnimatedCollectionViewLayout: 504b992a4258eb39d2dd2b2b48e84b4b95860fd7
   BouncyLayout: f64872d6b2a3e41bb8c89e24d0ff08e2dbeeb304
   BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
+  CenteredCollectionView: ac9c4d8a22abe9d108ff4d7dac135dd73f9a5516
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
   Hero: 6ab58fdfb16c75ce9c6bfad48ef6abb54780b263
@@ -36,6 +36,6 @@ SPEC CHECKSUMS:
   SkyFloatingLabelTextField: 771be94beca6868a6cea187f70c965ebd81d2f93
   Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
 
-PODFILE CHECKSUM: 84e6ba91359e16a43b215c6e89b0604ebc736816
+PODFILE CHECKSUM: 11da769db5ae6db22d0a2ec6718e40ad206cd956
 
 COCOAPODS: 1.3.1

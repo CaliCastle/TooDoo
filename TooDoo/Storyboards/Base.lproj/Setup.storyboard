@@ -169,7 +169,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-kc-ir6">
-                                <rect key="frame" x="156" y="718" width="64" height="60"/>
+                                <rect key="frame" x="156" y="710" width="64" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="eDG-Q5-cwG"/>
                                 </constraints>
@@ -206,8 +206,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="getStartedTapped:" destination="cXi-fh-WMJ" eventType="touchUpInside" id="3rq-zx-9zR"/>
-                                    <segue destination="kYS-8f-qTM" kind="show" id="dVH-ar-peE"/>
+                                    <segue destination="kYS-8f-qTM" kind="showDetail" identifier="GetStarted" action="showViewController:sender:" id="dVH-ar-peE"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default" translatesAutoresizingMaskIntoConstraints="NO" id="kYe-2b-Hek" customClass="CornerRadiusImageView" customModule="TooDoo" customModuleProvider="target">
@@ -270,7 +269,7 @@
                             <constraint firstItem="0j4-Dm-tyR" firstAttribute="trailing" secondItem="iRw-sh-JZL" secondAttribute="trailing" constant="20" id="qTS-Pj-Mou"/>
                             <constraint firstItem="NWx-Ic-Zdy" firstAttribute="centerX" secondItem="xmE-oI-qXh" secondAttribute="centerX" id="rul-Ht-vcl"/>
                             <constraint firstItem="kYe-2b-Hek" firstAttribute="top" secondItem="UvC-WI-LOa" secondAttribute="bottom" constant="30" id="s4h-ue-ajL"/>
-                            <constraint firstItem="w4h-kc-ir6" firstAttribute="bottom" secondItem="0j4-Dm-tyR" secondAttribute="bottom" id="sZG-SH-Bgc"/>
+                            <constraint firstItem="w4h-kc-ir6" firstAttribute="bottom" secondItem="0j4-Dm-tyR" secondAttribute="bottom" constant="-8" id="sZG-SH-Bgc"/>
                             <constraint firstItem="oPd-uc-rHC" firstAttribute="leading" secondItem="0j4-Dm-tyR" secondAttribute="leading" constant="35" id="sjk-GY-7DM"/>
                             <constraint firstItem="iRw-sh-JZL" firstAttribute="top" secondItem="NWx-Ic-Zdy" secondAttribute="bottom" constant="20" id="tEB-Qf-P3e"/>
                             <constraint firstItem="CD7-2G-qML" firstAttribute="centerX" secondItem="xmE-oI-qXh" secondAttribute="centerX" id="uCX-ix-Xdy"/>
