@@ -174,6 +174,7 @@
                                     <constraint firstAttribute="height" constant="60" id="eDG-Q5-cwG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="titleEdgeInsets" minX="-30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="15" minY="30" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="SKIP" image="skip-button">

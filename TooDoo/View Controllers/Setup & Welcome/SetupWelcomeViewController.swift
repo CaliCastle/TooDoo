@@ -108,7 +108,7 @@ class SetupWelcomeViewController: UIViewController {
     /// The bulletin manager that manages page bulletin items.
     
     lazy var bulletinManager: BulletinManager = {
-        // TODO: Localization
+        // FIXME: Localization
         let rootItem = PageBulletinItem(title: "No Photo Access")
         rootItem.image = #imageLiteral(resourceName: "no-photo-access")
         rootItem.descriptionText = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos"
@@ -244,10 +244,10 @@ class SetupWelcomeViewController: UIViewController {
             stepCompleteAvatarImageView.image = (userAvatarType == .Boy) ? #imageLiteral(resourceName: "avatar_boy") : #imageLiteral(resourceName: "avatar_girl")
             fallthrough
         case .Skipped:
-            // TODO: Localization
+            // FIXME: Localization
             stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nLet's start using TooDoo"
         case .Custom:
-            // TODO: Localization
+            // FIXME: Localization
             stepCompleteTitleLabel.text = "👀 Nice pic!"
             stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nAnd no worries! I don't judge 🙈"
             stepCompleteAvatarImageView.image = userSelectedImage
@@ -404,6 +404,13 @@ class SetupWelcomeViewController: UIViewController {
             let mainController = destination.topViewController as! ToDoOverviewViewController
             
             mainController.managedObjectContext = managedObjectContext
+            
+            // FIXME: Localization
+            let category = Category(context: managedObjectContext!)
+            category.name = "Personal"
+            category.color = "E7816D"
+            category.icon = "personal"
+            category.createdAt = Date()
         }
     }
     

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double CenteredCollectionViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char CenteredCollectionViewVersionString[];
+FOUNDATION_EXPORT double ViewAnimatorVersionNumber;
+FOUNDATION_EXPORT const unsigned char ViewAnimatorVersionString[];
 

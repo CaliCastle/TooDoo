@@ -11,7 +11,6 @@ target 'TooDoo' do
   # Pods for TooDoo
   pod 'M13Checkbox'
   pod 'ChameleonFramework/Swift'
-  pod 'CenteredCollectionView'
   pod 'BouncyLayout'
   pod 'Typist'
   pod 'Haptica'
@@ -19,5 +18,7 @@ target 'TooDoo' do
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'BulletinBoard', '~> 1.3'
   pod 'Peep'
+  pod 'ViewAnimator'
+  pod 'Hokusai'
   
 end

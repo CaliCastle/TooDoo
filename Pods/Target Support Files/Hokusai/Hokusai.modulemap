@@ -1,0 +1,6 @@
+framework module Hokusai {
+  umbrella header "Hokusai-umbrella.h"
+
+  export *
+  module * { export * }
+}
