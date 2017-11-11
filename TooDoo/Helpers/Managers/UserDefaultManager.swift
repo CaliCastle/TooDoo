@@ -80,6 +80,12 @@ final class UserDefaultManager {
         userDefaults.removeObject(forKey: key.rawValue)
     }
     
+    /// Check if the user has already setup
+    
+    class func userHasSetup() -> Bool {
+        return string(forKey: .UserName) != nil
+    }
+    
     // Private init
     
     private init() {}

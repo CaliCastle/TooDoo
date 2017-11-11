@@ -43,12 +43,8 @@ final class AppearanceManager {
     // MARK: - Navigation Bar
     
     static func changeNavigationBarAppearance() {
-        // Make it transparent globally
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().backgroundColor = .clear
-        UINavigationBar.appearance().barTintColor = .clear
         // Set to white tint and title color
+        UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white, .font: font(size: 18, weight: .DemiBold)]
         UIBarButtonItem.appearance().setTitleTextAttributes([.font: font()], for: .normal)

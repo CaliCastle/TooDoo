@@ -4,10 +4,13 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - DeckTransition (1.4.0)
   - Haptica (2.0.0)
-  - Hero (1.0.0-alpha.4)
   - Hokusai (0.4.0)
   - M13Checkbox (3.2.1)
+  - Motion (1.2.5):
+    - Motion/Core (= 1.2.5)
+  - Motion/Core (1.2.5)
   - Peep (2.0.0)
   - SkyFloatingLabelTextField (3.3.0)
   - Typist (1.1.0)
@@ -17,10 +20,11 @@ DEPENDENCIES:
   - BouncyLayout
   - BulletinBoard (~> 1.3)
   - ChameleonFramework/Swift
+  - DeckTransition
   - Haptica
-  - Hero (= 1.0.0-alpha.4)
   - Hokusai
   - M13Checkbox
+  - Motion
   - Peep
   - SkyFloatingLabelTextField (~> 3.0)
   - Typist
@@ -30,15 +34,16 @@ SPEC CHECKSUMS:
   BouncyLayout: f64872d6b2a3e41bb8c89e24d0ff08e2dbeeb304
   BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  DeckTransition: d678005a9b35c2745fe8b683c39c41f840ad69d7
   Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
-  Hero: 6ab58fdfb16c75ce9c6bfad48ef6abb54780b263
   Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
   M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
+  Motion: 88a8bee21926af792333f4b9e7170f710e9e48f3
   Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
   SkyFloatingLabelTextField: 771be94beca6868a6cea187f70c965ebd81d2f93
   Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
   ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
 
-PODFILE CHECKSUM: d8e94b018e2e4822c244b3a5693b8ebfe564e54d
+PODFILE CHECKSUM: f10c523c8e954d6642db58f880efc3962b6033d8
 
 COCOAPODS: 1.3.1

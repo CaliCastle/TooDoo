@@ -12,6 +12,10 @@
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
 		8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */; };
+		8D1F6A821FB64F6F004709E3 /* ShortcutItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A811FB64F6F004709E3 /* ShortcutItemManager.swift */; };
+		8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */; };
+		8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */; };
+		8D1F6A891FB67CA7004709E3 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A881FB67CA7004709E3 /* UIViewController.swift */; };
 		8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784C61F9077820067E0FE /* AppDelegate.swift */; };
 		8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D4784CA1F9077820067E0FE /* Main.storyboard */; };
 		8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */; };
@@ -42,6 +46,10 @@
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		8D1599071FAAEE310004846F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D1F6A811FB64F6F004709E3 /* ShortcutItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutItemManager.swift; sourceTree = "<group>"; };
+		8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		8D1F6A881FB67CA7004709E3 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		8D4784C31F9077820067E0FE /* TooDoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TooDoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D4784C61F9077820067E0FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D4784CB1F9077820067E0FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,6 +105,14 @@
 				8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */,
 			);
 			path = "Collection View Cell";
+			sourceTree = "<group>";
+		};
+		8D1F6A851FB679A6004709E3 /* Category Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */,
+			);
+			path = "Category Table View Controller";
 			sourceTree = "<group>";
 		};
 		8D4784BA1F9077820067E0FE = {
@@ -172,6 +188,7 @@
 				8DAC8F831FB0414B006207F6 /* UIView.swift */,
 				8DCBEA601FB2E69D00AD34D9 /* UINavigationController.swift */,
 				8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */,
+				8D1F6A881FB67CA7004709E3 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -225,6 +242,7 @@
 		8D6A13A11F93EBA2004238D8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8D1F6A851FB679A6004709E3 /* Category Table View Controller */,
 				8D1642D41FB4F28D004F306F /* Collection View Cell */,
 				8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */,
 			);
@@ -240,6 +258,8 @@
 				8D6A13A61F93EF70004238D8 /* StoryboardManager.swift */,
 				8D88C3151F949A40003C767C /* AppearanceManager.swift */,
 				8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */,
+				8D1F6A811FB64F6F004709E3 /* ShortcutItemManager.swift */,
+				8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -377,10 +397,11 @@
 				"${BUILT_PRODUCTS_DIR}/BouncyLayout/BouncyLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/DeckTransition/DeckTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Haptica/Haptica.framework",
-				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/Hokusai/Hokusai.framework",
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
+				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/Peep/Peep.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Typist/Typist.framework",
@@ -391,10 +412,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BouncyLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BulletinBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeckTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haptica.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hokusai.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Peep.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Typist.framework",
@@ -436,17 +458,21 @@
 				8D1599081FAAEE310004846F /* GradientView.swift in Sources */,
 				8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */,
 				8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */,
+				8D1F6A891FB67CA7004709E3 /* UIViewController.swift in Sources */,
 				8DAC8F841FB0414B006207F6 /* UIView.swift in Sources */,
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
 				8DCBEA611FB2E69D00AD34D9 /* UINavigationController.swift in Sources */,
 				8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */,
+				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
 				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
 				8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */,
+				8D1F6A821FB64F6F004709E3 /* ShortcutItemManager.swift in Sources */,
 				8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */,
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
 				8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */,
+				8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */,
 				8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */,
 				8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */,
 			);

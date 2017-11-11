@@ -281,6 +281,8 @@ class SetupWelcomeViewController: UIViewController {
         }
         // Save user avatar
         UserDefaultManager.set(image: userAvatar, forKey: .UserAvatar)
+        // Notify that the user finished setup
+        NotificationManager.send(notification: .UserHasSetup)
     }
     
     // MARK: - Handle Actions.

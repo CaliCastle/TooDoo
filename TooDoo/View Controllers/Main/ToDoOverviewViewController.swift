@@ -27,6 +27,14 @@ class ToDoOverviewViewController: UIViewController {
     @IBOutlet var todoMessageLabel: UILabel!
     @IBOutlet var todosCollectionView: UICollectionView!
     
+    /// Storyboard segues.
+    ///
+    /// - ShowCategory: Add/Edit a category
+    
+    private enum Segue: String {
+        case ShowCategory = "ShowCategory"
+    }
+    
     /// Navigation ttems enum.
     ///
     /// - Menu: Menu bar button
@@ -39,48 +47,8 @@ class ToDoOverviewViewController: UIViewController {
         case Add
     }
     
-    /// Navigation bar items
-    
-    @IBOutlet var menuBarButton: UIBarButtonItem! {
-        didSet {
-            let icon = #imageLiteral(resourceName: "menu-hamburger")
-            let iconButton = UIButton(frame: CGRect(origin: .zero, size: icon.size))
-            
-            iconButton.setBackgroundImage(icon, for: .normal)
-            iconButton.tag = NavigationItem.Menu.rawValue
-            iconButton.addTarget(self, action: #selector(navigationItemDidTap(_:)), for: .touchUpInside)
-            
-            menuBarButton.customView = iconButton
-        }
-    }
-    
-    @IBOutlet var addBarButton: UIBarButtonItem! {
-        didSet {
-            let icon = #imageLiteral(resourceName: "plus-button")
-            let iconButton = UIButton(frame: CGRect(origin: .zero, size: icon.size))
-            
-            iconButton.setBackgroundImage(icon, for: .normal)
-            iconButton.tag = NavigationItem.Add.rawValue
-            iconButton.addTarget(self, action: #selector(navigationItemDidTap(_:)), for: .touchUpInside)
-            
-            addBarButton.customView = iconButton
-        }
-    }
-    
-    @IBOutlet var searchBarButton: UIBarButtonItem! {
-        didSet {
-            let icon = #imageLiteral(resourceName: "search-button")
-            let iconButton = UIButton(frame: CGRect(origin: .zero, size: icon.size))
-            
-            iconButton.setBackgroundImage(icon, for: .normal)
-            iconButton.tag = NavigationItem.Search.rawValue
-            iconButton.addTarget(self, action: #selector(navigationItemDidTap(_:)), for: .touchUpInside)
-            
-            searchBarButton.customView = iconButton
-        }
-    }
-    
     /// Dependency Injection for Managed Object Context
+    
     var managedObjectContext: NSManagedObjectContext?
     
     /// Fetched results controller for Core Data.
@@ -130,18 +98,10 @@ class ToDoOverviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        let category = Category(context: managedObjectContext!)
-//        category.name = "Personal"
-//        category.color = "E7816D"
-//        category.icon = "personal"
-//        category.createdAt = Date()
-//
-//        do {
-//            try managedObjectContext!.save()
-//        } catch {
-//
-//        }
+        animateTodoCollectionView()
     }
+    
+    /// Fetch categories from core data.
     
     private func fetchCategories() {
         do {
@@ -225,9 +185,9 @@ class ToDoOverviewViewController: UIViewController {
         return true
     }
 
-    // MARK: - Handle Triggers.
+    // MARK: - Handle Interface Builder Actions.
     
-    @objc func navigationItemDidTap(_ sender: UIButton) {
+    @IBAction func navigationItemDidTap(_ sender: UIBarButtonItem) {
         /// FIXME
         switch sender.tag {
         case NavigationItem.Menu.rawValue:
@@ -245,7 +205,7 @@ class ToDoOverviewViewController: UIViewController {
         // FIXME: Localization
         let actionSheet = Hokusai(headline: "Create a")
         
-        actionSheet.colors = HOKColors(backGroundColor: UIColor(hexString: "3B3B3B"), buttonColor: UIColor(hexString: "1DCA54"), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
+        actionSheet.colors = HOKColors(backGroundColor: UIColor(hexString: "3B3B3B"), buttonColor: UIColor(hexString: "FFCD00"), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
         actionSheet.cancelButtonTitle = "Cancel"
 
         let _ = actionSheet.addButton("New Todo", target: self, selector: #selector(showAddTodo))
@@ -258,13 +218,28 @@ class ToDoOverviewViewController: UIViewController {
     @objc func showAddTodo() {
         
     }
+
+    /// Show add category view controller.
     
     @objc func showAddCategory() {
-        
+        performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
     }
     
-    // MARK: - Handle Interface Builder Actions.
-
+    /// Additional preparation for storyboard segue.
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else { return }
+        
+        switch id {
+        case Segue.ShowCategory.rawValue:
+            let destination = segue.destination as! UINavigationController
+            let destinationViewController = destination.topViewController as! CategoryTableViewController
+            // Pass through managed object context
+            destinationViewController.managedObjectContext = managedObjectContext
+        default:
+            break
+        }
+    }
     
 }
 
@@ -277,40 +252,6 @@ extension ToDoOverviewViewController {
     func startAnimations() {
         animateNavigationBar()
         animateUserViews()
-        animateTodoCollectionView()
-    }
-    
-    /// Animate the navigation bar
-    
-    func animateNavigationBar() {
-        guard let navigationController = navigationController else { return }
-        
-        // Move down animation to `navigation bar`
-        navigationController.navigationBar.alpha = 0
-        navigationController.navigationBar.transform = .init(translationX: 0, y: -80)
-        
-        UIView.animate(withDuration: 0.7, delay: 0.3, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
-            navigationController.navigationBar.alpha = 1
-            navigationController.navigationBar.transform = .init(translationX: 0, y: 0)
-        }, completion: nil)
-        
-        // Zoom in animation to `menu button`
-        menuBarButton.customView?.transform = .init(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.8, delay: 0.55, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: [], animations: {
-            self.menuBarButton.customView?.transform = .init(scaleX: 1, y: 1)
-        }, completion: nil)
-        
-        // Zoom in animation to `search button`
-        searchBarButton.customView?.transform = .init(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.8, delay: 0.65, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: [], animations: {
-            self.searchBarButton.customView?.transform = .init(scaleX: 1, y: 1)
-        }, completion: nil)
-        
-        // Zoom in animation to `add button`
-        addBarButton.customView?.transform = .init(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.8, delay: 0.72, usingSpringWithDamping: 0.5, initialSpringVelocity: 7, options: [], animations: {
-            self.addBarButton.customView?.transform = .init(scaleX: 1, y: 1)
-        }, completion: nil)
     }
     
     /// Animate user related views.
@@ -344,7 +285,7 @@ extension ToDoOverviewViewController {
     /// Animate todo collection view for categories.
     
     func animateTodoCollectionView() {
-        todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 35)], duration: 0.6)
+        todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], duration: 0.65)
     }
 }
 
@@ -381,7 +322,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { fatalError("Unexpected Index Path") }
         
         let category = fetchedResultsController.object(at: indexPath)
-        
+    
         cell.cardContainerView.layer.masksToBounds = true
         
         cell.categoryNameLabel.text = category.name
@@ -408,7 +349,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isAddCategoryCell(indexPath) {
-            
+            showAddCategory()
         } else {
             
         }

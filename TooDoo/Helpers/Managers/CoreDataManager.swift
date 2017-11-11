@@ -31,15 +31,18 @@ final class CoreDataManager {
     
     private func setupNotificationHandling() {
         let notificationCenter = NotificationCenter.default
-        
-        notificationCenter.addObserver(self, selector: #selector(saveContext(_:)), name: Notification.Name.UIApplicationWillTerminate, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(saveContext(_:)), name: Notification.Name.UIApplicationWillResignActive, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(saveContext(_:)), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+    
+        notificationCenter.addObserver(forName: Notification.Name.UIApplicationWillTerminate, object: nil, queue: OperationQueue.main) { _ in
+            self.saveContext()
+        }
+        notificationCenter.addObserver(forName: Notification.Name.UIApplicationDidEnterBackground, object: nil, queue: OperationQueue.main) { _ in
+            self.saveContext()
+        }
     }
     
     // MARK: - Core Data Saving Support
     
-    @objc private func saveContext(_ notification: Notification) {
+    private func saveContext() {
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {

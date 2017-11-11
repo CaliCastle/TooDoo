@@ -8,7 +8,24 @@
 
 import UIKit
 
+/// Transparent Navigation Bar Navigation Controller
+
+class TransparentNavigationController: UINavigationController {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationBar.shadowImage = UIImage()
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.barTintColor = .clear
+        navigationBar.backgroundColor = .clear
+    }
+}
+
 extension UINavigationController {
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         guard let statusBarStyle = visibleViewController?.preferredStatusBarStyle else { return .lightContent }

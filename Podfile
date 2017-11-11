@@ -14,11 +14,12 @@ target 'TooDoo' do
   pod 'BouncyLayout'
   pod 'Typist'
   pod 'Haptica'
-  pod 'Hero', '1.0.0-alpha.4'
+  pod 'Motion'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'BulletinBoard', '~> 1.3'
   pod 'Peep'
   pod 'ViewAnimator'
   pod 'Hokusai'
-  
+  pod 'DeckTransition'
+
 end

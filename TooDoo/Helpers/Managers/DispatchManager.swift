@@ -18,21 +18,41 @@ final class DispatchManager {
     class func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         configureAppearance()
         configureRootViewController(for: application)
+        configureShortcutItems(for: application, with: launchOptions)
+    }
+    
+    // MARK: - Shortcut Item Trigger Entry Point
+    
+    class func triggerShortcutItem(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
+        ShortcutItemManager.triggered(shortcutItem: shortcutItem, for: application)
+    }
+    
+    // MARK: - Core Data Manager Configuration
+    
+    fileprivate class func configureCoreDataManager() -> NSManagedObjectContext {
+        // Instanstiate and listen for notifications
+        let coreDataManager = CoreDataManager()
+        
+        // Create new private context with concurrency
+        return coreDataManager.persistentContainer.viewContext
     }
     
     // MARK: - View Controller Configuration
     
-    class func configureRootViewController(for application: UIApplication) {
+    fileprivate class func configureRootViewController(for application: UIApplication) {
         guard let appDelegate = application.delegate as? AppDelegate else { return }
+        let managedObjectContext = configureCoreDataManager()
         
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        
-        guard let _ = UserDefaultManager.string(forKey: .UserName) else {
+        // Check to see if user has set up
+        guard UserDefaultManager.userHasSetup() else {
             let welcomeViewController = StoryboardManager.initiateViewController(in: .Setup) as! SetupWelcomeViewController
             
             welcomeViewController.managedObjectContext = managedObjectContext
             
             appDelegate.window?.rootViewController = welcomeViewController
+            
+            // Listen for user setup notification
+            NotificationManager.listen(self, do: #selector(userHasSetup), notification: .UserHasSetup, object: nil)
             
             return
         }
@@ -46,10 +66,28 @@ final class DispatchManager {
         appDelegate.window?.rootViewController = navigationController
     }
     
+    // MARK: - 3D Touch Shortcut Items Configuration
+    
+    fileprivate class func configureShortcutItems(for application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        guard UserDefaultManager.userHasSetup() else { return }
+        
+        ShortcutItemManager.createItems(for: application)
+    }
+    
     // MARK: - Appearance Configuration
     
-    fileprivate static func configureAppearance() {
+    fileprivate class func configureAppearance() {
         // Adjust navigation bar appearance
         AppearanceManager.changeNavigationBarAppearance()
+    }
+    
+    /// Once user has finished setup process.
+    
+    @objc class func userHasSetup() {
+        // Create shortcut items
+        ShortcutItemManager.createItems(for: UIApplication.shared)
+        
+        // Remove from user setup notification
+        NotificationManager.remove(self, notification: .UserHasSetup, object: nil)
     }
 }
