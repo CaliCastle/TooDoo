@@ -11,7 +11,7 @@ import ViewAnimator
 
 class CategoryColorCollectionViewCell: UICollectionViewCell {
     
-    // Reuse identifier.
+    /// Reuse identifier.
     
     static let identifier = "CategoryColorCell"
     
@@ -19,7 +19,7 @@ class CategoryColorCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var colorView: UIView!
     
-    // Stored color property.
+    /// Stored color property.
     
     var color: UIColor = .white {
         didSet {
@@ -27,6 +27,8 @@ class CategoryColorCollectionViewCell: UICollectionViewCell {
             colorView.backgroundColor = color
         }
     }
+    
+    /// Set selected style.
     
     override var isSelected: Bool {
         didSet {

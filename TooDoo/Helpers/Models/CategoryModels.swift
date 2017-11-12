@@ -13,8 +13,8 @@ final class CategoryColor {
     /// Default colors as string
     
     static let defaultColorsString: [String] = [
-        "E74C3C", "9B59B6", "95A4A6", "A4C63A",
-        "E67E23", "3A6F81", "335F40", "F37BC3",
+        "E67E23", "9B59B6", "95A4A6", "A4C63A",
+        "E74C3C", "3A6F81", "335F40", "F37BC3",
         "FFCD00", "3398DB", "745EC5", "79302A",
         "F0DEB4", "2FCC71", "5E4533", "A28671",
         "34485E", "1BBC9C", "5E345E", "B8C8F1",

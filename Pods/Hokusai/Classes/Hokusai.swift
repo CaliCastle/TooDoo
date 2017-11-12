@@ -257,7 +257,9 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
     public var colors:HOKColors!  = nil
     public var cancelButtonTitle  = "Cancel"
     public var cancelButtonAction : (()->Void)?
+    public var cancelButtonColor: UIColor = .white
     public var headline: String   = ""
+    public var headlineColor: UIColor = .white
     public var message:String     = ""
 
     
@@ -374,6 +376,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
         
             let btn = addButton(title, action: cancelButtonAction)
             btn.isCancelButton = true
+            btn.setTitleColor(cancelButtonColor, for: .normal)
             return btn
         
         } else {
@@ -382,6 +385,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             btn.addTarget(self, action:#selector(Hokusai.buttonTapped(_:)), for:.touchUpInside)
             btn.addTarget(self, action:#selector(Hokusai.buttonDarker(_:)), for:.touchDown)
             btn.addTarget(self, action:#selector(Hokusai.buttonLighter(_:)), for:.touchUpOutside)
+            btn.setTitleColor(cancelButtonColor, for: .normal)
             btn.isCancelButton = true
             return btn
         }
@@ -413,6 +417,7 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
         label.layer.masksToBounds = true
         label.textAlignment = .center
         label.text = text
+        label.textColor = headlineColor
         label.numberOfLines = 0
         menuView.addSubview(label)
         labels.append(label)
@@ -468,6 +473,10 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             btn.layer.cornerRadius = kButtonHeight * 0.5
             btn.setFontName(fontName)
             btn.setColor(colors)
+            
+            if btn.isCancelButton {
+                btn.setTitleColor(cancelButtonColor, for: .normal)
+            }
         }
         
         // Style labels
@@ -475,6 +484,10 @@ final public class Hokusai: UIViewController, UIGestureRecognizerDelegate {
             
             label.setFontName(label.isTitle ? fontName : lightFontName)
             label.setColor(colors)
+            
+            if label.isTitle {
+                label.textColor = headlineColor
+            }
         }
         
         // Set frames

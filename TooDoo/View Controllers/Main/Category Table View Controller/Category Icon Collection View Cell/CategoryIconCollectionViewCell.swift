@@ -18,7 +18,7 @@ class CategoryIconCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var iconImageView: UIImageView!
     
-    /// Stored icon property
+    /// Stored icon property.
     
     var icon: UIImage = UIImage() {
         didSet {
@@ -28,6 +28,8 @@ class CategoryIconCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    /// Stored color property.
+    
     var color: UIColor = .white {
         didSet {
             UIView.animate(withDuration: 0.25) {
@@ -36,18 +38,29 @@ class CategoryIconCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    /// Pass tint color to color property.
+    
     override var tintColor: UIColor! {
         didSet {
             color = tintColor
+            if isSelected {
+                contentView.backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: tintColor, isFlat: true)
+            }
         }
     }
+    
+    /// Set selected style.
     
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.contentView.backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: self.color, isFlat: true)
+                })
             } else {
-                
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.contentView.backgroundColor = .clear
+                })
             }
         }
     }

@@ -11,18 +11,24 @@ import CoreData
 
 extension Category {
     
-    /// Create default category.
+    /// Create default `personal` and `work` category.
     ///
     /// - Parameter context: Managed object context
     
     class func createDefault(context: NSManagedObjectContext) {
-        let category = self.init(context: context)
+        let personalCategory = self.init(context: context)
         
         // FIXME: Localization
-        category.name = "Personal"
-        category.color = CategoryColor.defaultColorsString.first!
-        category.icon = "personal"
-        category.createdAt = Date()
+        personalCategory.name = "Personal"
+        personalCategory.color = CategoryColor.defaultColorsString.first!
+        personalCategory.icon = "personal"
+        personalCategory.createdAt = Date()
+        
+        let workCategory = self.init(context: context)
+        workCategory.name = "Work"
+        workCategory.color = CategoryColor.defaultColorsString[1]
+        workCategory.icon = "briefcase"
+        workCategory.createdAt = Date()
     }
     
     /// Get category color.

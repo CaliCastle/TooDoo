@@ -29,6 +29,14 @@ class CategoryTableViewController: UITableViewController {
     
     var isAdding = true
     
+    /// Stored category property.
+    
+    var category: Category? {
+        didSet {
+            isAdding = false
+        }
+    }
+    
     /// Dependency Injection for Managed Object Context.
     
     var managedObjectContext: NSManagedObjectContext?
@@ -74,6 +82,12 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Set selected indexes for category value
+        if let category = category {
+            selectedColorIndex = IndexPath(item: categoryColors.index(of: category.categoryColor())!, section: selectedColorIndex.section)
+            selectedIconIndex = IndexPath(item: categoryIcons.index(of: category.categoryIcon())!, section: selectedIconIndex.section)
+        }
+        
         selectDefaultColor()
         selectDefaultIcon()
     }
@@ -81,7 +95,8 @@ class CategoryTableViewController: UITableViewController {
     /// Additional views setup.
     
     fileprivate func setupViews() {
-        title = isAdding ? "New Category" : "Category"
+        // FIXME: Localization
+        navigationItem.title = isAdding ? "New Category" : "Edit Category"
         
         tableView.tableFooterView = UIView()
         
@@ -92,12 +107,16 @@ class CategoryTableViewController: UITableViewController {
     
     fileprivate func configureNameTextField() {
         // Change placeholder color to grayish
-        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.text!, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.5)])
-        categoryNameTextField.text = ""
+        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.5)])
         
-        // Show keyboard after half a second
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
-            self.categoryNameTextField.becomeFirstResponder()
+        if let category = category {
+            // If editing category, fill out text field
+            categoryNameTextField.text = category.name
+        } else {
+            // Show keyboard after half a second
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
+                self.categoryNameTextField.becomeFirstResponder()
+            }
         }
     }
     
@@ -162,8 +181,10 @@ class CategoryTableViewController: UITableViewController {
         
         // Retreive context
         guard let context = managedObjectContext else { return }
-        // Create category
-        let category = Category(context: context)
+        
+        // Create or use current category
+        let category = self.category == nil ? Category(context: context) : self.category!
+        
         // Assign properties
         category.name = categoryNameTextField.text
         category.color(categoryColors[selectedColorIndex.item])
@@ -252,6 +273,8 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
         return collectionView.tag == CategoryCollectionType.Color.rawValue ? categoryColors.count : categoryIcons.count
     }
     
+    /// Get each item for collection view.
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case CategoryCollectionType.Color.rawValue:
@@ -270,10 +293,13 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             }
             
             cell.icon = categoryIcons[indexPath.item]
+            cell.color = categoryColors[selectedColorIndex.item]
             
             return cell
         }
     }
+    
+    /// Select items in collection view.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView.tag {

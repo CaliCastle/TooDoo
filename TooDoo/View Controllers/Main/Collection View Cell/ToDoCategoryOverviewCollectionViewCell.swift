@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ToDoCategoryOverviewCollectionViewCellDelegate {
+    func itemLongPressed(cell: ToDoCategoryOverviewCollectionViewCell)
+}
+
 class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
 
     /// Reuse identifier.
@@ -26,6 +30,10 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     // Stored category property.
     
     var category: Category? {
+        willSet {
+            longPressGesture.delegate = self
+        }
+        
         didSet {
             guard let category = category else { return }
             let primaryColor = category.categoryColor()
@@ -42,8 +50,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             // Set icon image and colors
             categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
             categoryIconImageView.tintColor = primaryColor
-            categoryIconImageView.layer.borderColor = UIColor.flatWhite().darken(byPercentage: 0.07).cgColor
-            categoryIconImageView.layer.borderWidth = 1.5
             
             // Set add todo button colors
             addTodoButton.backgroundColor = primaryColor
@@ -51,5 +57,28 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             addTodoButton.setTitleColor(contrastColor, for: .normal)
         }
     }
+    
+    var delegate: ToDoCategoryOverviewCollectionViewCellDelegate?
+    
+    /// Long press gesture recognizer.
+    
+    lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(itemLongPressed))
+        
+        addGestureRecognizer(recognizer)
+        
+        return recognizer
+    }()
+    
+    /// Called when the cell is long pressed.
+    
+    @objc private func itemLongPressed() {
+        guard let delegate = delegate else { return }
+        
+        delegate.itemLongPressed(cell: self)
+    }
+}
+
+extension ToDoCategoryOverviewCollectionViewCell: UIGestureRecognizerDelegate {
     
 }

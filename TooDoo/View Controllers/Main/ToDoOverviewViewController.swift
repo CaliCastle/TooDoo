@@ -83,6 +83,10 @@ class ToDoOverviewViewController: UIViewController {
         return fetchedObjects.count
     }()
     
+    /// Current related category index.
+    
+    private var currentRelatedCategoryIndex: IndexPath?
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -205,7 +209,7 @@ class ToDoOverviewViewController: UIViewController {
         // FIXME: Localization
         let actionSheet = Hokusai(headline: "Create a")
         
-        actionSheet.colors = HOKColors(backGroundColor: UIColor(hexString: "3B3B3B"), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
+        actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
         actionSheet.cancelButtonTitle = "Cancel"
 
         let _ = actionSheet.addButton("New Todo", target: self, selector: #selector(showAddTodo))
@@ -236,6 +240,11 @@ class ToDoOverviewViewController: UIViewController {
             let destinationViewController = destination.topViewController as! CategoryTableViewController
             // Pass through managed object context
             destinationViewController.managedObjectContext = managedObjectContext
+            
+            // Show edit category
+            if let _ = sender, let index = currentRelatedCategoryIndex {
+                destinationViewController.category = fetchedResultsController.object(at: index)
+            }
         default:
             break
         }
@@ -316,17 +325,16 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard !isAddCategoryCell(indexPath) else {
-            // FIXME
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? AddCategoryOverviewCollectionViewCell else { fatalError("Unexpected Index Path") }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? AddCategoryOverviewCollectionViewCell else { return UICollectionViewCell() }
             
             return cell
         }
         
-        // FIXME
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { fatalError("Unexpected Index Path") }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { return UICollectionViewCell() }
         
         let category = fetchedResultsController.object(at: indexPath)
         cell.category = category
+        cell.delegate = self
         
         return cell
     }
@@ -340,6 +348,8 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         return indexPath.row == (todosCollectionView.numberOfItems(inSection: 0) - 1)
     }
     
+    /// Select item for collection view.
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isAddCategoryCell(indexPath) {
             showAddCategory()
@@ -347,6 +357,8 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
             
         }
     }
+    
+    
 }
 
 // MARK: - Handle Collection View Flow Layout.
@@ -391,4 +403,36 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         todosCollectionView.reloadData()
     }
+}
+
+// MARK: - Handle Category Actions.
+
+extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDelegate {
+    
+    /// Handle item long press.
+    
+    func itemLongPressed(cell: ToDoCategoryOverviewCollectionViewCell) {
+        guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
+        currentRelatedCategoryIndex = selectedIndexPath
+        
+        let category = fetchedResultsController.object(at: selectedIndexPath)
+        
+        // FIXME: Localization
+        let actionSheet = Hokusai(headline: "Category - \(category.name!)")
+        
+        actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
+        actionSheet.cancelButtonTitle = "Cancel"
+        
+        let _ = actionSheet.addButton("Edit Category", target: self, selector: #selector(showEditCategory))
+        let _ = actionSheet.addButton("Delete Category", target: self, selector: #selector(showAddCategory))
+        actionSheet.setStatusBarStyle(.lightContent)
+        
+        // Present actions sheet
+        actionSheet.show()
+    }
+    
+    @objc private func showEditCategory() {
+        performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: true)
+    }
+    
 }
