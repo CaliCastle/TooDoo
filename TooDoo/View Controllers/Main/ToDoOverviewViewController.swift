@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Haptica
 import Hokusai
 import CoreData
 import ViewAnimator
+import NotificationBannerSwift
 
 class ToDoOverviewViewController: UIViewController {
 
@@ -206,6 +208,10 @@ class ToDoOverviewViewController: UIViewController {
     /// Show action sheet for adding a new item.
     
     fileprivate func showAddNewItem() {
+        // Play click sound and haptic
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.light).generate()
+        
         // FIXME: Localization
         let actionSheet = Hokusai(headline: "Create a")
         
@@ -220,12 +226,17 @@ class ToDoOverviewViewController: UIViewController {
     }
     
     @objc fileprivate func showAddTodo() {
-        
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
     }
 
     /// Show add category view controller.
     
     @objc fileprivate func showAddCategory() {
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
     }
     
@@ -244,6 +255,7 @@ class ToDoOverviewViewController: UIViewController {
             // Show edit category
             if let _ = sender, let index = currentRelatedCategoryIndex {
                 destinationViewController.category = fetchedResultsController.object(at: index)
+                destinationViewController.delegate = self
             }
         default:
             break
@@ -395,7 +407,17 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
+        switch type {
+        case .delete:
+            let banner = NotificationBanner(attributedTitle: NSAttributedString(string: "Category Deleted!", attributes: [.font: AppearanceManager.font(size: 18, weight: .DemiBold)]), style: .success)
+            banner.show()
+        case .insert:
+            break
+        case .update:
+            break
+        default:
+            break
+        }
     }
     
     /// When the content did change.
@@ -415,6 +437,9 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
         currentRelatedCategoryIndex = selectedIndexPath
         
+        // Generate haptic feedback
+        Haptic.impact(.light).generate()
+        
         let category = fetchedResultsController.object(at: selectedIndexPath)
         
         // FIXME: Localization
@@ -424,15 +449,81 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         actionSheet.cancelButtonTitle = "Cancel"
         
         let _ = actionSheet.addButton("Edit Category", target: self, selector: #selector(showEditCategory))
-        let _ = actionSheet.addButton("Delete Category", target: self, selector: #selector(showAddCategory))
+        let _ = actionSheet.addButton("Delete Category", target: self, selector: #selector(showDeleteCategory))
         actionSheet.setStatusBarStyle(.lightContent)
         
         // Present actions sheet
         actionSheet.show()
     }
     
+    /// Show category edit controller.
+    
     @objc private func showEditCategory() {
+        // Play click sound and haptic feedback
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: true)
     }
     
+    /// Show alert for deleting category.
+    
+    @objc private func showDeleteCategory() {
+        guard let index = currentRelatedCategoryIndex else { return }
+        
+        // Generate warning haptic
+        Haptic.notification(.warning).generate()
+        
+        let category = fetchedResultsController.object(at: index)
+        
+        // FIXME: Localization
+        let alert = FCAlertView(type: .caution)
+        // Configure alert
+        alert.colorScheme = .flatRed()
+        alert.delegate = self
+        // Show alert for confirmation
+        alert.showAlert(
+            inView: self,
+            withTitle: "Delete \(category.name ?? "Category")?",
+            withSubtitle: "Once you've deleted the category, all of its to-do items will be removed too.",
+            withCustomImage: nil,
+            withDoneButtonTitle: "Delete",
+            andButtons: ["Nope"]
+        )
+    }
+    
+}
+
+// MARK: - Category Table View Controller Delegate Methods.
+
+extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
+    
+    /// Delete the category.
+    
+    func deleteCategory(_ category: Category) {
+        guard let context = managedObjectContext else { return }
+        
+        // Delete from context
+        context.delete(category)
+    }
+    
+}
+// MARK: - Alert Controller Delegate Methods.
+
+extension ToDoOverviewViewController: FCAlertViewDelegate {
+    
+    /// Dismissal of alert.
+    
+    func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
+        alertView.dismissAlertView()
+    }
+    
+    /// Confirmation of alert.
+    
+    func FCAlertDoneButtonClicked(alertView: FCAlertView) {
+        guard let index = currentRelatedCategoryIndex else { return }
+        
+        // Delete from results
+        deleteCategory(fetchedResultsController.object(at: index))
+    }
 }

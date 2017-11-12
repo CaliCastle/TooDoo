@@ -64,6 +64,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     lazy var longPressGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(itemLongPressed))
+        recognizer.minimumPressDuration = 0.25
         
         addGestureRecognizer(recognizer)
         
@@ -72,8 +73,9 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     /// Called when the cell is long pressed.
     
-    @objc private func itemLongPressed() {
+    @objc private func itemLongPressed(recognizer: UILongPressGestureRecognizer!) {
         guard let delegate = delegate else { return }
+        guard recognizer.state == .began else { return }
         
         delegate.itemLongPressed(cell: self)
     }

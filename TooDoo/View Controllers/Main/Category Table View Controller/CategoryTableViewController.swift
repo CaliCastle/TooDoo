@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import Haptica
 import CoreData
 import BouncyLayout
 import ViewAnimator
 import DeckTransition
+
+protocol CategoryTableViewControllerDelegate {
+    
+    func deleteCategory(_ category: Category)
+    
+}
 
 class CategoryTableViewController: UITableViewController {
 
@@ -61,7 +68,21 @@ class CategoryTableViewController: UITableViewController {
     /// Selected icon index.
     
     var selectedIconIndex: IndexPath = .init(item: 0, section: 0)
+
+    /// The alert controller for deleting category.
     
+    lazy var deleteAlertController: FCAlertView = {
+        let alert = FCAlertView(type: .caution)
+        
+        // Set button color to red
+        alert.colorScheme = .flatRed()
+        // Set delegate
+        alert.delegate = self
+        
+        return alert
+    }()
+    
+    var delegate: CategoryTableViewControllerDelegate?
     
     // MARK: - Interface Builder Outlets
     
@@ -165,6 +186,9 @@ class CategoryTableViewController: UITableViewController {
     /// User tapped cancel button.
     
     @IBAction func cancelDidTap(_ sender: Any) {
+        // Generate haptic feedback
+        Haptic.impact(.light).generate()
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -178,21 +202,24 @@ class CategoryTableViewController: UITableViewController {
     
     @IBAction func doneDidTap(_ sender: Any) {
         // Validates first
-        guard validateUserInput() else { return }
+        guard validateUserInput() else {
+            // Generate haptic feedback
+            Haptic.notification(.error).generate()
+            
+            return
+        }
         
-        // Retreive context
-        guard let context = managedObjectContext else { return }
+        saveCategory()
+    }
+    
+    /// User tapped delete button.
+    
+    @IBAction func deleteDidTap(_ sender: UIButton) {
+        // Generate haptic feedback and play sound
+        Haptic.notification(.warning).generate()
+        SoundManager.play(soundEffect: .Click)
         
-        // Create or use current category
-        let category = self.category == nil ? Category(context: context) : self.category!
-        
-        // Assign properties
-        category.name = categoryNameTextField.text
-        category.color(categoryColors[selectedColorIndex.item])
-        category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
-        category.createdAt = Date()
-        
-        navigationController?.dismiss(animated: true, completion: nil)
+        deleteCategory()
     }
     
     /// Validates user input.
@@ -203,6 +230,38 @@ class CategoryTableViewController: UITableViewController {
         guard categoryNameTextField.text?.trimmingCharacters(in: .whitespaces).count != 0 else { return false }
         
         return true
+    }
+    
+    /// Save category to Core Data.
+    
+    fileprivate func saveCategory() {
+        // Retreive context
+        guard let context = managedObjectContext else { return }
+        // Create or use current category
+        let category = self.category == nil ? Category(context: context) : self.category!
+        
+        // Assign properties
+        category.name = categoryNameTextField.text
+        category.color(categoryColors[selectedColorIndex.item])
+        category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
+        category.createdAt = Date()
+        // Generate haptic feedback and play sound
+        Haptic.notification(.success).generate()
+        SoundManager.play(soundEffect: .Success)
+        // Dismiss controller
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    /// Delete current category.
+    
+    fileprivate func deleteCategory() {
+        // FIXME: Localization
+        deleteAlertController.showAlert(inView: self,
+                                        withTitle: "Delete \(category?.name ?? "Category")?",
+                                        withSubtitle: "Once you've deleted the category, all of its to-do items will be removed too.",
+                                        withCustomImage: nil,
+                                        withDoneButtonTitle: "Delete",
+                                        andButtons: ["Nope"])
     }
     
     /// Light status bar.
@@ -311,6 +370,9 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             // Icon collection
             selectedIconIndex = indexPath
         }
+        // Play click sound and haptic feedback
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.light).generate()
     }
     
     /// Set left spacing for collection.
@@ -328,4 +390,33 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
+}
+
+// MARK: - Alert Delegate Methods.
+
+extension CategoryTableViewController: FCAlertViewDelegate {
+    
+    /// Irrelevant button clicked.
+    
+    func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
+        alertView.dismissAlertView()
+    }
+    
+    /// Delete button clicked.
+    
+    func FCAlertDoneButtonClicked(alertView: FCAlertView) {
+        guard let category = category, let delegate = delegate else {
+            navigationController?.dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        // Generate haptic
+        Haptic.notification(.success).generate()
+        // Dismiss controller
+        navigationController?.dismiss(animated: true, completion: {
+            // Delete category from context
+            delegate.deleteCategory(category)
+        })
+    }
+    
 }

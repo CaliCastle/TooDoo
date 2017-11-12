@@ -21,5 +21,6 @@ target 'TooDoo' do
   pod 'ViewAnimator'
   pod 'Hokusai'
   pod 'DeckTransition'
+  pod 'NotificationBannerSwift'
 
 end
