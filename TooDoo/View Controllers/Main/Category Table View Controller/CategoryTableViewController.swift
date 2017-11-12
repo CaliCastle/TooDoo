@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import BouncyLayout
 import ViewAnimator
 import DeckTransition
 
@@ -84,8 +85,13 @@ class CategoryTableViewController: UITableViewController {
         
         // Set selected indexes for category value
         if let category = category {
-            selectedColorIndex = IndexPath(item: categoryColors.index(of: category.categoryColor())!, section: selectedColorIndex.section)
-            selectedIconIndex = IndexPath(item: categoryIcons.index(of: category.categoryIcon())!, section: selectedIconIndex.section)
+            if let index = categoryColors.index(of: category.categoryColor()) {
+                selectedColorIndex = IndexPath(item: index, section: selectedColorIndex.section)
+            }
+            
+            if let index = categoryIcons.index(of: category.categoryIcon()) {
+                selectedIconIndex = IndexPath(item: index, section: selectedIconIndex.section)
+            }
         }
         
         selectDefaultColor()
@@ -143,12 +149,7 @@ class CategoryTableViewController: UITableViewController {
         // Set color collection view to initially hidden
         categoryColorCollectionView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
         // Fade in and move from right animation to color cells
-        categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.038, completion: nil)
-        
-        // Set icon collection view to initially hidden
-        categoryIconCollectionView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
-        // Fade in and move from right animation to icon cells
-        categoryIconCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 1, duration: 0.3, animationInterval: 0.018, completion: nil)
+        categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.035, completion: nil)
     }
     
     /// Change icon color accordingly.

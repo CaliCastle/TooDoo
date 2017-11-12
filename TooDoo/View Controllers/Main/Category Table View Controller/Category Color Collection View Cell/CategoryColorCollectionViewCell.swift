@@ -24,7 +24,15 @@ class CategoryColorCollectionViewCell: UICollectionViewCell {
     var color: UIColor = .white {
         didSet {
             // Once set, change background color accordingly
-            colorView.backgroundColor = color
+            if isSelected {
+                colorView.backgroundColor = .clear
+                colorView.layer.borderColor = color.cgColor
+                colorView.layer.borderWidth = 4
+            } else {
+                colorView.backgroundColor = color
+                colorView.layer.borderColor = UIColor.clear.cgColor
+                colorView.layer.borderWidth = 0
+            }
         }
     }
     
