@@ -115,7 +115,7 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Set up views properties.
     
-    func setupViews() {
+    fileprivate func setupViews() {
         setupTimeLabel()
         setupMessageLabel()
         setupTodosCollectionView()
@@ -123,7 +123,7 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Set up greetingWithTimeLabel.
     
-    func setupTimeLabel() {
+    fileprivate func setupTimeLabel() {
         let now = Date()
         let todayCompnents = Calendar.current.dateComponents([.hour], from: now)
         
@@ -146,7 +146,7 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Set up todoMessageLabel.
     
-    func setupMessageLabel() {
+    fileprivate func setupMessageLabel() {
         let dateFormatter = DateFormatter()
         // Format date to 'Monday, Nov 6'
         dateFormatter.dateFormat = "EEEE, MMM d"
@@ -157,14 +157,14 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Set up todos collection view properties.
     
-    func setupTodosCollectionView() {
+    fileprivate func setupTodosCollectionView() {
         (todosCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: todosCollectionView.bounds.width * 0.8, height: todosCollectionView.bounds.height)
         todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
     /// Configure user information to the designated views.
     
-    func configureUserSettings() {
+    fileprivate func configureUserSettings() {
         guard let userName = UserDefaultManager.string(forKey: .UserName) else { return }
         guard let userAvatar = UserDefaultManager.image(forKey: .UserAvatar) else { return }
         
@@ -201,11 +201,11 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Show action sheet for adding a new item.
     
-    func showAddNewItem() {
+    fileprivate func showAddNewItem() {
         // FIXME: Localization
         let actionSheet = Hokusai(headline: "Create a")
         
-        actionSheet.colors = HOKColors(backGroundColor: UIColor(hexString: "3B3B3B"), buttonColor: UIColor(hexString: "FFCD00"), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
+        actionSheet.colors = HOKColors(backGroundColor: UIColor(hexString: "3B3B3B"), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
         actionSheet.cancelButtonTitle = "Cancel"
 
         let _ = actionSheet.addButton("New Todo", target: self, selector: #selector(showAddTodo))
@@ -215,13 +215,13 @@ class ToDoOverviewViewController: UIViewController {
         actionSheet.show()
     }
     
-    @objc func showAddTodo() {
+    @objc fileprivate func showAddTodo() {
         
     }
 
     /// Show add category view controller.
     
-    @objc func showAddCategory() {
+    @objc fileprivate func showAddCategory() {
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
     }
     
@@ -249,14 +249,14 @@ extension ToDoOverviewViewController {
     
     /// Start animations
     
-    func startAnimations() {
+    fileprivate func startAnimations() {
         animateNavigationBar()
         animateUserViews()
     }
     
     /// Animate user related views.
     
-    func animateUserViews() {
+    fileprivate func animateUserViews() {
         // Fade in and move from up animation to `user avatar`
         userAvatarContainerView.alpha = 0
         userAvatarContainerView.transform = .init(translationX: 0, y: -40)
@@ -284,7 +284,7 @@ extension ToDoOverviewViewController {
     
     /// Animate todo collection view for categories.
     
-    func animateTodoCollectionView() {
+    fileprivate func animateTodoCollectionView() {
         todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], duration: 0.65)
     }
 }
@@ -308,6 +308,10 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         return (section.numberOfObjects + 1)
     }
     
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return !isAddCategoryCell(indexPath)
+    }
+    
     /// Configure each collection view cell.
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -322,18 +326,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { fatalError("Unexpected Index Path") }
         
         let category = fetchedResultsController.object(at: indexPath)
-    
-        cell.cardContainerView.layer.masksToBounds = true
-        
-        cell.categoryNameLabel.text = category.name
-        
-        cell.categoryIconImageView.image = UIImage(named: "category-icon-\(category.icon!)")
-        cell.categoryIconImageView.tintColor = UIColor(hexString: category.color)
-        cell.categoryIconImageView.layer.borderColor = UIColor(hexString: "ECECEC").cgColor
-        cell.categoryIconImageView.layer.borderWidth = 1.5
-        
-        cell.addTodoButton.setImage(cell.addTodoButton.currentImage!.withRenderingMode(.alwaysTemplate), for: .normal)
-        cell.addTodoButton.tintColor = .white
+        cell.category = category
         
         return cell
     }

@@ -407,12 +407,8 @@ class SetupWelcomeViewController: UIViewController {
             
             mainController.managedObjectContext = managedObjectContext
             
-            // FIXME: Localization
-            let category = Category(context: managedObjectContext!)
-            category.name = "Personal"
-            category.color = "E7816D"
-            category.icon = "personal"
-            category.createdAt = Date()
+            // Create default category
+            Category.createDefault(context: managedObjectContext!)
         }
     }
     
