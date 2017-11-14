@@ -15,6 +15,10 @@ class CategoryColorCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CategoryColorCell"
     
+    override var reuseIdentifier: String? {
+        return type(of: self).identifier
+    }
+    
     // MARK: - Interface Builder Outlets
     
     @IBOutlet var colorView: UIView!

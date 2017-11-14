@@ -14,6 +14,10 @@ class CategoryIconCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CategoryIconCell"
     
+    override var reuseIdentifier: String? {
+        return type(of: self).identifier
+    }
+    
     // MARK: - Interface Builder Outlets
     
     @IBOutlet var iconImageView: UIImageView!

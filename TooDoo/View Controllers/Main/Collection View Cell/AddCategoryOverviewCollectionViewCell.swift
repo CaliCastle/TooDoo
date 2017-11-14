@@ -14,5 +14,11 @@ class AddCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "AddCategoryOverviewCell"
     
+    override var reuseIdentifier: String? {
+        return type(of: self).identifier
+    }
+    
+    // MARK: - Interface Builder Outlets
+    
     @IBOutlet var cardContainerView: UIView!
 }

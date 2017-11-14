@@ -306,7 +306,7 @@ extension ToDoOverviewViewController {
     /// Animate todo collection view for categories.
     
     fileprivate func animateTodoCollectionView() {
-        todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], duration: 0.65)
+        todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], delay: 0.1, duration: 0.6)
     }
 }
 
@@ -409,8 +409,10 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
-            let banner = NotificationBanner(attributedTitle: NSAttributedString(string: "Category Deleted!", attributes: [.font: AppearanceManager.font(size: 18, weight: .DemiBold)]), style: .success)
-            banner.show()
+            if anObject is Category {
+                let banner = NotificationBanner(attributedTitle: NSAttributedString(string: "Category Deleted!", attributes: [.font: AppearanceManager.font(size: 18, weight: .DemiBold)]), style: .success)
+                banner.show()
+            }
         case .insert:
             break
         case .update:
@@ -431,9 +433,9 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
 
 extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDelegate {
     
-    /// Handle item long press.
+    /// Display category menu.
     
-    func itemLongPressed(cell: ToDoCategoryOverviewCollectionViewCell) {
+    func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell) {
         guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
         currentRelatedCategoryIndex = selectedIndexPath
         

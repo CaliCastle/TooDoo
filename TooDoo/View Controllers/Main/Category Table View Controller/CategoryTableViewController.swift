@@ -67,7 +67,11 @@ class CategoryTableViewController: UITableViewController {
     
     /// Selected icon index.
     
-    var selectedIconIndex: IndexPath = .init(item: 0, section: 0)
+    var selectedIconIndex: IndexPath = .init(item: 0, section: 0) {
+        didSet {
+            changeIcon()
+        }
+    }
 
     /// The alert controller for deleting category.
     
@@ -81,6 +85,10 @@ class CategoryTableViewController: UITableViewController {
         
         return alert
     }()
+    
+    /// Table header height.
+    
+    let tableHeaderHeight: CGFloat = 70
     
     var delegate: CategoryTableViewControllerDelegate?
     
@@ -150,13 +158,13 @@ class CategoryTableViewController: UITableViewController {
     /// Select default color in category color collection view.
     
     fileprivate func selectDefaultColor() {
-        categoryColorCollectionView.selectItem(at: selectedColorIndex, animated: false, scrollPosition: .top)
+        categoryColorCollectionView.selectItem(at: selectedColorIndex, animated: true, scrollPosition: .centeredHorizontally)
     }
     
     /// Select default icon in category icon collection view.
     
     fileprivate func selectDefaultIcon() {
-        categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: false, scrollPosition: .top)
+        categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: true, scrollPosition: .centeredHorizontally)
     }
     
     /// Animate views.
@@ -165,12 +173,12 @@ class CategoryTableViewController: UITableViewController {
         // Set table view to initially hidden
         tableView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
         // Fade in and move from bottom animation to table cells
-        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 50)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.12, completion: nil)
+        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 50)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.12)
         
         // Set color collection view to initially hidden
         categoryColorCollectionView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
         // Fade in and move from right animation to color cells
-        categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.035, completion: nil)
+        categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.035)
     }
     
     /// Change icon color accordingly.
@@ -178,9 +186,24 @@ class CategoryTableViewController: UITableViewController {
     fileprivate func changeColors() {
         let color = categoryColors[selectedColorIndex.item]
         
+        // Change icons in collection view to current color
         categoryIconCollectionView.subviews.forEach {
             $0.tintColor = color
         }
+        
+        guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
+        
+        headerView.color = color
+    }
+    
+    /// Change icon accordingly.
+    
+    fileprivate func changeIcon() {
+        guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
+        
+        let icon = categoryIcons[selectedIconIndex.item]
+        
+        headerView.icon = icon
     }
     
     /// User tapped cancel button.
@@ -189,6 +212,8 @@ class CategoryTableViewController: UITableViewController {
         // Generate haptic feedback
         Haptic.impact(.light).generate()
         
+        tableView.endEditing(true)
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -196,6 +221,14 @@ class CategoryTableViewController: UITableViewController {
     
     @IBAction func nameEndOnExit(_ sender: UITextField) {
         sender.resignFirstResponder()
+    }
+    
+    /// User changed category name.
+    
+    @IBAction func nameChanged(_ sender: UITextField) {
+        guard let header = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
+        
+        header.name = sender.text
     }
     
     /// User tapped done button.
@@ -241,7 +274,7 @@ class CategoryTableViewController: UITableViewController {
         let category = self.category == nil ? Category(context: context) : self.category!
         
         // Assign properties
-        category.name = categoryNameTextField.text
+        category.name = categoryNameTextField.text?.trimmingCharacters(in: .whitespaces)
         category.color(categoryColors[selectedColorIndex.item])
         category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
         category.createdAt = Date()
@@ -315,6 +348,29 @@ extension CategoryTableViewController {
         }
     }
     
+    /// Set preview header height.
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? tableHeaderHeight : 0
+    }
+    
+    /// Set preview header view.
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+        
+        guard let headerView = Bundle.main.loadNibNamed(CategoryPreviewTableHeaderView.nibName, owner: self, options: nil)?.first as? CategoryPreviewTableHeaderView else { return nil }
+        
+        // Preset attributes
+        if let category = category {
+            headerView.name = category.name
+            headerView.color = category.categoryColor()
+            headerView.icon = category.categoryIcon()
+        }
+        
+        return headerView
+    }
+    
 }
 
 // MARK: - Handle Collection Delgate Methods
@@ -358,6 +414,7 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             return cell
         }
     }
+    
     
     /// Select items in collection view.
     

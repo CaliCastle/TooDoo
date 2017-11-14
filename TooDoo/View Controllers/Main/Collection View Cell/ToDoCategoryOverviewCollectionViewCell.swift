@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
-    func itemLongPressed(cell: ToDoCategoryOverviewCollectionViewCell)
+    func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell)
 }
 
 class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
@@ -18,6 +18,10 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ToDoCategoryOverviewCell"
 
+    override var reuseIdentifier: String? {
+        return type(of: self).identifier
+    }
+    
     // MARK: - Properties.
     
     @IBOutlet var cardContainerView: UIView!
@@ -27,13 +31,11 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet var categoryTodosCountLabel: UILabel!
     @IBOutlet var addTodoButton: UIButton!
 
+    @IBOutlet var todoItemsTableView: UITableView!
+    
     // Stored category property.
     
     var category: Category? {
-        willSet {
-            longPressGesture.delegate = self
-        }
-        
         didSet {
             guard let category = category else { return }
             let primaryColor = category.categoryColor()
@@ -51,6 +53,9 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
             categoryIconImageView.tintColor = primaryColor
             
+            // Set todos count
+            categoryTodosCountLabel.text = "\(category.todos?.count ?? 0) Todos"
+            
             // Set add todo button colors
             addTodoButton.backgroundColor = primaryColor
             addTodoButton.tintColor = contrastColor
@@ -64,23 +69,55 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     lazy var longPressGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(itemLongPressed))
-        recognizer.minimumPressDuration = 0.25
         
-        addGestureRecognizer(recognizer)
+        cardContainerView.addGestureRecognizer(recognizer)
         
         return recognizer
     }()
     
-    /// Called when the cell is long pressed.
+    /// Double tap gesture recognizer.
+    
+    lazy var doubleTapGesture: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(itemDoubleTapped))
+        
+        cardContainerView.addGestureRecognizer(recognizer)
+        
+        return recognizer
+    }()
     
     @objc private func itemLongPressed(recognizer: UILongPressGestureRecognizer!) {
+
+    }
+    
+    /// Called when the cell is double tapped.
+    
+    @objc private func itemDoubleTapped(recognizer: UITapGestureRecognizer!) {
         guard let delegate = delegate else { return }
-        guard recognizer.state == .began else { return }
+        guard recognizer.state == .ended else { return }
         
-        delegate.itemLongPressed(cell: self)
+        delegate.showCategoryMenu(cell: self)
+    }
+
+    /// Additional initialization.
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        // Configure double tap recognizer
+        doubleTapGesture.numberOfTapsRequired = 2
     }
 }
 
-extension ToDoCategoryOverviewCollectionViewCell: UIGestureRecognizerDelegate {
+extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
+        
+        return cell
+    }
     
 }
