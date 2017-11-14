@@ -414,8 +414,14 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         categories.insert(categories.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
         // Save to order attribute
         let _ = categories.map {
-            $0.order = Int16(categories.index(of: $0)!)
+            let newOrder = Int16(categories.index(of: $0)!)
+            
+            if $0.order != newOrder {
+                $0.order = newOrder
+            }
         }
+        // If the category is re-ordered, scroll to that category
+        collectionView.scrollToItem(at: destinationIndexPath, at: .centeredHorizontally, animated: true)
     }
 }
 
@@ -482,24 +488,15 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             }
         case .update:
             // Item has been updated
-            if anObject is Category, let indexPath = indexPath, let cell = todosCollectionView.cellForItem(at: indexPath) as? ToDoCategoryOverviewCollectionViewCell {
+            if anObject is Category, let indexPath = indexPath {
                 // If a category has been updated
                 // Re-configure the cell
-                configure(cell: cell, at: indexPath)
-            }
-        default:
-            // Item has been moved
-            if anObject is Category, let indexPath = indexPath, let newIndexPath = newIndexPath, indexPath != newIndexPath {
-                // If a category has been moved
-                // Move category
                 todosCollectionView.performBatchUpdates({
-                    todosCollectionView.moveItem(at: indexPath, to: newIndexPath)
-                }, completion: {
-                    if $0 {
-                        self.todosCollectionView.scrollToItem(at: newIndexPath, at: .centeredHorizontally, animated: true)
-                    }
+                    todosCollectionView.reloadItems(at: [indexPath])
                 })
             }
+        default:
+            break
         }
     }
     
