@@ -58,4 +58,12 @@ extension Category {
     func color(_ color: UIColor) {
         self.color = color.hexValue().replacingOccurrences(of: "#", with: "")
     }
+    
+    /// Set order position.
+    ///
+    /// - Parameter indexPath: The index path for new order
+    
+    func order(indexPath: IndexPath) {
+        order = Int16(indexPath.item)
+    }
 }

@@ -11,7 +11,6 @@ import Haptica
 import Hokusai
 import CoreData
 import ViewAnimator
-import NotificationBannerSwift
 
 class ToDoOverviewViewController: UIViewController {
 
@@ -60,7 +59,7 @@ class ToDoOverviewViewController: UIViewController {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         
         // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
@@ -77,17 +76,17 @@ class ToDoOverviewViewController: UIViewController {
         return fetchedObjects.count > 0
     }
     
-    /// Current number of categories.
-    
-    private lazy var numberOfCategories: Int = {
-        guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return 0 }
-        
-        return fetchedObjects.count
-    }()
-    
     /// Current related category index.
     
     private var currentRelatedCategoryIndex: IndexPath?
+    
+    /// Long press gesture recognizer for category re-order.
+    
+    lazy var longPressForReorderCategoryGesture: UILongPressGestureRecognizer = {
+        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(categoryLongPressed))
+        
+        return recognizer
+    }()
     
     // MARK: - View Life Cycle
     
@@ -166,6 +165,7 @@ class ToDoOverviewViewController: UIViewController {
     fileprivate func setupTodosCollectionView() {
         (todosCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: todosCollectionView.bounds.width * 0.8, height: todosCollectionView.bounds.height)
         todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
     }
     
     /// Configure user information to the designated views.
@@ -252,10 +252,14 @@ class ToDoOverviewViewController: UIViewController {
             // Pass through managed object context
             destinationViewController.managedObjectContext = managedObjectContext
             
+            guard let categories = fetchedResultsController.fetchedObjects else { return }
+            
             // Show edit category
             if let _ = sender, let index = currentRelatedCategoryIndex {
-                destinationViewController.category = fetchedResultsController.object(at: index)
+                destinationViewController.category = categories[index.item]
                 destinationViewController.delegate = self
+            } else {
+                destinationViewController.newCategoryOrder = Int16(categories.count)
             }
         default:
             break
@@ -326,11 +330,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         guard let section = fetchedResultsController.sections?[section] else { return 0 }
         
         // One more for adding category
-        return (section.numberOfObjects + 1)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryCell(indexPath)
+        return section.numberOfObjects + 1
     }
     
     /// Configure each collection view cell.
@@ -344,11 +344,19 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { return UICollectionViewCell() }
         
-        let category = fetchedResultsController.object(at: indexPath)
-        cell.category = category
-        cell.delegate = self
+        // Configure cell
+        configure(cell: cell, at: indexPath)
         
         return cell
+    }
+    
+    /// Configure category cell.
+    
+    fileprivate func configure(cell: ToDoCategoryOverviewCollectionViewCell, at indexPath: IndexPath) {
+        let category = fetchedResultsController.object(at: indexPath)
+        
+        cell.category = category
+        cell.delegate = self
     }
     
     /// Detect if the index path corresponds to add category cell.
@@ -356,8 +364,8 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// - Parameter indexPath: The index path
     /// - Returns: Is add category cell for the index path or not.
     
-    func isAddCategoryCell(_ indexPath: IndexPath) -> Bool {
-        return indexPath.row == (todosCollectionView.numberOfItems(inSection: 0) - 1)
+    fileprivate func isAddCategoryCell(_ indexPath: IndexPath) -> Bool {
+        return indexPath.item == (todosCollectionView.numberOfItems(inSection: 0) - 1)
     }
     
     /// Select item for collection view.
@@ -370,7 +378,45 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         }
     }
     
+    /// Enable re-order ability for category that has been long pressed.
     
+    @objc func categoryLongPressed(recognizer: UILongPressGestureRecognizer!) {
+        switch recognizer.state {
+        case .began:
+            guard let selectedIndexPath = todosCollectionView.indexPathForItem(at: recognizer.location(in: todosCollectionView)) else { break }
+            
+            todosCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            todosCollectionView.updateInteractiveMovementTargetPosition(recognizer.location(in: recognizer.view!))
+        case .ended:
+            todosCollectionView.endInteractiveMovement()
+        default:
+            todosCollectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    /// Is the cell movable or not.
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return !isAddCategoryCell(indexPath)
+    }
+    
+    /// Move cell to a new location.
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard var categories = fetchedResultsController.fetchedObjects, sourceIndexPath != destinationIndexPath, !isAddCategoryCell(destinationIndexPath) else {
+            // Scroll back if anything went wrong
+            todosCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
+            
+            return
+        }
+        // Re-arrange category from source to destination
+        categories.insert(categories.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
+        // Save to order attribute
+        let _ = categories.map {
+            $0.order = Int16(categories.index(of: $0)!)
+        }
+    }
 }
 
 // MARK: - Handle Collection View Flow Layout.
@@ -394,38 +440,73 @@ extension ToDoOverviewViewController: UICollectionViewDelegateFlowLayout {
         
         return insets
     }
+    
 }
 
 // MARK: - Handle Fetched Results Controller Delegate Methods.
 
 extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     
-    /// When the content will be changed.
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
-    }
+    /// When the content did change with delete, insert, move and update type.
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .delete:
-            if anObject is Category {
-                let banner = NotificationBanner(attributedTitle: NSAttributedString(string: "Category Deleted!", attributes: [.font: AppearanceManager.font(size: 18, weight: .DemiBold)]), style: .success)
-                banner.show()
+            // Item has been deleted
+            if anObject is Category, let indexPath = indexPath {
+                // If a category has been deleted
+                // Show banner message
+                // FIXME: Localization
+                NotificationManager.showBanner(title: "Category Deleted!", type: .success)
+                // Perform deletion
+                todosCollectionView.performBatchUpdates({
+                    todosCollectionView.deleteItems(at: [indexPath])
+                })
             }
         case .insert:
-            break
+            // Item has been inserted
+            if anObject is Category, let indexPath = newIndexPath {
+                // If a new category has been inserted
+                // Show banner message
+                // FIXME: Localization
+                NotificationManager.showBanner(title: "Created Category - \((anObject as! Category).name!)", type: .success)
+                // Perform insertion to the last category
+                todosCollectionView.performBatchUpdates({
+                    todosCollectionView.insertItems(at: [indexPath])
+                }, completion: {
+                    if $0 {
+                        // Once completed, scroll to current category
+                        self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+                    }
+                })
+            }
         case .update:
-            break
+            // Item has been updated
+            if anObject is Category, let indexPath = indexPath, let cell = todosCollectionView.cellForItem(at: indexPath) as? ToDoCategoryOverviewCollectionViewCell {
+                // If a category has been updated
+                // Re-configure the cell
+                configure(cell: cell, at: indexPath)
+            }
         default:
-            break
+            // Item has been moved
+            if anObject is Category, let indexPath = indexPath, let newIndexPath = newIndexPath, indexPath != newIndexPath {
+                // If a category has been moved
+                // Move category
+                todosCollectionView.performBatchUpdates({
+                    todosCollectionView.moveItem(at: indexPath, to: newIndexPath)
+                }, completion: {
+                    if $0 {
+                        self.todosCollectionView.scrollToItem(at: newIndexPath, at: .centeredHorizontally, animated: true)
+                    }
+                })
+            }
         }
     }
     
     /// When the content did change.
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        todosCollectionView.reloadData()
+//        todosCollectionView.reloadData()
     }
 }
 

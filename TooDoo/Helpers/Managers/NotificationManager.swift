@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NotificationBannerSwift
 
 protocol NotificationName {
     var name: Notification.Name { get }
@@ -52,5 +53,17 @@ final class NotificationManager {
     
     class func remove(_ observer: Any, notification: Notifications, object: Any?) {
         center.removeObserver(observer, name: notification.name, object: object)
+    }
+    
+    /// Display a banner message.
+    ///
+    /// - Parameters:
+    ///   - title: The message title
+    ///   - type: Display type
+    
+    class func showBanner(title: String, type: BannerStyle = .info) {
+        let banner = NotificationBanner(attributedTitle: NSAttributedString(string: title, attributes: AppearanceManager.bannerTitleAttributes()), style: type)
+        
+        banner.show()
     }
 }

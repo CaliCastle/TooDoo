@@ -39,6 +39,14 @@ final class AppearanceManager {
         
         return font
     }
+
+    /// Get title attributes for banner message
+    ///
+    /// - Returns: The title attributes
+    
+    class func bannerTitleAttributes() -> [NSAttributedStringKey: Any] {
+        return [.font: AppearanceManager.font(size: 18, weight: .DemiBold)]
+    }
     
     // MARK: - Navigation Bar
     

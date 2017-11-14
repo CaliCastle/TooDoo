@@ -106,6 +106,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         // Configure double tap recognizer
         doubleTapGesture.numberOfTapsRequired = 2
     }
+    
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
