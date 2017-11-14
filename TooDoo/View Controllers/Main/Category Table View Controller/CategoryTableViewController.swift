@@ -282,7 +282,11 @@ class CategoryTableViewController: UITableViewController {
         category.color(categoryColors[selectedColorIndex.item])
         category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
         category.createdAt = Date()
-        category.order = newCategoryOrder
+        // Add new order
+        if isAdding {
+            category.order = newCategoryOrder
+        }
+        
         // Generate haptic feedback and play sound
         Haptic.notification(.success).generate()
         SoundManager.play(soundEffect: .Success)

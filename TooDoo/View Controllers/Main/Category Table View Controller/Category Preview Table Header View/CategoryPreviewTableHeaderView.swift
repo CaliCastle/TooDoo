@@ -32,7 +32,7 @@ class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
             iconImageView.tintColor = contrastColor
             nameLabel.textColor = contrastColor
             
-            gradientBackgroundView.startColor = color!.darken(byPercentage: 0.1)
+            gradientBackgroundView.startColor = color!.lighten(byPercentage: 0.08)
             gradientBackgroundView.endColor = color!
         }
     }

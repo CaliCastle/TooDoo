@@ -227,6 +227,13 @@
                                                                 <outlet property="delegate" destination="ZdY-Vh-DQU" id="OsN-KZ-npj"/>
                                                             </connections>
                                                         </tableView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nGz-ZA-aUL" customClass="GradientView" customModule="TooDoo" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="349" width="304" height="50"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4s-2G-4VL">
                                                             <rect key="frame" x="0.0" y="349.33333333333331" width="304" height="50"/>
                                                             <color key="backgroundColor" red="0.90588235294117647" green="0.50588235294117645" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
@@ -250,14 +257,18 @@
                                                         <constraint firstAttribute="trailing" secondItem="943-gG-flz" secondAttribute="trailing" constant="8" id="Kvy-e1-Wnb"/>
                                                         <constraint firstItem="943-gG-flz" firstAttribute="top" secondItem="0zk-Dj-DM1" secondAttribute="bottom" constant="8" id="QSL-2z-k7m"/>
                                                         <constraint firstItem="wau-5q-WVn" firstAttribute="top" secondItem="PLK-Jl-fkn" secondAttribute="top" constant="17" id="SQv-tq-87E"/>
+                                                        <constraint firstItem="nGz-ZA-aUL" firstAttribute="height" secondItem="T4s-2G-4VL" secondAttribute="height" id="T2K-tl-e5a"/>
+                                                        <constraint firstItem="nGz-ZA-aUL" firstAttribute="width" secondItem="T4s-2G-4VL" secondAttribute="width" id="Yrm-ta-4AM"/>
                                                         <constraint firstItem="0zk-Dj-DM1" firstAttribute="leading" secondItem="PLK-Jl-fkn" secondAttribute="leading" constant="17" id="aTh-bX-WcG"/>
                                                         <constraint firstItem="bYp-9c-1G8" firstAttribute="top" secondItem="PLK-Jl-fkn" secondAttribute="top" constant="17" id="cBX-AH-MWH"/>
+                                                        <constraint firstItem="nGz-ZA-aUL" firstAttribute="centerY" secondItem="T4s-2G-4VL" secondAttribute="centerY" id="cJe-nb-csy"/>
                                                         <constraint firstItem="bYp-9c-1G8" firstAttribute="leading" secondItem="PLK-Jl-fkn" secondAttribute="leading" constant="17" id="cVK-6H-Ax2"/>
                                                         <constraint firstItem="0zk-Dj-DM1" firstAttribute="top" secondItem="bYp-9c-1G8" secondAttribute="bottom" constant="2" id="eb5-28-Aqk"/>
                                                         <constraint firstAttribute="trailing" secondItem="wau-5q-WVn" secondAttribute="trailing" constant="8" id="f7O-t2-Ldt"/>
                                                         <constraint firstAttribute="trailing" secondItem="T4s-2G-4VL" secondAttribute="trailing" id="h1M-cu-DRi"/>
                                                         <constraint firstItem="T4s-2G-4VL" firstAttribute="leading" secondItem="PLK-Jl-fkn" secondAttribute="leading" id="kBZ-sH-ofh"/>
                                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="0zk-Dj-DM1" secondAttribute="trailing" constant="200" id="kc7-3C-aso"/>
+                                                        <constraint firstItem="nGz-ZA-aUL" firstAttribute="centerX" secondItem="T4s-2G-4VL" secondAttribute="centerX" id="ysO-hd-geG"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -290,6 +301,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="addTodoButton" destination="T4s-2G-4VL" id="Yh1-aw-uuF"/>
+                                            <outlet property="buttonGradientBackgroundView" destination="nGz-ZA-aUL" id="teX-Zw-Lpx"/>
                                             <outlet property="cardContainerView" destination="PLK-Jl-fkn" id="wyx-R4-JUm"/>
                                             <outlet property="categoryIconImageView" destination="wau-5q-WVn" id="42s-qw-2l1"/>
                                             <outlet property="categoryNameLabel" destination="bYp-9c-1G8" id="JN2-2H-FLf"/>

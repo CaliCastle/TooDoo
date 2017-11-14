@@ -499,12 +499,6 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             break
         }
     }
-    
-    /// When the content did change.
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        todosCollectionView.reloadData()
-    }
 }
 
 // MARK: - Handle Category Actions.

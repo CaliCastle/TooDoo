@@ -29,6 +29,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet var categoryNameLabel: UILabel!
     @IBOutlet var categoryIconImageView: UIImageView!
     @IBOutlet var categoryTodosCountLabel: UILabel!
+    @IBOutlet var buttonGradientBackgroundView: GradientView!
     @IBOutlet var addTodoButton: UIButton!
 
     @IBOutlet var todoItemsTableView: UITableView!
@@ -57,9 +58,13 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             categoryTodosCountLabel.text = "\(category.todos?.count ?? 0) Todos"
             
             // Set add todo button colors
-            addTodoButton.backgroundColor = primaryColor
+            addTodoButton.backgroundColor = .clear
             addTodoButton.tintColor = contrastColor
             addTodoButton.setTitleColor(contrastColor, for: .normal)
+            
+            // Set add todo button background gradient
+            buttonGradientBackgroundView.startColor = primaryColor.lighten(byPercentage: 0.08)
+            buttonGradientBackgroundView.endColor = primaryColor
         }
     }
     

@@ -33,7 +33,7 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="startColor">
                             <color key="value" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="NO"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                             <real key="value" value="8"/>
                         </userDefinedRuntimeAttribute>
@@ -49,6 +49,7 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="25"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xR1-74-Qyg">
