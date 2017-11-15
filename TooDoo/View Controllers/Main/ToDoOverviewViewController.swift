@@ -85,6 +85,15 @@ class ToDoOverviewViewController: UIViewController {
     
     lazy var longPressForReorderCategoryGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(categoryLongPressed))
+        recognizer.minimumPressDuration = 0.3
+        
+        return recognizer
+    }()
+    
+    /// Pinch gesture recognizer for category bulk re-order.
+    
+    lazy var pinchForReorderCategoryGesture: UIPinchGestureRecognizer = {
+        let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderCategories))
         
         return recognizer
     }()
@@ -173,9 +182,12 @@ class ToDoOverviewViewController: UIViewController {
     
     fileprivate func setupTodosCollectionView() {
         (todosCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: todosCollectionView.bounds.width * 0.8, height: todosCollectionView.bounds.height)
+        // Reset deceleration rate for center item
         todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        longPressForReorderCategoryGesture.minimumPressDuration = 0.3
+        
+        // Configure gestures
         todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
+        todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
     }
     
     /// Configure user information to the designated views.
@@ -574,7 +586,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
     /// Show reorder categories.
     
-    @objc private func showReorderCategories() {
+    @objc private func showReorderCategories(_ sender: Any?) {
         performSegue(withIdentifier: Segue.ShowReorderCategories.rawValue, sender: nil)
     }
     
@@ -602,8 +614,9 @@ extension ToDoOverviewViewController: ReorderCategoriesTableViewControllerDelega
     /// Once categories have been done organizing.
     
     func categoriesDoneOrganizing() {
+        guard let index = currentRelatedCategoryIndex else { return }
         // Reload current item
-        todosCollectionView.reloadItems(at: [currentRelatedCategoryIndex!])
+        todosCollectionView.reloadItems(at: [index])
     }
     
 }
