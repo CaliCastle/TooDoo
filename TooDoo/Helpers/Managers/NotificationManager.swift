@@ -30,9 +30,13 @@ final class NotificationManager {
     /// Defined Notifications.
     ///
     /// - UserHasSetup: When the user finished the setup
+    /// - ShowAddCategory: Show add category
+    /// - ShowAddToDo: Show add todo
     
     enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
+        case ShowAddCategory = "show-add-category"
+        case ShowAddToDo = "show-add-todo"
     }
     
     // MARK: - Functions.

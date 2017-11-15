@@ -74,7 +74,22 @@ final class ShortcutItemManager {
     /// Triggered shortcut item from 3D Touch.
     
     class func triggered(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
-        print(shortcutItem.type)
+        switch shortcutItem.type {
+        case shortcutItemType(.AddCategory):
+            // Add category
+            // Send notification
+            NotificationManager.send(notification: .ShowAddCategory)
+        case shortcutItemType(.AddTodo):
+            // Add todo
+            // Send notification
+            NotificationManager.send(notification: .ShowAddToDo)
+        case shortcutItemType(.Search):
+            // Search
+            break
+        default:
+            // Settings
+            break
+        }
     }
     
     /// Check if application has shortcut items already.

@@ -24,11 +24,16 @@ class ToDoItemTableViewCell: UITableViewCell {
             guard let todo = todo, let category = todo.category else { return }
             
             let categoryColor = category.categoryColor()
-            let backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
+            let backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true)
             let textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true).lighten(byPercentage: 0.1)
             
+            // Goal label set up
             todoItemGoalLabel.textColor = textColor
-            
+            todoItemGoalLabel.text = todo.goal
+            // Check box set up
+            checkBox.checkState = todo.completed ? .checked : .unchecked
+            checkBox.tintColor = categoryColor
+            // Trash button set up
             moveToTrashButton.tintColor = textColor?.withAlphaComponent(0.25)
         }
     }
@@ -39,4 +44,10 @@ class ToDoItemTableViewCell: UITableViewCell {
     @IBOutlet var todoItemGoalLabel: UILabel!
     @IBOutlet var moveToTrashButton: UIButton!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        todoItemGoalLabel.text = ""
+        
+    }
 }

@@ -50,6 +50,9 @@
 		8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */; };
 		8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */; };
 		8DD3D6E31FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6E21FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift */; };
+		8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1E51FBC13670026E65B /* ReorderCategoriesTableViewController.swift */; };
+		8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */; };
+		8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1EA1FBC44470026E65B /* AlertManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +102,9 @@
 		8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8DD3D6E21FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		8DE7F1E51FBC13670026E65B /* ReorderCategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCategoriesTableViewController.swift; sourceTree = "<group>"; };
+		8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		8DE7F1EA1FBC44470026E65B /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		956F67EA935055512DB22579 /* Pods_TooDoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TooDoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C60B7BF83007E4F0CAFE92 /* Pods-TooDoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,6 +279,7 @@
 		8D6A13A11F93EBA2004238D8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8DE7F1E41FBC134E0026E65B /* Reorder Categories Table View Controller */,
 				8D1F6A851FB679A6004709E3 /* Category Table View Controller */,
 				8DB49E5D1FB97304003240E1 /* Table View Cell */,
 				8D1642D41FB4F28D004F306F /* Collection View Cell */,
@@ -292,6 +299,7 @@
 				8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */,
 				8D1F6A811FB64F6F004709E3 /* ShortcutItemManager.swift */,
 				8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */,
+				8DE7F1EA1FBC44470026E65B /* AlertManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -366,6 +374,23 @@
 				8DD3D6E21FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift */,
 			);
 			path = "Category Icon Collection View Cell";
+			sourceTree = "<group>";
+		};
+		8DE7F1E41FBC134E0026E65B /* Reorder Categories Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8DE7F1E71FBC18950026E65B /* Reorder Category Cell */,
+				8DE7F1E51FBC13670026E65B /* ReorderCategoriesTableViewController.swift */,
+			);
+			path = "Reorder Categories Table View Controller";
+			sourceTree = "<group>";
+		};
+		8DE7F1E71FBC18950026E65B /* Reorder Category Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */,
+			);
+			path = "Reorder Category Cell";
 			sourceTree = "<group>";
 		};
 		DAB3235CDD8F1ABEA16D25BC /* Pods */ = {
@@ -561,6 +586,7 @@
 				8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */,
 				8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */,
+				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D6A13A31F93EC24004238D8 /* SetupWelcomeViewController.swift in Sources */,
 				8DD3D6D61FB797EE00BE4FEF /* CategoryModels.swift in Sources */,
 				8D1599081FAAEE310004846F /* GradientView.swift in Sources */,
@@ -573,8 +599,10 @@
 				8DCBEA611FB2E69D00AD34D9 /* UINavigationController.swift in Sources */,
 				8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */,
 				8DB49E5C1FB8D859003240E1 /* FCAlertViewDelegate.swift in Sources */,
+				8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */,
 				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
+				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
 				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
 				8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */,

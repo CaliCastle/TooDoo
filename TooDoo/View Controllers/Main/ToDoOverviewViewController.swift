@@ -34,6 +34,7 @@ class ToDoOverviewViewController: UIViewController {
     
     private enum Segue: String {
         case ShowCategory = "ShowCategory"
+        case ShowReorderCategories = "ShowReoderCategories"
     }
     
     /// Navigation ttems enum.
@@ -62,7 +63,7 @@ class ToDoOverviewViewController: UIViewController {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "categories")
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -93,6 +94,7 @@ class ToDoOverviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        handleNotifications()
         setupViews()
         configureUserSettings()
         fetchCategories()
@@ -116,6 +118,13 @@ class ToDoOverviewViewController: UIViewController {
             print("Unable to Execute Fetch Request")
             print("\(error), \(error.localizedDescription)")
         }
+    }
+    
+    /// Set up notification handling.
+    
+    fileprivate func handleNotifications() {
+        NotificationManager.listen(self, do: #selector(showAddCategory), notification: .ShowAddCategory, object: nil)
+        NotificationManager.listen(self, do: #selector(showAddTodo), notification: .ShowAddToDo, object: nil)
     }
     
     /// Set up views properties.
@@ -165,6 +174,7 @@ class ToDoOverviewViewController: UIViewController {
     fileprivate func setupTodosCollectionView() {
         (todosCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: todosCollectionView.bounds.width * 0.8, height: todosCollectionView.bounds.height)
         todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        longPressForReorderCategoryGesture.minimumPressDuration = 0.3
         todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
     }
     
@@ -247,8 +257,9 @@ class ToDoOverviewViewController: UIViewController {
         
         switch id {
         case Segue.ShowCategory.rawValue:
+            // About to show add/edit category
             let destination = segue.destination as! UINavigationController
-            let destinationViewController = destination.topViewController as! CategoryTableViewController
+            let destinationViewController = destination.viewControllers.first as! CategoryTableViewController
             // Pass through managed object context
             destinationViewController.managedObjectContext = managedObjectContext
             
@@ -261,6 +272,13 @@ class ToDoOverviewViewController: UIViewController {
             } else {
                 destinationViewController.newCategoryOrder = Int16(categories.count)
             }
+        case Segue.ShowReorderCategories.rawValue:
+            // About to show reorder categories
+            let destination = segue.destination as! UINavigationController
+            let destinationViewController = destination.viewControllers.first as! ReorderCategoriesTableViewController
+            
+            destinationViewController.managedObjectContext = managedObjectContext
+            destinationViewController.delegate = self
         default:
             break
         }
@@ -355,6 +373,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     fileprivate func configure(cell: ToDoCategoryOverviewCollectionViewCell, at indexPath: IndexPath) {
         let category = fetchedResultsController.object(at: indexPath)
         
+        cell.managedObjectContext = managedObjectContext
         cell.category = category
         cell.delegate = self
     }
@@ -524,6 +543,8 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         let _ = actionSheet.addButton("Edit Category", target: self, selector: #selector(showEditCategory))
         let _ = actionSheet.addButton("Delete Category", target: self, selector: #selector(showDeleteCategory))
+        let _ = actionSheet.addButton("Organize Categories", target: self, selector: #selector(showReorderCategories))
+        
         actionSheet.setStatusBarStyle(.lightContent)
         
         // Present actions sheet
@@ -545,25 +566,16 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     @objc private func showDeleteCategory() {
         guard let index = currentRelatedCategoryIndex else { return }
         
-        // Generate warning haptic
-        Haptic.notification(.warning).generate()
-        
         let category = fetchedResultsController.object(at: index)
         
         // FIXME: Localization
-        let alert = FCAlertView(type: .caution)
-        // Configure alert
-        alert.colorScheme = .flatRed()
-        alert.delegate = self
-        // Show alert for confirmation
-        alert.showAlert(
-            inView: self,
-            withTitle: "Delete \(category.name ?? "Category")?",
-            withSubtitle: "Once you've deleted the category, all of its to-do items will be removed too.",
-            withCustomImage: nil,
-            withDoneButtonTitle: "Delete",
-            andButtons: ["Nope"]
-        )
+        AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
+    }
+    
+    /// Show reorder categories.
+    
+    @objc private func showReorderCategories() {
+        performSegue(withIdentifier: Segue.ShowReorderCategories.rawValue, sender: nil)
     }
     
 }
@@ -582,6 +594,20 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     }
     
 }
+
+// MARK: - Reorder Categories Table View Controller Delegate Methods.
+
+extension ToDoOverviewViewController: ReorderCategoriesTableViewControllerDelegate {
+    
+    /// Once categories have been done organizing.
+    
+    func categoriesDoneOrganizing() {
+        // Reload current item
+        todosCollectionView.reloadItems(at: [currentRelatedCategoryIndex!])
+    }
+    
+}
+
 // MARK: - Alert Controller Delegate Methods.
 
 extension ToDoOverviewViewController: FCAlertViewDelegate {

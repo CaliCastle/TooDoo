@@ -76,19 +76,6 @@ class CategoryTableViewController: UITableViewController {
             changeIcon()
         }
     }
-
-    /// The alert controller for deleting category.
-    
-    lazy var deleteAlertController: FCAlertView = {
-        let alert = FCAlertView(type: .caution)
-        
-        // Set button color to red
-        alert.colorScheme = .flatRed()
-        // Set delegate
-        alert.delegate = self
-        
-        return alert
-    }()
     
     /// Table header height.
     
@@ -297,13 +284,9 @@ class CategoryTableViewController: UITableViewController {
     /// Delete current category.
     
     fileprivate func deleteCategory() {
+        guard let category = category else { return }
         // FIXME: Localization
-        deleteAlertController.showAlert(inView: self,
-                                        withTitle: "Delete \(category?.name ?? "Category")?",
-                                        withSubtitle: "Once you've deleted the category, all of its to-do items will be removed too.",
-                                        withCustomImage: nil,
-                                        withDoneButtonTitle: "Delete",
-                                        andButtons: ["Nope"])
+        AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
     }
     
     /// Light status bar.

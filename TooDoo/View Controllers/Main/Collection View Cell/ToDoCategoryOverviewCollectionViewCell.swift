@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
     func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell)
@@ -33,6 +34,29 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     @IBOutlet var addTodoButton: UIButton!
 
     @IBOutlet var todoItemsTableView: UITableView!
+    
+    /// Managed Object Context.
+    
+    var managedObjectContext: NSManagedObjectContext?
+    
+    /// Fetched Results Controller.
+    
+    private lazy var fetchedResultsController: NSFetchedResultsController<ToDo> = {
+        // Create fetch request
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        
+        // Set relationship predicate
+        fetchRequest.predicate = NSPredicate(format: "category.name == %@", (category?.name)!)
+        
+        // Configure fetch request sort method
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
+        
+        // Create controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
     
     // Stored category property.
     
@@ -65,20 +89,18 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             // Set add todo button background gradient
             buttonGradientBackgroundView.startColor = primaryColor.lighten(byPercentage: 0.08)
             buttonGradientBackgroundView.endColor = primaryColor
+            
+            // Fetch todos
+            do {
+                try fetchedResultsController.performFetch()
+            } catch {
+                // FIXME
+                fatalError("Unable to fetch todos")
+            }
         }
     }
     
     var delegate: ToDoCategoryOverviewCollectionViewCellDelegate?
-    
-    /// Long press gesture recognizer.
-    
-    lazy var longPressGesture: UILongPressGestureRecognizer = {
-        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(itemLongPressed))
-        
-        cardContainerView.addGestureRecognizer(recognizer)
-        
-        return recognizer
-    }()
     
     /// Double tap gesture recognizer.
     
@@ -89,10 +111,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         
         return recognizer
     }()
-    
-    @objc private func itemLongPressed(recognizer: UILongPressGestureRecognizer!) {
-
-    }
     
     /// Called when the cell is double tapped.
     
@@ -116,14 +134,40 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
 
 extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+    /// Number of sections for todos.
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return 0 }
+        
+        return category == nil ? 0 : 1
     }
+    
+    /// Number of rows.
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard category != nil else { return 0}
+        guard let section = fetchedResultsController.sections?[section] else { return 0 }
+        
+        return section.numberOfObjects
+    }
+    
+    /// Configure cell.
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
         
+        let todo = fetchedResultsController.object(at: indexPath)
+        cell.todo = todo
+        
         return cell
+    }
+    
+}
+
+extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
     }
     
 }

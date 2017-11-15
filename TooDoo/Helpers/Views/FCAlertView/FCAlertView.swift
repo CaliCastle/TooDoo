@@ -610,6 +610,8 @@ public class FCAlertView: UIView {
     
     // Dismissing AlertView
     @objc public func dismissAlertView() {
+        alertBackground.alpha = 1
+        alpha = 1
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
             self.alertBackground.alpha = 0
             self.alpha = 0
