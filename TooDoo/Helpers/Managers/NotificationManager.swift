@@ -32,11 +32,13 @@ final class NotificationManager {
     /// - UserHasSetup: When the user finished the setup
     /// - ShowAddCategory: Show add category
     /// - ShowAddToDo: Show add todo
+    /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
     
     enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
+        case DraggedWhileAddingTodo = "dragged-while-adding-todo"
     }
     
     // MARK: - Functions.

@@ -183,13 +183,16 @@
                                                                                 </constraints>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="checkmarkLineWidth">
-                                                                                        <real key="value" value="1"/>
+                                                                                        <real key="value" value="2"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
                                                                                         <real key="value" value="1"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                     <userDefinedRuntimeAttribute type="string" keyPath="_IBStateChangeAnimation" value="ExpandFill"/>
                                                                                 </userDefinedRuntimeAttributes>
+                                                                                <connections>
+                                                                                    <action selector="checkboxChanged:" destination="F0s-WT-Tl5" eventType="valueChanged" id="APT-Be-zz3"/>
+                                                                                </connections>
                                                                             </view>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To-do item" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="x5H-4u-tMc">
                                                                                 <rect key="frame" x="34" y="8.6666666666666643" width="229" height="18"/>

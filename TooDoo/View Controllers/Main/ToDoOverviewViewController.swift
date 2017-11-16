@@ -98,6 +98,15 @@ class ToDoOverviewViewController: UIViewController {
         return recognizer
     }()
     
+    /// Swipe gesture recognizer for dismissal of adding new todo.
+    
+    lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
+        swipeGestureRecognizer.direction = [.left, .right]
+        
+        return swipeGestureRecognizer
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -540,6 +549,38 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
 // MARK: - Handle Category Actions.
 
 extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDelegate {
+    
+    /// Began adding new todo.
+    
+    func newTodoBeganEditing() {
+        // Remove reorder gesture
+        todosCollectionView.removeGestureRecognizer(longPressForReorderCategoryGesture)
+        // Remove pinch gesture
+        todosCollectionView.removeGestureRecognizer(pinchForReorderCategoryGesture)
+        // Add swipe gesture for dismissal
+        todosCollectionView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
+        // Disable collection view to be scrollable
+        todosCollectionView.isScrollEnabled = false
+    }
+    
+    /// Done adding new todo.
+    
+    func newTodoDoneEditing() {
+        // Restore reorder gesture
+        todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
+        // Restore pinch gesture
+        todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
+        // Remove swipe gesture for dismissal
+        todosCollectionView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
+        // Enable collection view to be scrollable
+        todosCollectionView.isScrollEnabled = true
+    }
+    
+    /// Collection view dragged while adding new todo.
+    
+    @objc fileprivate func draggedWhileAddingTodo(recognizer: UISwipeGestureRecognizer) {
+        NotificationManager.send(notification: .DraggedWhileAddingTodo)
+    }
     
     /// Display category menu.
     

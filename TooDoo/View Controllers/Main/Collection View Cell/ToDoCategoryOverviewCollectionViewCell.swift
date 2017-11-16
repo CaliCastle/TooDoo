@@ -10,7 +10,13 @@ import UIKit
 import CoreData
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
+    
     func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell)
+    
+    func newTodoBeganEditing()
+    
+    func newTodoDoneEditing()
+    
 }
 
 class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
@@ -88,10 +94,18 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     lazy var doubleTapGesture: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(itemDoubleTapped))
-        
-        cardContainerView.addGestureRecognizer(recognizer)
+        recognizer.numberOfTapsRequired = 2
         
         return recognizer
+    }()
+    
+    /// Swipe for dismissal gesture recognizer.
+    
+    lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
+        swipeGestureRecognizer.direction = [.down, .up]
+        
+        return swipeGestureRecognizer
     }()
     
     /// Called when the cell is double tapped.
@@ -102,6 +116,12 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         
         delegate.showCategoryMenu(cell: self)
     }
+    
+    /// Called when the view is being dragged while adding new todo.
+    
+    @objc private func draggedWhileAddingTodo() {
+        NotificationManager.send(notification: .DraggedWhileAddingTodo)
+    }
 
     /// Additional initialization.
     
@@ -109,7 +129,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // Configure double tap recognizer
-        doubleTapGesture.numberOfTapsRequired = 2
+        cardContainerView.addGestureRecognizer(doubleTapGesture)
     }
     
     /// Set up fetched results controller.
@@ -268,16 +288,38 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
     
 }
 
+// MARK: - To Do Add Item Table View Cell Delegate Methods.
+
 extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelegate {
     
+    /// Began adding new todo.
+    
     func newTodoBeganEditing() {
-        
+        // Fix dragging while adding new todo
+        guard let delegate = delegate else { return }
+        delegate.newTodoBeganEditing()
+        // Remove double tap gesture
+        cardContainerView.removeGestureRecognizer(doubleTapGesture)
+        // Add swipe dismissal gesture
+        cardContainerView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
     }
     
-    func newTodoDoneEditing(todo: ToDo) {
-        todo.category = category!
-        
+    /// Done adding new todo.
+    
+    func newTodoDoneEditing(todo: ToDo?) {
+        // Notify that the new todo is done editing
+        guard let delegate = delegate else { return }
+        delegate.newTodoDoneEditing()
+        // Reset adding state
         isAdding = false
+        // Restore double tap gesture
+        cardContainerView.addGestureRecognizer(doubleTapGesture)
+        // Remove swipe dismissal gesture
+        cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
+        // Set its category
+        guard let todo = todo else { return }
+        
+        todo.category = category!
     }
     
 }
