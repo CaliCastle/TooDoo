@@ -42,20 +42,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     /// Fetched Results Controller.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<ToDo> = {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        
-        // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "category.name == %@", (category?.name)!)
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
+        return setupFetchedResultsController()
     }()
     
     // Stored category property.
@@ -66,37 +53,13 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             let primaryColor = category.categoryColor()
             let contrastColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.15)
             
-            // Set card color
-            cardContainerView.layer.masksToBounds = true
-            cardContainerView.backgroundColor = contrastColor
+            configureCardContainerView(contrastColor)
+            configureCategoryName(category, primaryColor)
+            configureCategoryIcon(category, primaryColor)
+            configureCategoryTodoCount(category)
+            configureAddTodoButton(primaryColor, contrastColor)
             
-            // Set name text and color
-            categoryNameLabel.text = category.name
-            categoryNameLabel.textColor = primaryColor
-            
-            // Set icon image and colors
-            categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
-            categoryIconImageView.tintColor = primaryColor
-            
-            // Set todos count
-            categoryTodosCountLabel.text = "\(category.todos?.count ?? 0) Todos"
-            
-            // Set add todo button colors
-            addTodoButton.backgroundColor = .clear
-            addTodoButton.tintColor = contrastColor
-            addTodoButton.setTitleColor(contrastColor, for: .normal)
-            
-            // Set add todo button background gradient
-            buttonGradientBackgroundView.startColor = primaryColor.lighten(byPercentage: 0.08)
-            buttonGradientBackgroundView.endColor = primaryColor
-            
-            // Fetch todos
-            do {
-                try fetchedResultsController.performFetch()
-            } catch {
-                // FIXME
-                fatalError("Unable to fetch todos")
-            }
+            configureTodoItems()
         }
     }
     
@@ -130,6 +93,90 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         doubleTapGesture.numberOfTapsRequired = 2
     }
     
+    /// Set up fetched results controller.
+    
+    private func setupFetchedResultsController() -> NSFetchedResultsController<ToDo> {
+        // Create fetch request
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        
+        // Set relationship predicate
+        fetchRequest.predicate = NSPredicate(format: "category.name == %@", (category?.name)!)
+        
+        // Configure fetch request sort method
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
+        
+        // Create controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "\((category?.name)!).todos")
+        
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }
+    
+    /// Perform fetch todos.
+    
+    private func fetchTodos() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            // FIXME
+            fatalError("Unable to fetch todos")
+        }
+    }
+    
+    /// Configure card container view.
+    
+    fileprivate func configureCardContainerView(_ contrastColor: UIColor?) {
+        // Set card color
+        cardContainerView.layer.masksToBounds = true
+        cardContainerView.backgroundColor = contrastColor
+    }
+    
+    /// Configure category name.
+    
+    fileprivate func configureCategoryName(_ category: Category, _ primaryColor: UIColor) {
+        // Set name text and color
+        categoryNameLabel.text = category.name
+        categoryNameLabel.textColor = primaryColor
+    }
+    
+    /// Configure category icon.
+    
+    fileprivate func configureCategoryIcon(_ category: Category, _ primaryColor: UIColor) {
+        // Set icon image and colors
+        categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
+        categoryIconImageView.tintColor = primaryColor
+    }
+    
+    /// Configure category todo count.
+    // FIXME: Localization
+    
+    fileprivate func configureCategoryTodoCount(_ category: Category) {
+        categoryTodosCountLabel.text = "\(category.todos?.count ?? 0) Todos"
+    }
+    
+    /// Configure add todo button.
+    
+    fileprivate func configureAddTodoButton(_ primaryColor: UIColor, _ contrastColor: UIColor?) {
+        // Set add todo button colors
+        addTodoButton.backgroundColor = .clear
+        addTodoButton.tintColor = contrastColor
+        addTodoButton.setTitleColor(contrastColor, for: .normal)
+        
+        // Set add todo button background gradient
+        buttonGradientBackgroundView.startColor = primaryColor.lighten(byPercentage: 0.08)
+        buttonGradientBackgroundView.endColor = primaryColor
+    }
+    
+    /// Configure todo items.
+    
+    fileprivate func configureTodoItems() {
+        // Fetch todos
+        fetchedResultsController = setupFetchedResultsController()
+        fetchTodos()
+        
+        todoItemsTableView.reloadData()
+    }
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {

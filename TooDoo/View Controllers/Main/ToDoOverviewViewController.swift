@@ -521,9 +521,14 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             // Item has been updated
             if anObject is Category, let indexPath = indexPath {
                 // If a category has been updated
+                var indexPaths: [IndexPath] = [indexPath]
+                // If new index exists, append it
+                if let newIndexPath = newIndexPath {
+                    indexPaths.append(newIndexPath)
+                }
                 // Re-configure the cell
                 todosCollectionView.performBatchUpdates({
-                    todosCollectionView.reloadItems(at: [indexPath])
+                    todosCollectionView.reloadItems(at: indexPaths)
                 })
             }
         default:
