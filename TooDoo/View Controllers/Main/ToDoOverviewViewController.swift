@@ -278,9 +278,9 @@ class ToDoOverviewViewController: UIViewController {
             guard let categories = fetchedResultsController.fetchedObjects else { return }
             
             // Show edit category
+            destinationViewController.delegate = self
             if let _ = sender, let index = currentRelatedCategoryIndex {
                 destinationViewController.category = categories[index.item]
-                destinationViewController.delegate = self
             } else {
                 destinationViewController.newCategoryOrder = Int16(categories.count)
             }
@@ -523,7 +523,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                 // If a category has been updated
                 var indexPaths: [IndexPath] = [indexPath]
                 // If new index exists, append it
-                if let newIndexPath = newIndexPath {
+                if let newIndexPath = newIndexPath, newIndexPath != indexPath {
                     indexPaths.append(newIndexPath)
                 }
                 // Re-configure the cell
@@ -600,6 +600,26 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
 // MARK: - Category Table View Controller Delegate Methods.
 
 extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
+    
+    /// Validate category with unique name.
+    
+    func validateCategory(_ category: Category?, with name: String) -> Bool {
+        guard var categories = fetchedResultsController.fetchedObjects else { return false }
+        // Remove current category from checking if exists
+        if let category = category, let index = categories.index(of: category) {
+            categories.remove(at: index)
+        }
+        
+        var validated = true
+        // Go through each and check name
+        let _ = categories.map {
+            if $0.name! == name {
+                validated = false
+            }
+        }
+        
+        return validated
+    }
     
     /// Delete the category.
     

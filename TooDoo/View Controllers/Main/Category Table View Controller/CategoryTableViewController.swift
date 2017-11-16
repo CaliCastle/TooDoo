@@ -15,6 +15,8 @@ import DeckTransition
 
 protocol CategoryTableViewControllerDelegate {
     
+    func validateCategory(_ category: Category?, with name: String) -> Bool
+    
     func deleteCategory(_ category: Category)
     
 }
@@ -260,18 +262,25 @@ class CategoryTableViewController: UITableViewController {
     
     fileprivate func saveCategory() {
         // Retreive context
-        guard let context = managedObjectContext else { return }
+        guard let context = managedObjectContext, let delegate = delegate else { return }
         // Create or use current category
-        let category = self.category == nil ? Category(context: context) : self.category!
+        let name = categoryNameTextField.text?.trimmingCharacters(in: .whitespaces)
+        
+        guard delegate.validateCategory(self.category, with: name!) else {
+            showValidationError()
+            return
+        }
         
         // Assign properties
-        category.name = categoryNameTextField.text?.trimmingCharacters(in: .whitespaces)
+        let category = self.category ?? Category(context: context)
+        category.name = name
         category.color(categoryColors[selectedColorIndex.item])
         category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
-        category.createdAt = Date()
-        // Add new order
+        
+        // Add new order, created date
         if isAdding {
             category.order = newCategoryOrder
+            category.createdAt = Date()
         }
         
         // Generate haptic feedback and play sound
@@ -287,6 +296,13 @@ class CategoryTableViewController: UITableViewController {
         guard let category = category else { return }
         // FIXME: Localization
         AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
+    }
+    
+    /// Show validation error banner.
+    
+    fileprivate func showValidationError() {
+        // FIXME: Localization
+        NotificationManager.showBanner(title: "Name already exists", type: .danger)
     }
     
     /// Light status bar.
