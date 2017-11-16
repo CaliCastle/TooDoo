@@ -39,6 +39,25 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     var managedObjectContext: NSManagedObjectContext?
     
+    /// Is currently adding todo.
+    
+    var isAdding = false {
+        didSet {
+            if todoItemsTableView.numberOfSections != 0 {
+                if isAdding {
+                    
+                    todoItemsTableView.reloadSections([0], with: .bottom)
+                } else {
+                    // Done with creating the only todo
+                    todoItemsTableView.reloadData()
+                }
+            } else {
+                // Tapped add button with no other todos
+                todoItemsTableView.insertSections([0], with: .left)
+            }
+        }
+    }
+    
     /// Fetched Results Controller.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<ToDo> = {
@@ -106,7 +125,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "\((category?.name)!).todos")
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController.delegate = self
         
@@ -175,8 +194,17 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         fetchedResultsController = setupFetchedResultsController()
         fetchTodos()
         
-        todoItemsTableView.reloadData()
+        if !isAdding {
+            todoItemsTableView.reloadData()
+        }
     }
+    
+    /// Handle actions.
+    
+    @IBAction func addTodoDidTap(_ sender: Any) {
+        isAdding = true
+    }
+    
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
@@ -184,7 +212,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of sections for todos.
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return 0 }
+        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return isAdding ? 1 : 0 }
         
         return category == nil ? 0 : 1
     }
@@ -192,21 +220,42 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of rows.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard category != nil else { return 0}
+        guard category != nil else { return 0 }
         guard let section = fetchedResultsController.sections?[section] else { return 0 }
         
-        return section.numberOfObjects
+        return isAdding ? section.numberOfObjects + 1 : section.numberOfObjects
     }
     
     /// Configure cell.
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Configure add todo item cell
+        if isAdding && indexPath.item == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier, for: indexPath) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
+            
+            cell.delegate = self
+            cell.managedObjectContext = managedObjectContext
+            cell.primaryColor = category!.categoryColor()
+            
+            return cell
+        }
+        // Configure todo item cell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
         
-        let todo = fetchedResultsController.object(at: indexPath)
+        let todo = fetchedResultsController.object(at: isAdding ? IndexPath(item: indexPath.item - 1, section: indexPath.section) : indexPath)
         cell.todo = todo
         
         return cell
+    }
+    
+    /// When cell will be displayed.
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if isAdding && indexPath.item == 0 {
+            guard let cell = cell as? ToDoAddItemTableViewCell else { return }
+            // Show keyboard for typing
+            cell.goalTextField.becomeFirstResponder()
+        }
     }
     
 }
@@ -215,6 +264,20 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
+    }
+    
+}
+
+extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelegate {
+    
+    func newTodoBeganEditing() {
+        
+    }
+    
+    func newTodoDoneEditing(todo: ToDo) {
+        todo.category = category!
+        
+        isAdding = false
     }
     
 }

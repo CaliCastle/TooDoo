@@ -162,7 +162,7 @@
                                                             <color key="textColor" red="0.61176470588235299" green="0.61176470588235299" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
+                                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
                                                             <rect key="frame" x="8" y="73.666666666666657" width="288" height="267.33333333333337"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <prototypes>
@@ -223,6 +223,46 @@
                                                                         <outlet property="todoItemGoalLabel" destination="x5H-4u-tMc" id="IPy-8c-74o"/>
                                                                     </connections>
                                                                 </tableViewCell>
+                                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToDoAddItemTableCell" rowHeight="35" id="Zs7-Mo-cVb" customClass="ToDoAddItemTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="63" width="288" height="35"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zs7-Mo-cVb" id="WN7-ae-vAc">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="35"/>
+                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRk-Fd-bAM">
+                                                                                <rect key="frame" x="268" y="10" width="15" height="15"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="15" id="i95-AL-gbp"/>
+                                                                                    <constraint firstAttribute="width" constant="15" id="zja-Mi-nyk"/>
+                                                                                </constraints>
+                                                                                <state key="normal" image="pencil-icon"/>
+                                                                            </button>
+                                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="To-do" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="0jz-1e-9bK">
+                                                                                <rect key="frame" x="34" y="8.6666666666666643" width="226" height="18"/>
+                                                                                <nil key="textColor"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
+                                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                                <connections>
+                                                                                    <action selector="goalBeganEditing:" destination="Zs7-Mo-cVb" eventType="editingDidBegin" id="gTw-dU-3Tx"/>
+                                                                                    <action selector="goalDoneEditing:" destination="Zs7-Mo-cVb" eventType="editingDidEndOnExit" id="By8-yE-930"/>
+                                                                                </connections>
+                                                                            </textField>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstItem="0jz-1e-9bK" firstAttribute="centerY" secondItem="WN7-ae-vAc" secondAttribute="centerY" id="elp-bt-2sN"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="MRk-Fd-bAM" secondAttribute="trailing" constant="5" id="kbj-Ro-yzx"/>
+                                                                            <constraint firstItem="0jz-1e-9bK" firstAttribute="leading" secondItem="WN7-ae-vAc" secondAttribute="leading" constant="34" id="o1X-oy-wpy"/>
+                                                                            <constraint firstItem="MRk-Fd-bAM" firstAttribute="leading" secondItem="0jz-1e-9bK" secondAttribute="trailing" constant="8" id="w0s-eT-0BQ"/>
+                                                                            <constraint firstItem="MRk-Fd-bAM" firstAttribute="centerY" secondItem="WN7-ae-vAc" secondAttribute="centerY" id="yoJ-LP-kJg"/>
+                                                                        </constraints>
+                                                                    </tableViewCellContentView>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <connections>
+                                                                        <outlet property="editButton" destination="MRk-Fd-bAM" id="DV6-gi-Usb"/>
+                                                                        <outlet property="goalTextField" destination="0jz-1e-9bK" id="RNE-se-vbP"/>
+                                                                    </connections>
+                                                                </tableViewCell>
                                                             </prototypes>
                                                             <sections/>
                                                             <connections>
@@ -249,6 +289,9 @@
                                                             <state key="normal" title="Add Todo" image="add-icon">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="addTodoDidTap:" destination="ZdY-Vh-DQU" eventType="touchUpInside" id="MM7-Du-s9u"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -461,7 +504,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QYV-mC-TEl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1334" y="-215"/>
+            <point key="canvasLocation" x="1348" y="-367"/>
         </scene>
         <!--New Category-->
         <scene sceneID="s1N-DG-Dt2">
@@ -776,7 +819,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k32-bO-hZd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2112.8000000000002" y="-215.02463054187194"/>
+            <point key="canvasLocation" x="2127" y="-367"/>
         </scene>
         <!--Categories-->
         <scene sceneID="kn9-7i-Uta">
@@ -842,7 +885,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzi-Vn-MhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2112.8000000000002" y="443.3497536945813"/>
+            <point key="canvasLocation" x="2126" y="290"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="24T-Tu-V3n">
@@ -866,7 +909,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8nZ-Xz-9xw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1334" y="443"/>
+            <point key="canvasLocation" x="1346" y="289"/>
         </scene>
     </scenes>
     <resources>
@@ -876,6 +919,7 @@
         <image name="category-icon-personal" width="200" height="200"/>
         <image name="checkmark-filled-circle-icon" width="34" height="34"/>
         <image name="menu-hamburger" width="25" height="25"/>
+        <image name="pencil-icon" width="25" height="25"/>
         <image name="plus-button" width="25" height="25"/>
         <image name="search-button" width="25" height="25"/>
         <image name="trash-icon" width="25" height="25"/>

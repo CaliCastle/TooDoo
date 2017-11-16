@@ -6,7 +6,7 @@
         <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ToDo" inverseName="category" inverseEntity="ToDo" syncable="YES"/>
+        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ToDo" inverseName="category" inverseEntity="ToDo" syncable="YES"/>
     </entity>
     <entity name="ToDo" representedClassName="ToDo" syncable="YES" codeGenerationType="class">
         <attribute name="completed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>

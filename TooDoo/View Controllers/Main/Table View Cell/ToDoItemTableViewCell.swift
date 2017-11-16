@@ -44,10 +44,11 @@ class ToDoItemTableViewCell: UITableViewCell {
     @IBOutlet var todoItemGoalLabel: UILabel!
     @IBOutlet var moveToTrashButton: UIButton!
     
+    /// Additional setup.
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         todoItemGoalLabel.text = ""
-        
     }
 }
