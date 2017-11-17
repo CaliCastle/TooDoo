@@ -37,6 +37,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
             let color = UIColor(contrastingBlackOrWhiteColorOn: UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true),
                                 isFlat: true).lighten(byPercentage: 0.1)
             
+            // Configure background color
+            backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.15)
+            
             // Configure text field color
             goalTextField.textColor = color
             goalTextField.text = ""
@@ -103,6 +106,10 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         guard let delegate = delegate else { return }
         // Dismiss and reset
         delegate.newTodoDoneEditing(todo: nil)
+    }
+    
+    @IBAction func editButtonDidTap(_ sender: Any) {
+        
     }
     
 }

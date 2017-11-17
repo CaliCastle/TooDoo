@@ -21,7 +21,7 @@ protocol CategoryTableViewControllerDelegate {
     
 }
 
-class CategoryTableViewController: UITableViewController {
+class CategoryTableViewController: UITableViewController, CALayerDelegate {
 
     /// Category collection type.
     ///
@@ -91,7 +91,32 @@ class CategoryTableViewController: UITableViewController {
     @IBOutlet var categoryColorCollectionView: UICollectionView!
     @IBOutlet var categoryIconCollectionView: UICollectionView!
     
-
+    /// Gradient mask for color collection view.
+    
+    private lazy var gradientMaskForColors: CAGradientLayer = {
+        let gradientMask = CAGradientLayer()
+        gradientMask.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
+        gradientMask.locations = [0, 0.06, 0.9, 1]
+        gradientMask.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientMask.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientMask.delegate = self
+        
+        return gradientMask
+    }()
+    
+    /// Gradent mask for icon collection view.
+    
+    private lazy var gradientMaskForIcons: CAGradientLayer = {
+        let gradientMask = CAGradientLayer()
+        gradientMask.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
+        gradientMask.locations = [0, 0.085, 0.88, 1]
+        gradientMask.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientMask.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientMask.delegate = self
+        
+        return gradientMask
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -100,6 +125,16 @@ class CategoryTableViewController: UITableViewController {
         setupViews()
         animateNavigationBar()
         animateViews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        updateGradientFrame()
+    }
+    
+    func action(for layer: CALayer, forKey event: String) -> CAAction? {
+        return NSNull()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -125,10 +160,13 @@ class CategoryTableViewController: UITableViewController {
     fileprivate func setupViews() {
         // FIXME: Localization
         navigationItem.title = isAdding ? "New Category" : "Edit Category"
-        
+        // Remove redundant white lines
         tableView.tableFooterView = UIView()
-        
+        // Configure name text field
         configureNameTextField()
+        // Configure gradient masks
+        categoryColorCollectionView.layer.mask = gradientMaskForColors
+        categoryIconCollectionView.layer.mask = gradientMaskForIcons
     }
     
     /// Configure name text field properties.
@@ -158,6 +196,13 @@ class CategoryTableViewController: UITableViewController {
     
     fileprivate func selectDefaultIcon() {
         categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: true, scrollPosition: .centeredHorizontally)
+    }
+    
+    /// Update gradient frame when scrolling.
+    
+    private func updateGradientFrame() {
+        gradientMaskForColors.frame = CGRect(x: categoryColorCollectionView.contentOffset.x, y: 0, width: categoryColorCollectionView.bounds.width, height: categoryColorCollectionView.bounds.height)
+        gradientMaskForIcons.frame = CGRect(x: categoryIconCollectionView.contentOffset.x, y: 0, width: categoryIconCollectionView.bounds.width, height: categoryIconCollectionView.bounds.height)
     }
     
     /// Animate views.
@@ -332,6 +377,10 @@ extension CategoryTableViewController {
     /// Adjust scroll behavior for dismissal.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isEqual(categoryColorCollectionView) || scrollView.isEqual(categoryIconCollectionView) {
+            updateGradientFrame()
+        }
+        
         guard scrollView.isEqual(tableView) else { return }
         
         if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
@@ -375,6 +424,8 @@ extension CategoryTableViewController {
             headerView.color = category.categoryColor()
             headerView.icon = category.categoryIcon()
         }
+        
+        headerView.backgroundColor = .clear
         
         return headerView
     }
@@ -448,11 +499,13 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             // Color collection
             var insets = collectionView.contentInset
             
-            insets.left = 10
+            insets.left = 25
+            insets.right = 30
+            insets.bottom = 4
             
             return insets
         default:
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 25)
         }
     }
 }

@@ -633,6 +633,10 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     /// Show reorder categories.
     
     @objc private func showReorderCategories(_ sender: Any?) {
+        // Play click sound and haptic feedback
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        
         performSegue(withIdentifier: Segue.ShowReorderCategories.rawValue, sender: nil)
     }
     

@@ -29,11 +29,14 @@ class ToDoItemTableViewCell: UITableViewCell {
             let textColor = getTextColor()
             let categoryColor = category.categoryColor()
             
+            // Set background color
+            backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.15)
             // Goal label set up
             todoItemGoalLabel.textColor = textColor
             todoItemGoalLabel.text = todo.goal
             // Check box set up
             checkBox.tintColor = categoryColor
+            checkBox.secondaryCheckmarkTintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true)
             // Trash button set up
             moveToTrashButton.tintColor = textColor.withAlphaComponent(0.3)
             // Set completed
@@ -50,9 +53,7 @@ class ToDoItemTableViewCell: UITableViewCell {
             // Set checkbox state accordingly
             checkBox.checkState = completed ? .checked : .unchecked
             // Save completed if different
-            if todo.completed != completed {
-                todo.completed = completed
-            }
+            todo.complete(completed: completed)
             
             let textColor = getTextColor()
             
@@ -94,11 +95,21 @@ class ToDoItemTableViewCell: UITableViewCell {
     
     @IBAction func checkboxChanged(_ sender: M13Checkbox) {
         // Generate haptic feedback
-        Haptic.impact(sender.checkState == .checked ? .light : .heavy).generate()
-        // Produce sound
-        SoundManager.play(soundEffect: .Success)
+        Haptic.impact(sender.checkState == .unchecked ? .light : .heavy).generate()
+        // Produce sound if checked
+        if sender.checkState == .checked {
+            SoundManager.play(soundEffect: .Drip)
+        }
         
         completed = sender.checkState == .checked
+    }
+    
+    /// Move to trash button tapped.
+    
+    @IBAction func moveToTrashDidTap(_ sender: UIButton) {
+        guard let todo = todo else { return }
+        
+        todo.moveToTrash()
     }
     
     /// Configure selected state.

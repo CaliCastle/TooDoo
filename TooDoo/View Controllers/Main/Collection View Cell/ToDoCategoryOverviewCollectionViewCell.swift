@@ -51,11 +51,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         didSet {
             if todoItemsTableView.numberOfSections != 0 {
                 if isAdding {
-                    
                     todoItemsTableView.reloadSections([0], with: .bottom)
-                } else {
-                    // Done with creating the only todo
-                    todoItemsTableView.reloadData()
                 }
             } else {
                 // Tapped add button with no other todos
@@ -139,7 +135,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
         
         // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "category.name == %@", (category?.name)!)
+        fetchRequest.predicate = NSPredicate(format: "(category.name == %@) AND (movedToTrashAt = nil)", (category?.name)!)
         
         // Configure fetch request sort method
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
@@ -191,7 +187,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     // FIXME: Localization
     
     fileprivate func configureCategoryTodoCount(_ category: Category) {
-        categoryTodosCountLabel.text = "\(category.todos?.count ?? 0) Todos"
+        categoryTodosCountLabel.text = "\(category.validTodos().count) Todos"
     }
     
     /// Configure add todo button.
@@ -232,7 +228,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of sections for todos.
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return isAdding ? 1 : 0 }
+        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return 1 }
         
         return category == nil ? 0 : 1
     }
@@ -282,10 +278,37 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
 
 extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
+    /// When the controller will change content.
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        todoItemsTableView.beginUpdates()
     }
     
+    /// When the content did change with delete.
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        // A todo item is changed
+        if anObject is ToDo {
+            switch type {
+            case .delete:
+                // Moved a todo to trash
+                if let indexPath = indexPath {
+                    // Delete from table row
+                    todoItemsTableView.deleteRows(at: [indexPath], with: .left)
+                }
+                // Re-configure todo count
+                configureCategoryTodoCount(category!)
+            default:
+                break
+            }
+        }
+    }
+    
+    /// When the controller did change content.
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        todoItemsTableView.endUpdates()
+    }
 }
 
 // MARK: - To Do Add Item Table View Cell Delegate Methods.

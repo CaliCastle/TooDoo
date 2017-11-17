@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "LTMorphingLabel.h"
 
-FOUNDATION_EXPORT double SkyFloatingLabelTextFieldVersionNumber;
-FOUNDATION_EXPORT const unsigned char SkyFloatingLabelTextFieldVersionString[];
+FOUNDATION_EXPORT double LTMorphingLabelVersionNumber;
+FOUNDATION_EXPORT const unsigned char LTMorphingLabelVersionString[];
 

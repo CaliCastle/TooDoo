@@ -59,14 +59,20 @@
                         <constraint firstAttribute="height" constant="40" id="Ks5-WH-9sE"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="qdi-B7-Kkq">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="qdi-B7-Kkq" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
                     <rect key="frame" x="85" y="22" width="255" height="26"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="morphingDuration">
+                            <real key="value" value="0.28000000000000003"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="1KK-gM-11s" firstAttribute="leading" secondItem="ST7-Kk-t3V" secondAttribute="leading" constant="25" id="166-mu-jxf"/>
                 <constraint firstItem="qdi-B7-Kkq" firstAttribute="leading" secondItem="xR1-74-Qyg" secondAttribute="trailing" constant="5" id="Boe-y9-frx"/>
@@ -83,7 +89,7 @@
                 <outlet property="iconImageView" destination="xR1-74-Qyg" id="Yzu-fI-s9R"/>
                 <outlet property="nameLabel" destination="qdi-B7-Kkq" id="k6l-0f-aU0"/>
             </connections>
-            <point key="canvasLocation" x="546" y="133"/>
+            <point key="canvasLocation" x="545.5" y="133"/>
         </view>
     </objects>
 </document>

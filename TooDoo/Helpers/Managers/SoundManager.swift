@@ -18,11 +18,13 @@ final class SoundManager {
     /// - Click: A click sound
     /// - Success: A success sound
     /// - Chord: A chord sound
+    /// - Drip: A pop drip sound
     
     enum SoundEffect: String {
         case Click = "click"
         case Success = "success"
         case Chord = "chord"
+        case Drip = "drip"
     }
     
     /// Play sound effect

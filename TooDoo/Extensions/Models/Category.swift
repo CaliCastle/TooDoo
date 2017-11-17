@@ -66,4 +66,20 @@ extension Category {
     func order(indexPath: IndexPath) {
         order = Int16(indexPath.item)
     }
+    
+    /// Get valid todos.
+    
+    func validTodos() -> [ToDo] {
+        var validTodos: [ToDo] = []
+        
+        guard let todos = todos else { return validTodos }
+        
+        for todo in todos {
+            if !(todo as! ToDo).isMovedToTrash() {
+                validTodos.append(todo as! ToDo)
+            }
+        }
+        
+        return validTodos
+    }
 }
