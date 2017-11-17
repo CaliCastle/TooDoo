@@ -133,10 +133,6 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         updateGradientFrame()
     }
     
-    func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        return NSNull()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -203,6 +199,12 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     private func updateGradientFrame() {
         gradientMaskForColors.frame = CGRect(x: categoryColorCollectionView.contentOffset.x, y: 0, width: categoryColorCollectionView.bounds.width, height: categoryColorCollectionView.bounds.height)
         gradientMaskForIcons.frame = CGRect(x: categoryIconCollectionView.contentOffset.x, y: 0, width: categoryIconCollectionView.bounds.width, height: categoryIconCollectionView.bounds.height)
+    }
+    
+    /// Remove action from gradient layer.
+    
+    func action(for layer: CALayer, forKey event: String) -> CAAction? {
+        return NSNull()
     }
     
     /// Animate views.

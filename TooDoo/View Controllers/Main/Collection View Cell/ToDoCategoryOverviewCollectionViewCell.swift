@@ -10,12 +10,14 @@ import UIKit
 import CoreData
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
-    
+
     func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell)
-    
+
     func newTodoBeganEditing()
-    
+
     func newTodoDoneEditing()
+
+    func showAddNewTodo(goal: String)
     
 }
 
@@ -50,9 +52,9 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     var isAdding = false {
         didSet {
             if todoItemsTableView.numberOfSections != 0 {
-                if isAdding {
+//                if isAdding {
                     todoItemsTableView.reloadSections([0], with: .bottom)
-                }
+//                }
             } else {
                 // Tapped add button with no other todos
                 todoItemsTableView.insertSections([0], with: .left)
@@ -343,6 +345,17 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         guard let todo = todo else { return }
         
         todo.category = category!
+    }
+    
+    /// Show adding a new todo.
+    
+    func showAddNewTodo(goal: String) {
+        // Notify to show advanced controller for adding new todo
+        guard let delegate = delegate else { return }
+        // Reset adding state
+        newTodoDoneEditing(todo: nil)
+        // Show add new todo
+        delegate.showAddNewTodo(goal: goal)
     }
     
 }

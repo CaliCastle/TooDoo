@@ -12,7 +12,10 @@ import CoreData
 protocol ToDoAddItemTableViewCellDelegate {
     
     func newTodoBeganEditing()
+    
     func newTodoDoneEditing(todo: ToDo?)
+    
+    func showAddNewTodo(goal: String)
     
 }
 
@@ -109,7 +112,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     }
     
     @IBAction func editButtonDidTap(_ sender: Any) {
-        
+        guard let delegate = delegate else { return }
+        // Dismiss and show add new todo
+        delegate.showAddNewTodo(goal: goalTextField.text!.trimmingCharacters(in: .whitespaces))
     }
     
 }

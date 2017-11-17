@@ -31,10 +31,13 @@ class ToDoOverviewViewController: UIViewController {
     /// Storyboard segues.
     ///
     /// - ShowCategory: Add/Edit a category
+    /// - ShowReorderCategories: Bulk re-order/delete categories
+    /// - ShowTodo: Add/Edit a todo
     
     private enum Segue: String {
         case ShowCategory = "ShowCategory"
         case ShowReorderCategories = "ShowReoderCategories"
+        case ShowTodo = "ShowTodo"
     }
     
     /// Navigation ttems enum.
@@ -300,6 +303,16 @@ class ToDoOverviewViewController: UIViewController {
             
             destinationViewController.managedObjectContext = managedObjectContext
             destinationViewController.delegate = self
+        case Segue.ShowTodo.rawValue:
+            // About to show add/edit todo
+            // About to show add/edit category
+            let destination = segue.destination as! UINavigationController
+            let destinationViewController = destination.viewControllers.first as! ToDoTableViewController
+            // Pass through managed object context
+            destinationViewController.managedObjectContext = managedObjectContext
+            
+            guard let goal = sender as? String else  { return }
+            destinationViewController.goal = goal
         default:
             break
         }
@@ -574,6 +587,16 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         todosCollectionView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
         // Enable collection view to be scrollable
         todosCollectionView.isScrollEnabled = true
+    }
+    
+    /// Show controller for adding new todo.
+    
+    func showAddNewTodo(goal: String) {
+        // Play click sound and haptic feedback
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        // Perform segue in storyboard
+        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: goal)
     }
     
     /// Collection view dragged while adding new todo.

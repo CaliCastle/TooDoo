@@ -56,6 +56,7 @@
 		8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1EA1FBC44470026E65B /* AlertManager.swift */; };
 		8DF35D631FBE54FA001877F4 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D621FBE54FA001877F4 /* ToDo.swift */; };
 		8DF35D651FBE6E47001877F4 /* drip.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DF35D641FBE6DD7001877F4 /* drip.caf */; };
+		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,7 @@
 		8DE7F1EA1FBC44470026E65B /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		8DF35D621FBE54FA001877F4 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		8DF35D641FBE6DD7001877F4 /* drip.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = drip.caf; sourceTree = "<group>"; };
+		8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 		956F67EA935055512DB22579 /* Pods_TooDoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TooDoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C60B7BF83007E4F0CAFE92 /* Pods-TooDoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +287,7 @@
 		8D6A13A11F93EBA2004238D8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */,
 				8DE7F1E41FBC134E0026E65B /* Reorder Categories Table View Controller */,
 				8D1F6A851FB679A6004709E3 /* Category Table View Controller */,
 				8DB49E5D1FB97304003240E1 /* Table View Cell */,
@@ -400,6 +403,14 @@
 				8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */,
 			);
 			path = "Reorder Category Cell";
+			sourceTree = "<group>";
+		};
+		8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */,
+			);
+			path = "Todo Table View Controller";
 			sourceTree = "<group>";
 		};
 		DAB3235CDD8F1ABEA16D25BC /* Pods */ = {
@@ -614,6 +625,7 @@
 				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
+				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
 				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
 				8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */,
