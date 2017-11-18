@@ -65,6 +65,10 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         }
     }
     
+    /// Stored category property.
+    
+    var category: Category?
+    
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var goalTextField: UITextField!
@@ -119,6 +123,13 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         // Configure attributes
         todo.goal = goal
         todo.createdAt = Date()
+        todo.updatedAt = Date()
+        
+        // Set its category
+        if let category = category {
+            category.addToTodos(todo)
+        }
+        
         // Notify delegate
         delegate.newTodoDoneEditing(todo: todo)
     }

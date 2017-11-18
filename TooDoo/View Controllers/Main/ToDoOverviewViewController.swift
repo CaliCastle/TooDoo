@@ -373,7 +373,9 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Number of sections.
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        guard let section = fetchedResultsController.sections else { return 0 }
+        
+        return section.count
     }
     
     /// Number of items in section.
@@ -408,8 +410,8 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         let category = fetchedResultsController.object(at: indexPath)
         
         cell.managedObjectContext = managedObjectContext
-        cell.category = category
         cell.delegate = self
+        cell.category = category
     }
     
     /// Detect if the index path corresponds to add category cell.
@@ -554,8 +556,10 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                 })
             }
         default:
-            if anObject is Category, let _ = indexPath, let _ = newIndexPath {
-                todosCollectionView.reloadData()
+            if anObject is Category, let indexPath = indexPath, let newIndexPath = newIndexPath {
+                todosCollectionView.performBatchUpdates({
+                    todosCollectionView.reloadItems(at: [indexPath, newIndexPath])
+                }, completion: nil)
             }
             break
         }

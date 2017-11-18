@@ -89,6 +89,7 @@ class ToDoItemTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         todoItemGoalLabel.text = ""
+        backgroundColor = .clear
     }
     
     /// Touched checkbox.
@@ -110,6 +111,9 @@ class ToDoItemTableViewCell: UITableViewCell {
         guard let todo = todo else { return }
         
         todo.moveToTrash()
+        // Generate haptic and play sound
+        Haptic.notification(.success).generate()
+        SoundManager.play(soundEffect: .Click)
     }
     
     /// Configure selected state.
@@ -117,6 +121,14 @@ class ToDoItemTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        checkBox.checkState = .unchecked
+        todoItemGoalLabel.text = ""
+        moveToTrashButton.alpha = 0
     }
     
     /// Get text color.

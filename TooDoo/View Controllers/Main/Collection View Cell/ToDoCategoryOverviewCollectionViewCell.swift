@@ -51,11 +51,9 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     /// Is currently adding todo.
     
-    var isAdding = false {
+    open var isAdding = false {
         didSet {
-            if todoItemsTableView.numberOfSections != 0 {
-                todoItemsTableView.reloadSections([0], with: .fade)
-            } else {
+            if todoItemsTableView.numberOfSections == 0 && isAdding {
                 // Tapped add button with no other todos
                 todoItemsTableView.insertSections([0], with: .left)
             }
@@ -136,6 +134,17 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         
         // Configure double tap recognizer
         cardContainerView.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    /// Prepare reuse.
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cardContainerView.backgroundColor = .white
+        categoryNameLabel.text = ""
+        categoryIconImageView.image = CategoryIcon.default().first
+        categoryTodosCountLabel.text = ""
     }
     
     /// Set up fetched results controller.
@@ -229,6 +238,8 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     @IBAction func addTodoDidTap(_ sender: Any) {
         isAdding = true
+        
+        todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .top)
     }
     
 }
@@ -239,8 +250,9 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let _ = category else { return 0 }
+        guard let sections = fetchedResultsController.sections else { return 0 }
         
-        return 1
+        return sections.count
     }
     
     /// Number of rows.
@@ -260,15 +272,17 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier, for: indexPath) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
             
             cell.delegate = self
+            cell.category = category
             cell.managedObjectContext = managedObjectContext
             cell.primaryColor = category!.categoryColor()
             
             return cell
         }
         // Configure todo item cell
+        let index = isAdding ? IndexPath(item: indexPath.item - 1, section: indexPath.section) : indexPath
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
         
-        let todo = fetchedResultsController.object(at: isAdding ? IndexPath(item: indexPath.item - 1, section: indexPath.section) : indexPath)
+        let todo = fetchedResultsController.object(at: index)
         cell.todo = todo
         
         return cell
@@ -296,19 +310,39 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             switch type {
             case .delete:
                 // Moved a todo to trash
-                if let indexPath = indexPath {
+                if let indexPath = indexPath, todoItemsTableView.numberOfRows(inSection: 0) > 0 {
                     // Delete from table row
                     if #available(iOS 11.0, *) {
                         todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.deleteRows(at: [indexPath], with: .left)
-                        }, completion: nil)
+                            todoItemsTableView.deleteRows(at: [indexPath], with: .top)
+                        })
                     } else {
                         // Fallback on earlier versions
-                        todoItemsTableView.deleteRows(at: [indexPath], with: .left)
+                        todoItemsTableView.deleteRows(at: [indexPath], with: .top)
                     }
                 }
                 // Re-configure todo count
                 configureCategoryTodoCount(category!)
+            case .insert:
+                if let indexPath = newIndexPath {
+                    // A new todo has been inserted
+                    guard isAdding else { return }
+                    // Just added a new one
+                    // Reset adding state
+                    isAdding = false
+                    
+                    // Reload the inserted row
+                    if #available(iOS 11.0, *) {
+                        todoItemsTableView.performBatchUpdates({
+                            todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                        })
+                    } else {
+                        // Fallback on earlier versions
+                        todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                    // Re-configure todo count
+                    configureCategoryTodoCount(category!)
+                }
             default:
                 break
             }
@@ -326,13 +360,14 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoBeganEditing() {
         // Fix dragging while adding new todo
         guard let delegate = delegate else { return }
-        delegate.newTodoBeganEditing()
         // Remove double tap gesture
         cardContainerView.removeGestureRecognizer(doubleTapGesture)
         // Add swipe dismissal gesture
         cardContainerView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
         // Add tap dismissal gesture
         addGestureRecognizer(tapForDismissalGestureRecognizer)
+        
+        delegate.newTodoBeganEditing()
     }
     
     /// Done adding new todo.
@@ -340,19 +375,19 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoDoneEditing(todo: ToDo?) {
         // Notify that the new todo is done editing
         guard let delegate = delegate else { return }
-        delegate.newTodoDoneEditing()
-        // Reset adding state
-        isAdding = false
         // Restore double tap gesture
         cardContainerView.addGestureRecognizer(doubleTapGesture)
         // Remove swipe dismissal gesture
         cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
         // Remove tap dismissal gesture
         removeGestureRecognizer(tapForDismissalGestureRecognizer)
-        // Set its category
-        guard let todo = todo else { return }
         
-        todo.category = category!
+        delegate.newTodoDoneEditing()
+        
+        // Reset add todo cell to hidden
+        guard todo == nil else { return }
+        isAdding = false
+        todoItemsTableView.reloadSections([0], with: .automatic)
     }
     
     /// Show adding a new todo.
