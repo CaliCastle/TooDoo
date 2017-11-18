@@ -54,6 +54,8 @@ class ToDoAddItemTableViewCell: UITableViewCell {
             goalTextField.keyboardAppearance = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false).hexValue() == UIColor.white.hexValue() ? .light : .dark
             goalTextField.tintColor = color?.lighten(byPercentage: 0.15)
             
+            // Configure cancel button color
+            cancelButton.tintColor = color?.withAlphaComponent(0.8)
             // Configure edit button color
             editButton.tintColor = color?.withAlphaComponent(0.5)
         }
@@ -73,12 +75,13 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     @IBOutlet var goalTextField: UITextField!
     @IBOutlet var editButton: UIButton!
+    @IBOutlet var cancelButton: UIButton!
     
     /// Additional setup.
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        // Register dragged event
         NotificationManager.listen(self, do: #selector(dragged(_:)), notification: .DraggedWhileAddingTodo, object: nil)
     }
     
@@ -148,10 +151,20 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         delegate.newTodoDoneEditing(todo: nil)
     }
     
+    /// When the user tapped edit button.
+    
     @IBAction func editButtonDidTap(_ sender: Any) {
         guard let delegate = delegate else { return }
         // Dismiss and show add new todo
         delegate.showAddNewTodo(goal: goalTextField.text!.trimmingCharacters(in: .whitespaces))
     }
     
+    /// When the user tapped cancel button.
+    
+    @IBAction func cancelButtonDidTap(_ sender: Any) {
+        guard let delegate = delegate else { return }
+        // Dismiss and remove
+        goalTextField.resignFirstResponder()
+        delegate.newTodoDoneEditing(todo: nil)
+    }
 }

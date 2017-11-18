@@ -8,6 +8,7 @@
 
 import UIKit
 import Typist
+import Haptica
 import CoreData
 import ViewAnimator
 
@@ -367,6 +368,10 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         // Add tap dismissal gesture
         addGestureRecognizer(tapForDismissalGestureRecognizer)
         
+        // Generate haptic feedback and sound
+        Haptic.impact(.heavy).generate()
+        SoundManager.play(soundEffect: .Click)
+        
         delegate.newTodoBeganEditing()
     }
     
@@ -381,6 +386,9 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
         // Remove tap dismissal gesture
         removeGestureRecognizer(tapForDismissalGestureRecognizer)
+        
+        // Generate haptic feedback
+        Haptic.impact(.light).generate()
         
         delegate.newTodoDoneEditing()
         
