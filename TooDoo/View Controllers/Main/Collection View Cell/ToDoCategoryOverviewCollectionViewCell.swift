@@ -20,7 +20,7 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
 
     func newTodoDoneEditing()
 
-    func showAddNewTodo(goal: String)
+    func showAddNewTodo(goal: String, for category: Category)
     
 }
 
@@ -406,7 +406,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         // Reset adding state
         newTodoDoneEditing(todo: nil)
         // Show add new todo
-        delegate.showAddNewTodo(goal: goal)
+        delegate.showAddNewTodo(goal: goal, for: category!)
     }
     
     /// Calculate for animating card up when keyboard is shown.

@@ -311,7 +311,11 @@ class ToDoOverviewViewController: UIViewController {
             // Pass through managed object context
             destinationViewController.managedObjectContext = managedObjectContext
             
-            guard let goal = sender as? String else  { return }
+            guard let sender = sender as? [String: Any] else { return }
+            let goal = sender["goal"] as! String
+            let category = sender["category"] as! Category
+            
+            destinationViewController.category = category
             destinationViewController.goal = goal
         default:
             break
@@ -598,12 +602,12 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
     /// Show controller for adding new todo.
     
-    func showAddNewTodo(goal: String) {
+    func showAddNewTodo(goal: String, for category: Category) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
         // Perform segue in storyboard
-        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: goal)
+        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: ["goal": goal, "category": category])
     }
     
     /// Collection view dragged while adding new todo.

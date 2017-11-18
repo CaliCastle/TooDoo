@@ -57,7 +57,7 @@ class ToDoAddItemTableViewCell: UITableViewCell {
             // Configure cancel button color
             cancelButton.tintColor = color?.withAlphaComponent(0.8)
             // Configure edit button color
-            editButton.tintColor = color?.withAlphaComponent(0.5)
+            editButton.tintColor = primaryColor.withAlphaComponent(0.95)
         }
     }
     
