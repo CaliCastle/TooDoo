@@ -168,7 +168,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
+                                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
                                                             <rect key="frame" x="8" y="73.666666666666657" width="288" height="267.33333333333337"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <prototypes>
@@ -979,7 +979,6 @@
         <!--Navigation Controller-->
         <scene sceneID="qh6-GS-mVE">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yTz-tw-zHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="TlB-gP-We0" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="myX-wD-073">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
@@ -994,6 +993,7 @@
                         <segue destination="VJ3-YR-ah3" kind="relationship" relationship="rootViewController" id="Pjz-hI-7Kw"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yTz-tw-zHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="532" y="944"/>
         </scene>

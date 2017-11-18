@@ -24,6 +24,11 @@ extension Category {
         personalCategory.icon = "personal"
         personalCategory.createdAt = Date()
         
+        let getStartedTodo = ToDo(context: context)
+        getStartedTodo.goal = "Get started"
+        getStartedTodo.category = personalCategory
+        getStartedTodo.createdAt = Date()
+        
         let workCategory = self.init(context: context)
         workCategory.name = "Work"
         workCategory.color = CategoryColor.defaultColorsString[1]

@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import Typist
 import CoreData
+import ViewAnimator
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
 
@@ -52,9 +54,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     var isAdding = false {
         didSet {
             if todoItemsTableView.numberOfSections != 0 {
-//                if isAdding {
-                    todoItemsTableView.reloadSections([0], with: .bottom)
-//                }
+                todoItemsTableView.reloadSections([0], with: .fade)
             } else {
                 // Tapped add button with no other todos
                 todoItemsTableView.insertSections([0], with: .left)
@@ -106,6 +106,14 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         return swipeGestureRecognizer
     }()
     
+    /// Tap for dismissal gesture recognizer.
+    
+    lazy var tapForDismissalGestureRecognizer: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
+        
+        return recognizer
+    }()
+    
     /// Called when the cell is double tapped.
     
     @objc private func itemDoubleTapped(recognizer: UITapGestureRecognizer!) {
@@ -140,7 +148,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         fetchRequest.predicate = NSPredicate(format: "(category.name == %@) AND (movedToTrashAt = nil)", (category?.name)!)
         
         // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
@@ -230,9 +238,9 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of sections for todos.
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard (fetchedResultsController.fetchedObjects?.count)! > 0 else { return 1 }
+        guard let _ = category else { return 0 }
         
-        return category == nil ? 0 : 1
+        return 1
     }
     
     /// Number of rows.
@@ -280,12 +288,6 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
 
 extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
     
-    /// When the controller will change content.
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        todoItemsTableView.beginUpdates()
-    }
-    
     /// When the content did change with delete.
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -296,7 +298,14 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                 // Moved a todo to trash
                 if let indexPath = indexPath {
                     // Delete from table row
-                    todoItemsTableView.deleteRows(at: [indexPath], with: .left)
+                    if #available(iOS 11.0, *) {
+                        todoItemsTableView.performBatchUpdates({
+                            todoItemsTableView.deleteRows(at: [indexPath], with: .left)
+                        }, completion: nil)
+                    } else {
+                        // Fallback on earlier versions
+                        todoItemsTableView.deleteRows(at: [indexPath], with: .left)
+                    }
                 }
                 // Re-configure todo count
                 configureCategoryTodoCount(category!)
@@ -306,11 +315,6 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
         }
     }
     
-    /// When the controller did change content.
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        todoItemsTableView.endUpdates()
-    }
 }
 
 // MARK: - To Do Add Item Table View Cell Delegate Methods.
@@ -327,6 +331,8 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         cardContainerView.removeGestureRecognizer(doubleTapGesture)
         // Add swipe dismissal gesture
         cardContainerView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
+        // Add tap dismissal gesture
+        addGestureRecognizer(tapForDismissalGestureRecognizer)
     }
     
     /// Done adding new todo.
@@ -341,6 +347,8 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         cardContainerView.addGestureRecognizer(doubleTapGesture)
         // Remove swipe dismissal gesture
         cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
+        // Remove tap dismissal gesture
+        removeGestureRecognizer(tapForDismissalGestureRecognizer)
         // Set its category
         guard let todo = todo else { return }
         
@@ -356,6 +364,28 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         newTodoDoneEditing(todo: nil)
         // Show add new todo
         delegate.showAddNewTodo(goal: goal)
+    }
+    
+    /// Calculate for animating card up when keyboard is shown.
+    
+    func animateCardUp(options: Typist.KeyboardOptions) {
+        let tableFrame = todoItemsTableView.convert(options.startFrame, from: nil)
+        let tableRowFrame = todoItemsTableView.rectForRow(at: IndexPath(item: 0, section: 0))
+        let keyboardCovers = options.endFrame.origin.y - abs(tableFrame.origin.y) - tableRowFrame.size.height
+        
+        if keyboardCovers > 0 {
+            UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
+                self.cardContainerView.transform = .init(translationX: 0, y: -keyboardCovers)
+            }, completion: nil)
+        }
+    }
+    
+    /// Caluculate for animating card down when keyboard hides.
+    
+    func animateCardDown(options: Typist.KeyboardOptions) {
+        UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
+            self.cardContainerView.transform = .init(translationX: 0, y: 0)
+        }, completion: nil)
     }
     
 }

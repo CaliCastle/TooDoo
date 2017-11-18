@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Typist
 import CoreData
 
 protocol ToDoAddItemTableViewCellDelegate {
@@ -16,6 +17,10 @@ protocol ToDoAddItemTableViewCellDelegate {
     func newTodoDoneEditing(todo: ToDo?)
     
     func showAddNewTodo(goal: String)
+    
+    func animateCardUp(options: Typist.KeyboardOptions)
+    
+    func animateCardDown(options: Typist.KeyboardOptions)
     
 }
 
@@ -54,7 +59,11 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         }
     }
     
-    var delegate: ToDoAddItemTableViewCellDelegate?
+    var delegate: ToDoAddItemTableViewCellDelegate? {
+        didSet {
+            registerKeyboardEvents()
+        }
+    }
     
     // MARK: - Interface Builder Outlets.
     
@@ -67,6 +76,23 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         NotificationManager.listen(self, do: #selector(dragged(_:)), notification: .DraggedWhileAddingTodo, object: nil)
+    }
+    
+    /// Register keyboard events for display issues.
+    
+    fileprivate func registerKeyboardEvents() {
+        guard let delegate = delegate else { return }
+        
+        let keyboard = Typist.shared
+        keyboard
+            .on(event: .willShow) {
+                // Animate card up
+                delegate.animateCardUp(options: $0)
+            }
+            .on(event: .willHide) {
+                // Animate card back down
+                delegate.animateCardDown(options: $0)
+            }.start()
     }
     
     /// When the goal started editing.

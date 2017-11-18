@@ -554,6 +554,9 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                 })
             }
         default:
+            if anObject is Category, let _ = indexPath, let _ = newIndexPath {
+                todosCollectionView.reloadData()
+            }
             break
         }
     }
