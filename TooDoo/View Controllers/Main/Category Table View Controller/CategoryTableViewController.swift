@@ -154,8 +154,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     /// Additional views setup.
     
     fileprivate func setupViews() {
-        // FIXME: Localization
-        navigationItem.title = isAdding ? "New Category" : "Edit Category"
+        navigationItem.title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
         // Configure name text field
@@ -278,8 +277,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         guard validateUserInput() else {
             // Generate haptic feedback
             Haptic.notification(.error).generate()
-            // FIXME: Localization
-            NotificationManager.showBanner(title: "Name cannot be empty", type: .warning)
+            
+            NotificationManager.showBanner(title: "notification.empty-name".localized, type: .warning)
             
             return
         }
@@ -343,15 +342,14 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     fileprivate func deleteCategory() {
         guard let category = category else { return }
-        // FIXME: Localization
-        AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
+        
+        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
     }
     
     /// Show validation error banner.
     
     fileprivate func showValidationError() {
-        // FIXME: Localization
-        NotificationManager.showBanner(title: "Name already exists", type: .danger)
+        NotificationManager.showBanner(title: "notification.name-exists".localized, type: .danger)
     }
     
     /// Light status bar.

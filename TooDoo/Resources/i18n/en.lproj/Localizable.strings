@@ -1,0 +1,90 @@
+/* 
+  Localizable.strings
+  TooDoo
+
+  Created by Cali Castle  on 11/19/17.
+  Copyright © 2017 Cali Castle . All rights reserved.
+*/
+
+/* Common phrases */
+"Get started" = "Get started";
+"Cancel" = "Cancel";
+"Delete" = "Delete";
+"Nope" = "Nope";
+"Model.Category" = "Category";
+"Give access" = "Give access";
+"Not now" = "Not now";
+"Todos" = "Todos";
+
+/*
+ Shortcut Items.
+ */
+"shortcut.items.add-todo" = "New Todo";
+"shortcut.items.add-category" = "New Category";
+"shortcut.items.search" = "Search";
+"shortcut.items.settings" = "Settings";
+
+/*
+ Notifications
+ */
+"notifications.todo.due.title" = "Todo due in";
+"notifications.todo.due.body" = "Time to complete:";
+
+"notification.deleted-category" = "Category Deleted!";
+"notification.created-category" = "Created Category - ";
+"notification.empty-goal" = "Goal cannot be empty";
+"notification.empty-name" = "Name cannot be empty";
+"notification.name-exists" = "Name already exists";
+
+/*
+ Setup Welcome View Controller.
+ */
+"setup.no-photo-access.title" = "No Photo Access";
+"setup.no-photo-access.description" = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos";
+"setup.complete.skipped" = "Let's start using TooDoo";
+"setup.complete.custom.title" = "Nice pic!";
+"setup.complete.custom.message" = "And no worries! I don't judge";
+// Personal default category
+"setup.default-category" = "Personal";
+// Work default category
+"setup.default-category-alt" = "Work";
+
+/*
+ ToDo Overview View Controller.
+ */
+"overview.greeting.time.morning" = "Good morning";
+"overview.greeting.time.afternoon" = "Good afternoon";
+"overview.greeting.time.evening" = "Good evening";
+// Today is {Monday, Nov 20}
+"overview.message.today" = "Today is";
+/* FIXME: */
+"overview.message.todo.count" = "No todos due today.";
+
+/*
+ ToDo Table View Controller.
+ */
+"todo-table.select-due-time" = "Select due time";
+"todo-table.no-notifications-access.title" = "Notification Disabled";
+"todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in settings";
+"todo-table.add-todo" = "Add Todo";
+"todo-table.edit-todo" = "Edit Todo";
+"todo-table.select-category" = "Select a category";
+
+/*
+ Category Table View Controller.
+ */
+
+
+
+/*
+ Action Sheet & Alert
+ */
+"actionsheet.create-a" = "Create a";
+"actionsheet.new-todo" = "New Todo";
+"actionsheet.new-category" = "New Category";
+"actionsheet.category.title" = "Category - ";
+"actionsheet.actions.edit-category" = "Edit Category";
+"actionsheet.actions.delete-category" = "Delete Category";
+"actionsheet.actions.organize-categories" = "Organize Categories";
+
+"alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";

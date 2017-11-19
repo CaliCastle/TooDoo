@@ -18,19 +18,18 @@ extension Category {
     class func createDefault(context: NSManagedObjectContext) {
         let personalCategory = self.init(context: context)
         
-        // FIXME: Localization
-        personalCategory.name = "Personal"
+        personalCategory.name = "setup.default-category".localized
         personalCategory.color = CategoryColor.defaultColorsString.first!
         personalCategory.icon = "personal"
         personalCategory.createdAt = Date()
         
         let getStartedTodo = ToDo(context: context)
-        getStartedTodo.goal = "Get started"
+        getStartedTodo.goal = "Get started".localized
         getStartedTodo.category = personalCategory
         getStartedTodo.createdAt = Date()
         
         let workCategory = self.init(context: context)
-        workCategory.name = "Work"
+        workCategory.name = "setup.default-category-alt".localized
         workCategory.color = CategoryColor.defaultColorsString[1]
         workCategory.icon = "briefcase"
         workCategory.createdAt = Date()

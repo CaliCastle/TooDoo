@@ -45,18 +45,17 @@ final class ShortcutItemManager {
     class func createItems(for application: UIApplication) {
         guard !hasItems(for: application) else { return }
         
-        // FIXME: Localization
         let checkmarkIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddTodo.rawValue)
-        let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "New Todo", localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)
+        let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "shortcut.items.add-todo".localized, localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)
         
         let addCategoryIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddCategory.rawValue)
-        let addCategoryItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddCategory), localizedTitle: "New Category", localizedSubtitle: nil, icon: addCategoryIcon, userInfo: nil)
+        let addCategoryItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddCategory), localizedTitle: "shortcut.items.add-category".localized, localizedSubtitle: nil, icon: addCategoryIcon, userInfo: nil)
         
         let searchIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.Search.rawValue)
-        let searchItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Search), localizedTitle: "Search", localizedSubtitle: nil, icon: searchIcon, userInfo: nil)
+        let searchItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Search), localizedTitle: "shortcut.items.search".localized, localizedSubtitle: nil, icon: searchIcon, userInfo: nil)
         
         let settingsIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.Settings.rawValue)
-        let settingsItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Settings), localizedTitle: "Settings", localizedSubtitle: nil, icon: settingsIcon, userInfo: nil)
+        let settingsItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Settings), localizedTitle: "shortcut.items.settings".localized, localizedSubtitle: nil, icon: settingsIcon, userInfo: nil)
         
         // Register items
         application.shortcutItems = [addTodoItem, addCategoryItem, searchItem, settingsItem]

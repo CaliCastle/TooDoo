@@ -184,19 +184,18 @@ class ToDoOverviewViewController: UIViewController {
         let now = Date()
         let todayCompnents = Calendar.current.dateComponents([.hour], from: now)
         
-        // FIXME: Localization
         switch todayCompnents.hour! {
         case 5..<12:
             // Morning
-            greetingWithTimeLabel.text = "Good morning ☀️"
+            greetingWithTimeLabel.text = "\("overview.greeting.time.morning".localized) ☀️"
             greetingWithTimeLabel.textColor = UIColor(hexString: "F8E71C")
         case 12..<19:
             // Afternoon
-            greetingWithTimeLabel.text = "Good afternoon ☕️"
+            greetingWithTimeLabel.text = "\("overview.greeting.time.afternoon".localized) ☕️"
             greetingWithTimeLabel.textColor = UIColor(hexString: "F5A623")
         default:
             // Evening
-            greetingWithTimeLabel.text = "Good evening 🌙"
+            greetingWithTimeLabel.text = "\("overview.greeting.time.evening".localized) 🌙"
             greetingWithTimeLabel.textColor = UIColor(hexString: "E8A278")
         }
     }
@@ -208,8 +207,7 @@ class ToDoOverviewViewController: UIViewController {
         // Format date to 'Monday, Nov 6'
         dateFormatter.dateFormat = "EEEE, MMM d"
         
-        // FIXME: Localization
-        todoMessageLabel.text = "Today is \(dateFormatter.string(from: Date())).\nNo todos due today."
+        todoMessageLabel.text = "\("overview.message.today".localized) \(dateFormatter.string(from: Date())).\n\("overview.message.todo.count".localized)"
     }
     
     /// Set up todos collection view properties.
@@ -268,14 +266,14 @@ class ToDoOverviewViewController: UIViewController {
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.light).generate()
         
-        // FIXME: Localization
-        let actionSheet = Hokusai(headline: "Create a")
+        // Show action sheet
+        let actionSheet = Hokusai(headline: "actionsheet.create-a".localized)
         
         actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
-        actionSheet.cancelButtonTitle = "Cancel"
+        actionSheet.cancelButtonTitle = "Cancel".localized
 
-        let _ = actionSheet.addButton("New Todo", target: self, selector: #selector(showAddTodo))
-        let _ = actionSheet.addButton("New Category", target: self, selector: #selector(showAddCategory))
+        let _ = actionSheet.addButton("actionsheet.new-todo".localized, target: self, selector: #selector(showAddTodo))
+        let _ = actionSheet.addButton("actionsheet.new-category".localized, target: self, selector: #selector(showAddCategory))
         actionSheet.setStatusBarStyle(.lightContent)
         
         actionSheet.show()
@@ -545,8 +543,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             if anObject is Category, let indexPath = indexPath {
                 // If a category has been deleted
                 // Show banner message
-                // FIXME: Localization
-                NotificationManager.showBanner(title: "Category Deleted!", type: .success)
+                NotificationManager.showBanner(title: "notification.deleted-category".localized, type: .success)
                 // Perform deletion
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.deleteItems(at: [indexPath])
@@ -557,8 +554,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             if anObject is Category, let indexPath = newIndexPath {
                 // If a new category has been inserted
                 // Show banner message
-                // FIXME: Localization
-                NotificationManager.showBanner(title: "Created Category - \((anObject as! Category).name!)", type: .success)
+                NotificationManager.showBanner(title: "\("notification.created-category".localized)\((anObject as! Category).name!)", type: .success)
                 // Perform insertion to the last category
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.insertItems(at: [indexPath])
@@ -650,16 +646,15 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         Haptic.impact(.light).generate()
         
         let category = fetchedResultsController.object(at: selectedIndexPath)
-        
-        // FIXME: Localization
-        let actionSheet = Hokusai(headline: "Category - \(category.name!)")
+        // Show action sheet
+        let actionSheet = Hokusai(headline: "\("actionsheet.category.title".localized)\(category.name!)")
         
         actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
-        actionSheet.cancelButtonTitle = "Cancel"
+        actionSheet.cancelButtonTitle = "Cancel".localized
         
-        let _ = actionSheet.addButton("Edit Category", target: self, selector: #selector(showEditCategory))
-        let _ = actionSheet.addButton("Delete Category", target: self, selector: #selector(showDeleteCategory))
-        let _ = actionSheet.addButton("Organize Categories", target: self, selector: #selector(showReorderCategories))
+        let _ = actionSheet.addButton("actionsheet.actions.edit-category".localized, target: self, selector: #selector(showEditCategory))
+        let _ = actionSheet.addButton("actionsheet.actions.delete-category".localized, target: self, selector: #selector(showDeleteCategory))
+        let _ = actionSheet.addButton("actionsheet.actions.organize-categories".localized, target: self, selector: #selector(showReorderCategories))
         
         actionSheet.setStatusBarStyle(.lightContent)
         
@@ -684,8 +679,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         let category = fetchedResultsController.object(at: index)
         
-        // FIXME: Localization
-        AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
+        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
     }
     
     /// Show reorder categories.

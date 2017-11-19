@@ -69,7 +69,7 @@ class ToDoTableViewController: UITableViewController {
     
     var dueDate: Date? {
         didSet {
-            guard let dueDate = dueDate else { return }
+            guard let dueDate = dueDate else { dueTimeLabel.text = "todo-table.select-due-time".localized; return }
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = dateFormat
@@ -81,12 +81,11 @@ class ToDoTableViewController: UITableViewController {
     /// Bulletin manager.
     
     lazy var bulletinManager: BulletinManager = {
-        // FIXME: Localization
-        let rootItem = PageBulletinItem(title: "Notification Disabled")
+        let rootItem = PageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
         rootItem.image = #imageLiteral(resourceName: "no-notification-access")
-        rootItem.descriptionText = "You need to grant this application access to send you notifications, you can turn it on in settings Privacy > Photos"
-        rootItem.actionButtonTitle = "Give access"
-        rootItem.alternativeButtonTitle = "Not now"
+        rootItem.descriptionText = "todo-table.no-notifications-access.description".localized
+        rootItem.actionButtonTitle = "Give access".localized
+        rootItem.alternativeButtonTitle = "Not now".localized
         
         rootItem.shouldCompactDescriptionText = true
         rootItem.isDismissable = true
@@ -123,8 +122,7 @@ class ToDoTableViewController: UITableViewController {
     /// Setup views.
     
     fileprivate func setupViews() {
-        // FIXME: Localization
-        navigationItem.title = isAdding ? "Add Todo" : "Edit Todo"
+        navigationItem.title = isAdding ? "todo-table.add-todo".localized : "todo-table.edit-todo".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
         
@@ -154,8 +152,7 @@ class ToDoTableViewController: UITableViewController {
     
     fileprivate func configureCategoryViews() {
         guard let category = category else {
-            // FIXME: Localization
-            categoryNameLabel.text = "Select a category"
+            categoryNameLabel.text = "todo-table.select-category".localized
             categoryIconImageView.tintColor = .white
             
             return
@@ -199,8 +196,8 @@ class ToDoTableViewController: UITableViewController {
         guard validateUserInput(text: goalTextField.text!) else {
             goalTextField.text = ""
             goalTextField.becomeFirstResponder()
-            // FIXME: Localization
-            NotificationManager.showBanner(title: "Goal cannot be empty", type: .warning)
+            
+            NotificationManager.showBanner(title: "notification.empty-goal".localized, type: .warning)
             
             return
         }
@@ -254,6 +251,8 @@ class ToDoTableViewController: UITableViewController {
         if sender.isOn {
             // Check notification authorization
             checkNotificationPermission()
+        } else {
+            dueDate = nil
         }
         
         hasDue = sender.isOn

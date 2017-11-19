@@ -156,8 +156,8 @@ class ReorderCategoriesTableViewController: UITableViewController {
         if editingStyle == .delete {
             let category = fetchedResultsController.object(at: indexPath)
             deletingCategory = category
-            // FIXME: Localization
-            AlertManager.showCategoryDeleteAlert(in: self, title: "Delete \(category.name ?? "Category")?")
+            
+            AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
         }
     }
     

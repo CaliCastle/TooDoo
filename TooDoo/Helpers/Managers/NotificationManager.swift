@@ -89,10 +89,10 @@ final class NotificationManager {
         let components = Calendar.current.dateComponents([.minute, .hour, .day, .month, .year], from: due)
         // Configure content
         let content = UNMutableNotificationContent()
-        // FIXME: Localization
-        content.title = "❗️Todo dued in \(todo.category!.name!)"
+        
+        content.title = "❗️\("notifications.todo.due.title".localized) \(todo.category!.name!)"
         content.categoryIdentifier = LocalNotifications.TodoDued.rawValue
-        content.body = "Time to complete: \(todo.goal!)"
+        content.body = "\("notifications.todo.due.body".localized) \(todo.goal!)"
         content.sound = .default()
   
         // Create trigger

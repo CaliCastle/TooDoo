@@ -14,8 +14,7 @@ final class AlertManager {
     /// Show caregory deletion alert.
     
     class func showCategoryDeleteAlert(in controller: FCAlertViewDelegate, title: String) {
-        // FIXME: Localization
-        showAlert(in: controller, title: title, subtitle: "Once you've deleted the category, all of its to-do items will be removed too.", doneButtonTitle: "Delete", buttons: ["Nope"])
+        showAlert(in: controller, title: title, subtitle: "alert.delete-category".localized, doneButtonTitle: "Delete".localized, buttons: ["Nope".localized])
     }
     
     /// Show general alert.

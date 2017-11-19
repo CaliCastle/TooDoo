@@ -196,10 +196,9 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     }
     
     /// Configure category todo count.
-    // FIXME: Localization
     
     fileprivate func configureCategoryTodoCount(_ category: Category) {
-        categoryTodosCountLabel.text = "\(category.validTodos().count) Todos"
+        categoryTodosCountLabel.text = "\(category.validTodos().count) \("Todos".localized)"
     }
     
     /// Configure add todo button.

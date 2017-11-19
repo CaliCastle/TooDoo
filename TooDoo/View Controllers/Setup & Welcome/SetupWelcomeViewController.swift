@@ -108,12 +108,11 @@ class SetupWelcomeViewController: UIViewController {
     /// The bulletin manager that manages page bulletin items.
     
     lazy var bulletinManager: BulletinManager = {
-        // FIXME: Localization
-        let rootItem = PageBulletinItem(title: "No Photo Access")
+        let rootItem = PageBulletinItem(title: "setup.no-photo-access.title".localized)
         rootItem.image = #imageLiteral(resourceName: "no-photo-access")
-        rootItem.descriptionText = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos"
-        rootItem.actionButtonTitle = "Give access"
-        rootItem.alternativeButtonTitle = "Not now"
+        rootItem.descriptionText = "setup.no-photo-access.description".localized
+        rootItem.actionButtonTitle = "Give access".localized
+        rootItem.alternativeButtonTitle = "Not now".localized
         
         rootItem.shouldCompactDescriptionText = true
         rootItem.isDismissable = true
@@ -244,12 +243,10 @@ class SetupWelcomeViewController: UIViewController {
             stepCompleteAvatarImageView.image = (userAvatarType == .Boy) ? #imageLiteral(resourceName: "avatar_boy") : #imageLiteral(resourceName: "avatar_girl")
             fallthrough
         case .Skipped:
-            // FIXME: Localization
-            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nLet's start using TooDoo"
+            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\n\("setup.complete.skipped".localized)"
         case .Custom:
-            // FIXME: Localization
-            stepCompleteTitleLabel.text = "👀 Nice pic!"
-            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\nAnd no worries! I don't judge 🙈"
+            stepCompleteTitleLabel.text = "👀 \("setup.complete.custom.title".localized)"
+            stepCompleteMessageLabel.text = stepCompleteMessageLabel.text! + "\n\("setup.complete.custom.message".localized) 🙈"
             stepCompleteAvatarImageView.image = userSelectedImage
             stepCompleteAvatarImageView.layer.shadowColor = UIColor(hexString: "111111", withAlpha: 0.35).cgColor
             stepCompleteAvatarImageView.layer.shadowRadius = 30
