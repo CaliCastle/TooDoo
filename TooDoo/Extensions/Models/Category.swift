@@ -87,4 +87,12 @@ extension Category {
         
         return validTodos
     }
+    
+    /// Get object identifier.
+    ///
+    /// - Returns: Identifier
+    
+    func identifier() -> String {
+        return objectID.uriRepresentation().relativePath
+    }
 }

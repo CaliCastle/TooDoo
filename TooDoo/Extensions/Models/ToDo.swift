@@ -16,6 +16,12 @@ extension ToDo {
         if self.completed != completed {
             self.completed = completed
             completedAt = completed ? Date() : nil
+            
+            if completed {
+                NotificationManager.removeTodoDueNotification(for: self)
+            } else {
+                NotificationManager.registerTodoDueNotification(for: self)
+            }
         }
     }
     
@@ -29,6 +35,16 @@ extension ToDo {
     
     func moveToTrash() {
         movedToTrashAt = Date()
+        // Remove from notifications
+        NotificationManager.removeTodoDueNotification(for: self)
+    }
+    
+    /// Get object identifier.
+    ///
+    /// - Returns: Identifier
+    
+    func identifier() -> String {
+        return objectID.uriRepresentation().relativePath
     }
     
 }

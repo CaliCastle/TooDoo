@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UserNotifications
 import NotificationBannerSwift
 
 protocol NotificationName {
@@ -41,6 +42,10 @@ final class NotificationManager {
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
     }
     
+    enum LocalNotifications: String {
+        case TodoDued = "TODO_DUED"
+    }
+    
     // MARK: - Functions.
     
     /// Observe for a notification.
@@ -71,5 +76,47 @@ final class NotificationManager {
         let banner = NotificationBanner(attributedTitle: NSAttributedString(string: title, attributes: AppearanceManager.bannerTitleAttributes()), style: type)
         
         banner.show()
+    }
+    
+    
+    /// Register and schedule todo notification.
+    ///
+    /// - Parameter todo: The todo item
+    
+    class func registerTodoDueNotification(for todo: ToDo) {
+        guard let due = todo.due else { return }
+        
+        let components = Calendar.current.dateComponents([.minute, .hour, .day, .month, .year], from: due)
+        // Configure content
+        let content = UNMutableNotificationContent()
+        // FIXME: Localization
+        content.title = "❗️Todo dued in \(todo.category!.name!)"
+        content.categoryIdentifier = LocalNotifications.TodoDued.rawValue
+        content.body = "Time to complete: \(todo.goal!)"
+        content.sound = .default()
+  
+        // Create trigger
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        // Generate request
+        let request = UNNotificationRequest(identifier: todo.identifier(), content: content, trigger: trigger)
+        
+        // Add request for scheduling
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    /// Remove a scheduled todo notification.
+    ///
+    /// - Parameter todo: The todo item
+    
+    class func removeTodoDueNotification(for todo: ToDo) {
+        guard todo.completed || todo.isMovedToTrash() else { return }
+        
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [todo.identifier()])
     }
 }

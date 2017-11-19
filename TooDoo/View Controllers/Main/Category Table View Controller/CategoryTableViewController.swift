@@ -278,6 +278,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         guard validateUserInput() else {
             // Generate haptic feedback
             Haptic.notification(.error).generate()
+            // FIXME: Localization
+            NotificationManager.showBanner(title: "Name cannot be empty", type: .warning)
             
             return
         }

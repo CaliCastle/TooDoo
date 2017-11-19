@@ -10,7 +10,10 @@ import UIKit
 import Haptica
 import CoreData
 import ViewAnimator
+import BulletinBoard
+import DateTimePicker
 import DeckTransition
+import UserNotifications
 
 class ToDoTableViewController: UITableViewController {
 
@@ -38,6 +41,10 @@ class ToDoTableViewController: UITableViewController {
     
     var category: Category?
     
+    /// Stored has due property.
+    
+    var hasDue: Bool = false
+    
     /// Stored goal property.
     
     var goal: String = ""
@@ -48,10 +55,60 @@ class ToDoTableViewController: UITableViewController {
     @IBOutlet var categoryGradientBackgroundView: GradientView!
     @IBOutlet var categoryIconImageView: UIImageView!
     @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var dueTimeLabel: UILabel!
     
     /// Dependency Injection for Managed Object Context.
     
     var managedObjectContext: NSManagedObjectContext?
+    
+    /// Default date format.
+    
+    let dateFormat = "MMM d, HH:mm"
+    
+    /// Stored due date property.
+    
+    var dueDate: Date? {
+        didSet {
+            guard let dueDate = dueDate else { return }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = dateFormat
+            
+            dueTimeLabel.text = dateFormatter.string(from: dueDate)
+        }
+    }
+    
+    /// Bulletin manager.
+    
+    lazy var bulletinManager: BulletinManager = {
+        // FIXME: Localization
+        let rootItem = PageBulletinItem(title: "Notification Disabled")
+        rootItem.image = #imageLiteral(resourceName: "no-notification-access")
+        rootItem.descriptionText = "You need to grant this application access to send you notifications, you can turn it on in settings Privacy > Photos"
+        rootItem.actionButtonTitle = "Give access"
+        rootItem.alternativeButtonTitle = "Not now"
+        
+        rootItem.shouldCompactDescriptionText = true
+        rootItem.isDismissable = true
+        
+        // Take user to the settings page
+        rootItem.actionHandler = { item in
+            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
+            
+            if UIApplication.shared.canOpenURL(openSettingsURL) {
+                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
+            }
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        rootItem.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return BulletinManager(rootItem: rootItem)
+    }()
     
     // MARK: - View Life Cycle.
     
@@ -149,8 +206,17 @@ class ToDoTableViewController: UITableViewController {
         }
         
         tableView.endEditing(true)
+        
+        saveTodo()
+        
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    /// Save todo.
+
+    private func saveTodo() {
         // Create new todo
-        let todo = ToDo(context: managedObjectContext!)
+        let todo = self.todo ?? ToDo(context: managedObjectContext!)
         let goal = (goalTextField.text?.trimmingCharacters(in: .whitespaces))!
         // Configure attributes
         todo.goal = goal
@@ -161,8 +227,16 @@ class ToDoTableViewController: UITableViewController {
         if let category = category {
             category.addToTodos(todo)
         }
+        // Set due notification
+        if let due = dueDate {
+            todo.due = due
+            
+            NotificationManager.registerTodoDueNotification(for: todo)
+        }
         
-        navigationController?.dismiss(animated: true, completion: nil)
+        // Generate haptic feedback and play sound
+        Haptic.notification(.success).generate()
+        SoundManager.play(soundEffect: .Success)
     }
     
     /// Validate user input.
@@ -174,7 +248,36 @@ class ToDoTableViewController: UITableViewController {
     /// When user changed due switch state.
     
     @IBAction func dueSwitchChanged(_ sender: UISwitch) {
+        tableView.endEditing(true)
+    
+        // If set due time
+        if sender.isOn {
+            // Check notification authorization
+            checkNotificationPermission()
+        }
         
+        hasDue = sender.isOn
+    
+        // Insert or delete due time row
+        if hasDue {
+            tableView.insertRows(at: [IndexPath(item: tableView.numberOfRows(inSection: 0), section: 0)], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [IndexPath(item: tableView.numberOfRows(inSection: 0) - 1, section: 0)], with: .automatic)
+        }
+    }
+    
+    /// When user tapped due time.
+    
+    @IBAction func dueTimeDidTap(_ sender: Any) {
+        let dateTimePicker = DateTimePicker.show(selected: dueDate ?? Date(), minimumDate: Date(), maximumDate: nil)
+        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.cancelButtonTitle = "Cancel"
+        dateTimePicker.doneButtonTitle = "Done"
+        dateTimePicker.is12HourFormat = true
+        dateTimePicker.dateFormat = dateFormat
+        dateTimePicker.completionHandler = {
+            self.dueDate = $0
+        }
     }
     
     /// When user taps delete.
@@ -189,6 +292,37 @@ class ToDoTableViewController: UITableViewController {
         guard let todo = todo else { return }
         
         todo.moveToTrash()
+    }
+    
+    /// Check for notification permission.
+    
+    private func checkNotificationPermission() {
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        center.getNotificationSettings {
+            switch $0.authorizationStatus {
+            case .authorized:
+                return
+            default:
+                center.requestAuthorization(options: options) { (granted, error) in
+                    if !granted {
+                        self.noNotificationPermission()
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Called when no notification permissions in settings.
+    
+    private func noNotificationPermission() {
+        DispatchQueue.main.async {
+            // Ask for permission
+            self.bulletinManager.backgroundViewStyle = .blurredDark
+            self.bulletinManager.prepare()
+            self.bulletinManager.presentBulletin(above: self)
+        }
     }
     
     /// Prepare for segue.
@@ -211,6 +345,15 @@ class ToDoTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return isAdding ? 1 : 2
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return hasDue ? 4 : 3
+        default:
+            return 1
+        }
     }
     
     /// Adjust scroll behavior for dismissal.

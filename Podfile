@@ -22,5 +22,6 @@ target 'TooDoo' do
   pod 'Hokusai'
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'
-
+  pod 'DateTimePicker'
+  
 end

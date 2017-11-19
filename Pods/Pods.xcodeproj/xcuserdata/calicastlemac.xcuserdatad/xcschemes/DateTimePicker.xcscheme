@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "26E9678DDCD7AFB96676FF60EEDB9CD6"
-               BuildableName = "Typist.framework"
-               BlueprintName = "Typist"
+               BlueprintIdentifier = "5F72C1852584A5C1073B32B80AF17541"
+               BuildableName = "DateTimePicker.framework"
+               BlueprintName = "DateTimePicker"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "26E9678DDCD7AFB96676FF60EEDB9CD6"
-            BuildableName = "Typist.framework"
-            BlueprintName = "Typist"
+            BlueprintIdentifier = "5F72C1852584A5C1073B32B80AF17541"
+            BuildableName = "DateTimePicker.framework"
+            BlueprintName = "DateTimePicker"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

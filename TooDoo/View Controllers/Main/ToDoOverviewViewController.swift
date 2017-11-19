@@ -110,6 +110,17 @@ class ToDoOverviewViewController: UIViewController {
         return swipeGestureRecognizer
     }()
     
+    /// Timer for user interface updates
+
+    lazy var timer: Timer = {
+        // 30 minutes timer
+        let timer = Timer.scheduledTimer(withTimeInterval: 60 * 30, repeats: true, block: { _ in
+            self.setupTimeLabel()
+        })
+        
+        return timer
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -121,6 +132,17 @@ class ToDoOverviewViewController: UIViewController {
         fetchCategories()
         
         startAnimations()
+        // Auto update time label
+        timer.fire()
+    }
+    
+    /// Release memory.
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        // Stop the timer
+        timer.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
