@@ -262,6 +262,9 @@ class ToDoOverviewViewController: UIViewController {
     @objc fileprivate func showAddTodo() {
         // Play click sound
         SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.light).generate()
+        
+        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: nil)
     }
 
     /// Show add category view controller.
@@ -305,7 +308,6 @@ class ToDoOverviewViewController: UIViewController {
             destinationViewController.delegate = self
         case Segue.ShowTodo.rawValue:
             // About to show add/edit todo
-            // About to show add/edit category
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ToDoTableViewController
             // Pass through managed object context

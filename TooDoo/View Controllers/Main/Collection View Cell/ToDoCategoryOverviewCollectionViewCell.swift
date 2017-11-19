@@ -105,14 +105,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         return swipeGestureRecognizer
     }()
     
-    /// Tap for dismissal gesture recognizer.
-    
-    lazy var tapForDismissalGestureRecognizer: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
-        
-        return recognizer
-    }()
-    
     /// Called when the cell is double tapped.
     
     @objc private func itemDoubleTapped(recognizer: UITapGestureRecognizer!) {
@@ -240,7 +232,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     @IBAction func addTodoDidTap(_ sender: Any) {
         isAdding = true
         
-        todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .top)
+        todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
     }
     
 }
@@ -270,7 +262,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure add todo item cell
         if isAdding && indexPath.item == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier, for: indexPath) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
             
             cell.delegate = self
             cell.category = category
@@ -365,8 +357,6 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         cardContainerView.removeGestureRecognizer(doubleTapGesture)
         // Add swipe dismissal gesture
         cardContainerView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
-        // Add tap dismissal gesture
-        addGestureRecognizer(tapForDismissalGestureRecognizer)
         
         // Generate haptic feedback and sound
         Haptic.impact(.heavy).generate()
@@ -384,18 +374,16 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         cardContainerView.addGestureRecognizer(doubleTapGesture)
         // Remove swipe dismissal gesture
         cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
-        // Remove tap dismissal gesture
-        removeGestureRecognizer(tapForDismissalGestureRecognizer)
         
         // Generate haptic feedback
         Haptic.impact(.light).generate()
-        
-        delegate.newTodoDoneEditing()
         
         // Reset add todo cell to hidden
         guard todo == nil else { return }
         isAdding = false
         todoItemsTableView.reloadSections([0], with: .automatic)
+        
+        delegate.newTodoDoneEditing()
     }
     
     /// Show adding a new todo.
@@ -414,11 +402,11 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func animateCardUp(options: Typist.KeyboardOptions) {
         let tableFrame = todoItemsTableView.convert(options.startFrame, from: nil)
         let tableRowFrame = todoItemsTableView.rectForRow(at: IndexPath(item: 0, section: 0))
-        let keyboardCovers = options.endFrame.origin.y - abs(tableFrame.origin.y) - tableRowFrame.size.height
+        let keyboardCovers = (options.endFrame.origin.y - abs(tableFrame.origin.y) - tableRowFrame.size.height)
         
         if keyboardCovers > 0 {
             UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
-                self.cardContainerView.transform = .init(translationX: 0, y: -keyboardCovers)
+                self.superview?.transform = .init(translationX: 0, y: -keyboardCovers)
             }, completion: nil)
         }
     }
@@ -427,7 +415,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     
     func animateCardDown(options: Typist.KeyboardOptions) {
         UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
-            self.cardContainerView.transform = .init(translationX: 0, y: 0)
+            self.superview?.transform = .init(translationX: 0, y: 0)
         }, completion: nil)
     }
     

@@ -32,6 +32,8 @@
 		8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBBF1F92F19100721980 /* DispatchManager.swift */; };
 		8D9BCBC21F92FC9800721980 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */; };
 		8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */; };
+		8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC56291FC0A6E600F6956F /* SelectCategoryTableViewController.swift */; };
+		8DAC562D1FC0C61900F6956F /* SelectCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC562C1FC0C61900F6956F /* SelectCategoryTableViewCell.swift */; };
 		8DAC8F841FB0414B006207F6 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC8F831FB0414B006207F6 /* UIView.swift */; };
 		8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC8F851FB041F4006207F6 /* CornerRadiusView.swift */; };
 		8DB49E561FB8D859003240E1 /* alert-round.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E4E1FB8D859003240E1 /* alert-round.png */; };
@@ -87,6 +89,8 @@
 		8D9BCBBF1F92F19100721980 /* DispatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchManager.swift; sourceTree = "<group>"; };
 		8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		8DAC56291FC0A6E600F6956F /* SelectCategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryTableViewController.swift; sourceTree = "<group>"; };
+		8DAC562C1FC0C61900F6956F /* SelectCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		8DAC8F831FB0414B006207F6 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		8DAC8F851FB041F4006207F6 /* CornerRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusView.swift; sourceTree = "<group>"; };
 		8DB49E4E1FB8D859003240E1 /* alert-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert-round.png"; sourceTree = "<group>"; };
@@ -313,6 +317,23 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */,
+				8DAC56291FC0A6E600F6956F /* SelectCategoryTableViewController.swift */,
+			);
+			path = "Select Category Table View Controller";
+			sourceTree = "<group>";
+		};
+		8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8DAC562C1FC0C61900F6956F /* SelectCategoryTableViewCell.swift */,
+			);
+			path = "Select Category Table View Cell";
+			sourceTree = "<group>";
+		};
 		8DB49E4D1FB8D859003240E1 /* FCAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +429,7 @@
 		8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */,
 				8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */,
 			);
 			path = "Todo Table View Controller";
@@ -609,6 +631,7 @@
 				8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */,
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
+				8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */,
 				8D6A13A31F93EC24004238D8 /* SetupWelcomeViewController.swift in Sources */,
 				8DD3D6D61FB797EE00BE4FEF /* CategoryModels.swift in Sources */,
 				8D1599081FAAEE310004846F /* GradientView.swift in Sources */,
@@ -619,6 +642,7 @@
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8DCBEA611FB2E69D00AD34D9 /* UINavigationController.swift in Sources */,
+				8DAC562D1FC0C61900F6956F /* SelectCategoryTableViewCell.swift in Sources */,
 				8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */,
 				8DB49E5C1FB8D859003240E1 /* FCAlertViewDelegate.swift in Sources */,
 				8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */,
