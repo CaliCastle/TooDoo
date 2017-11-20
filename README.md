@@ -37,6 +37,8 @@ _Supported devices:_
 
 ## Upcoming features:
 
+- Change user's name and avatar
+- Settings page
 - Categorize icons for better UX
 - Location-sensitive notifications for to-dos
 - Search
