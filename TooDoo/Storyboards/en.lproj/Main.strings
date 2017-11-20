@@ -1,0 +1,87 @@
+
+/* Class = "UINavigationItem"; title = "TooDoo"; ObjectID = "0Bt-i3-bCD"; */
+"0Bt-i3-bCD.title" = "TooDoo";
+
+/* Class = "UITextField"; text = "To-do"; ObjectID = "0jz-1e-9bK"; */
+"0jz-1e-9bK.text" = "To-do";
+
+/* Class = "UILabel"; text = "0 Todos"; ObjectID = "0zk-Dj-DM1"; */
+"0zk-Dj-DM1.text" = "0 Todos";
+
+/* Class = "UILabel"; text = "Category:"; ObjectID = "6Em-EM-2uI"; */
+"6Em-EM-2uI.text" = "Category:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "8zA-aa-c2W"; */
+"8zA-aa-c2W.text" = "Label";
+
+/* Class = "UILabel"; text = "Choose a color:"; ObjectID = "AEL-2z-JMy"; */
+"AEL-2z-JMy.text" = "Choose a color:";
+
+/* Class = "UITextField"; placeholder = "✎ Set your todo goal"; ObjectID = "AqI-GN-X2o"; */
+"AqI-GN-X2o.placeholder" = "✎ Set your todo goal";
+
+/* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "BAy-NV-rf6"; */
+"BAy-NV-rf6.normalTitle" = "Delete";
+
+/* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
+"Dti-RI-Fq8.text" = "Choose an icon:";
+
+/* Class = "UILabel"; text = "New Category"; ObjectID = "O0a-3Q-COc"; */
+"O0a-3Q-COc.text" = "New Category";
+
+/* Class = "UIButton"; normalTitle = "Add Todo"; ObjectID = "T4s-2G-4VL"; */
+"T4s-2G-4VL.normalTitle" = "Add Todo";
+
+/* Class = "UINavigationItem"; title = "Select Category"; ObjectID = "Umf-Me-WFp"; */
+"Umf-Me-WFp.title" = "Select Category";
+
+/* Class = "UINavigationItem"; title = "Add Todo"; ObjectID = "Vs2-HY-QQw"; */
+"Vs2-HY-QQw.title" = "Add Todo";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Wp1-tJ-ec5"; */
+"Wp1-tJ-ec5.text" = "Name";
+
+/* Class = "UITextField"; placeholder = "✎ Category name"; ObjectID = "XYe-b2-iVD"; */
+"XYe-b2-iVD.placeholder" = "✎ Category name";
+
+/* Class = "UILabel"; text = "Due time"; ObjectID = "Xop-1P-BWD"; */
+"Xop-1P-BWD.text" = "Due time";
+
+/* Class = "UILabel"; text = "Name:"; ObjectID = "Ymz-fk-4yv"; */
+"Ymz-fk-4yv.text" = "Name:";
+
+/* Class = "UILabel"; text = "Todo goal:"; ObjectID = "anl-Mc-eRf"; */
+"anl-Mc-eRf.text" = "Todo goal:";
+
+/* Class = "UILabel"; text = "Category Name"; ObjectID = "bYp-9c-1G8"; */
+"bYp-9c-1G8.text" = "Category Name";
+
+/* Class = "UIButton"; normalTitle = "Delete Category"; ObjectID = "cfa-hc-62R"; */
+"cfa-hc-62R.normalTitle" = "Delete Category";
+
+/* Class = "UILabel"; text = "Hi, %name%!"; ObjectID = "e3V-9A-d9Q"; */
+"e3V-9A-d9Q.text" = "Hi, %name%!";
+
+/* Class = "UINavigationItem"; title = "New Category"; ObjectID = "fr8-v1-isn"; */
+"fr8-v1-isn.title" = "New Category";
+
+/* Class = "UILabel"; text = "You have no todos today."; ObjectID = "fzt-6i-3oP"; */
+"fzt-6i-3oP.text" = "You have no todos today.";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gY2-nf-kaY"; */
+"gY2-nf-kaY.text" = "Label";
+
+/* Class = "UILabel"; text = "Good morning"; ObjectID = "l9p-kw-NAc"; */
+"l9p-kw-NAc.text" = "Good morning";
+
+/* Class = "UILabel"; text = "Select due time"; ObjectID = "la1-hR-EUt"; */
+"la1-hR-EUt.text" = "Select due time";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "wH7-Qc-AgL"; */
+"wH7-Qc-AgL.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "To-do item"; ObjectID = "x5H-4u-tMc"; */
+"x5H-4u-tMc.text" = "To-do item";
+
+/* Class = "UINavigationItem"; title = "Categories"; ObjectID = "ycy-I5-cbe"; */
+"ycy-I5-cbe.title" = "Categories";

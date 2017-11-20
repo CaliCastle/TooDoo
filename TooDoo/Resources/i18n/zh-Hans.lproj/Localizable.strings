@@ -1,0 +1,97 @@
+/* 
+  Localizable.strings
+  TooDoo
+
+  Created by Cali Castle  on 11/19/17.
+  Copyright © 2017 Cali Castle . All rights reserved.
+*/
+
+/* Common phrases */
+"Get started" = "开始使用 TooDoo";
+"Cancel" = "取消";
+"Done" = "完成";
+"Delete" = "删除";
+"Nope" = "算了";
+"Model.Category" = "分类";
+"Give access" = "去设置";
+"Not now" = "残忍拒绝";
+"Todos" = "个待办事项";
+"Today" = "今天";
+
+"EEEE, MMM d" = "MM月d日 EEEE";
+"MMM dd, EEE hh:mm aa" = "MM月dd日, EEE hh:mm aa";
+
+/*
+ Shortcut Items.
+ */
+"shortcut.items.add-todo" = "新建待办事项";
+"shortcut.items.add-category" = "新建分类";
+"shortcut.items.search" = "搜索";
+"shortcut.items.settings" = "设置";
+
+/*
+ Notifications
+ */
+"notifications.todo.due.title" = "你有一个 %name% 的待办事项";
+
+"notification.deleted-category" = "分类已删除！";
+"notification.created-category" = "成功创建分类 - ";
+"notification.empty-goal" = "待办事项不能为空";
+"notification.empty-name" = "名字不能为空";
+"notification.name-exists" = "名字已存在";
+
+/*
+ Setup Welcome View Controller.
+ */
+"setup.no-photo-access.title" = "无相册权限";
+"setup.no-photo-access.description" = "本应用未获得照片的读写权限, 请在系统设置的 '隐私' > '照片' 中开启";
+"setup.complete.skipped" = "开始使用TooDoo吧";
+"setup.complete.custom.title" = "照片不错！";
+"setup.complete.custom.message" = "别担心，我会捍卫你的隐私!";
+// Personal default category
+"setup.default-category" = "个人";
+// Work default category
+"setup.default-category-alt" = "工作";
+
+/*
+ ToDo Overview View Controller.
+ */
+"overview.greeting.time.morning" = "早上好";
+"overview.greeting.time.afternoon" = "下午好";
+"overview.greeting.time.evening" = "晚上好";
+// Today is {Monday, Nov 20}
+"overview.message.today" = "今天是";
+/* FIXME: */
+"overview.message.todo.count" = "今天暂无待办事项";
+
+/*
+ ToDo Table View Controller.
+ */
+"todo-table.select-due-time" = "选择提醒时间";
+"todo-table.no-notifications-access.title" = "提醒通知已关闭";
+"todo-table.no-notifications-access.description" = "本应用未获得通知权限，请在 系统设置 中开启";
+"todo-table.add-todo" = "添加待办事项";
+"todo-table.edit-todo" = "编辑待办事项";
+"todo-table.select-category" = "选择所属分类";
+
+/*
+ Category Table View Controller.
+ */
+
+
+
+/*
+ Action Sheet & Alert
+ */
+"actionsheet.create-a" = "创建";
+"actionsheet.new-todo" = "新待办事项";
+"actionsheet.new-category" = "新分类";
+"actionsheet.category.title" = "分类 - ";
+"actionsheet.actions.edit-category" = "编辑分类";
+"actionsheet.actions.delete-category" = "删除分类";
+"actionsheet.actions.organize-categories" = "管理所有分类";
+
+"alert.delete-category" = "一旦分类被删除，其分类下的所有待办事项也会被删除";
+"alert.error-fetching-category" = "无法读取分类";
+"alert.error-fetching-todo" = "无法读取待办事项";
+"alert.unable-to-fetch-request" = "无法读取数据";

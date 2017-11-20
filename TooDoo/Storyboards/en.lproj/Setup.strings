@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "👋🏻 Hi there"; ObjectID = "A6U-QU-Ecb"; */
+"A6U-QU-Ecb.text" = "👋🏻 Hi there";
+
+/* Class = "UILabel"; text = "or"; ObjectID = "CD7-2G-qML"; */
+"CD7-2G-qML.text" = "or";
+
+/* Class = "UILabel"; text = "What do you want me to call you?"; ObjectID = "DKX-Zj-r1H"; */
+"DKX-Zj-r1H.text" = "What do you want me to call you?";
+
+/* Class = "UILabel"; text = "Choose your avatar"; ObjectID = "NWx-Ic-Zdy"; */
+"NWx-Ic-Zdy.text" = "Choose your avatar";
+
+/* Class = "UILabel"; text = "First, let’s get you all set up 😎"; ObjectID = "P5a-Le-h7W"; */
+"P5a-Le-h7W.text" = "First, let’s get you all set up 😎";
+
+/* Class = "UIButton"; normalTitle = "Select your own"; ObjectID = "T2g-w4-jx1"; */
+"T2g-w4-jx1.normalTitle" = "Select your own";
+
+/* Class = "UILabel"; text = "Perfect 👏🏻"; ObjectID = "UvC-WI-LOa"; */
+"UvC-WI-LOa.text" = "Perfect 👏🏻";
+
+/* Class = "UILabel"; text = "✌🏻Awesome"; ObjectID = "Xam-KC-8eY"; */
+"Xam-KC-8eY.text" = "✌🏻Awesome";
+
+/* Class = "UILabel"; text = "🎉 Congrats, you’re all set now!"; ObjectID = "ex4-CV-PCL"; */
+"ex4-CV-PCL.text" = "🎉 Congrats, you’re all set now!";
+
+/* Class = "UITextField"; placeholder = "✎ Enter your name…"; ObjectID = "kdg-ji-lNk"; */
+"kdg-ji-lNk.placeholder" = "✎ Enter your name…";
+
+/* Class = "UILabel"; text = "%name% is a great name!"; ObjectID = "oO5-Zi-Usg"; */
+"oO5-Zi-Usg.text" = "%name% is a great name!";
+
+/* Class = "UIButton"; normalTitle = "I'm Ready!"; ObjectID = "oPd-uc-rHC"; */
+"oPd-uc-rHC.normalTitle" = "I'm Ready!";
+
+/* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "w4h-kc-ir6"; */
+"w4h-kc-ir6.normalTitle" = "SKIP";

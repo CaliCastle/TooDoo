@@ -55,6 +55,7 @@ class ToDoTableViewController: UITableViewController {
     @IBOutlet var categoryGradientBackgroundView: GradientView!
     @IBOutlet var categoryIconImageView: UIImageView!
     @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var dueIconImageView: UIImageView!
     @IBOutlet var dueTimeLabel: UILabel!
     
     /// Dependency Injection for Managed Object Context.
@@ -63,7 +64,7 @@ class ToDoTableViewController: UITableViewController {
     
     /// Default date format.
     
-    let dateFormat = "MMM d, HH:mm"
+    let dateFormat = "MMM dd, EEE hh:mm aa".localized
     
     /// Stored due date property.
     
@@ -270,9 +271,9 @@ class ToDoTableViewController: UITableViewController {
     @IBAction func dueTimeDidTap(_ sender: Any) {
         let dateTimePicker = DateTimePicker.show(selected: dueDate ?? Date(), minimumDate: Date(), maximumDate: nil)
         dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
-        dateTimePicker.cancelButtonTitle = "Cancel"
-        dateTimePicker.doneButtonTitle = "Done"
-        dateTimePicker.is12HourFormat = true
+        dateTimePicker.cancelButtonTitle = "Cancel".localized
+        dateTimePicker.doneButtonTitle = "Done".localized
+        dateTimePicker.todayButtonTitle = "Today".localized
         dateTimePicker.dateFormat = dateFormat
         dateTimePicker.completionHandler = {
             self.dueDate = $0

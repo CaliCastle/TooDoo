@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  TooDoo
+
+  Created by Cali Castle  on 11/19/17.
+  Copyright © 2017 Cali Castle . All rights reserved.
+*/
+
+/* App Display Name */
+CFBundleDisplayName = "TooDoo待办事项";
+
+/* Photo Library Access */
+NSPhotoLibraryUsageDescription = "图片选择功能需要相册访问权限";

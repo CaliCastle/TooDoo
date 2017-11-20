@@ -37,7 +37,7 @@ class CategoryIconCollectionViewCell: UICollectionViewCell {
     var color: UIColor = .white {
         didSet {
             UIView.animate(withDuration: 0.25) {
-                self.iconImageView.tintColor = self.color
+                self.iconImageView.tintColor = self.color.lighten(byPercentage: 0.2)
             }
         }
     }

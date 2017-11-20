@@ -90,9 +90,9 @@ final class NotificationManager {
         // Configure content
         let content = UNMutableNotificationContent()
         
-        content.title = "❗️\("notifications.todo.due.title".localized) \(todo.category!.name!)"
+        content.title = "❗️\("notifications.todo.due.title".localized)".replacingOccurrences(of: "%name%", with: todo.category!.name!)
         content.categoryIdentifier = LocalNotifications.TodoDued.rawValue
-        content.body = "\("notifications.todo.due.body".localized) \(todo.goal!)"
+        content.body = "🔘 \(todo.goal!)"
         content.sound = .default()
   
         // Create trigger

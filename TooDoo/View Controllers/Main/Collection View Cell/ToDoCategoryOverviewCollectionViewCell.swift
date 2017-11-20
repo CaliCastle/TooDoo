@@ -166,8 +166,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            // FIXME
-            fatalError("Unable to fetch todos")
+            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
         }
     }
     

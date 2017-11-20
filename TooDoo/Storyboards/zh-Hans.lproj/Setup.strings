@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "👋🏻 Hi there"; ObjectID = "A6U-QU-Ecb"; */
+"A6U-QU-Ecb.text" = "👋🏻 你好";
+
+/* Class = "UILabel"; text = "or"; ObjectID = "CD7-2G-qML"; */
+"CD7-2G-qML.text" = "或";
+
+/* Class = "UILabel"; text = "What do you want me to call you?"; ObjectID = "DKX-Zj-r1H"; */
+"DKX-Zj-r1H.text" = "我该怎么称呼你呢？";
+
+/* Class = "UILabel"; text = "Choose your avatar"; ObjectID = "NWx-Ic-Zdy"; */
+"NWx-Ic-Zdy.text" = "选择头像";
+
+/* Class = "UILabel"; text = "First, let’s get you all set up 😎"; ObjectID = "P5a-Le-h7W"; */
+"P5a-Le-h7W.text" = "首先，让我了解一下你 😎";
+
+/* Class = "UIButton"; normalTitle = "Select your own"; ObjectID = "T2g-w4-jx1"; */
+"T2g-w4-jx1.normalTitle" = "从相册选择";
+
+/* Class = "UILabel"; text = "Perfect 👏🏻"; ObjectID = "UvC-WI-LOa"; */
+"UvC-WI-LOa.text" = "完美👏🏻";
+
+/* Class = "UILabel"; text = "✌🏻Awesome"; ObjectID = "Xam-KC-8eY"; */
+"Xam-KC-8eY.text" = "✌🏻酷~";
+
+/* Class = "UILabel"; text = "🎉 Congrats, you’re all set now!"; ObjectID = "ex4-CV-PCL"; */
+"ex4-CV-PCL.text" = "🎉 恭喜你，设置完毕！";
+
+/* Class = "UITextField"; placeholder = "✎ Enter your name…"; ObjectID = "kdg-ji-lNk"; */
+"kdg-ji-lNk.placeholder" = "✎ 输入昵称…";
+
+/* Class = "UILabel"; text = "%name% is a great name!"; ObjectID = "oO5-Zi-Usg"; */
+"oO5-Zi-Usg.text" = "%name% 是个不错的名字！";
+
+/* Class = "UIButton"; normalTitle = "I'm Ready!"; ObjectID = "oPd-uc-rHC"; */
+"oPd-uc-rHC.normalTitle" = "我准备好了！";
+
+/* Class = "UIButton"; normalTitle = "SKIP"; ObjectID = "w4h-kc-ir6"; */
+"w4h-kc-ir6.normalTitle" = "跳过";

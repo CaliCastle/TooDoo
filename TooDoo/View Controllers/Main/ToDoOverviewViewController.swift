@@ -157,8 +157,7 @@ class ToDoOverviewViewController: UIViewController {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            /// FIXME: Handle error
-            print("Unable to Execute Fetch Request")
+            NotificationManager.showBanner(title: "alert.unable-to-fetch-request".localized, type: .danger)
             print("\(error), \(error.localizedDescription)")
         }
     }
@@ -205,7 +204,7 @@ class ToDoOverviewViewController: UIViewController {
     fileprivate func setupMessageLabel() {
         let dateFormatter = DateFormatter()
         // Format date to 'Monday, Nov 6'
-        dateFormatter.dateFormat = "EEEE, MMM d"
+        dateFormatter.dateFormat = "EEEE, MMM d".localized
         
         todoMessageLabel.text = "\("overview.message.today".localized) \(dateFormatter.string(from: Date())).\n\("overview.message.todo.count".localized)"
     }

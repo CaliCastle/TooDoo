@@ -10,7 +10,7 @@ TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a
 ### Upcoming features:
 - Localization
 - Categorize icons
-- Add location notification
+- Add location-sensitive notifications for to-dos
 - Search
 
 ### Open source libraries:

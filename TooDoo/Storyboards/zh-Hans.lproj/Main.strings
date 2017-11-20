@@ -1,0 +1,87 @@
+
+/* Class = "UINavigationItem"; title = "TooDoo"; ObjectID = "0Bt-i3-bCD"; */
+"0Bt-i3-bCD.title" = "TooDoo";
+
+/* Class = "UITextField"; text = "To-do"; ObjectID = "0jz-1e-9bK"; */
+"0jz-1e-9bK.text" = "";
+
+/* Class = "UILabel"; text = "0 Todos"; ObjectID = "0zk-Dj-DM1"; */
+"0zk-Dj-DM1.text" = "0 个待办事项";
+
+/* Class = "UILabel"; text = "Category:"; ObjectID = "6Em-EM-2uI"; */
+"6Em-EM-2uI.text" = "分类:";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "8zA-aa-c2W"; */
+"8zA-aa-c2W.text" = "";
+
+/* Class = "UILabel"; text = "Choose a color:"; ObjectID = "AEL-2z-JMy"; */
+"AEL-2z-JMy.text" = "选择颜色:";
+
+/* Class = "UITextField"; placeholder = "✎ Set your todo goal"; ObjectID = "AqI-GN-X2o"; */
+"AqI-GN-X2o.placeholder" = "✎ 输入目标";
+
+/* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "BAy-NV-rf6"; */
+"BAy-NV-rf6.normalTitle" = "删除";
+
+/* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
+"Dti-RI-Fq8.text" = "选择图标:";
+
+/* Class = "UILabel"; text = "New Category"; ObjectID = "O0a-3Q-COc"; */
+"O0a-3Q-COc.text" = "新建分类";
+
+/* Class = "UIButton"; normalTitle = "Add Todo"; ObjectID = "T4s-2G-4VL"; */
+"T4s-2G-4VL.normalTitle" = "添加待办事项";
+
+/* Class = "UINavigationItem"; title = "Select Category"; ObjectID = "Umf-Me-WFp"; */
+"Umf-Me-WFp.title" = "选择分类";
+
+/* Class = "UINavigationItem"; title = "Add Todo"; ObjectID = "Vs2-HY-QQw"; */
+"Vs2-HY-QQw.title" = "添加待办事项";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Wp1-tJ-ec5"; */
+"Wp1-tJ-ec5.text" = "名称";
+
+/* Class = "UITextField"; placeholder = "✎ Category name"; ObjectID = "XYe-b2-iVD"; */
+"XYe-b2-iVD.placeholder" = "✎ 类别名称";
+
+/* Class = "UILabel"; text = "Due time"; ObjectID = "Xop-1P-BWD"; */
+"Xop-1P-BWD.text" = "开启提醒";
+
+/* Class = "UILabel"; text = "Name:"; ObjectID = "Ymz-fk-4yv"; */
+"Ymz-fk-4yv.text" = "名字:";
+
+/* Class = "UILabel"; text = "Todo goal:"; ObjectID = "anl-Mc-eRf"; */
+"anl-Mc-eRf.text" = "目标:";
+
+/* Class = "UILabel"; text = "Category Name"; ObjectID = "bYp-9c-1G8"; */
+"bYp-9c-1G8.text" = "类别名称";
+
+/* Class = "UIButton"; normalTitle = "Delete Category"; ObjectID = "cfa-hc-62R"; */
+"cfa-hc-62R.normalTitle" = "删除分类";
+
+/* Class = "UILabel"; text = "Hi, %name%!"; ObjectID = "e3V-9A-d9Q"; */
+"e3V-9A-d9Q.text" = "嗨, %name%!";
+
+/* Class = "UINavigationItem"; title = "New Category"; ObjectID = "fr8-v1-isn"; */
+"fr8-v1-isn.title" = "新建分类";
+
+/* Class = "UILabel"; text = "You have no todos today."; ObjectID = "fzt-6i-3oP"; */
+"fzt-6i-3oP.text" = "今天暂无待办事项。";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gY2-nf-kaY"; */
+"gY2-nf-kaY.text" = "";
+
+/* Class = "UILabel"; text = "Good morning"; ObjectID = "l9p-kw-NAc"; */
+"l9p-kw-NAc.text" = "";
+
+/* Class = "UILabel"; text = "Select due time"; ObjectID = "la1-hR-EUt"; */
+"la1-hR-EUt.text" = "设置提醒";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "wH7-Qc-AgL"; */
+"wH7-Qc-AgL.normalTitle" = "完成";
+
+/* Class = "UILabel"; text = "To-do item"; ObjectID = "x5H-4u-tMc"; */
+"x5H-4u-tMc.text" = "";
+
+/* Class = "UINavigationItem"; title = "Categories"; ObjectID = "ycy-I5-cbe"; */
+"ycy-I5-cbe.title" = "所有分类";

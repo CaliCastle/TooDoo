@@ -7,14 +7,19 @@
 */
 
 /* Common phrases */
-"Get started" = "Get started";
+"Get started" = "Get started with TooDoo";
 "Cancel" = "Cancel";
+"Done" = "Done";
 "Delete" = "Delete";
 "Nope" = "Nope";
 "Model.Category" = "Category";
 "Give access" = "Give access";
 "Not now" = "Not now";
 "Todos" = "Todos";
+"Today" = "Today";
+
+"EEEE, MMM d" = "EEEE, MMM d";
+"MMM dd, EEE hh:mm aa" = "MMM dd, EEE hh:mm aa";
 
 /*
  Shortcut Items.
@@ -27,8 +32,7 @@
 /*
  Notifications
  */
-"notifications.todo.due.title" = "Todo due in";
-"notifications.todo.due.body" = "Time to complete:";
+"notifications.todo.due.title" = "Todo due in %name%";
 
 "notification.deleted-category" = "Category Deleted!";
 "notification.created-category" = "Created Category - ";
@@ -65,7 +69,7 @@
  */
 "todo-table.select-due-time" = "Select due time";
 "todo-table.no-notifications-access.title" = "Notification Disabled";
-"todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in settings";
+"todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in System Settings";
 "todo-table.add-todo" = "Add Todo";
 "todo-table.edit-todo" = "Edit Todo";
 "todo-table.select-category" = "Select a category";
@@ -88,3 +92,6 @@
 "actionsheet.actions.organize-categories" = "Organize Categories";
 
 "alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";
+"alert.error-fetching-category" = "Unable to fetch categories";
+"alert.error-fetching-todo" = "Unable to fetch todos";
+"alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";

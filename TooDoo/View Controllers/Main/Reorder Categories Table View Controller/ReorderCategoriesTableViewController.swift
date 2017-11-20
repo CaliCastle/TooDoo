@@ -79,8 +79,7 @@ class ReorderCategoriesTableViewController: UITableViewController {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            // FIXME
-            fatalError("Unable to fetch categories")
+            NotificationManager.showBanner(title: "alert.error-fetching-category".localized, type: .danger)
         }
     }
     
