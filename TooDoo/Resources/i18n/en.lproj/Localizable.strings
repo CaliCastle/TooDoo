@@ -19,7 +19,7 @@
 "Today" = "Today";
 
 "EEEE, MMM d" = "EEEE, MMM d";
-"MMM dd, EEE hh:mm aa" = "MMM dd, EEE hh:mm aa";
+"MMM dd, EEE hh:mm aa" = "MMM dd, EEE HH:mm";
 
 /*
  Shortcut Items.

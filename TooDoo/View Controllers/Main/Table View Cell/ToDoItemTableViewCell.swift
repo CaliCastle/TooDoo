@@ -10,6 +10,12 @@ import UIKit
 import Haptica
 import M13Checkbox
 
+protocol ToDoItemTableViewCellDelegate {
+    
+    func deleteTodo(for todo: ToDo)
+    
+}
+
 class ToDoItemTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
@@ -77,6 +83,8 @@ class ToDoItemTableViewCell: UITableViewCell {
         }
     }
 
+    var delegate: ToDoItemTableViewCellDelegate?
+    
     // MARK: - Interface Builder Outlets
     
     @IBOutlet var checkBox: M13Checkbox!
@@ -108,12 +116,9 @@ class ToDoItemTableViewCell: UITableViewCell {
     /// Move to trash button tapped.
     
     @IBAction func moveToTrashDidTap(_ sender: UIButton) {
-        guard let todo = todo else { return }
+        guard let todo = todo, let delegate = delegate else { return }
         
-        todo.moveToTrash()
-        // Generate haptic and play sound
-        Haptic.notification(.success).generate()
-        SoundManager.play(soundEffect: .Click)
+        delegate.deleteTodo(for: todo)
     }
     
     /// Configure selected state.

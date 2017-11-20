@@ -229,7 +229,9 @@ class ToDoTableViewController: UITableViewController {
         if let due = dueDate {
             todo.due = due
             
-            NotificationManager.registerTodoDueNotification(for: todo)
+            DispatchQueue.main.async {
+                NotificationManager.registerTodoDueNotification(for: todo)
+            }
         }
         
         // Generate haptic feedback and play sound

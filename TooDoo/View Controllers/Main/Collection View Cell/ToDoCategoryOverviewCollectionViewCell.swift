@@ -273,6 +273,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
         let index = isAdding ? IndexPath(item: indexPath.item - 1, section: indexPath.section) : indexPath
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
         
+        cell.delegate = self
         let todo = fetchedResultsController.object(at: index)
         cell.todo = todo
         
@@ -302,6 +303,12 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             case .delete:
                 // Moved a todo to trash
                 if let indexPath = indexPath, todoItemsTableView.numberOfRows(inSection: 0) > 0 {
+                    // Prevent core data objects with table rows async crash
+                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
+                    let controllerRows = (controller.fetchedObjects?.count)!
+                    // If equal, exit
+                    guard tableRows != controllerRows else { return }
+                    
                     // Delete from table row
                     if #available(iOS 11.0, *) {
                         todoItemsTableView.performBatchUpdates({
@@ -338,6 +345,21 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                 break
             }
         }
+    }
+    
+}
+
+// MARK: - To Do Item Table View Cell Delegate Methods.
+
+extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate {
+    
+    /// Delete todo.
+
+    func deleteTodo(for todo: ToDo) {
+        todo.moveToTrash()
+        // Generate haptic and play sound
+        Haptic.notification(.success).generate()
+        SoundManager.play(soundEffect: .Click)
     }
     
 }
@@ -391,6 +413,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         guard let delegate = delegate else { return }
         // Reset adding state
         newTodoDoneEditing(todo: nil)
+        isAdding = false
         // Show add new todo
         delegate.showAddNewTodo(goal: goal, for: category!)
     }

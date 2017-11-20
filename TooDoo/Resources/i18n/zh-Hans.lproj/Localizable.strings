@@ -19,7 +19,7 @@
 "Today" = "今天";
 
 "EEEE, MMM d" = "MM月d日 EEEE";
-"MMM dd, EEE hh:mm aa" = "MM月dd日, EEE hh:mm aa";
+"MMM dd, EEE hh:mm aa" = "MM月dd日, EEE HH:mm";
 
 /*
  Shortcut Items.
@@ -30,7 +30,7 @@
 "shortcut.items.settings" = "设置";
 
 /*
- Notifications
+ Notifications.
  */
 "notifications.todo.due.title" = "你有一个 %name% 的待办事项";
 

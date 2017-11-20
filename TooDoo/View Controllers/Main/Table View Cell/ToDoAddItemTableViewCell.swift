@@ -156,6 +156,7 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     @IBAction func editButtonDidTap(_ sender: Any) {
         guard let delegate = delegate else { return }
         // Dismiss and show add new todo
+        goalTextField.resignFirstResponder()
         delegate.showAddNewTodo(goal: goalTextField.text!.trimmingCharacters(in: .whitespaces))
     }
     

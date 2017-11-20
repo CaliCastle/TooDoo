@@ -336,8 +336,8 @@ class ToDoOverviewViewController: UIViewController {
             let goal = sender["goal"] as! String
             let category = sender["category"] as! Category
             
-            destinationViewController.category = category
             destinationViewController.goal = goal
+            destinationViewController.category = category
         default:
             break
         }
@@ -478,7 +478,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Is the cell movable or not.
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryCell(indexPath)
+        return !isAddCategoryCell(indexPath) || collectionView.numberOfItems(inSection: 0) > 2
     }
     
     /// Move cell to a new location.
