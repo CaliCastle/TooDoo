@@ -10,20 +10,73 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
     
+    let tableHeaderHeight: CGFloat = 100
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        setupViews()
     }
+    
+    /// Set up view properties.
+    
+    fileprivate func setupViews() {
+        setupNavigationBarAndToolBar()
+        setupTableView()
+    }
+    
+    /// Set navigation bar to hidden and tool bar to visible.
+    
+    fileprivate func setupNavigationBarAndToolBar() {
+        guard let navigationController = navigationController else { return }
+        
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.setToolbarHidden(false, animated: false)
+        
+        navigationController.toolbar.isTranslucent = false
+        navigationController.toolbar.barTintColor = .flatBlack()
+        navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+    }
+    
+    fileprivate func setupTableView() {
+        tableView.backgroundColor = .flatBlack()
+    }
+    
+    // MARK: - Table View Related
 
+    /// Table header height.
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section == 0 else { return 0}
+        
+        return tableHeaderHeight
+    }
+    
+    /// Set preview header view.
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+        
+        guard let headerView = Bundle.main.loadNibNamed(MenuTableHeaderView.nibName, owner: self, options: nil)?.first as? MenuTableHeaderView else { return nil }
+        
+        headerView.backgroundColor = .clear
+        
+        return headerView
+    }
+    
+    /// Light status bar.
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBAction func menuButtonDidTap(_ sender: UIBarButtonItem) {
-        presentingViewController!.dismiss(animated: true, completion: nil)
+    // MARK: - Hide Home Indicator for iPhone X
+    
+    @available(iOS 11, *)
+    override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
     }
     
     // MARK: - Table view data source

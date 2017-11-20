@@ -48,6 +48,8 @@
 		8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB49E5E1FB9731E003240E1 /* ToDoItemTableViewCell.swift */; };
 		8DB49E631FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB49E611FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift */; };
 		8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */; };
+		8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */; };
+		8DBA55901FC37B490012B941 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA558E1FC37B490012B941 /* MenuTableHeaderView.xib */; };
 		8DCBEA5B1FB2A63700AD34D9 /* chord.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA541FB2A5B000AD34D9 /* chord.caf */; };
 		8DCBEA5C1FB2A63700AD34D9 /* click.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5A1FB2A62E00AD34D9 /* click.caf */; };
 		8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA591FB2A62D00AD34D9 /* success.caf */; };
@@ -119,6 +121,8 @@
 		8DB49E5E1FB9731E003240E1 /* ToDoItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTableViewCell.swift; sourceTree = "<group>"; };
 		8DB49E611FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPreviewTableHeaderView.swift; sourceTree = "<group>"; };
 		8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryPreviewTableHeaderView.xib; sourceTree = "<group>"; };
+		8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableHeaderView.swift; sourceTree = "<group>"; };
+		8DBA558E1FC37B490012B941 /* MenuTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableHeaderView.xib; sourceTree = "<group>"; };
 		8DCBEA541FB2A5B000AD34D9 /* chord.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.caf; sourceTree = "<group>"; };
 		8DCBEA591FB2A62D00AD34D9 /* success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.caf; sourceTree = "<group>"; };
 		8DCBEA5A1FB2A62E00AD34D9 /* click.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.caf; sourceTree = "<group>"; };
@@ -398,6 +402,15 @@
 			path = "Category Preview Table Header View";
 			sourceTree = "<group>";
 		};
+		8DBA558C1FC37B030012B941 /* Menu Table Header View */ = {
+			isa = PBXGroup;
+			children = (
+				8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */,
+				8DBA558E1FC37B490012B941 /* MenuTableHeaderView.xib */,
+			);
+			path = "Menu Table Header View";
+			sourceTree = "<group>";
+		};
 		8DCBEA561FB2A5DA00AD34D9 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,6 +458,7 @@
 		8DE287E31FC2DDF3008EFE91 /* Menu Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8DBA558C1FC37B030012B941 /* Menu Table Header View */,
 				8DE287E41FC2DE16008EFE91 /* MenuTableViewController.swift */,
 			);
 			path = "Menu Table View Controller";
@@ -555,6 +569,7 @@
 				8DCBEA5C1FB2A63700AD34D9 /* click.caf in Resources */,
 				8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */,
 				8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */,
+				8DBA55901FC37B490012B941 /* MenuTableHeaderView.xib in Resources */,
 				8DB49E591FB8D859003240E1 /* checkmark-round.png in Resources */,
 				8D1599051FAAE7220004846F /* Setup.storyboard in Resources */,
 				8D4784D41F9077820067E0FE /* LaunchScreen.storyboard in Resources */,
@@ -619,6 +634,7 @@
 				"${BUILT_PRODUCTS_DIR}/Motion/Motion.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Peep/Peep.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Typist/Typist.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
@@ -638,6 +654,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Motion.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Peep.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Typist.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
@@ -701,6 +718,7 @@
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
+				8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */,
 				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
 				8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */,
 				8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */,

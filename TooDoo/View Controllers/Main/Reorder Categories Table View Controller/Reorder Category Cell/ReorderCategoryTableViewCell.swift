@@ -28,6 +28,8 @@ class ReorderCategoryTableViewCell: UITableViewCell {
             // Configure name label
             categoryNameLabel.text = category.name
             categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            // Configure tint color
+            tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
         }
     }
     

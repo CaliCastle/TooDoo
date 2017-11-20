@@ -10,6 +10,7 @@ import UIKit
 import Haptica
 import Hokusai
 import CoreData
+import SideMenu
 import ViewAnimator
 
 class ToDoOverviewViewController: UIViewController {
@@ -149,7 +150,6 @@ class ToDoOverviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        animateTodoCollectionView()
     }
     
     /// Fetch categories from core data.
@@ -176,6 +176,7 @@ class ToDoOverviewViewController: UIViewController {
         setupTimeLabel()
         setupMessageLabel()
         setupTodosCollectionView()
+        setupSideMenuGesture()
     }
     
     /// Set up greetingWithTimeLabel.
@@ -222,6 +223,16 @@ class ToDoOverviewViewController: UIViewController {
         todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
     }
     
+    /// Set up side menu screen edge pan gesture.
+    
+    fileprivate func setupSideMenuGesture() {
+        let menuController = StoryboardManager.storyboardInstance(name: .Menu).instantiateInitialViewController()
+        
+        SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuController!)
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController!.view)
+    }
+    
     /// Configure user information to the designated views.
     
     fileprivate func configureUserSettings() {
@@ -255,8 +266,19 @@ class ToDoOverviewViewController: UIViewController {
         case NavigationItem.Search.rawValue:
             print("Search!")
         default:
-            break
+            showSideMenu()
         }
+    }
+    
+    /// Show menu for more options.
+    
+    fileprivate func showSideMenu() {
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        
+        // Present side menu
+        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
     /// Show action sheet for adding a new item.
@@ -339,10 +361,6 @@ class ToDoOverviewViewController: UIViewController {
             
             destinationViewController.goal = goal
             destinationViewController.category = category
-        case Segue.ShowMenu.rawValue:
-            // Play click sound
-            SoundManager.play(soundEffect: .Click)
-            Haptic.impact(.medium).generate()
             
         default:
             break
@@ -360,6 +378,7 @@ extension ToDoOverviewViewController {
     fileprivate func startAnimations() {
         animateNavigationBar()
         animateUserViews()
+        animateTodoCollectionView()
     }
     
     /// Animate user related views.

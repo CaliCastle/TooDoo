@@ -79,6 +79,8 @@ final class DispatchManager {
     fileprivate class func configureAppearance() {
         // Adjust navigation bar appearance
         AppearanceManager.changeNavigationBarAppearance()
+        // Adjust side menu appearance
+        AppearanceManager.changeSideMenuAppearance()
     }
     
     /// Once user has finished setup process.

@@ -16,10 +16,12 @@ final class StoryboardManager {
     ///
     /// - Main: Main storyboard
     /// - Setup: Setup storyboard
+    /// - Menu: Side menu storyboard
     
     enum Storyboard: String {
         case Main = "Main"
         case Setup = "Setup"
+        case Menu = "Menu"
     }
     
     /// Get storyboard file name in string

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SideMenu
 
 /// Manager for Appearance Configuration
 
@@ -56,6 +57,15 @@ final class AppearanceManager {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white, .font: font(size: 18, weight: .DemiBold)]
         UIBarButtonItem.appearance().setTitleTextAttributes([.font: font()], for: .normal)
+    }
+    
+    // MARK: - Side Menu
+    
+    static func changeSideMenuAppearance() {
+        SideMenuManager.default.menuFadeStatusBar = false
+        SideMenuManager.default.menuPresentMode = .viewSlideInOut
+        SideMenuManager.default.menuShadowOpacity = 0.15
+        SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 0.8
     }
     
     // Private init

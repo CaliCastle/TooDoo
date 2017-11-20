@@ -39,14 +39,6 @@
             </objects>
             <point key="canvasLocation" x="-271" y="150"/>
         </scene>
-        <!--Menu-->
-        <scene sceneID="tU3-JL-q4Z">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Menu" id="1bR-KV-RDP" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZIa-jX-1oz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1146" y="296"/>
-        </scene>
         <!--TooDoo-->
         <scene sceneID="Tcy-m9-9ny">
             <objects>
@@ -486,7 +478,6 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="navigationItemDidTap:" destination="hCj-vD-cOb" id="bTu-GC-Oxv"/>
-                                <segue destination="1bR-KV-RDP" kind="presentation" identifier="ShowMenu" modalTransitionStyle="flipHorizontal" id="5UJ-Ka-KuS"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>

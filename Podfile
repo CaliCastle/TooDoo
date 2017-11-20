@@ -23,5 +23,6 @@ target 'TooDoo' do
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'
   pod 'DateTimePicker'
+  pod 'SideMenu'
   
 end
