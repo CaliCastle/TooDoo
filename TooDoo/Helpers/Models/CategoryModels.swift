@@ -50,9 +50,9 @@ final class CategoryIcon {
         "airplane", "ingredients", "fruit", "chef", "calendar",
         "house", "home", "pilers", "call", "beach", "cat", "car", "cap",
         "flipflops", "heels", "love", "mail", "design", "dance", "code",
-        "party", "present", "progress", "running", "tickets", "netflix",
-        "skype", "spotify", "snapchat", "messenger", "whatsapp", "instagram",
-        "wechat", "weibo"
+        "party", "present", "progress", "running", "tickets", "scissors",
+        "yoga", "warning", "dribbble", "netflix", "skype", "spotify", "snapchat",
+        "messenger", "whatsapp", "instagram", "wechat", "weibo"
     ]
     
     /// Get default icons for category.

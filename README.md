@@ -5,6 +5,8 @@
 
 TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a daily basis and painless create new todos in seconds.
 
+> __Written only in Swift 4__
+
 ## Features list:
 - [x] Add/Update/Delete categories
 - [x] Reorder categories
@@ -37,6 +39,7 @@ _Supported devices:_
 
 ## Upcoming features:
 
+- Gravitational physics effects to UI
 - Change user's name and avatar
 - Settings page
 - Categorize icons for better UX

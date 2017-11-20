@@ -38,6 +38,7 @@ class ToDoOverviewViewController: UIViewController {
         case ShowCategory = "ShowCategory"
         case ShowReorderCategories = "ShowReoderCategories"
         case ShowTodo = "ShowTodo"
+        case ShowMenu = "ShowMenu"
     }
     
     /// Navigation ttems enum.
@@ -110,7 +111,7 @@ class ToDoOverviewViewController: UIViewController {
         return swipeGestureRecognizer
     }()
     
-    /// Timer for user interface updates
+    /// Timer for user interface updates.
 
     lazy var timer: Timer = {
         // 30 minutes timer
@@ -249,12 +250,12 @@ class ToDoOverviewViewController: UIViewController {
     @IBAction func navigationItemDidTap(_ sender: UIBarButtonItem) {
         /// FIXME
         switch sender.tag {
-        case NavigationItem.Menu.rawValue:
-            print("Menu!")
+        case NavigationItem.Add.rawValue:
+            showAddNewItem()
         case NavigationItem.Search.rawValue:
             print("Search!")
         default:
-            showAddNewItem()
+            break
         }
     }
     
@@ -338,6 +339,11 @@ class ToDoOverviewViewController: UIViewController {
             
             destinationViewController.goal = goal
             destinationViewController.category = category
+        case Segue.ShowMenu.rawValue:
+            // Play click sound
+            SoundManager.play(soundEffect: .Click)
+            Haptic.impact(.medium).generate()
+            
         default:
             break
         }
