@@ -186,11 +186,11 @@ class ToDoOverviewViewController: UIViewController {
         let todayCompnents = Calendar.current.dateComponents([.hour], from: now)
         
         switch todayCompnents.hour! {
-        case 5..<12:
+        case 4..<12:
             // Morning
             greetingWithTimeLabel.text = "\("overview.greeting.time.morning".localized) ☀️"
             greetingWithTimeLabel.textColor = UIColor(hexString: "F8E71C")
-        case 12..<19:
+        case 12..<18:
             // Afternoon
             greetingWithTimeLabel.text = "\("overview.greeting.time.afternoon".localized) ☕️"
             greetingWithTimeLabel.textColor = UIColor(hexString: "F5A623")

@@ -15,10 +15,14 @@ final class UserDefaultManager {
     /// User Default keys
     ///
     /// - UserName: User's name
+    /// - UserAvatar: User's avatar image
+    /// - UserHasBeenUsingSince: Count how many days has the user been using this app
     
     enum Key: String {
         case UserName = "user-name"
         case UserAvatar = "user-avatar"
+        
+        case UserHasBeenUsingSince = "user-has-been-using-since"
     }
     
     static let userDefaults = UserDefaults.standard
@@ -62,6 +66,24 @@ final class UserDefaultManager {
         userDefaults.set(value, forKey: key.rawValue)
     }
     
+    /// Get value for key
+    ///
+    /// - Parameter key: The unique user default key
+    /// - Returns: The value
+    
+    class func get(forKey key: Key) -> Any? {
+        return userDefaults.value(forKey: key.rawValue)
+    }
+    
+    /// Get integer for key
+    ///
+    /// - Parameter key: The unique user default key
+    /// - Returns: The integer value
+    
+    class func int(forKey key: Key) -> Int {
+        return userDefaults.integer(forKey: key.rawValue)
+    }
+    
     /// Set an image for a User Defaults key
     ///
     /// - Parameters:
@@ -80,14 +102,57 @@ final class UserDefaultManager {
         userDefaults.removeObject(forKey: key.rawValue)
     }
     
+    // Private init
+    
+    private init() {}
+    
+}
+
+// MARK: - Custom Definitions.
+
+extension UserDefaultManager {
+    
     /// Check if the user has already setup
+    ///
+    /// - Returns: If setup or not
     
     class func userHasSetup() -> Bool {
         return string(forKey: .UserName) != nil
     }
     
-    // Private init
+    /// Default date format.
     
-    private init() {}
+    static var dateFormat: String {
+        return "yyyy-MM-dd"
+    }
+    
+    /// Get how many days has the user been using this app
+    ///
+    /// - Returns: The days integer
+    
+    class func userHasBeenUsingThisAppDaysCount() -> Int {
+        guard let installationDateAsString = string(forKey: .UserHasBeenUsingSince) else { setUserInstallationDate(); return 0 }
+        
+        // Configure format
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        // Retreive dates
+        let today = Date()
+        let installationDate = dateFormatter.date(from: installationDateAsString) ?? today
+        let dateDiffInDays = Date().timeIntervalSince(installationDate) / 12 / 6 / 6 / 100
+        
+        return Int(dateDiffInDays)
+    }
+    
+    /// Set user installation date to today's date.
+    
+    fileprivate class func setUserInstallationDate() {
+        // Configure date
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        // Set installation date
+        set(value: dateFormatter.string(from: today), forKey: .UserHasBeenUsingSince)
+    }
     
 }

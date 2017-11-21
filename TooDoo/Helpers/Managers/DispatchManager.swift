@@ -19,6 +19,7 @@ final class DispatchManager {
         configureAppearance()
         configureRootViewController(for: application)
         configureShortcutItems(for: application, with: launchOptions)
+        configureInstallationDateIfNone()
     }
     
     // MARK: - Shortcut Item Trigger Entry Point
@@ -91,5 +92,11 @@ final class DispatchManager {
         
         // Remove from user setup notification
         NotificationManager.remove(self, notification: .UserHasSetup, object: nil)
+    }
+    
+    /// Configure installation to user defaults if none.
+    
+    fileprivate static func configureInstallationDateIfNone() {
+        let _ = UserDefaultManager.userHasBeenUsingThisAppDaysCount()
     }
 }
