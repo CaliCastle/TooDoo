@@ -95,3 +95,8 @@
 "alert.error-fetching-category" = "无法读取分类";
 "alert.error-fetching-todo" = "无法读取待办事项";
 "alert.unable-to-fetch-request" = "无法读取数据";
+
+/*
+ Permission
+ */
+"permission.authentication.reason" = "为了保护隐私与未来解锁本应用";

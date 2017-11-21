@@ -11,3 +11,6 @@ CFBundleDisplayName = "TooDoo待办事项";
 
 /* Photo Library Access */
 NSPhotoLibraryUsageDescription = "图片选择功能需要相册访问权限";
+
+/* Face ID Usage Description */
+NSFaceIDUsageDescription = "为了保护隐私与未来解锁本应用";

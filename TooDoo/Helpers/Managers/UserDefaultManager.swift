@@ -23,6 +23,9 @@ final class UserDefaultManager {
         case UserAvatar = "user-avatar"
         
         case UserHasBeenUsingSince = "user-has-been-using-since"
+        
+        case SettingSounds = "setting-sounds"
+        case SettingAuthentication = "setting-authentication"
     }
     
     static let userDefaults = UserDefaults.standard
@@ -158,7 +161,19 @@ extension UserDefaultManager {
     /// Get user avatar.
     
     class func userAvatar() -> UIImage {
-        return UserDefaultManager.image(forKey: .UserAvatar) ?? UIImage()
+        return image(forKey: .UserAvatar) ?? UIImage()
+    }
+    
+    /// See if sounds setting is enabled.
+    
+    class func settingSoundsEnabled() -> Bool {
+        return userDefaults.value(forKey: Key.SettingSounds.rawValue) == nil ? true : bool(forKey: .SettingSounds)
+    }
+    
+    /// See if authentication setting is enabled.
+    
+    class func settingAuthenticationEnabled() -> Bool {
+        return bool(forKey: .SettingAuthentication)
     }
     
 }

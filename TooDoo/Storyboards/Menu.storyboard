@@ -51,6 +51,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FJG-d9-Udg">
                                                     <rect key="frame" x="311" y="11" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.31372549019607843" green="0.8901960784313725" blue="0.76078431372549016" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="soundsSwitchChanged:" destination="UmB-by-Qdc" eventType="valueChanged" id="JMh-KS-h3W"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,7 +78,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="h7R-nk-XSS">
+                                                <imageView tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="h7R-nk-XSS">
                                                     <rect key="frame" x="30" y="9" width="35" height="35"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,9 +93,12 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lHL-OA-01e">
+                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lHL-OA-01e">
                                                     <rect key="frame" x="311" y="11" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="authenticationSwitchChanged:" destination="UmB-by-Qdc" eventType="valueChanged" id="7zc-Zh-gUB"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -324,6 +330,8 @@
                     <navigationItem key="navigationItem" title="Title" id="jhp-6e-IYz"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <connections>
+                        <outlet property="authenticationIconImageView" destination="h7R-nk-XSS" id="zxD-up-ttg"/>
+                        <outlet property="authenticationLabel" destination="sx5-od-7eX" id="8xA-dF-xMW"/>
                         <outletCollection property="iconImageViews" destination="hZ0-sx-MvJ" collectionClass="NSMutableArray" id="LP7-nc-Ei5"/>
                         <outletCollection property="iconImageViews" destination="h7R-nk-XSS" collectionClass="NSMutableArray" id="ugr-L1-xC6"/>
                         <outletCollection property="iconImageViews" destination="qCv-Dz-qgF" collectionClass="NSMutableArray" id="n7L-JA-p4e"/>
@@ -331,6 +339,8 @@
                         <outletCollection property="iconImageViews" destination="gKL-oB-Uhl" collectionClass="NSMutableArray" id="koe-Yw-wrO"/>
                         <outletCollection property="iconImageViews" destination="RxD-Ut-He5" collectionClass="NSMutableArray" id="cP8-QE-cCb"/>
                         <outletCollection property="iconImageViews" destination="LOR-gw-zON" collectionClass="NSMutableArray" id="RG5-A4-aHH"/>
+                        <outletCollection property="switches" destination="FJG-d9-Udg" collectionClass="NSMutableArray" id="baD-4Y-G1k"/>
+                        <outletCollection property="switches" destination="lHL-OA-01e" collectionClass="NSMutableArray" id="Nb7-l9-eKJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M4W-eH-dri" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -32,6 +32,9 @@ final class SoundManager {
     /// - Parameter soundEffect: The sound effect
     
     class func play(soundEffect: SoundEffect) {
+        // Check for sounds setting before playing
+        guard UserDefaultManager.settingSoundsEnabled() else { return }
+        
         let soundFileUrl = Bundle.main.url(forResource: soundEffect.rawValue, withExtension: "caf")
         
         Peep.play(sound: soundFileUrl)

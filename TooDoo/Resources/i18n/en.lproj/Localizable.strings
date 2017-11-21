@@ -95,3 +95,8 @@
 "alert.error-fetching-category" = "Unable to fetch categories";
 "alert.error-fetching-todo" = "Unable to fetch todos";
 "alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";
+
+/*
+ Permission
+ */
+"permission.authentication.reason" = "Authenticate for unlocking app under privacy protection";

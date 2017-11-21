@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Authenticate for unlocking app under privacy protection</string>
 	<key>CFBundleDisplayName</key>
 	<string>TooDoo</string>
 	<key>CFBundleExecutable</key>

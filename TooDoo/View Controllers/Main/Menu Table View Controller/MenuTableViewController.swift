@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class MenuTableViewController: UITableViewController {
     
@@ -17,6 +18,9 @@ class MenuTableViewController: UITableViewController {
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var iconImageViews: [UIImageView]!
+    @IBOutlet var authenticationLabel: UILabel!
+    @IBOutlet var authenticationIconImageView: UIImageView!
+    @IBOutlet var switches: [UISwitch]!
     
     // MARK: - View Life Cycle
     
@@ -46,14 +50,100 @@ class MenuTableViewController: UITableViewController {
         navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
     
+    /// Set up authentication properties.
+    
+    fileprivate func setupAuthenticationProperties() {
+        // Check for biometric types
+        if #available(iOS 11, *) {
+            let context = LAContext()
+            
+            var error: NSError?
+            
+            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                switch context.biometryType {
+                case .faceID:
+                    // Supports Face ID
+                    authenticationIconImageView.image = #imageLiteral(resourceName: "face-id-icon")
+                    authenticationLabel.text = "Face ID".localized
+                case .none:
+                    // No biometric type
+                    authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
+                    authenticationLabel.text = "Passcode".localized
+                default:
+                    // Touch ID
+                    break
+                }
+            }
+        }
+    }
+    
+    /// Configure icon image views.
+    
+    fileprivate func configureIconImages() {
+        for iconImageView in iconImageViews {
+            // Bulk set image tint colors
+            iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
+            iconImageView.tintColor = .white
+        }
+    }
+    
+    /// Configure switches.
+    
+    fileprivate func configureSwitches() {
+        for `switch` in switches {
+            // Bulk set switch tint colors
+            `switch`.tintColor = .flatWhite()
+            `switch`.onTintColor = .flatMint()
+            
+            if `switch`.tag == 0 {
+                // Sounds switch
+                `switch`.isOn = UserDefaultManager.settingSoundsEnabled()
+            } else {
+                // Authentication switch
+                `switch`.isOn = UserDefaultManager.settingAuthenticationEnabled()
+            }
+        }
+    }
+    
     /// Set up table view.
     
     fileprivate func setupTableView() {
         tableView.backgroundColor = .flatBlack()
         
-        for iconImageView in iconImageViews {
-            iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = .white
+        setupAuthenticationProperties()
+        
+        configureIconImages()
+        
+        configureSwitches()
+    }
+    
+    /// Sounds switch value changed.
+    
+    @IBAction func soundsSwitchChanged(_ sender: UISwitch) {
+        UserDefaultManager.set(value: sender.isOn, forKey: .SettingSounds)
+    }
+    
+    /// Authentication switch value changed.
+    
+    @IBAction func authenticationSwitchChanged(_ sender: UISwitch) {
+        let context = LAContext()
+        let reason = "permission.authentication.reason".localized
+        
+        var authError: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, evaluateError in
+                if success {
+                    // User authenticated successfully
+                    UserDefaultManager.set(value: true, forKey: .SettingAuthentication)
+                } else {
+                    // User did not authenticate successfully
+                    sender.isOn = false
+                }
+            }
+        } else {
+            // Could not evaluate policy; look at authError and present an appropriate message to user
+            sender.isOn = false
         }
     }
     
@@ -77,6 +167,11 @@ class MenuTableViewController: UITableViewController {
         return headerView
     }
     
+    /// Select row at index path.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
     
     /// Light status bar.
     
