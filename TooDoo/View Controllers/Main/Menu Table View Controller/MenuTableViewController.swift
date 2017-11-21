@@ -10,7 +10,13 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
     
-    let tableHeaderHeight: CGFloat = 100
+    /// Table header height.
+    
+    let tableHeaderHeight: CGFloat = 150
+    
+    // MARK: - Interface Builder Outlets.
+    
+    @IBOutlet var iconImageViews: [UIImageView]!
     
     // MARK: - View Life Cycle
     
@@ -40,8 +46,15 @@ class MenuTableViewController: UITableViewController {
         navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
     
+    /// Set up table view.
+    
     fileprivate func setupTableView() {
         tableView.backgroundColor = .flatBlack()
+        
+        for iconImageView in iconImageViews {
+            iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
+            iconImageView.tintColor = .white
+        }
     }
     
     // MARK: - Table View Related
@@ -61,10 +74,9 @@ class MenuTableViewController: UITableViewController {
         
         guard let headerView = Bundle.main.loadNibNamed(MenuTableHeaderView.nibName, owner: self, options: nil)?.first as? MenuTableHeaderView else { return nil }
         
-        headerView.backgroundColor = .clear
-        
         return headerView
     }
+    
     
     /// Light status bar.
     

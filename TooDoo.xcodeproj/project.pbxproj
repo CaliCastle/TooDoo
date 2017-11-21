@@ -50,6 +50,7 @@
 		8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */; };
 		8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */; };
 		8DBA55901FC37B490012B941 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA558E1FC37B490012B941 /* MenuTableHeaderView.xib */; };
+		8DBA55921FC430F80012B941 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA55911FC430F80012B941 /* UITextView.swift */; };
 		8DCBEA5B1FB2A63700AD34D9 /* chord.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA541FB2A5B000AD34D9 /* chord.caf */; };
 		8DCBEA5C1FB2A63700AD34D9 /* click.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5A1FB2A62E00AD34D9 /* click.caf */; };
 		8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA591FB2A62D00AD34D9 /* success.caf */; };
@@ -123,6 +124,7 @@
 		8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryPreviewTableHeaderView.xib; sourceTree = "<group>"; };
 		8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableHeaderView.swift; sourceTree = "<group>"; };
 		8DBA558E1FC37B490012B941 /* MenuTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableHeaderView.xib; sourceTree = "<group>"; };
+		8DBA55911FC430F80012B941 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		8DCBEA541FB2A5B000AD34D9 /* chord.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.caf; sourceTree = "<group>"; };
 		8DCBEA591FB2A62D00AD34D9 /* success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.caf; sourceTree = "<group>"; };
 		8DCBEA5A1FB2A62E00AD34D9 /* click.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.caf; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */,
 				8D1F6A881FB67CA7004709E3 /* UIViewController.swift */,
 				8D589F721FC1A00700039610 /* String.swift */,
+				8DBA55911FC430F80012B941 /* UITextView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
 				8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */,
 				8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */,
+				8DBA55921FC430F80012B941 /* UITextView.swift in Sources */,
 				8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */,
 				8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */,
 			);

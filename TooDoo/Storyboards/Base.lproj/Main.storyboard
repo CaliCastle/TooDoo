@@ -200,7 +200,7 @@
                                                                                     <action selector="checkboxChanged:" destination="F0s-WT-Tl5" eventType="valueChanged" id="APT-Be-zz3"/>
                                                                                 </connections>
                                                                             </view>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To-do item" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="x5H-4u-tMc">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To-do item" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="x5H-4u-tMc">
                                                                                 <rect key="frame" x="34" y="8.6666666666666643" width="226" height="18"/>
                                                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                                                                 <nil key="textColor"/>
@@ -972,6 +972,9 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="goalEntered:" destination="VJ3-YR-ah3" eventType="editingDidEndOnExit" id="a4t-fa-bxn"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -1085,7 +1088,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Xop-1P-BWD" firstAttribute="centerY" secondItem="I1e-0c-3KB" secondAttribute="centerY" id="6A7-94-wyE"/>
-                                                <constraint firstItem="tg8-Jh-Icg" firstAttribute="leading" secondItem="Xop-1P-BWD" secondAttribute="trailing" constant="200" id="8Vk-VG-8yg"/>
+                                                <constraint firstItem="tg8-Jh-Icg" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Xop-1P-BWD" secondAttribute="trailing" constant="200" id="8Vk-VG-8yg"/>
                                                 <constraint firstItem="tg8-Jh-Icg" firstAttribute="centerY" secondItem="I1e-0c-3KB" secondAttribute="centerY" id="k5x-51-Cmg"/>
                                                 <constraint firstItem="tg8-Jh-Icg" firstAttribute="trailing" secondItem="I1e-0c-3KB" secondAttribute="trailingMargin" id="u2m-7Q-Jbd"/>
                                                 <constraint firstItem="Xop-1P-BWD" firstAttribute="leading" secondItem="I1e-0c-3KB" secondAttribute="leadingMargin" id="wl1-SD-6VW"/>

@@ -190,6 +190,12 @@ class ToDoTableViewController: UITableViewController {
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
+    /// Entered goal and click return key on keyboard.
+    
+    @IBAction func goalEntered(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
     /// When user taps done, save todo.
     
     @IBAction func doneDidTap(_ sender: Any) {

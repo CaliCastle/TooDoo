@@ -155,4 +155,10 @@ extension UserDefaultManager {
         set(value: dateFormatter.string(from: today), forKey: .UserHasBeenUsingSince)
     }
     
+    /// Get user avatar.
+    
+    class func userAvatar() -> UIImage {
+        return UserDefaultManager.image(forKey: .UserAvatar) ?? UIImage()
+    }
+    
 }

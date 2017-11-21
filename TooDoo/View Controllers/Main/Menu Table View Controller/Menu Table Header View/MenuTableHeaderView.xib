@@ -9,16 +9,111 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="5Zu-Lg-0Ox" customClass="MenuTableHeaderView" customModule="TooDoo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft5-9m-cnK">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_boy" translatesAutoresizingMaskIntoConstraints="NO" id="oCe-rN-OV4">
+                            <rect key="frame" x="20" y="7.5" width="55" height="55"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="55" id="ZNy-VG-4ck"/>
+                                <constraint firstAttribute="height" constant="55" id="j8h-KI-SvQ"/>
+                            </constraints>
+                        </imageView>
+                        <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" text="User Name" translatesAutoresizingMaskIntoConstraints="NO" id="9oD-ew-iRj">
+                            <rect key="frame" x="83" y="7.5" width="256" height="55"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="55" id="leC-gM-KsD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="nickname"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMi-RK-TrP">
+                            <rect key="frame" x="347" y="25" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="9Jq-QO-xs6"/>
+                                <constraint firstAttribute="height" constant="20" id="SfM-Ko-vI1"/>
+                            </constraints>
+                            <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                            <state key="normal" image="pencil-icon"/>
+                            <connections>
+                                <action selector="editButtonDidTap:" destination="5Zu-Lg-0Ox" eventType="touchUpInside" id="w2Y-5m-hhF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="oCe-rN-OV4" firstAttribute="leading" secondItem="ft5-9m-cnK" secondAttribute="leading" constant="20" id="2h3-GI-Fxl"/>
+                        <constraint firstItem="9oD-ew-iRj" firstAttribute="centerY" secondItem="ft5-9m-cnK" secondAttribute="centerY" id="71b-L6-vIH"/>
+                        <constraint firstAttribute="trailing" secondItem="uMi-RK-TrP" secondAttribute="trailing" constant="8" id="7dB-uk-CHR"/>
+                        <constraint firstItem="oCe-rN-OV4" firstAttribute="centerY" secondItem="ft5-9m-cnK" secondAttribute="centerY" id="NiY-4W-wqn"/>
+                        <constraint firstAttribute="height" constant="70" id="T3t-Aa-sM0"/>
+                        <constraint firstItem="uMi-RK-TrP" firstAttribute="leading" secondItem="9oD-ew-iRj" secondAttribute="trailing" constant="8" id="dvL-Kt-ScN"/>
+                        <constraint firstItem="uMi-RK-TrP" firstAttribute="centerY" secondItem="ft5-9m-cnK" secondAttribute="centerY" id="eV4-hI-Nfl"/>
+                        <constraint firstItem="9oD-ew-iRj" firstAttribute="leading" secondItem="oCe-rN-OV4" secondAttribute="trailing" constant="8" id="puU-1b-9FK"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked-overflow-icon" translatesAutoresizingMaskIntoConstraints="NO" id="ds8-Eb-pkJ">
+                    <rect key="frame" x="20" y="78" width="34" height="34"/>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="c6E-48-Elg"/>
+                        <constraint firstAttribute="width" constant="34" id="zWo-t6-eMZ"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have been using TooDoo for 10 days" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNb-TG-z54">
+                    <rect key="frame" x="66" y="78" width="274" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="Wtt-Ez-XGm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="UNb-TG-z54" firstAttribute="leading" secondItem="ds8-Eb-pkJ" secondAttribute="trailing" constant="12" id="6j6-E1-Azg"/>
+                <constraint firstItem="UNb-TG-z54" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="Dp3-Ua-7aD"/>
+                <constraint firstItem="ft5-9m-cnK" firstAttribute="top" secondItem="5Zu-Lg-0Ox" secondAttribute="top" id="IF9-Lm-WSM"/>
+                <constraint firstItem="ds8-Eb-pkJ" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="Iqi-5g-rmU"/>
+                <constraint firstItem="UNb-TG-z54" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="JqK-AN-G74"/>
+                <constraint firstItem="UNb-TG-z54" firstAttribute="leading" secondItem="ds8-Eb-pkJ" secondAttribute="trailing" constant="12" id="Q0G-oO-y7S"/>
+                <constraint firstAttribute="trailing" secondItem="ft5-9m-cnK" secondAttribute="trailing" id="RXh-p4-hbK"/>
+                <constraint firstItem="ft5-9m-cnK" firstAttribute="leading" secondItem="5Zu-Lg-0Ox" secondAttribute="leading" id="U6S-Nq-jqv"/>
+                <constraint firstItem="O2J-7n-6Zs" firstAttribute="trailing" secondItem="UNb-TG-z54" secondAttribute="trailing" constant="35" id="XlJ-sK-xwi"/>
+                <constraint firstItem="O2J-7n-6Zs" firstAttribute="trailing" secondItem="UNb-TG-z54" secondAttribute="trailing" constant="35" id="aX4-gZ-Sdn"/>
+                <constraint firstItem="ds8-Eb-pkJ" firstAttribute="leading" secondItem="O2J-7n-6Zs" secondAttribute="leading" constant="20" id="sA2-tM-BeN"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="O2J-7n-6Zs"/>
-            <point key="canvasLocation" x="-141" y="214"/>
+            <connections>
+                <outlet property="editButton" destination="uMi-RK-TrP" id="a3u-tO-vWe"/>
+                <outlet property="sinceCheckImageView" destination="ds8-Eb-pkJ" id="VtR-DS-0Q8"/>
+                <outlet property="sinceLabel" destination="UNb-TG-z54" id="lul-nf-KHj"/>
+                <outlet property="userAvatarImageView" destination="oCe-rN-OV4" id="dDa-Rv-0O5"/>
+                <outlet property="userNameTextView" destination="9oD-ew-iRj" id="xkg-e2-pZW"/>
+            </connections>
+            <point key="canvasLocation" x="-141.5" y="214"/>
         </view>
     </objects>
+    <resources>
+        <image name="avatar_boy" width="512" height="512"/>
+        <image name="checked-overflow-icon" width="40" height="40"/>
+        <image name="pencil-icon" width="25" height="25"/>
+    </resources>
 </document>
