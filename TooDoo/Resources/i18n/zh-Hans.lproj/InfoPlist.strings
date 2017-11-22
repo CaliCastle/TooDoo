@@ -7,7 +7,7 @@
 */
 
 /* App Display Name */
-CFBundleDisplayName = "TooDoo待办事项";
+CFBundleDisplayName = "TooDoo";
 
 /* Photo Library Access */
 NSPhotoLibraryUsageDescription = "图片选择功能需要相册访问权限";

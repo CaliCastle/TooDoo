@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3CB54E0EF5F8FF069BCA2FD2 /* Pods_TooDoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 956F67EA935055512DB22579 /* Pods_TooDoo.framework */; };
+		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
+		8D05144E1FC57E6C00AC45CE /* UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
@@ -68,10 +70,14 @@
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
 		8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0571FC5074D00162996 /* Menu.storyboard */; };
+		8DF7B05D1FC50D5800162996 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B05C1FC50D5800162996 /* Settings.storyboard */; };
+		8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A0CD7DA27E89FF9555CD299 /* Pods-TooDoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.release.xcconfig"; sourceTree = "<group>"; };
+		8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUnlockViewController.swift; sourceTree = "<group>"; };
+		8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMotionEffect.swift; sourceTree = "<group>"; };
 		8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		8D1599071FAAEE310004846F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
@@ -146,6 +152,8 @@
 		8DF7B0561FC5074D00162996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Menu.storyboard; sourceTree = "<group>"; };
 		8DF7B0591FC5075100162996 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Menu.strings; sourceTree = "<group>"; };
 		8DF7B05B1FC5075500162996 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Menu.strings"; sourceTree = "<group>"; };
+		8DF7B05C1FC50D5800162996 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		956F67EA935055512DB22579 /* Pods_TooDoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TooDoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C60B7BF83007E4F0CAFE92 /* Pods-TooDoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,6 +278,7 @@
 				8D1F6A881FB67CA7004709E3 /* UIViewController.swift */,
 				8D589F721FC1A00700039610 /* String.swift */,
 				8DBA55911FC430F80012B941 /* UITextView.swift */,
+				8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +288,7 @@
 			children = (
 				8D6A13A01F93EB97004238D8 /* Setup & Welcome */,
 				8D6A13A11F93EBA2004238D8 /* Main */,
+				8DF7B05E1FC50DB400162996 /* Settings */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -290,6 +300,7 @@
 				8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */,
 				8D1599031FAAE7220004846F /* Setup.storyboard */,
 				8DF7B0571FC5074D00162996 /* Menu.storyboard */,
+				8DF7B05C1FC50D5800162996 /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -341,6 +352,7 @@
 				8DB49E5D1FB97304003240E1 /* Table View Cell */,
 				8D1642D41FB4F28D004F306F /* Collection View Cell */,
 				8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */,
+				8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -497,6 +509,14 @@
 			path = "Todo Table View Controller";
 			sourceTree = "<group>";
 		};
+		8DF7B05E1FC50DB400162996 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		DAB3235CDD8F1ABEA16D25BC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +605,7 @@
 				8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */,
 				8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */,
 				8D809BDA1FC2513F008DF629 /* README.md in Resources */,
+				8DF7B05D1FC50D5800162996 /* Settings.storyboard in Resources */,
 				8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */,
 				8DB49E561FB8D859003240E1 /* alert-round.png in Resources */,
 			);
@@ -704,6 +725,7 @@
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
 				8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */,
+				8D05144E1FC57E6C00AC45CE /* UIMotionEffect.swift in Sources */,
 				8D6A13A31F93EC24004238D8 /* SetupWelcomeViewController.swift in Sources */,
 				8DD3D6D61FB797EE00BE4FEF /* CategoryModels.swift in Sources */,
 				8D1599081FAAEE310004846F /* GradientView.swift in Sources */,
@@ -723,6 +745,7 @@
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
 				8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */,
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
+				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
 				8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */,
@@ -732,6 +755,7 @@
 				8DF35D631FBE54FA001877F4 /* ToDo.swift in Sources */,
 				8D1F6A821FB64F6F004709E3 /* ShortcutItemManager.swift in Sources */,
 				8DB49E631FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift in Sources */,
+				8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */,
 				8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */,
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
 				8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */,

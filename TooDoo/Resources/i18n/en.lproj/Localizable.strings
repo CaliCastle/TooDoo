@@ -10,6 +10,7 @@
 "Get started" = "Get started with TooDoo";
 "Cancel" = "Cancel";
 "Done" = "Done";
+"OK" = "OK";
 "Delete" = "Delete";
 "Nope" = "Nope";
 "Model.Category" = "Category";
@@ -101,6 +102,7 @@
 "alert.error-fetching-category" = "Unable to fetch categories";
 "alert.error-fetching-todo" = "Unable to fetch todos";
 "alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";
+"alert.authentication-failed" = "Authentication failed, please try again";
 
 /*
  Permission

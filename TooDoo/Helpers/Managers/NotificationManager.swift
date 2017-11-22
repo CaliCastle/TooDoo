@@ -33,17 +33,22 @@ final class NotificationManager {
     /// - UserHasSetup: When the user finished the setup
     /// - UserNameChanged: When the user changed the name
     /// - UserAvatarChanged: When the user changed avatar
+    /// - UserAuthenticated: When the user passes authentication with biometric Touch ID, Face ID or Passcode
     /// - ShowAddCategory: Show add category
     /// - ShowAddToDo: Show add todo
     /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
+    /// - SettingMotionEffectsChanged: When the motion effect setting is changed
     
     public enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
         case UserNameChanged = "user-name-changed"
         case UserAvatarChanged = "user-avatar-changed"
+        case UserAuthenticated = "user-authenticated"
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
+        
+        case SettingMotionEffectsChanged = "setting-motion-effects-changed"
     }
     
     /// Local Notifications.

@@ -123,6 +123,8 @@ class ToDoOverviewViewController: UIViewController {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(categoryLongPressed))
         recognizer.minimumPressDuration = 0.3
         
+        todosCollectionView.addGestureRecognizer(recognizer)
+        
         return recognizer
     }()
     
@@ -131,28 +133,46 @@ class ToDoOverviewViewController: UIViewController {
     lazy var pinchForReorderCategoryGesture: UIPinchGestureRecognizer = {
         let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderCategories))
         
+        todosCollectionView.addGestureRecognizer(recognizer)
+        
         return recognizer
     }()
     
-    /// Swipe gesture recognizer for dismissal of adding new todo.
-    
-    lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
-        swipeGestureRecognizer.direction = [.left, .right]
-        
-        return swipeGestureRecognizer
-    }()
-    
-    /// Timer for user interface updates.
+    /// Timer for saving core data updates just in case if any crash happens.
 
     lazy var timer: Timer = {
-        // 30 minutes timer
-        let timer = Timer.scheduledTimer(withTimeInterval: 60 * 30, repeats: true, block: { _ in
-            self.setupTimeLabel()
+        // 1 minute timer
+        let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+            self.saveData()
         })
         
         return timer
     }()
+    
+    /// Display side menu when swiping left.
+    
+    lazy var menuPanGesture: UIScreenEdgePanGestureRecognizer = {
+        let gestureRecognizer = UIScreenEdgePanGestureRecognizer()
+        gestureRecognizer.edges = .left
+        
+        return gestureRecognizer
+    }()
+    
+    /// Motion effect for avatar view.
+    
+    lazy var motionEffectForAvatar: UIMotionEffect = {
+        return .twoAxesShift(strength: 8)
+    }()
+    
+    /// Motion effect for greeting label.
+    
+    lazy var motionEffectForGreeting: UIMotionEffect = {
+        return .twoAxesShift(strength: 12)
+    }()
+    
+    /// Check if user has authenticated.
+    
+    var userAuthenticated = false
     
     // MARK: - View Life Cycle
     
@@ -167,11 +187,23 @@ class ToDoOverviewViewController: UIViewController {
         fetchTodos()
         
         setupViews()
-        
+
         startAnimations()
         
         // Auto update time label
         timer.fire()
+    }
+    
+    /// View will appear.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard !userAuthenticated else { return }
+        
+        if UserDefaultManager.settingAuthenticationEnabled() {
+            present(storyboard!.instantiateViewController(withIdentifier: HomeUnlockViewController.identifier), animated: false, completion: nil)
+        }
     }
     
     /// Release memory.
@@ -183,9 +215,17 @@ class ToDoOverviewViewController: UIViewController {
         timer.invalidate()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    /// Save context changes.
+    
+    private func saveData() {
+        // Save data
+        if fetchedResultsController.managedObjectContext.hasChanges {
+            do {
+                try fetchedResultsController.managedObjectContext.save()
+            } catch {
+                NotificationManager.showBanner(title: "Cannot save data", type: .danger)
+            }
+        }
     }
     
     /// Fetch categories from core data.
@@ -217,6 +257,8 @@ class ToDoOverviewViewController: UIViewController {
         NotificationManager.listen(self, do: #selector(showAddTodo), notification: .ShowAddToDo, object: nil)
         NotificationManager.listen(self, do: #selector(updateAvatar(_:)), notification: .UserAvatarChanged, object: nil)
         NotificationManager.listen(self, do: #selector(updateName(_:)), notification: .UserNameChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(userHasAuthenticated), notification: .UserAuthenticated, object: nil)
+        NotificationManager.listen(self, do: #selector(motionEffectSettingChanged(_:)), notification: .SettingMotionEffectsChanged, object: nil)
     }
     
     /// Set up views properties.
@@ -283,6 +325,7 @@ class ToDoOverviewViewController: UIViewController {
         todosCollectionView.decelerationRate = UIScrollViewDecelerationRateFast
         
         // Configure gestures
+        todosCollectionView.addGestureRecognizer(menuPanGesture)
         todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
         todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
     }
@@ -296,8 +339,9 @@ class ToDoOverviewViewController: UIViewController {
         (menuController as! MenuTableViewController).mainViewController = self
         
         SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuController!)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: view)
         SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController!.view)
+        menuPanGesture.addTarget(SideMenuManager.default.transition, action: #selector(SideMenuTransition.handlePresentMenuLeftScreenEdge))
     }
     
     /// Configure user information to the designated views.
@@ -308,6 +352,8 @@ class ToDoOverviewViewController: UIViewController {
         
         userAvatarImageView.image = userAvatar
         greetingLabel.text = "overview.greeting.name".localized.replacingOccurrences(of: "%name%", with: userName)
+        
+        setMotionEffects()
     }
     
     /// Light status bar.
@@ -368,6 +414,8 @@ class ToDoOverviewViewController: UIViewController {
         actionSheet.show()
     }
     
+    /// Show add todo view controller.
+    
     @objc fileprivate func showAddTodo() {
         // Play click sound
         SoundManager.play(soundEffect: .Click)
@@ -404,6 +452,28 @@ class ToDoOverviewViewController: UIViewController {
         greetingLabel.text = "overview.greeting.name".localized.replacingOccurrences(of: "%name%", with: newName)
         // Save to user default
         UserDefaultManager.set(value: newName, forKey: .UserName)
+    }
+    
+    /// User has authenticated.
+    
+    @objc fileprivate func userHasAuthenticated() {
+        userAuthenticated = true
+    }
+    
+    /// User has changed motion effect setting.
+    
+    @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
+        setMotionEffects()
+    }
+    
+    private func setMotionEffects() {
+        if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
+            userAvatarContainerView.addMotionEffect(motionEffectForAvatar)
+            greetingLabel.addMotionEffect(motionEffectForGreeting)
+        } else {
+            userAvatarContainerView.removeMotionEffect(motionEffectForAvatar)
+            greetingLabel.removeMotionEffect(motionEffectForGreeting)
+        }
     }
     
     /// Additional preparation for storyboard segue.
@@ -590,7 +660,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Is the cell movable or not.
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryCell(indexPath) || collectionView.numberOfItems(inSection: 0) > 2
+        return !isAddCategoryCell(indexPath) && collectionView.numberOfItems(inSection: 0) > 2
     }
     
     /// Move cell to a new location.
@@ -715,11 +785,9 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
     func newTodoBeganEditing() {
         // Remove reorder gesture
-        todosCollectionView.removeGestureRecognizer(longPressForReorderCategoryGesture)
+        longPressForReorderCategoryGesture.isEnabled = false
         // Remove pinch gesture
-        todosCollectionView.removeGestureRecognizer(pinchForReorderCategoryGesture)
-        // Add swipe gesture for dismissal
-        todosCollectionView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
+        pinchForReorderCategoryGesture.isEnabled = false
         // Disable collection view to be scrollable
         todosCollectionView.isScrollEnabled = false
     }
@@ -728,11 +796,9 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
     func newTodoDoneEditing() {
         // Restore reorder gesture
-        todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
+        longPressForReorderCategoryGesture.isEnabled = true
         // Restore pinch gesture
-        todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
-        // Remove swipe gesture for dismissal
-        todosCollectionView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
+        pinchForReorderCategoryGesture.isEnabled = true
         // Enable collection view to be scrollable
         todosCollectionView.isScrollEnabled = true
     }
@@ -745,12 +811,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         Haptic.impact(.medium).generate()
         // Perform segue in storyboard
         performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: ["goal": goal, "category": category])
-    }
-    
-    /// Collection view dragged while adding new todo.
-    
-    @objc fileprivate func draggedWhileAddingTodo(recognizer: UISwipeGestureRecognizer) {
-        NotificationManager.send(notification: .DraggedWhileAddingTodo)
     }
     
     /// Display category menu.

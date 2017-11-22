@@ -114,12 +114,11 @@ class MenuTableViewController: UITableViewController {
     
     fileprivate func setupAuthenticationProperties() {
         // Check for biometric types
-        if #available(iOS 11, *) {
-            let context = LAContext()
-            
-            var error: NSError?
-            
-            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+        let context = LAContext()
+        
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            if #available(iOS 11, *) {
                 switch context.biometryType {
                 case .faceID:
                     // Supports Face ID
@@ -134,6 +133,10 @@ class MenuTableViewController: UITableViewController {
                     break
                 }
             }
+        } else {
+            // No biometric type
+            authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
+            authenticationLabel.text = "Passcode".localized
         }
     }
     
@@ -238,12 +241,6 @@ class MenuTableViewController: UITableViewController {
         return headerView
     }
     
-    /// Select row at index path.
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
     /// Light status bar.
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -279,15 +276,12 @@ extension MenuTableViewController: MenuTableHeaderViewDelegate {
                 
             case .authorized:
                 // Access is granted by user.
+                // Generate haptic feedback
                 DispatchQueue.main.async() {
-                    // Generate haptic feedback
                     Haptic.impact(.medium).generate()
-                    
-                    // Present image picker
-                    self.present(self.imagePickerController, animated: true, completion: nil)
                 }
-                break
-                
+                // Present image picker
+                self.present(self.imagePickerController, animated: true, completion: nil)
             case .notDetermined:
                 // It is not determined until now.
                 fallthrough

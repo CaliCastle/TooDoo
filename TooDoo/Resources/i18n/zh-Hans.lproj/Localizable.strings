@@ -10,6 +10,7 @@
 "Get started" = "开始使用 TooDoo";
 "Cancel" = "取消";
 "Done" = "完成";
+"OK" = "好吧";
 "Delete" = "删除";
 "Nope" = "算了";
 "Model.Category" = "分类";
@@ -101,6 +102,7 @@
 "alert.error-fetching-category" = "无法读取分类";
 "alert.error-fetching-todo" = "无法读取待办事项";
 "alert.unable-to-fetch-request" = "无法读取数据";
+"alert.authentication-failed" = "身份信息验证失败，请重试";
 
 /*
  Permission

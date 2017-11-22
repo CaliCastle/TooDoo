@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hoo-th-PJg">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-Medium</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="qtq-rw-uuX">
+            <objects>
+                <tableViewController id="0DN-7j-0Ql" customClass="SettingsTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="YeL-Bh-q9c">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <sections>
+                            <tableViewSection id="xgH-4F-3dO">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="K6x-Cm-3qk">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K6x-Cm-3qk" id="aDH-A7-Ltn">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="motion-icon" translatesAutoresizingMaskIntoConstraints="NO" id="TeL-qQ-CGW">
+                                                    <rect key="frame" x="16" y="10" width="40" height="40"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="6zw-fM-9yn"/>
+                                                        <constraint firstAttribute="height" constant="40" id="EMR-Jt-zxB"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Motion Effects" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEh-by-Kfo">
+                                                    <rect key="frame" x="72" y="18" width="228" height="23.333333333333329"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzU-0l-Xom">
+                                                    <rect key="frame" x="308" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="motionEffectSwitchChanged:" destination="0DN-7j-0Ql" eventType="valueChanged" id="UoE-58-P3F"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="TeL-qQ-CGW" firstAttribute="centerY" secondItem="aDH-A7-Ltn" secondAttribute="centerY" id="5df-zt-isl"/>
+                                                <constraint firstItem="HzU-0l-Xom" firstAttribute="centerY" secondItem="aDH-A7-Ltn" secondAttribute="centerY" id="8F2-65-qQd"/>
+                                                <constraint firstItem="ZEh-by-Kfo" firstAttribute="centerY" secondItem="aDH-A7-Ltn" secondAttribute="centerY" id="Hpg-yc-2gg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HzU-0l-Xom" secondAttribute="trailing" constant="2" id="TGi-Ph-fRe"/>
+                                                <constraint firstItem="ZEh-by-Kfo" firstAttribute="leading" secondItem="TeL-qQ-CGW" secondAttribute="trailing" constant="16" id="hff-xE-1ly"/>
+                                                <constraint firstItem="HzU-0l-Xom" firstAttribute="leading" secondItem="ZEh-by-Kfo" secondAttribute="trailing" constant="8" id="lTR-vs-C7s"/>
+                                                <constraint firstItem="TeL-qQ-CGW" firstAttribute="leading" secondItem="aDH-A7-Ltn" secondAttribute="leading" constant="16" id="mK8-eq-mZn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="0DN-7j-0Ql" id="6If-Q3-Hfa"/>
+                            <outlet property="delegate" destination="0DN-7j-0Ql" id="LXG-Bn-hy3"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="0FB-X8-MeX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="AIL-ST-U5d">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="doneButtonDidTap:" destination="0DN-7j-0Ql" id="t0f-5D-uKU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outletCollection property="iconImageViews" destination="TeL-qQ-CGW" collectionClass="NSMutableArray" id="gmD-dj-32n"/>
+                        <outletCollection property="switches" destination="HzU-0l-Xom" collectionClass="NSMutableArray" id="eud-Mo-DfN"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hqv-qn-hSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="428" y="148.52216748768473"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Jth-9s-zHh">
+            <objects>
+                <navigationController id="hoo-th-PJg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="NWC-8k-6mf">
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="27"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="0DN-7j-0Ql" kind="relationship" relationship="rootViewController" id="fMS-ih-NcP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uth-bY-5Kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-361" y="149"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="motion-icon" width="33" height="33"/>
+    </resources>
+</document>

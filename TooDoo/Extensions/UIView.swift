@@ -10,17 +10,25 @@ import UIKit
 
 extension UIView {
     
+    /// Apply basic gradients.
+    
     func applyGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil)
     }
+    
+    /// Apply horizontal gradient layer.
     
     func applyHorizontalGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil, horizontal: true)
     }
     
+    /// Apply diagonal gradient layer.
+    
     func applyDiagonalGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil, diagonal: true)
     }
+    
+    /// Apply full gradient layer.
     
     func applyGradient(colors: [UIColor], locations: [NSNumber]?, diagonal: Bool = false, horizontal: Bool = false) {
         let gradient = CAGradientLayer()
@@ -37,6 +45,14 @@ extension UIView {
         }
         
         layer.insertSublayer(gradient, at: 0)
+    }
+    
+    /// Add tilt.
+    
+    func addTilt() {
+        self.layer.transform = CATransform3DIdentity
+        self.layer.transform.m34 = 1 / 1000.0
+        self.layer.transform = CATransform3DMakeTranslation(0, 0, 0)
     }
     
     @IBInspectable

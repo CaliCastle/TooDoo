@@ -17,6 +17,10 @@ final class UserDefaultManager {
     /// - UserName: User's name
     /// - UserAvatar: User's avatar image
     /// - UserHasBeenUsingSince: Count how many days has the user been using this app
+    /// - SettingSounds: The sounds option in settings
+    /// - SettingAuthentication: The authentication lock for entering the app option in settings
+    /// - SettingThemeMode: The dark or light mode in settings
+    /// - SettingMotionEffects: The motion effect animation
     
     enum Key: String {
         case UserName = "user-name"
@@ -26,6 +30,8 @@ final class UserDefaultManager {
         
         case SettingSounds = "setting-sounds"
         case SettingAuthentication = "setting-authentication"
+        case SettingThemeMode = "setting-theme-mode"
+        case SettingMotionEffects = "setting-motion-effects"
     }
     
     static let userDefaults = UserDefaults.standard
@@ -174,6 +180,27 @@ extension UserDefaultManager {
     
     class func settingAuthenticationEnabled() -> Bool {
         return bool(forKey: .SettingAuthentication)
+    }
+    
+    /// See if motion effect is enabled.
+    
+    class func settingMotionEffectsEnabled() -> Bool {
+        return bool(forKey: .SettingMotionEffects)
+    }
+    
+    /// Get current theme mode.
+    ///
+    /// - Returns: The theme mode
+    
+    class func settingThemeMode() -> AppearanceManager.ThemeMode {
+        guard let themeMode = get(forKey: .SettingThemeMode) as? String else { return .Dark }
+        
+        switch themeMode {
+        case AppearanceManager.ThemeMode.Dark.rawValue:
+            return .Dark
+        default:
+            return .Light
+        }
     }
     
 }

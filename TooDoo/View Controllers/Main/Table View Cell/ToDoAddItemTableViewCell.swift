@@ -81,8 +81,7 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Register dragged event
-        NotificationManager.listen(self, do: #selector(dragged(_:)), notification: .DraggedWhileAddingTodo, object: nil)
+    
     }
     
     /// Register keyboard events for display issues.
@@ -108,6 +107,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         guard let delegate = delegate else { return }
         
         delegate.newTodoBeganEditing()
+        
+        // Register dragged event
+        NotificationManager.listen(self, do: #selector(dragged(_:)), notification: .DraggedWhileAddingTodo, object: nil)
     }
     
     /// When the goal is finished editing.
@@ -147,8 +149,17 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     @objc private func dragged(_ notification: Notification) {
         guard let delegate = delegate else { return }
-        // Dismiss and reset
-        delegate.newTodoDoneEditing(todo: nil)
+
+        // Unregister dragged event
+        NotificationManager.remove(self, notification: .DraggedWhileAddingTodo, object: nil)
+        
+        if goalTextField.text?.trimmingCharacters(in: .whitespaces) != "" {
+            // If entered a goal, create todo
+            goalDoneEditing(goalTextField)
+        } else {
+            // Dismiss and reset
+            delegate.newTodoDoneEditing(todo: nil)
+        }
     }
     
     /// When the user tapped edit button.

@@ -28,6 +28,13 @@ final class AppearanceManager {
         case UltraLight = "UltraLight"
     }
     
+    // Theme mode
+    
+    enum ThemeMode: String {
+        case Dark = "dark"
+        case Light = "light"
+    }
+    
     /// Get main font
     ///
     /// - Parameters:
@@ -51,7 +58,7 @@ final class AppearanceManager {
     
     // MARK: - Navigation Bar
     
-    static func changeNavigationBarAppearance() {
+    class func changeNavigationBarAppearance() {
         // Set to white tint and title color
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = .white
@@ -61,11 +68,23 @@ final class AppearanceManager {
     
     // MARK: - Side Menu
     
-    static func changeSideMenuAppearance() {
+    class func changeSideMenuAppearance() {
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuPresentMode = .viewSlideInOut
         SideMenuManager.default.menuShadowOpacity = 0.15
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 0.8
+    }
+    
+    /// Get current theme.
+    ///
+    /// - Returns: The current theme enum
+    
+    class func currentTheme() -> ThemeMode {
+        return UserDefaultManager.settingThemeMode()
+    }
+    
+    class func changeTheme(to theme: ThemeMode) {
+        UserDefaultManager.set(value: theme.rawValue, forKey: .SettingThemeMode)
     }
     
     // Private init

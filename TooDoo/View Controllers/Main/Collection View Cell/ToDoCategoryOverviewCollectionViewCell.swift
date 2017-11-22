@@ -58,6 +58,8 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
                 // Tapped add button with no other todos
                 todoItemsTableView.insertSections([0], with: .left)
             }
+            
+            addTodoButton.isEnabled = !isAdding
         }
     }
     
@@ -87,11 +89,20 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     var delegate: ToDoCategoryOverviewCollectionViewCellDelegate?
     
-    /// Double tap gesture recognizer.
+    /// Tap gesture recognizer for editing category.
     
-    lazy var doubleTapGesture: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(itemDoubleTapped))
-        recognizer.numberOfTapsRequired = 2
+    lazy var tapGestureForName: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(categoryTappedForEdit))
+        categoryNameLabel.addGestureRecognizer(recognizer)
+        
+        return recognizer
+    }()
+    
+    /// Tap gesture recognizer for editing category.
+    
+    lazy var tapGestureForIcon: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(categoryTappedForEdit))
+        categoryIconImageView.addGestureRecognizer(recognizer)
         
         return recognizer
     }()
@@ -99,24 +110,31 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     /// Swipe for dismissal gesture recognizer.
     
     lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo))
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo(_:)))
         swipeGestureRecognizer.direction = [.down, .up]
+        
+        todoItemsTableView.addGestureRecognizer(swipeGestureRecognizer)
         
         return swipeGestureRecognizer
     }()
     
+    /// Motion effect for collection cell.
+    
+    lazy var motionEffect: UIMotionEffect = {
+        return .twoAxesShift(strength: 25)
+    }()
+    
     /// Called when the cell is double tapped.
     
-    @objc private func itemDoubleTapped(recognizer: UITapGestureRecognizer!) {
+    @objc private func categoryTappedForEdit(recognizer: UITapGestureRecognizer!) {
         guard let delegate = delegate else { return }
-        guard recognizer.state == .ended else { return }
         
         delegate.showCategoryMenu(cell: self)
     }
     
     /// Called when the view is being dragged while adding new todo.
     
-    @objc private func draggedWhileAddingTodo() {
+    @objc private func draggedWhileAddingTodo(_ gesture: UISwipeGestureRecognizer) {
         NotificationManager.send(notification: .DraggedWhileAddingTodo)
     }
 
@@ -125,8 +143,13 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Configure double tap recognizer
-        cardContainerView.addGestureRecognizer(doubleTapGesture)
+        // Configure tap recognizers
+        categoryNameLabel.addGestureRecognizer(tapGestureForName)
+        categoryIconImageView.addGestureRecognizer(tapGestureForIcon)
+        
+        setMotionEffect(nil)
+        
+        NotificationManager.listen(self, do: #selector(setMotionEffect(_:)), notification: .SettingMotionEffectsChanged, object: nil)
     }
     
     /// Prepare reuse.
@@ -138,6 +161,16 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         categoryNameLabel.text = ""
         categoryIconImageView.image = CategoryIcon.default().first
         categoryTodosCountLabel.text = ""
+    }
+    
+    /// Set motion effect.
+    
+    @objc private func setMotionEffect(_ notifcation: Notification?) {
+        if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
+            motionEffects.append(motionEffect)
+        } else {
+            motionEffects.removeAll()
+        }
     }
     
     /// Set up fetched results controller.
@@ -329,6 +362,12 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     // Reset adding state
                     isAdding = false
                     
+                    // Prevent core data objects with table rows async crash
+                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
+                    let controllerRows = (controller.fetchedObjects?.count)!
+                    // If equal, exit
+                    guard tableRows != controllerRows else { return }
+                    
                     // Reload the inserted row
                     if #available(iOS 11.0, *) {
                         todoItemsTableView.performBatchUpdates({
@@ -373,11 +412,11 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoBeganEditing() {
         // Fix dragging while adding new todo
         guard let delegate = delegate else { return }
-        // Remove double tap gesture
-        cardContainerView.removeGestureRecognizer(doubleTapGesture)
         // Add swipe dismissal gesture
-        cardContainerView.addGestureRecognizer(swipeForDismissalGestureRecognizer)
-        
+        swipeForDismissalGestureRecognizer.isEnabled = true
+        // Disable category edit gesture
+        tapGestureForName.isEnabled = false
+        tapGestureForIcon.isEnabled = false
         // Generate haptic feedback and sound
         Haptic.impact(.heavy).generate()
         SoundManager.play(soundEffect: .Click)
@@ -390,20 +429,21 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoDoneEditing(todo: ToDo?) {
         // Notify that the new todo is done editing
         guard let delegate = delegate else { return }
-        // Restore double tap gesture
-        cardContainerView.addGestureRecognizer(doubleTapGesture)
         // Remove swipe dismissal gesture
-        cardContainerView.removeGestureRecognizer(swipeForDismissalGestureRecognizer)
+        swipeForDismissalGestureRecognizer.isEnabled = false
+        // Restore category edit gesture
+        tapGestureForName.isEnabled = true
+        tapGestureForIcon.isEnabled = true
         
         // Generate haptic feedback
         Haptic.impact(.light).generate()
+        
+        delegate.newTodoDoneEditing()
         
         // Reset add todo cell to hidden
         guard todo == nil else { return }
         isAdding = false
         todoItemsTableView.reloadSections([0], with: .automatic)
-        
-        delegate.newTodoDoneEditing()
     }
     
     /// Show adding a new todo.

@@ -132,7 +132,7 @@ open class SideMenuManager : NSObject {
     
     /// Default instance of SideMenuManager.
     open static let `default` = SideMenuManager()
-    internal var transition: SideMenuTransition!
+    open var transition: SideMenuTransition!
     
     public override init() {
         super.init()

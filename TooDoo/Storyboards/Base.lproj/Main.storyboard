@@ -134,8 +134,8 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogu-d4-Yvt">
-                                <rect key="frame" x="0.0" y="307" width="375" height="461"/>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogu-d4-Yvt">
+                                <rect key="frame" x="0.0" y="312" width="375" height="456"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wh7-y6-AUF" customClass="CenterCellCollectionViewFlowLayout" customModule="TooDoo" customModuleProvider="target">
                                     <size key="itemSize" width="320" height="400"/>
@@ -145,7 +145,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToDoCategoryOverviewCell" id="ZdY-Vh-DQU" customClass="ToDoCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="30.666666666666668" width="320" height="400"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -154,13 +154,15 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLK-Jl-fkn">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="400"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-9c-1G8">
+                                                        <label opaque="NO" contentMode="left" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-9c-1G8">
                                                             <rect key="frame" x="17" y="17" width="239" height="33"/>
+                                                            <gestureRecognizers/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="category-icon-personal" translatesAutoresizingMaskIntoConstraints="NO" id="wau-5q-WVn">
+                                                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="category-icon-personal" translatesAutoresizingMaskIntoConstraints="NO" id="wau-5q-WVn">
                                                             <rect key="frame" x="264" y="17" width="32" height="32"/>
+                                                            <gestureRecognizers/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="32" id="Dx3-hg-qbU"/>
                                                                 <constraint firstAttribute="height" constant="32" id="feR-nC-5FO"/>
@@ -400,7 +402,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddCategoryOverviewCell" id="5fz-jR-nQi" customClass="AddCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="330" y="30.666666666666668" width="320" height="400"/>
+                                        <rect key="frame" x="330" y="28" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -471,7 +473,7 @@
                             <constraint firstItem="fzt-6i-3oP" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="913-6J-M8Z"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="fzt-6i-3oP" secondAttribute="trailing" constant="30" id="96o-gz-cUc"/>
                             <constraint firstItem="l9p-kw-NAc" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="9b4-jp-oth"/>
-                            <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="DsW-xc-lcL" secondAttribute="bottom" constant="15" id="Afo-cb-DS3"/>
+                            <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="DsW-xc-lcL" secondAttribute="bottom" constant="20" id="Afo-cb-DS3"/>
                             <constraint firstItem="ZUy-L5-o8r" firstAttribute="top" secondItem="meb-ds-NIi" secondAttribute="top" id="CKc-s3-EZz"/>
                             <constraint firstItem="DsW-xc-lcL" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="HFM-wA-S2p"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="top" secondItem="ukM-SL-0bF" secondAttribute="bottom" constant="20" id="HQM-Yy-8PU"/>
@@ -531,6 +533,83 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kar-pI-oKe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="532" y="150"/>
+        </scene>
+        <!--Home Unlock View Controller-->
+        <scene sceneID="BQQ-G4-qHE">
+            <objects>
+                <viewController storyboardIdentifier="HomeUnlock" id="OWT-dx-H56" customClass="HomeUnlockViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HhM-UL-V9c">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCL-8z-OEP" customClass="GradientView" customModule="TooDoo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <subviews>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlock-icon" translatesAutoresizingMaskIntoConstraints="NO" id="sbv-y5-mgf">
+                                        <rect key="frame" x="137" y="150" width="100" height="100"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="FGI-BE-2aI"/>
+                                            <constraint firstAttribute="width" constant="100" id="XPP-35-oIi"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                <size key="value" width="0.0" height="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                                <real key="value" value="0.34999999999999998"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="0IS-1Q-0Sq" appends="YES" id="DqX-Go-A6q"/>
+                                        </connections>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="sbv-y5-mgf" firstAttribute="centerX" secondItem="WCL-8z-OEP" secondAttribute="centerX" id="Q0j-Fu-nbH"/>
+                                    <constraint firstItem="sbv-y5-mgf" firstAttribute="top" secondItem="WCL-8z-OEP" secondAttribute="top" constant="150" id="awa-e6-b2g"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                        <color key="value" red="0.30980392156862746" green="0.30980392156862746" blue="0.30980392156862746" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                        <color key="value" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="WCL-8z-OEP" firstAttribute="top" secondItem="HhM-UL-V9c" secondAttribute="top" id="Efd-JW-Xrf"/>
+                            <constraint firstAttribute="bottom" secondItem="WCL-8z-OEP" secondAttribute="bottom" id="kcm-Ui-M3p"/>
+                            <constraint firstItem="WCL-8z-OEP" firstAttribute="trailing" secondItem="eil-mf-yRV" secondAttribute="trailing" id="ldC-Ee-gxQ"/>
+                            <constraint firstItem="WCL-8z-OEP" firstAttribute="leading" secondItem="eil-mf-yRV" secondAttribute="leading" id="lvY-ON-Xud"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eil-mf-yRV"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundGradientView" destination="WCL-8z-OEP" id="9Ht-co-e1U"/>
+                        <outlet property="lockImageView" destination="sbv-y5-mgf" id="IrF-7W-vGC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="smr-pv-aaJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0IS-1Q-0Sq">
+                    <connections>
+                        <action selector="unlockDidTap:" destination="OWT-dx-H56" id="gHP-Uo-2F1"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="389.60000000000002" y="-540.14778325123154"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="C1p-7o-72M">
@@ -1316,5 +1395,6 @@
         <image name="plus-button" width="25" height="25"/>
         <image name="search-button" width="25" height="25"/>
         <image name="trash-icon" width="25" height="25"/>
+        <image name="unlock-icon" width="300" height="300"/>
     </resources>
 </document>
