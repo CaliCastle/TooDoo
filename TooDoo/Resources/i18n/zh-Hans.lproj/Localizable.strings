@@ -18,6 +18,10 @@
 "Todos" = "个待办事项";
 "Today" = "今天";
 
+/* Authentication */
+"Face ID" = "面容ID";
+"Passcode" = "密码";
+
 "EEEE, MMM d" = "MM月d日 EEEE";
 "MMM dd, EEE hh:mm aa" = "MM月dd日, EEE HH:mm";
 
@@ -56,13 +60,15 @@
 /*
  ToDo Overview View Controller.
  */
+"overview.greeting.name" = "嗨, %name%";
 "overview.greeting.time.morning" = "早上好";
 "overview.greeting.time.afternoon" = "下午好";
 "overview.greeting.time.evening" = "晚上好";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "今天是";
 /* FIXME: */
-"overview.message.todo.count" = "今天暂无待办事项";
+"overview.message.todo.count" = "今天有%count%个待办事项";
+"overview.message.todo.zero" = "今天暂无待办事项";
 
 /*
  ToDo Table View Controller.

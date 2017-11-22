@@ -18,6 +18,10 @@
 "Todos" = "Todos";
 "Today" = "Today";
 
+/* Authentication */
+"Face ID" = "Face ID";
+"Passcode" = "Passcode";
+
 "EEEE, MMM d" = "EEEE, MMM d";
 "MMM dd, EEE hh:mm aa" = "MMM dd, EEE HH:mm";
 
@@ -56,13 +60,15 @@
 /*
  ToDo Overview View Controller.
  */
+"overview.greeting.name" = "Hi, %name%";
 "overview.greeting.time.morning" = "Good morning";
 "overview.greeting.time.afternoon" = "Good afternoon";
 "overview.greeting.time.evening" = "Good evening";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "Today is";
-/* FIXME: */
-"overview.message.todo.count" = "No todos due today.";
+
+"overview.message.todo.count" = "%count% todos due today.";
+"overview.message.todo.zero" = "No todos due today, yay!";
 
 /*
  ToDo Table View Controller.

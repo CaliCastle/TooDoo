@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Photos
+import Haptica
+import ViewAnimator
+import BulletinBoard
 import LocalAuthentication
 
 class MenuTableViewController: UITableViewController {
@@ -22,12 +26,68 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var authenticationIconImageView: UIImageView!
     @IBOutlet var switches: [UISwitch]!
     
+    /// Main view controller.
+    
+    var mainViewController: ToDoOverviewViewController?
+    
+    /// The image picker controller for choosing avatar.
+    
+    lazy var imagePickerController: UIImagePickerController = {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(.lightContent)
+        imagePickerController.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "black-background"), for: .default)
+        imagePickerController.navigationBar.shadowImage = UIImage()
+        imagePickerController.modalPresentationStyle = .popover
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        
+        return imagePickerController
+    }()
+    
+    /// The bulletin manager that manages page bulletin items.
+    
+    lazy var bulletinManager: BulletinManager = {
+        let rootItem = PageBulletinItem(title: "setup.no-photo-access.title".localized)
+        rootItem.image = #imageLiteral(resourceName: "no-photo-access")
+        rootItem.descriptionText = "setup.no-photo-access.description".localized
+        rootItem.actionButtonTitle = "Give access".localized
+        rootItem.alternativeButtonTitle = "Not now".localized
+        
+        rootItem.shouldCompactDescriptionText = true
+        rootItem.isDismissable = true
+        
+        // Take user to the settings page
+        rootItem.actionHandler = { item in
+            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
+            
+            if UIApplication.shared.canOpenURL(openSettingsURL) {
+                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
+            }
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        rootItem.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return BulletinManager(rootItem: rootItem)
+    }()
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.animateViews(animations: [AnimationType.from(direction: .left, offset: 12)], duration: 0.2, animationInterval: 0.056)
     }
     
     /// Set up view properties.
@@ -135,15 +195,25 @@ class MenuTableViewController: UITableViewController {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, evaluateError in
                 if success {
                     // User authenticated successfully
-                    UserDefaultManager.set(value: true, forKey: .SettingAuthentication)
+                    DispatchQueue.main.async {
+                        UserDefaultManager.set(value: sender.isOn, forKey: .SettingAuthentication)
+                    }
                 } else {
                     // User did not authenticate successfully
-                    sender.isOn = false
+                    self.authenticationFailed(sender)
                 }
             }
         } else {
-            // Could not evaluate policy; look at authError and present an appropriate message to user
-            sender.isOn = false
+            // Could not evaluate policy
+            authenticationFailed(sender)
+        }
+    }
+    
+    /// Set authentication switch to off state.
+    
+    private func authenticationFailed(_ sender: UISwitch) {
+        DispatchQueue.main.async {
+            sender.setOn(false, animated: true)
         }
     }
     
@@ -152,7 +222,7 @@ class MenuTableViewController: UITableViewController {
     /// Table header height.
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section == 0 else { return 0}
+        guard section == 0 else { return 0 }
         
         return tableHeaderHeight
     }
@@ -163,6 +233,7 @@ class MenuTableViewController: UITableViewController {
         guard section == 0 else { return nil }
         
         guard let headerView = Bundle.main.loadNibNamed(MenuTableHeaderView.nibName, owner: self, options: nil)?.first as? MenuTableHeaderView else { return nil }
+        headerView.delegate = self
         
         return headerView
     }
@@ -185,32 +256,89 @@ class MenuTableViewController: UITableViewController {
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
+
+}
+
+// MARK: - Menu Table Header View Delegate Methods.
+
+extension MenuTableViewController: MenuTableHeaderViewDelegate {
     
-    // MARK: - Table view data source
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 0
-//    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
+    /// Show photo album to change avatar.
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showChangeAvatar() {
+        // Configure image picker for iPad with Popover
+        imagePickerController.popoverPresentationController?.delegate = self
+        imagePickerController.popoverPresentationController?.sourceView = tableView.headerView(forSection: 0)
+        
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
+        
+        // Check for access authorization
+        PHPhotoLibrary.requestAuthorization { (status) in
+            switch status {
+                
+            case .authorized:
+                // Access is granted by user.
+                DispatchQueue.main.async() {
+                    // Generate haptic feedback
+                    Haptic.impact(.medium).generate()
+                    
+                    // Present image picker
+                    self.present(self.imagePickerController, animated: true, completion: nil)
+                }
+                break
+                
+            case .notDetermined:
+                // It is not determined until now.
+                fallthrough
+            case .restricted:
+                // User do not have access to photo album.
+                fallthrough
+            case .denied:
+                // User has denied the permission.
+                self.dismiss(animated: true, completion: {
+                    DispatchQueue.main.async() {
+                        // Generate haptic feedback
+                        Haptic.notification(.warning).generate()
+                        // Present bulletin
+                        self.bulletinManager.backgroundViewStyle = .blurredDark
+                        self.bulletinManager.prepare()
+                        self.bulletinManager.presentBulletin(above: self.mainViewController!)
+                    }
+                })
+            }
+        }
     }
-    */
+    
+    /// The user has changed the name.
+    
+    func nameChanged(to newName: String) {
+        NotificationManager.send(notification: .UserNameChanged, object: newName)
+    }
+    
+}
 
+extension MenuTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
+    
+    /// User cancels selection.
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    /// User selected a photo.
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        
+        NotificationManager.send(notification: .UserAvatarChanged, object: image)
+        
+        SoundManager.play(soundEffect: .Click)
+        
+        picker.dismiss(animated: true) {
+            // FIXME: Localization
+            NotificationManager.showBanner(title: "Avatar changed!", type: .success)
+        }
+    }
+    
 }

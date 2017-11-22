@@ -110,17 +110,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no todos today." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzt-6i-3oP">
-                                <rect key="frame" x="40" y="252" width="305" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no todos today." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzt-6i-3oP" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                <rect key="frame" x="40" y="252" width="305" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ZKz-Xd-07U"/>
+                                    <constraint firstAttribute="height" constant="18" id="ZKz-Xd-07U"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                 <color key="textColor" red="0.72941176470588232" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no todos today." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsW-xc-lcL" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                <rect key="frame" x="40" y="272" width="327" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="ICS-az-G0c"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
+                                <color key="textColor" red="0.72941176470000002" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="morphingEnabled" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogu-d4-Yvt">
-                                <rect key="frame" x="0.0" y="337" width="375" height="421"/>
+                                <rect key="frame" x="0.0" y="307" width="375" height="461"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wh7-y6-AUF" customClass="CenterCellCollectionViewFlowLayout" customModule="TooDoo" customModuleProvider="target">
                                     <size key="itemSize" width="320" height="400"/>
@@ -130,7 +145,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToDoCategoryOverviewCell" id="ZdY-Vh-DQU" customClass="ToDoCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="10.666666666666666" width="320" height="400"/>
+                                        <rect key="frame" x="0.0" y="30.666666666666668" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -385,7 +400,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddCategoryOverviewCell" id="5fz-jR-nQi" customClass="AddCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="330" y="10.666666666666666" width="320" height="400"/>
+                                        <rect key="frame" x="330" y="30.666666666666668" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -456,18 +471,21 @@
                             <constraint firstItem="fzt-6i-3oP" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="913-6J-M8Z"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="fzt-6i-3oP" secondAttribute="trailing" constant="30" id="96o-gz-cUc"/>
                             <constraint firstItem="l9p-kw-NAc" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="9b4-jp-oth"/>
+                            <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="DsW-xc-lcL" secondAttribute="bottom" constant="15" id="Afo-cb-DS3"/>
                             <constraint firstItem="ZUy-L5-o8r" firstAttribute="top" secondItem="meb-ds-NIi" secondAttribute="top" id="CKc-s3-EZz"/>
-                            <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="fzt-6i-3oP" secondAttribute="bottom" constant="45" id="GlE-Ug-mP0"/>
+                            <constraint firstItem="DsW-xc-lcL" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="HFM-wA-S2p"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="top" secondItem="ukM-SL-0bF" secondAttribute="bottom" constant="20" id="HQM-Yy-8PU"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="l9p-kw-NAc" secondAttribute="trailing" constant="30" id="JVc-yL-yNA"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="Nwj-Ge-Mff"/>
                             <constraint firstAttribute="trailing" secondItem="ZUy-L5-o8r" secondAttribute="trailing" id="Oob-cu-qAg"/>
                             <constraint firstItem="ukM-SL-0bF" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="WfH-ch-sIV"/>
+                            <constraint firstItem="DsW-xc-lcL" firstAttribute="top" secondItem="fzt-6i-3oP" secondAttribute="bottom" constant="2" id="YCC-WY-D2z"/>
                             <constraint firstAttribute="bottom" secondItem="ZUy-L5-o8r" secondAttribute="bottom" id="Z5B-hm-BGY"/>
                             <constraint firstItem="ZUy-L5-o8r" firstAttribute="leading" secondItem="meb-ds-NIi" secondAttribute="leading" id="aMj-GB-tIg"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="e3V-9A-d9Q" secondAttribute="trailing" constant="20" id="cfZ-Fj-WUB"/>
                             <constraint firstItem="l9p-kw-NAc" firstAttribute="top" secondItem="e3V-9A-d9Q" secondAttribute="bottom" constant="11" id="cm7-yP-GBl"/>
-                            <constraint firstItem="aS1-Gl-qfS" firstAttribute="bottom" secondItem="ogu-d4-Yvt" secondAttribute="bottom" constant="20" id="fOB-Og-9Un"/>
+                            <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="DsW-xc-lcL" secondAttribute="trailing" constant="8" id="eZl-Yf-E0N"/>
+                            <constraint firstItem="aS1-Gl-qfS" firstAttribute="bottom" secondItem="ogu-d4-Yvt" secondAttribute="bottom" constant="10" id="fOB-Og-9Un"/>
                             <constraint firstItem="ukM-SL-0bF" firstAttribute="top" secondItem="aS1-Gl-qfS" secondAttribute="top" constant="20" id="kOO-0t-MG3"/>
                             <constraint firstItem="ogu-d4-Yvt" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" id="xkL-jb-SIo"/>
                         </constraints>
@@ -500,7 +518,8 @@
                     <connections>
                         <outlet property="greetingLabel" destination="e3V-9A-d9Q" id="7cA-vH-P5h"/>
                         <outlet property="greetingWithTimeLabel" destination="l9p-kw-NAc" id="nKS-Vr-Ups"/>
-                        <outlet property="todoMessageLabel" destination="fzt-6i-3oP" id="oFb-vd-ehP"/>
+                        <outlet property="todayLabel" destination="fzt-6i-3oP" id="fCq-pV-lZe"/>
+                        <outlet property="todoMessageLabel" destination="DsW-xc-lcL" id="k3K-XM-wJK"/>
                         <outlet property="todosCollectionView" destination="ogu-d4-Yvt" id="mg8-7z-mz2"/>
                         <outlet property="userAvatarContainerView" destination="ukM-SL-0bF" id="lQ4-Iy-bMo"/>
                         <outlet property="userAvatarImageView" destination="dWF-fQ-j50" id="xaC-2F-GXP"/>

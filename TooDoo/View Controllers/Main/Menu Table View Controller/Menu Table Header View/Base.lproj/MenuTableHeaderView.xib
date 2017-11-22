@@ -23,24 +23,28 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft5-9m-cnK">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                    <rect key="frame" x="0.0" y="8" width="375" height="70"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_boy" translatesAutoresizingMaskIntoConstraints="NO" id="oCe-rN-OV4">
-                            <rect key="frame" x="20" y="7.5" width="55" height="55"/>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_boy" translatesAutoresizingMaskIntoConstraints="NO" id="oCe-rN-OV4">
+                            <rect key="frame" x="16" y="6" width="58" height="58"/>
+                            <gestureRecognizers/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="55" id="ZNy-VG-4ck"/>
-                                <constraint firstAttribute="height" constant="55" id="j8h-KI-SvQ"/>
+                                <constraint firstAttribute="width" constant="58" id="ZNy-VG-4ck"/>
+                                <constraint firstAttribute="height" constant="58" id="j8h-KI-SvQ"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="yf7-sQ-wTV" appends="YES" id="Oze-Gu-Wmy"/>
+                            </connections>
                         </imageView>
                         <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" text="User Name" translatesAutoresizingMaskIntoConstraints="NO" id="9oD-ew-iRj">
-                            <rect key="frame" x="83" y="7.5" width="256" height="55"/>
+                            <rect key="frame" x="82" y="-2.5" width="257" height="75"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="55" id="leC-gM-KsD"/>
+                                <constraint firstAttribute="height" constant="75" id="leC-gM-KsD"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="nickname"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" textContentType="nickname"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMi-RK-TrP">
                             <rect key="frame" x="347" y="25" width="20" height="20"/>
@@ -57,7 +61,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="oCe-rN-OV4" firstAttribute="leading" secondItem="ft5-9m-cnK" secondAttribute="leading" constant="20" id="2h3-GI-Fxl"/>
+                        <constraint firstItem="oCe-rN-OV4" firstAttribute="leading" secondItem="ft5-9m-cnK" secondAttribute="leading" constant="16" id="2h3-GI-Fxl"/>
                         <constraint firstItem="9oD-ew-iRj" firstAttribute="centerY" secondItem="ft5-9m-cnK" secondAttribute="centerY" id="71b-L6-vIH"/>
                         <constraint firstAttribute="trailing" secondItem="uMi-RK-TrP" secondAttribute="trailing" constant="8" id="7dB-uk-CHR"/>
                         <constraint firstItem="oCe-rN-OV4" firstAttribute="centerY" secondItem="ft5-9m-cnK" secondAttribute="centerY" id="NiY-4W-wqn"/>
@@ -68,15 +72,15 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked-overflow-icon" translatesAutoresizingMaskIntoConstraints="NO" id="ds8-Eb-pkJ">
-                    <rect key="frame" x="20" y="78" width="34" height="34"/>
+                    <rect key="frame" x="20" y="90" width="34" height="34"/>
                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="34" id="c6E-48-Elg"/>
                         <constraint firstAttribute="width" constant="34" id="zWo-t6-eMZ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have been using TooDoo for 10 days" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNb-TG-z54">
-                    <rect key="frame" x="66" y="78" width="274" height="38"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have been using TooDoo for %days% days" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNb-TG-z54">
+                    <rect key="frame" x="66" y="90" width="274" height="38"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="Wtt-Ez-XGm"/>
                     </constraints>
@@ -88,10 +92,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="UNb-TG-z54" firstAttribute="leading" secondItem="ds8-Eb-pkJ" secondAttribute="trailing" constant="12" id="6j6-E1-Azg"/>
-                <constraint firstItem="UNb-TG-z54" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="Dp3-Ua-7aD"/>
-                <constraint firstItem="ft5-9m-cnK" firstAttribute="top" secondItem="5Zu-Lg-0Ox" secondAttribute="top" id="IF9-Lm-WSM"/>
-                <constraint firstItem="ds8-Eb-pkJ" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="Iqi-5g-rmU"/>
-                <constraint firstItem="UNb-TG-z54" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="8" id="JqK-AN-G74"/>
+                <constraint firstItem="UNb-TG-z54" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="12" id="Dp3-Ua-7aD"/>
+                <constraint firstItem="ft5-9m-cnK" firstAttribute="top" secondItem="5Zu-Lg-0Ox" secondAttribute="top" constant="8" id="IF9-Lm-WSM"/>
+                <constraint firstItem="ds8-Eb-pkJ" firstAttribute="top" secondItem="ft5-9m-cnK" secondAttribute="bottom" constant="12" id="Iqi-5g-rmU"/>
                 <constraint firstItem="UNb-TG-z54" firstAttribute="leading" secondItem="ds8-Eb-pkJ" secondAttribute="trailing" constant="12" id="Q0G-oO-y7S"/>
                 <constraint firstAttribute="trailing" secondItem="ft5-9m-cnK" secondAttribute="trailing" id="RXh-p4-hbK"/>
                 <constraint firstItem="ft5-9m-cnK" firstAttribute="leading" secondItem="5Zu-Lg-0Ox" secondAttribute="leading" id="U6S-Nq-jqv"/>
@@ -110,6 +113,11 @@
             </connections>
             <point key="canvasLocation" x="-141.5" y="214"/>
         </view>
+        <tapGestureRecognizer id="yf7-sQ-wTV">
+            <connections>
+                <action selector="userAvatarDidTap:" destination="5Zu-Lg-0Ox" id="WPb-yT-jKt"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="avatar_boy" width="512" height="512"/>

@@ -26,6 +26,7 @@ class ToDoOverviewViewController: UIViewController {
     @IBOutlet var userAvatarImageView: UIImageView!
     @IBOutlet var greetingLabel: UILabel!
     @IBOutlet var greetingWithTimeLabel: UILabel!
+    @IBOutlet var todayLabel: UILabel!
     @IBOutlet var todoMessageLabel: UILabel!
     @IBOutlet var todosCollectionView: UICollectionView!
     
@@ -58,7 +59,7 @@ class ToDoOverviewViewController: UIViewController {
     
     var managedObjectContext: NSManagedObjectContext?
     
-    /// Fetched results controller for Core Data.
+    /// Fetched results controller for categories fetching.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
         // Create fetch request
@@ -69,6 +70,36 @@ class ToDoOverviewViewController: UIViewController {
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "categories")
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
+    
+    /// Fetched results controller for todos fetching.
+    
+    private lazy var todosFetchedResultsController: NSFetchedResultsController<ToDo> = {
+        // Create fetch request
+        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
+        
+        // Get the current calendar with local time zone
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        
+        // Get today's beginning & end
+        let dateFrom = calendar.startOfDay(for: Date()) // eg. 2016-10-10 00:00:00
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: dateFrom)
+        components.day! += 1
+        
+        let dateTo = calendar.date(from: components)! // eg. 2016-10-11 00:00:00
+        
+        // Set relationship predicate
+        fetchRequest.predicate = NSPredicate(format: "(%@ <= due) AND (due < %@) AND (completed == NO)", argumentArray: [dateFrom, dateTo])
+        
+        // Configure fetch request sort
+        fetchRequest.sortDescriptors = []
+        
+        // Create controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "todos")
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -129,11 +160,16 @@ class ToDoOverviewViewController: UIViewController {
         super.viewDidLoad()
         
         handleNotifications()
-        setupViews()
+
         configureUserSettings()
+        
         fetchCategories()
+        fetchTodos()
+        
+        setupViews()
         
         startAnimations()
+        
         // Auto update time label
         timer.fire()
     }
@@ -163,17 +199,31 @@ class ToDoOverviewViewController: UIViewController {
         }
     }
     
+    /// Fetch categories from core data.
+    
+    private func fetchTodos() {
+        do {
+            try todosFetchedResultsController.performFetch()
+        } catch {
+            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
+            print("\(error), \(error.localizedDescription)")
+        }
+    }
+    
     /// Set up notification handling.
     
     fileprivate func handleNotifications() {
         NotificationManager.listen(self, do: #selector(showAddCategory), notification: .ShowAddCategory, object: nil)
         NotificationManager.listen(self, do: #selector(showAddTodo), notification: .ShowAddToDo, object: nil)
+        NotificationManager.listen(self, do: #selector(updateAvatar(_:)), notification: .UserAvatarChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(updateName(_:)), notification: .UserNameChanged, object: nil)
     }
     
     /// Set up views properties.
     
     fileprivate func setupViews() {
         setupTimeLabel()
+        setupTodayLabel()
         setupMessageLabel()
         setupTodosCollectionView()
         setupSideMenuGesture()
@@ -201,14 +251,28 @@ class ToDoOverviewViewController: UIViewController {
         }
     }
     
-    /// Set up todoMessageLabel.
+    /// Set up today label.
     
-    fileprivate func setupMessageLabel() {
+    fileprivate func setupTodayLabel() {
         let dateFormatter = DateFormatter()
         // Format date to 'Monday, Nov 6'
         dateFormatter.dateFormat = "EEEE, MMM d".localized
         
-        todoMessageLabel.text = "\("overview.message.today".localized) \(dateFormatter.string(from: Date())).\n\("overview.message.todo.count".localized)"
+        todayLabel.text = "\("overview.message.today".localized) \(dateFormatter.string(from: Date()))"
+    }
+    
+    /// Set up todoMessageLabel.
+    
+    fileprivate func setupMessageLabel() {
+        var todosCount = 0
+        // Get todos count number
+        if let todos = todosFetchedResultsController.fetchedObjects {
+            todosCount = todos.count
+        }
+        // Set todos count label accordingly
+        let todosCountLabel = todosCount == 0 ? "overview.message.todo.zero".localized : "overview.message.todo.count".localized
+        
+        todoMessageLabel.text = "\(todosCountLabel.replacingOccurrences(of: "%count%", with: "\(todosCount)"))"
     }
     
     /// Set up todos collection view properties.
@@ -228,6 +292,9 @@ class ToDoOverviewViewController: UIViewController {
     fileprivate func setupSideMenuGesture() {
         let menuController = StoryboardManager.storyboardInstance(name: .Menu).instantiateInitialViewController()
         
+        // Configure main view controller
+        (menuController as! MenuTableViewController).mainViewController = self
+        
         SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuController!)
         SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController!.view)
@@ -240,7 +307,7 @@ class ToDoOverviewViewController: UIViewController {
         guard let userAvatar = UserDefaultManager.image(forKey: .UserAvatar) else { return }
         
         userAvatarImageView.image = userAvatar
-        greetingLabel.text = greetingLabel.text?.replacingOccurrences(of: "%name%", with: userName).localizedCapitalized
+        greetingLabel.text = "overview.greeting.name".localized.replacingOccurrences(of: "%name%", with: userName)
     }
     
     /// Light status bar.
@@ -317,6 +384,26 @@ class ToDoOverviewViewController: UIViewController {
         Haptic.impact(.medium).generate()
         
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
+    }
+    
+    /// Update user avatar.
+    
+    @objc fileprivate func updateAvatar(_ notification: Notification) {
+        guard let avatar = notification.object as? UIImage else { return }
+        // Update image view
+        userAvatarImageView.image = avatar
+        // Save to user default
+        UserDefaultManager.set(image: avatar, forKey: .UserAvatar)
+    }
+    
+    /// Update user name.
+    
+    @objc fileprivate func updateName(_ notification: Notification) {
+        guard let newName = notification.object as? String else { return }
+        // Update name label
+        greetingLabel.text = "overview.greeting.name".localized.replacingOccurrences(of: "%name%", with: newName)
+        // Save to user default
+        UserDefaultManager.set(value: newName, forKey: .UserName)
     }
     
     /// Additional preparation for storyboard segue.
@@ -573,6 +660,9 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                     todosCollectionView.deleteItems(at: [indexPath])
                 })
             }
+            if anObject is ToDo {
+                setupMessageLabel()
+            }
         case .insert:
             // Item has been inserted
             if anObject is Category, let indexPath = newIndexPath {
@@ -588,6 +678,9 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                         self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                     }
                 })
+            }
+            if anObject is ToDo {
+                setupMessageLabel()
             }
         case .update:
             // Item has been updated

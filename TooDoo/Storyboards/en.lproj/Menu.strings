@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "Sounds"; ObjectID = "G8x-4Y-OrQ"; */
+"G8x-4Y-OrQ.text" = "Sounds";
+
+/* Class = "UILabel"; text = "About TooDoo"; ObjectID = "H6F-qx-bbo"; */
+"H6F-qx-bbo.text" = "About TooDoo";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "I9o-AO-xfk"; */
+"I9o-AO-xfk.text" = "Settings";
+
+/* Class = "UILabel"; text = "Feedback"; ObjectID = "QCm-fU-8sZ"; */
+"QCm-fU-8sZ.text" = "Feedback";
+
+/* Class = "UILabel"; text = "Trash"; ObjectID = "bSb-UC-3OL"; */
+"bSb-UC-3OL.text" = "Trash";
+
+/* Class = "UILabel"; text = "Help"; ObjectID = "grX-dl-AOu"; */
+"grX-dl-AOu.text" = "Help";
+
+/* Class = "UILabel"; text = "Touch ID"; ObjectID = "sx5-od-7eX"; */
+"sx5-od-7eX.text" = "Touch ID";

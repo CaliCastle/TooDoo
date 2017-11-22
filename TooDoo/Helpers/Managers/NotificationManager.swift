@@ -31,12 +31,16 @@ final class NotificationManager {
     /// Defined Notifications for KVO.
     ///
     /// - UserHasSetup: When the user finished the setup
+    /// - UserNameChanged: When the user changed the name
+    /// - UserAvatarChanged: When the user changed avatar
     /// - ShowAddCategory: Show add category
     /// - ShowAddToDo: Show add todo
     /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
     
     public enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
+        case UserNameChanged = "user-name-changed"
+        case UserAvatarChanged = "user-avatar-changed"
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
@@ -60,8 +64,8 @@ final class NotificationManager {
     
     /// Send a notification.
     
-    public class func send(notification: Notifications) {
-        center.post(name: notification.name, object: nil)
+    public class func send(notification: Notifications, object: Any? = nil) {
+        center.post(name: notification.name, object: object)
     }
     
     /// Remove from a notification.
