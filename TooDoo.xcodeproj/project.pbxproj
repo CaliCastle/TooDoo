@@ -10,6 +10,7 @@
 		3CB54E0EF5F8FF069BCA2FD2 /* Pods_TooDoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 956F67EA935055512DB22579 /* Pods_TooDoo.framework */; };
 		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */; };
+		8D05144F1FC593AE00AC45CE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0514511FC593AE00AC45CE /* Settings.storyboard */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
@@ -70,7 +71,6 @@
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
 		8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0571FC5074D00162996 /* Menu.storyboard */; };
-		8DF7B05D1FC50D5800162996 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B05C1FC50D5800162996 /* Settings.storyboard */; };
 		8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +78,9 @@
 		0A0CD7DA27E89FF9555CD299 /* Pods-TooDoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.release.xcconfig"; sourceTree = "<group>"; };
 		8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUnlockViewController.swift; sourceTree = "<group>"; };
 		8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMotionEffect.swift; sourceTree = "<group>"; };
+		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		8D0514531FC593B100AC45CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		8D0514551FC593B300AC45CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		8D1599071FAAEE310004846F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
@@ -152,7 +155,6 @@
 		8DF7B0561FC5074D00162996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Menu.storyboard; sourceTree = "<group>"; };
 		8DF7B0591FC5075100162996 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Menu.strings; sourceTree = "<group>"; };
 		8DF7B05B1FC5075500162996 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Menu.strings"; sourceTree = "<group>"; };
-		8DF7B05C1FC50D5800162996 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		956F67EA935055512DB22579 /* Pods_TooDoo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TooDoo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C60B7BF83007E4F0CAFE92 /* Pods-TooDoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -300,7 +302,7 @@
 				8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */,
 				8D1599031FAAE7220004846F /* Setup.storyboard */,
 				8DF7B0571FC5074D00162996 /* Menu.storyboard */,
-				8DF7B05C1FC50D5800162996 /* Settings.storyboard */,
+				8D0514511FC593AE00AC45CE /* Settings.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -605,7 +607,7 @@
 				8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */,
 				8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */,
 				8D809BDA1FC2513F008DF629 /* README.md in Resources */,
-				8DF7B05D1FC50D5800162996 /* Settings.storyboard in Resources */,
+				8D05144F1FC593AE00AC45CE /* Settings.storyboard in Resources */,
 				8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */,
 				8DB49E561FB8D859003240E1 /* alert-round.png in Resources */,
 			);
@@ -769,6 +771,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8D0514511FC593AE00AC45CE /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8D0514501FC593AE00AC45CE /* Base */,
+				8D0514531FC593B100AC45CE /* en */,
+				8D0514551FC593B300AC45CE /* zh-Hans */,
+			);
+			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
 		8D1599031FAAE7220004846F /* Setup.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
