@@ -96,6 +96,7 @@ final class AppearanceManager {
     
     internal func changeSwitchAppearance() {
         UISwitch.appearance().onTintColor = theme == .Dark ? .flatMint() : .flatNavyBlue()
+        UISwitch.appearance().tintColor = theme == .Dark ? .white : .flatWhite()
     }
     
     /// Get current theme.

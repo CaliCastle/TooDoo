@@ -107,17 +107,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         return recognizer
     }()
     
-    /// Swipe for dismissal gesture recognizer.
-    
-    lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo(_:)))
-        swipeGestureRecognizer.direction = [.down, .up]
-        
-        todoItemsTableView.addGestureRecognizer(swipeGestureRecognizer)
-        
-        return swipeGestureRecognizer
-    }()
-    
     /// Motion effect for collection cell.
     
     lazy var motionEffect: UIMotionEffect = {
@@ -262,8 +251,11 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     
     @IBAction func addTodoDidTap(_ sender: Any) {
         isAdding = true
-        
+
+        // Insert add todo cell
         todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
+        // Scroll to top for entering goal
+        todoItemsTableView.scrollToRow(at: .zero, at: .none, animated: false)
     }
     
 }
@@ -323,6 +315,16 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
         }
     }
     
+    /// When user begin dragging table view.
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard scrollView.isEqual(todoItemsTableView) else { return }
+        
+        if isAdding {
+            NotificationManager.send(notification: .DraggedWhileAddingTodo)
+        }
+    }
+
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
@@ -412,8 +414,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoBeganEditing() {
         // Fix dragging while adding new todo
         guard let delegate = delegate else { return }
-        // Add swipe dismissal gesture
-        swipeForDismissalGestureRecognizer.isEnabled = true
+        
         // Disable category edit gesture
         tapGestureForName.isEnabled = false
         tapGestureForIcon.isEnabled = false
@@ -429,8 +430,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoDoneEditing(todo: ToDo?) {
         // Notify that the new todo is done editing
         guard let delegate = delegate else { return }
-        // Remove swipe dismissal gesture
-        swipeForDismissalGestureRecognizer.isEnabled = false
+
         // Restore category edit gesture
         tapGestureForName.isEnabled = true
         tapGestureForIcon.isEnabled = true

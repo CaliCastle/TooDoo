@@ -176,10 +176,6 @@ class MenuTableViewController: UITableViewController {
     
     fileprivate func configureSwitches() {
         for `switch` in switches {
-            // Bulk set switch tint colors
-            `switch`.tintColor = .flatWhite()
-            `switch`.onTintColor = .flatMint()
-            
             if `switch`.tag == 0 {
                 // Sounds switch
                 `switch`.isOn = UserDefaultManager.settingSoundsEnabled()
