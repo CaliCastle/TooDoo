@@ -46,6 +46,7 @@ class SelectCategoryTableViewController: UITableViewController {
         super.viewDidLoad()
 
         clearsSelectionOnViewWillAppear = false
+        
         fetchCategories()
     }
     

@@ -38,6 +38,7 @@ final class NotificationManager {
     /// - ShowAddToDo: Show add todo
     /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
     /// - SettingMotionEffectsChanged: When the motion effect setting is changed
+    /// - SettingThemeChanged: When the user changed color theme
     
     public enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
@@ -49,6 +50,7 @@ final class NotificationManager {
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
         
         case SettingMotionEffectsChanged = "setting-motion-effects-changed"
+        case SettingThemeChanged = "setting-theme-changed"
     }
     
     /// Local Notifications.

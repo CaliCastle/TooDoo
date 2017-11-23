@@ -13,6 +13,7 @@ extension String {
     /// Localized shortcut.
     
     var localized: String {
+        
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
@@ -20,6 +21,12 @@ extension String {
     
     func localized(with comment: String) -> String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: comment)
+    }
+    
+    /// Localized with plural.
+    
+    func localizedPlural(_ variable: Int) -> String {
+        return String(format: NSLocalizedString(self, comment: ""), arguments: [variable])
     }
     
 }

@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Authenticate for unlocking app under privacy protection</string>
 	<key>CFBundleDisplayName</key>
 	<string>TooDoo</string>
 	<key>CFBundleExecutable</key>
@@ -21,9 +19,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>5</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Authenticate for unlocking app under privacy protection</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access for photo selection use</string>
 	<key>UILaunchStoryboardName</key>

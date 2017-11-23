@@ -69,6 +69,10 @@ class ReorderCategoriesTableViewController: UITableViewController {
         
         tableView.tableFooterView = UIView()
         
+        // Set theme color
+        navigationController?.navigationBar.barTintColor = .flatBlack()
+        tableView.backgroundColor = .flatBlack()
+        
         // Disable scroll gesture to dismiss controller
         if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
             delegate.isDismissEnabled = false

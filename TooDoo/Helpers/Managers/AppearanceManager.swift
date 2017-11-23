@@ -35,6 +35,16 @@ final class AppearanceManager {
         case Light = "light"
     }
     
+    /// Singleton standard instance.
+    
+    public static let standard = AppearanceManager()
+    
+    /// Theme variable.
+    
+    private lazy var theme: ThemeMode = {
+        return AppearanceManager.currentTheme()
+    }()
+    
     /// Get main font
     ///
     /// - Parameters:
@@ -58,21 +68,34 @@ final class AppearanceManager {
     
     // MARK: - Navigation Bar
     
-    class func changeNavigationBarAppearance() {
+    internal func changeNavigationBarAppearance() {
         // Set to white tint and title color
         UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white, .font: font(size: 18, weight: .DemiBold)]
-        UIBarButtonItem.appearance().setTitleTextAttributes([.font: font()], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font: AppearanceManager.font()], for: .normal)
+        
+        var color: UIColor = .white
+        
+        if theme == .Light {
+            color = .flatBlack()
+        }
+        
+        UINavigationBar.appearance().tintColor = color
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: color, .font: AppearanceManager.font(size: 18, weight: .DemiBold)]
     }
     
     // MARK: - Side Menu
     
-    class func changeSideMenuAppearance() {
+    internal func changeSideMenuAppearance() {
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuPresentMode = .viewSlideInOut
         SideMenuManager.default.menuShadowOpacity = 0.15
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 0.8
+    }
+    
+    // MARK: - Switch Controls.
+    
+    internal func changeSwitchAppearance() {
+        UISwitch.appearance().onTintColor = theme == .Dark ? .flatMint() : .flatNavyBlue()
     }
     
     /// Get current theme.
@@ -83,11 +106,31 @@ final class AppearanceManager {
         return UserDefaultManager.settingThemeMode()
     }
     
+    /// Set current theme.
+    
     class func changeTheme(to theme: ThemeMode) {
         UserDefaultManager.set(value: theme.rawValue, forKey: .SettingThemeMode)
     }
     
-    // Private init
-    private init() {}
+    /// Configure appearances.
+    
+    open func configureAppearances() {
+        changeNavigationBarAppearance()
+        changeSideMenuAppearance()
+        changeSwitchAppearance()
+    }
+    
+    /// Private init
+    
+    private init() {
+        // Listen for theme change event
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+    }
+    
+    @objc private func themeChanged() {
+        theme = AppearanceManager.currentTheme()
+        
+        configureAppearances()
+    }
     
 }

@@ -68,9 +68,6 @@
 // Today is {Monday, Nov 20}
 "overview.message.today" = "Today is";
 
-"overview.message.todo.count" = "%count% todos due today.";
-"overview.message.todo.zero" = "No todos due today, yay!";
-
 /*
  ToDo Table View Controller.
  */
@@ -108,3 +105,8 @@
  Permission
  */
 "permission.authentication.reason" = "Authenticate for unlocking app under privacy protection";
+
+/*
+ Settings
+ */
+"settings.avatar.changed" = "Avatar changed!";

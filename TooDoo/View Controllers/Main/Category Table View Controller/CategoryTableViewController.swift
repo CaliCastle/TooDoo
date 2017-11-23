@@ -157,6 +157,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         navigationItem.title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
+        
         // Configure name text field
         configureNameTextField()
         // Configure gradient masks

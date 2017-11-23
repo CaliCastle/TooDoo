@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Haptica
+import SideMenu
 
 protocol MenuTableHeaderViewDelegate {
     
@@ -38,17 +40,21 @@ class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    
+        
         DispatchQueue.main.async {
             self.setupViews()
-            self.contentView.backgroundColor = .flatBlack()
         }
+        
         userNameTextView.delegate = self
         
         NotificationManager.listen(self, do: #selector(updateAvatar), notification: .UserAvatarChanged, object: nil)
     }
     
+    /// Set up views.
+    
     public func setupViews() {
+        // Configure content view
+        contentView.backgroundColor = .flatBlack()
         // Configure avatar
         userAvatarImageView.cornerRadius = userAvatarImageView.bounds.size.width / 2
         userAvatarImageView.layer.masksToBounds = true
@@ -62,12 +68,14 @@ class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
         // Configure since image
         sinceCheckImageView.tintColor = UIColor.white.withAlphaComponent(0.6)
         // Configure since label
-        sinceLabel.text = sinceLabel.text?.replacingOccurrences(of: "%days%", with: "\(UserDefaultManager.userHasBeenUsingThisAppDaysCount())")
+        sinceLabel.text = "%d day(s) since installation".localizedPlural(UserDefaultManager.userHasBeenUsingThisAppDaysCount())
     }
     
     /// User tapped edit button.
     
     @IBAction func editButtonDidTap(_ sender: UIButton) {
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
         userNameTextView.becomeFirstResponder()
     }
     

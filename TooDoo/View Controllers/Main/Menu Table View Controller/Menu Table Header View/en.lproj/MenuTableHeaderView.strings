@@ -1,6 +1,3 @@
 
 /* Class = "UITextView"; text = "User Name"; ObjectID = "9oD-ew-iRj"; */
 "9oD-ew-iRj.text" = "User Name";
-
-/* Class = "UILabel"; text = "You have been using TooDoo for %days% days"; ObjectID = "UNb-TG-z54"; */
-"UNb-TG-z54.text" = "You have been using TooDoo for %days% days now 👏🏻";

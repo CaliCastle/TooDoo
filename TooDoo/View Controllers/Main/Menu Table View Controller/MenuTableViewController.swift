@@ -15,6 +15,12 @@ import LocalAuthentication
 
 class MenuTableViewController: UITableViewController {
     
+    /// Storyboard segues.
+    
+    enum Segue: String {
+        case ShowSettings = "ShowSettings"
+    }
+    
     /// Table header height.
     
     let tableHeaderHeight: CGFloat = 150
@@ -25,6 +31,7 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var authenticationLabel: UILabel!
     @IBOutlet var authenticationIconImageView: UIImageView!
     @IBOutlet var switches: [UISwitch]!
+    @IBOutlet var changeThemeButton: UIBarButtonItem!
     
     /// Main view controller.
     
@@ -88,6 +95,10 @@ class MenuTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         tableView.animateViews(animations: [AnimationType.from(direction: .left, offset: 12)], duration: 0.2, animationInterval: 0.056)
+        
+        if let menuHeaderView = tableView.headerView(forSection: 0) as? MenuTableHeaderView {
+            menuHeaderView.setupViews()
+        }
     }
     
     /// Set up view properties.
@@ -108,6 +119,17 @@ class MenuTableViewController: UITableViewController {
         navigationController.toolbar.isTranslucent = false
         navigationController.toolbar.barTintColor = .flatBlack()
         navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+    }
+    
+    /// Set up change theme button image.
+    
+    fileprivate func setupChangeThemeButton() {
+        switch UserDefaultManager.settingThemeMode() {
+        case .Dark:
+            changeThemeButton.image = #imageLiteral(resourceName: "light-mode-icon")
+        case .Light:
+            changeThemeButton.image = #imageLiteral(resourceName: "dark-mode-icon")
+        }
     }
     
     /// Set up authentication properties.
@@ -211,6 +233,26 @@ class MenuTableViewController: UITableViewController {
             authenticationFailed(sender)
         }
     }
+
+    /// Change theme button did tap.
+    
+    @IBAction func themeButtonDidTap(_ sender: UIBarButtonItem) {
+//        switch UserDefaultManager.settingThemeMode() {
+//        case .Dark:
+//            // Change user defaults to Light
+//            AppearanceManager.changeTheme(to: .Light)
+//            // Set button to Dark mode
+//            sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
+//        case .Light:
+//            // Change user defaults to Dark
+//            AppearanceManager.changeTheme(to: .Dark)
+//            // Set button to Light mode
+//            sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
+//        }
+//
+//        // Send notification
+//        NotificationManager.send(notification: .SettingThemeChanged)
+    }
     
     /// Set authentication switch to off state.
     
@@ -239,6 +281,21 @@ class MenuTableViewController: UITableViewController {
         headerView.delegate = self
         
         return headerView
+    }
+    
+    /// Select row.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.item != 5 else { return }
+        
+        switch indexPath.item {
+        case 2:
+            dismiss(animated: true, completion: {
+                self.mainViewController?.performSegue(withIdentifier: Segue.ShowSettings.rawValue, sender: nil)
+            })
+        default:
+            break
+        }
     }
     
     /// Light status bar.
@@ -330,8 +387,7 @@ extension MenuTableViewController: UIImagePickerControllerDelegate, UINavigation
         SoundManager.play(soundEffect: .Click)
         
         picker.dismiss(animated: true) {
-            // FIXME: Localization
-            NotificationManager.showBanner(title: "Avatar changed!", type: .success)
+            NotificationManager.showBanner(title: "settings.avatar.changed".localized, type: .success)
         }
     }
     

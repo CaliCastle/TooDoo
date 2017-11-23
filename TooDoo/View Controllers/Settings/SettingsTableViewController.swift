@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 
 class SettingsTableViewController: UITableViewController {
 
@@ -22,6 +23,13 @@ class SettingsTableViewController: UITableViewController {
 
         navigationController?.navigationBar.barTintColor = .flatBlack()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Generate haptic feedback
+        Haptic.impact(.light).generate()
     }
     
     /// Configure icon image views.

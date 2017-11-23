@@ -108,3 +108,8 @@
  Permission
  */
 "permission.authentication.reason" = "为了保护隐私与未来解锁本应用";
+
+/*
+ Settings
+ */
+"settings.avatar.changed" = "头像已更改!";

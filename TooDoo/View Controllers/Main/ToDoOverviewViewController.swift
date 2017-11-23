@@ -312,7 +312,7 @@ class ToDoOverviewViewController: UIViewController {
             todosCount = todos.count
         }
         // Set todos count label accordingly
-        let todosCountLabel = todosCount == 0 ? "overview.message.todo.zero".localized : "overview.message.todo.count".localized
+        let todosCountLabel = "%d todo(s) due today".localizedPlural(todosCount)
         
         todoMessageLabel.text = "\(todosCountLabel.replacingOccurrences(of: "%count%", with: "\(todosCount)"))"
     }

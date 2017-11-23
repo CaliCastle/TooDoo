@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%d day(s) since installation</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>You decided to start using TooDoo today 🎉</string>
+			<key>one</key>
+			<string>You started using TooDoo yesterday 🙌🏻</string>
+			<key>other</key>
+			<string>You have been using TooDoo for %d days now 👏🏻</string>
+		</dict>
+	</dict>
+	<key>%d todo(s) due today</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@todos@</string>
+		<key>todos</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>No todos due today, yay!</string>
+			<key>one</key>
+			<string>You got 1 todo due today</string>
+			<key>two</key>
+			<string></string>
+			<key>few</key>
+			<string></string>
+			<key>many</key>
+			<string></string>
+			<key>other</key>
+			<string>%d todos due today</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
