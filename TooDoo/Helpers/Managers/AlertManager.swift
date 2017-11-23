@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Hokusai
 import Haptica
 
 final class AlertManager {
@@ -42,4 +43,23 @@ final class AlertManager {
         )
     }
     
+    /// Get action sheet.
+    
+    class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
+        // Show action sheet
+        let actionSheet = Hokusai(headline: headline)
+        
+        actionSheet.setStatusBarStyle(lightStatusBar ? .lightContent : .default)
+        
+        // Set colors accordingly to category color
+        if let category = category {
+            actionSheet.colors = HOKColors(backGroundColor: .flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
+        } else {
+            actionSheet.colors = colors
+        }
+        
+        actionSheet.cancelButtonTitle = cancelButtonTitle.localized
+        
+        return actionSheet
+    }
 }

@@ -34,6 +34,10 @@ class ToDoTableViewController: UITableViewController {
     var todo: ToDo? {
         didSet {
             isAdding = todo == nil
+            
+            guard let todo = todo else { return }
+            category = todo.category
+            goal = todo.goal!
         }
     }
     
@@ -143,9 +147,10 @@ class ToDoTableViewController: UITableViewController {
         } else {
             // Show keyboard after half a second
             goalTextField.text = goal
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(700)) {
-                self.goalTextField.becomeFirstResponder()
-            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(700)) {
+            self.goalTextField.becomeFirstResponder()
         }
     }
     
@@ -175,7 +180,6 @@ class ToDoTableViewController: UITableViewController {
     
     fileprivate func animateViews() {
         // Fade in and move from bottom animation to table cells
-        tableView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
         tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 60)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.13)
     }
 
@@ -224,13 +228,18 @@ class ToDoTableViewController: UITableViewController {
         let goal = (goalTextField.text?.trimmingCharacters(in: .whitespaces))!
         // Configure attributes
         todo.goal = goal
-        todo.createdAt = Date()
         todo.updatedAt = Date()
+        
+        if isAdding {
+            // Add created at date
+            todo.createdAt = Date()
+        }
         
         // Set its category
         if let category = category {
             category.addToTodos(todo)
         }
+        
         // Set due notification
         if let due = dueDate {
             todo.due = due
@@ -291,11 +300,11 @@ class ToDoTableViewController: UITableViewController {
     /// When user taps delete.
     
     @IBAction func deleteDidTap(_ sender: Any) {
-        // Generate haptic feedback
-        Haptic.notification(.warning).generate()
         // End editing
         tableView.endEditing(true)
         navigationController?.dismiss(animated: true, completion: nil)
+        // Generate haptic feedback
+        Haptic.notification(.success).generate()
         // Move todo to trash
         guard let todo = todo else { return }
         

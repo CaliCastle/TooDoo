@@ -22,6 +22,8 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
 
     func showAddNewTodo(goal: String, for category: Category)
     
+    func showTodoMenu(for todo: ToDo)
+    
 }
 
 class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
@@ -105,6 +107,18 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         categoryIconImageView.addGestureRecognizer(recognizer)
         
         return recognizer
+    }()
+    
+    /// Swipe for dismissal gesture recognizer.
+    
+    lazy var swipeForDismissalGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(draggedWhileAddingTodo(_:)))
+        swipeGestureRecognizer.direction = [.down, .up]
+        swipeGestureRecognizer.isEnabled = false
+        
+        todoItemsTableView.addGestureRecognizer(swipeGestureRecognizer)
+        
+        return swipeGestureRecognizer
     }()
     
     /// Motion effect for collection cell.
@@ -323,6 +337,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
         
         cell.delegate = self
+        
         let todo = fetchedResultsController.object(at: index)
         cell.todo = todo
         
@@ -338,22 +353,28 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
             cell.goalTextField.becomeFirstResponder()
         }
     }
-    
-    /// When user begin dragging table view.
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        guard scrollView.isEqual(todoItemsTableView) else { return }
-        
-        if isAdding {
-            NotificationManager.send(notification: .DraggedWhileAddingTodo)
-        }
-    }
 
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
     
-    /// When the content did change with delete.
+    /// When the content will be changed.
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if #available(iOS 11, *) {} else {
+            todoItemsTableView.beginUpdates()
+        }
+    }
+    
+    /// When the content has changed.
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if #available(iOS 11, *) {} else {
+            todoItemsTableView.endUpdates()
+        }
+    }
+    
+    /// When the content did change.
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // A todo item is changed
@@ -416,7 +437,17 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     }
                 }
             default:
-                break
+                if let indexPath = indexPath {
+                    guard !isAdding else { return }
+                    
+                    if #available(iOS 11, *) {
+                        todoItemsTableView.performBatchUpdates({
+                            todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                        }, completion: nil)
+                    } else {
+                        todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
             }
             
             // Re-configure todo count
@@ -439,6 +470,14 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate 
         SoundManager.play(soundEffect: .Click)
     }
     
+    /// Show menu for todo.
+    
+    func showTodoMenu(for todo: ToDo) {
+        guard let delegate = delegate else { return }
+        
+        delegate.showTodoMenu(for: todo)
+    }
+    
 }
 
 // MARK: - To Do Add Item Table View Cell Delegate Methods.
@@ -450,10 +489,13 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoBeganEditing() {
         // Fix dragging while adding new todo
         guard let delegate = delegate else { return }
-        
+        // Add swipe dismissal gesture
+        swipeForDismissalGestureRecognizer.isEnabled = true
         // Disable category edit gesture
         tapGestureForName.isEnabled = false
         tapGestureForIcon.isEnabled = false
+        // Disable scroll
+        todoItemsTableView.isScrollEnabled = false
         // Generate haptic feedback and sound
         Haptic.impact(.heavy).generate()
         SoundManager.play(soundEffect: .Click)
@@ -466,11 +508,13 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func newTodoDoneEditing(todo: ToDo?) {
         // Notify that the new todo is done editing
         guard let delegate = delegate else { return }
-
+        // Remove swipe dismissal gesture
+        swipeForDismissalGestureRecognizer.isEnabled = false
         // Restore category edit gesture
         tapGestureForName.isEnabled = true
         tapGestureForIcon.isEnabled = true
-        
+        // Enable scroll
+        todoItemsTableView.isScrollEnabled = true
         // Generate haptic feedback
         Haptic.impact(.light).generate()
         
@@ -515,11 +559,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func animateCardDown(options: Typist.KeyboardOptions) {
         UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
             self.superview?.transform = .init(translationX: 0, y: 0)
-        }, completion: {
-            if $0 {
-                NotificationManager.send(notification: .DraggedWhileAddingTodo)
-            }
-        })
+        }, completion: nil)
     }
     
 }

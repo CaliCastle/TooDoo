@@ -402,14 +402,10 @@ class ToDoOverviewViewController: UIViewController {
         Haptic.impact(.light).generate()
         
         // Show action sheet
-        let actionSheet = Hokusai(headline: "actionsheet.create-a".localized)
-        
-        actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white)
-        actionSheet.cancelButtonTitle = "Cancel".localized
+        let actionSheet = AlertManager.actionSheet(headline: "actionsheet.create-a".localized)
 
         let _ = actionSheet.addButton("actionsheet.new-todo".localized, target: self, selector: #selector(showAddTodo))
         let _ = actionSheet.addButton("actionsheet.new-category".localized, target: self, selector: #selector(showAddCategory))
-        actionSheet.setStatusBarStyle(.lightContent)
         
         actionSheet.show()
     }
@@ -511,6 +507,11 @@ class ToDoOverviewViewController: UIViewController {
             let destinationViewController = destination.viewControllers.first as! ToDoTableViewController
             // Pass through managed object context
             destinationViewController.managedObjectContext = managedObjectContext
+            
+            if let sender = sender, sender is ToDo {
+                destinationViewController.todo = sender as? ToDo
+                return
+            }
             
             guard let sender = sender as? [String: Any] else { return }
             let goal = sender["goal"] as! String
@@ -824,16 +825,11 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         let category = fetchedResultsController.object(at: selectedIndexPath)
         // Show action sheet
-        let actionSheet = Hokusai(headline: "\("actionsheet.category.title".localized)\(category.name!)")
-        
-        actionSheet.colors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
-        actionSheet.cancelButtonTitle = "Cancel".localized
+        let actionSheet = AlertManager.actionSheet(headline: "\("actionsheet.category.title".localized)\(category.name!)", category: category)
         
         let _ = actionSheet.addButton("actionsheet.actions.edit-category".localized, target: self, selector: #selector(showEditCategory))
         let _ = actionSheet.addButton("actionsheet.actions.delete-category".localized, target: self, selector: #selector(showDeleteCategory))
         let _ = actionSheet.addButton("actionsheet.actions.organize-categories".localized, target: self, selector: #selector(showReorderCategories))
-        
-        actionSheet.setStatusBarStyle(.lightContent)
         
         // Present actions sheet
         actionSheet.show()
@@ -902,6 +898,26 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
         
         // Delete from context
         context.delete(category)
+    }
+    
+    /// Show menu for todo.
+    
+    func showTodoMenu(for todo: ToDo) {
+        let actionSheet = AlertManager.actionSheet(headline: "\("actionsheet.todo.title".localized)\(todo.goal!)", category: todo.category!)
+        
+        // Add edit item button
+        let _ = actionSheet.addButton("actionsheet.actions.edit-todo".localized) {
+            self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
+        }
+        let _ = actionSheet.addButton("actionsheet.actions.delete-todo".localized) {
+            DispatchQueue.main.async {
+                Haptic.notification(.success).generate()
+            }
+            
+            todo.moveToTrash()
+        }
+        
+        actionSheet.show()
     }
     
 }

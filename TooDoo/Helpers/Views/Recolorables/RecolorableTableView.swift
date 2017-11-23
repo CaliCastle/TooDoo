@@ -8,7 +8,6 @@
 
 import UIKit
 
-@IBDesignable
 class RecolorableTableView: UITableView {
 
     @IBInspectable
@@ -42,7 +41,7 @@ class RecolorableTableView: UITableView {
         guard notification == nil else {
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-                switch UserDefaultManager.settingThemeMode() {
+                switch AppearanceManager.currentTheme() {
                 case .Dark:
                     // Dark theme
                     self.backgroundColor = .flatBlack()
@@ -57,7 +56,7 @@ class RecolorableTableView: UITableView {
         
         if solidBackground {
             // Change to theme color
-            switch UserDefaultManager.settingThemeMode() {
+            switch AppearanceManager.currentTheme() {
             case .Dark:
                 // Dark theme
                 backgroundColor = .flatBlack()

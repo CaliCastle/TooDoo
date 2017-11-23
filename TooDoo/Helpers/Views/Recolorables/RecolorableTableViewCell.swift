@@ -8,24 +8,27 @@
 
 import UIKit
 
-@IBDesignable
 class RecolorableTableViewCell: UITableViewCell {
 
     @IBInspectable
     var solidBackground: Bool = false {
         didSet {
-            contentView.backgroundColor = solidBackground ? .flatBlack() : .clear
+            recolorViews()
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        recolorViews()
+        
+        NotificationManager.listen(self, do: #selector(recolorViews), notification: .SettingThemeChanged, object: nil)
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Initialization code
-        backgroundColor = .clear
         recolorViews()
-        
-        NotificationManager.listen(self, do: #selector(recolorViews), notification: .SettingThemeChanged, object: nil)
     }
     
     @objc fileprivate func recolorViews(_ notification: Notification? = nil) {
@@ -44,9 +47,11 @@ class RecolorableTableViewCell: UITableViewCell {
             return
         }
         
-        if UserDefaultManager.settingThemeMode() == .Dark {
+        if AppearanceManager.currentTheme() == .Dark {
+            backgroundColor = solidBackground ? .flatBlack() : .clear
             contentView.backgroundColor = solidBackground ? .flatBlack() : .clear
         } else {
+            backgroundColor = solidBackground ? .flatWhite() : .clear
             contentView.backgroundColor = solidBackground ? .flatWhite() : .clear
         }
     }
@@ -55,14 +60,6 @@ class RecolorableTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        if solidBackground {
-            switch UserDefaultManager.settingThemeMode() {
-            case .Dark:
-                contentView.backgroundColor = UIColor.flatBlack().lighten(byPercentage: 0.15)
-            case .Light:
-                contentView.backgroundColor = UIColor.flatWhite().lighten(byPercentage: 0.15)
-            }
-        }
     }
 
 }

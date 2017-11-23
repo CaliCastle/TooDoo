@@ -38,6 +38,8 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     var managedObjectContext: NSManagedObjectContext?
     
+    private var creating = false
+    
     /// Stored primary color.
     
     var primaryColor: UIColor = .clear {
@@ -63,7 +65,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     var delegate: ToDoAddItemTableViewCellDelegate? {
         didSet {
-            registerKeyboardEvents()
+            guard let _ = delegate else { return }
+            
+            creating = false
         }
     }
     
@@ -76,21 +80,6 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     @IBOutlet var goalTextField: UITextField!
     @IBOutlet var editButton: UIButton!
     @IBOutlet var cancelButton: UIButton!
-    
-    /// Additional setup.
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    
-    }
-    
-    /// Register keyboard events for display issues.
-    
-    fileprivate func registerKeyboardEvents() {
-//        guard let delegate = delegate else { return }
-        
-        
-    }
     
     /// When the goal started editing.
     
@@ -107,6 +96,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     @IBAction func goalDoneEditing(_ sender: UITextField) {
         guard let delegate = delegate else { return }
+        guard !creating else { return }
+        
+        creating = true
         
         // Hide keyboard
         sender.resignFirstResponder()

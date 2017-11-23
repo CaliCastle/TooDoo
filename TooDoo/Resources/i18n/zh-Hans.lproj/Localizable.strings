@@ -97,6 +97,9 @@
 "actionsheet.actions.edit-category" = "编辑分类";
 "actionsheet.actions.delete-category" = "删除分类";
 "actionsheet.actions.organize-categories" = "管理所有分类";
+"actionsheet.todo.title" = "待办事项: ";
+"actionsheet.actions.edit-todo" = "编辑事项";
+"actionsheet.actions.delete-todo" = "删除事项";
 
 "alert.delete-category" = "一旦分类被删除，其分类下的所有待办事项也会被删除";
 "alert.error-fetching-category" = "无法读取分类";

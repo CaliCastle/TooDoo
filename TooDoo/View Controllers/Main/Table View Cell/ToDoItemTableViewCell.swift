@@ -14,6 +14,8 @@ protocol ToDoItemTableViewCellDelegate {
     
     func deleteTodo(for todo: ToDo)
     
+    func showTodoMenu(for todo: ToDo)
+    
 }
 
 class ToDoItemTableViewCell: UITableViewCell {
@@ -82,6 +84,17 @@ class ToDoItemTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    /// Double tap for editing, deleting todo.
+    
+    private lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        
+        addGestureRecognizer(doubleTapGesture)
+        
+        return doubleTapGesture
+    }()
 
     var delegate: ToDoItemTableViewCellDelegate?
     
@@ -98,6 +111,8 @@ class ToDoItemTableViewCell: UITableViewCell {
         
         todoItemGoalLabel.text = ""
         backgroundColor = .clear
+        // Configure double tap gesture
+        doubleTapGestureRecognizer.isEnabled = true
     }
     
     /// Touched checkbox.
@@ -121,12 +136,7 @@ class ToDoItemTableViewCell: UITableViewCell {
         delegate.deleteTodo(for: todo)
     }
     
-    /// Configure selected state.
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }
+    /// Prepare for reuse.
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -134,6 +144,14 @@ class ToDoItemTableViewCell: UITableViewCell {
         checkBox.checkState = .unchecked
         todoItemGoalLabel.text = ""
         moveToTrashButton.alpha = 0
+    }
+    
+    /// Todo double tapped.
+    
+    @objc fileprivate func doubleTapped(_ recognizer: UITapGestureRecognizer) {
+        guard let todo = todo, let delegate = delegate else { return }
+        
+        delegate.showTodoMenu(for: todo)
     }
     
     /// Get text color.

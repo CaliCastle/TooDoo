@@ -21,7 +21,7 @@
 "AqI-GN-X2o.placeholder" = "✎ Set your todo goal";
 
 /* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "BAy-NV-rf6"; */
-"BAy-NV-rf6.normalTitle" = "Delete";
+"BAy-NV-rf6.normalTitle" = "Delete Item";
 
 /* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
 "Dti-RI-Fq8.text" = "Choose an icon:";

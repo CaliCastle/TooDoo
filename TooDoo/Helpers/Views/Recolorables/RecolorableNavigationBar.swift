@@ -8,7 +8,6 @@
 
 import UIKit
 
-@IBDesignable
 class RecolorableNavigationBar: UINavigationBar {
 
     @IBInspectable
@@ -36,7 +35,7 @@ class RecolorableNavigationBar: UINavigationBar {
     
     @objc private func recolorViews() {
         // Change to theme color
-        switch UserDefaultManager.settingThemeMode() {
+        switch AppearanceManager.currentTheme() {
         case .Dark:
             // Dark theme
             barTintColor = .flatBlack()

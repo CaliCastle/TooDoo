@@ -174,11 +174,10 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         if let category = category {
             // If editing category, fill out text field
             categoryNameTextField.text = category.name
-        } else {
-            // Show keyboard after half a second
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
-                self.categoryNameTextField.becomeFirstResponder()
-            }
+        }
+        // Show keyboard after half a second
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
+            self.categoryNameTextField.becomeFirstResponder()
         }
     }
     

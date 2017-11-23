@@ -21,7 +21,7 @@
 "AqI-GN-X2o.placeholder" = "✎ 输入目标";
 
 /* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "BAy-NV-rf6"; */
-"BAy-NV-rf6.normalTitle" = "删除";
+"BAy-NV-rf6.normalTitle" = "删除事项";
 
 /* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
 "Dti-RI-Fq8.text" = "选择图标:";

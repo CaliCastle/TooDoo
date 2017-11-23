@@ -16,6 +16,9 @@ TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a
     - [x] English
     - [x] 简体中文
     - [ ] Deutsch
+- [x] Motion effects to tilt UI
+- [x] Change user's name and avatar
+- [x] Settings page
 
 ## Requirements for running:
 **iOS 10.0+**
@@ -39,9 +42,6 @@ _Supported devices:_
 
 ## Upcoming features:
 
-- Gravitational physics effects to UI
-- Change user's name and avatar
-- Settings page
 - Categorize icons for better UX
 - Location-sensitive notifications for to-dos
 - Search
