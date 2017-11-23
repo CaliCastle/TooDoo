@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%d todo(s) remaining</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@todos@</string>
+		<key>todos</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>无待办事项</string>
+			<key>one</key>
+			<string>仅剩一个待办事项</string>
+			<key>other</key>
+			<string>还有%d个待办事项</string>
+		</dict>
+	</dict>
+	<key>%d day(s) since installation</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>今天刚刚开始用的TooDoo 🎉</string>
+			<key>one</key>
+			<string>昨天开始用的TooDoo 🙌🏻</string>
+			<key>other</key>
+			<string>今天是你用TooDoo的第%d天啦 👏🏻</string>
+		</dict>
+	</dict>
+	<key>%d todo(s) due today</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@todos@</string>
+		<key>todos</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>今天暂无待办事项, 耶!</string>
+			<key>one</key>
+			<string>今天只剩一个待办事项啦!</string>
+			<key>other</key>
+			<string>今天还有%d个未完成待办事项</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

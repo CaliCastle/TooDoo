@@ -87,18 +87,9 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     /// Register keyboard events for display issues.
     
     fileprivate func registerKeyboardEvents() {
-        guard let delegate = delegate else { return }
+//        guard let delegate = delegate else { return }
         
-        let keyboard = Typist.shared
-        keyboard
-            .on(event: .willShow) {
-                // Animate card up
-                delegate.animateCardUp(options: $0)
-            }
-            .on(event: .willHide) {
-                // Animate card back down
-                delegate.animateCardDown(options: $0)
-            }.start()
+        
     }
     
     /// When the goal started editing.

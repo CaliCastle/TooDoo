@@ -113,6 +113,10 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         return .twoAxesShift(strength: 25)
     }()
     
+    /// Keyboard manager.
+    
+    let keyboard = Typist()
+    
     /// Called when the cell is double tapped.
     
     @objc private func categoryTappedForEdit(recognizer: UITapGestureRecognizer!) {
@@ -172,7 +176,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         fetchRequest.predicate = NSPredicate(format: "(category.name == %@) AND (movedToTrashAt = nil)", (category?.name)!)
         
         // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.completedAt), ascending: true), NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
@@ -219,7 +223,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     /// Configure category todo count.
     
     fileprivate func configureCategoryTodoCount(_ category: Category) {
-        categoryTodosCountLabel.text = "\(category.validTodos().count) \("Todos".localized)"
+        categoryTodosCountLabel.text = "%d todo(s) remaining".localizedPlural(category.validTodos().count)
     }
     
     /// Configure add todo button.
@@ -250,12 +254,32 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     /// Handle actions.
     
     @IBAction func addTodoDidTap(_ sender: Any) {
+        // Configure keyboard first
+        configureKeyboard()
+        // Set adding state
         isAdding = true
 
         // Insert add todo cell
         todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
         // Scroll to top for entering goal
         todoItemsTableView.scrollToRow(at: .zero, at: .none, animated: false)
+    }
+    
+    /// Configure keyboard events.
+    
+    private func configureKeyboard(register: Bool = true) {
+        if register {
+            keyboard
+                .on(event: .willShow) {
+                    // Animate card up
+                    self.animateCardUp(options: $0)
+                }
+                .on(event: .willHide) {
+                    self.animateCardDown(options: $0)
+                }.start()
+        } else {
+            keyboard.stop()
+        }
     }
     
 }
@@ -345,7 +369,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     guard tableRows != controllerRows else { return }
                     
                     // Delete from table row
-                    if #available(iOS 11.0, *) {
+                    if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
                             todoItemsTableView.deleteRows(at: [indexPath], with: .top)
                         })
@@ -354,8 +378,6 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                         todoItemsTableView.deleteRows(at: [indexPath], with: .top)
                     }
                 }
-                // Re-configure todo count
-                configureCategoryTodoCount(category!)
             case .insert:
                 if let indexPath = newIndexPath {
                     // A new todo has been inserted
@@ -371,7 +393,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     guard tableRows != controllerRows else { return }
                     
                     // Reload the inserted row
-                    if #available(iOS 11.0, *) {
+                    if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
                             todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
                         })
@@ -379,12 +401,26 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                         // Fallback on earlier versions
                         todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
                     }
-                    // Re-configure todo count
-                    configureCategoryTodoCount(category!)
+                }
+            case .move:
+                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+                    guard !isAdding else { return }
+                    
+                    if #available(iOS 11, *) {
+                        todoItemsTableView.performBatchUpdates({
+                            todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
+                        })
+                    } else {
+                        // Fallback on earlier versions
+                        todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
+                    }
                 }
             default:
                 break
             }
+            
+            // Re-configure todo count
+            configureCategoryTodoCount(category!)
         }
     }
     
@@ -440,6 +476,9 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         
         delegate.newTodoDoneEditing()
         
+        // Clear keyboard events
+        configureKeyboard(register: false)
+        
         // Reset add todo cell to hidden
         guard todo == nil else { return }
         isAdding = false
@@ -461,13 +500,12 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     /// Calculate for animating card up when keyboard is shown.
     
     func animateCardUp(options: Typist.KeyboardOptions) {
-        let tableFrame = todoItemsTableView.convert(options.startFrame, from: nil)
-        let tableRowFrame = todoItemsTableView.rectForRow(at: IndexPath(item: 0, section: 0))
-        let keyboardCovers = (options.endFrame.origin.y - abs(tableFrame.origin.y) - tableRowFrame.size.height)
+        let tableOffFrame = todoItemsTableView.convert(options.endFrame, from: nil)
+        let tableRowHeight = todoItemsTableView.rectForRow(at: IndexPath(item: 0, section: 0)).size.height
         
-        if keyboardCovers > 0 {
+        if tableOffFrame.origin.y < 0 {
             UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
-                self.superview?.transform = .init(translationX: 0, y: -keyboardCovers)
+                self.superview?.transform = .init(translationX: 0, y: tableOffFrame.origin.y - tableRowHeight)
             }, completion: nil)
         }
     }
@@ -477,7 +515,11 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     func animateCardDown(options: Typist.KeyboardOptions) {
         UIView.animate(withDuration: options.animationDuration, delay: 0, options: UIViewAnimationOptions(rawValue: UIViewAnimationOptions.RawValue(options.animationCurve.rawValue)), animations: {
             self.superview?.transform = .init(translationX: 0, y: 0)
-        }, completion: nil)
+        }, completion: {
+            if $0 {
+                NotificationManager.send(notification: .DraggedWhileAddingTodo)
+            }
+        })
     }
     
 }

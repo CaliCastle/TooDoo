@@ -71,7 +71,7 @@ extension Category {
         order = Int16(indexPath.item)
     }
     
-    /// Get valid todos.
+    /// Get valid todos. (The ones that are either completed or moved to trash)
     
     func validTodos() -> [ToDo] {
         var validTodos: [ToDo] = []
@@ -79,7 +79,7 @@ extension Category {
         guard let todos = todos else { return validTodos }
         
         for todo in todos {
-            if !(todo as! ToDo).isMovedToTrash() {
+            if !(todo as! ToDo).isMovedToTrash() && !(todo as! ToDo).completed {
                 validTodos.append(todo as! ToDo)
             }
         }

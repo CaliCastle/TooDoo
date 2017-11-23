@@ -159,6 +159,8 @@ class MenuTableViewController: UITableViewController {
             // No biometric type
             authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
             authenticationLabel.text = "Passcode".localized
+            authenticationLabel.isEnabled = false
+            switches.last?.isEnabled = false
         }
     }
     

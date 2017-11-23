@@ -26,7 +26,6 @@
 		8D4784D41F9077820067E0FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D4784D21F9077820067E0FE /* LaunchScreen.storyboard */; };
 		8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784E41F9078450067E0FE /* RPCircularProgress.swift */; };
 		8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D49E6431FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift */; };
-		8D4E2BC01FC6401C00195D5C /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8D4E2BBF1FC6401C00195D5C /* Localizable.stringsdict */; };
 		8D4E2BC21FC655D300195D5C /* RecolorableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E2BC11FC655D300195D5C /* RecolorableTableViewCell.swift */; };
 		8D4E2BC41FC6582700195D5C /* RecolorableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E2BC31FC6582700195D5C /* RecolorableTableView.swift */; };
 		8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E2BC61FC65C4E00195D5C /* RecolorableNavigationBar.swift */; };
@@ -37,6 +36,7 @@
 		8D6A13A31F93EC24004238D8 /* SetupWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A13A21F93EC24004238D8 /* SetupWelcomeViewController.swift */; };
 		8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */; };
 		8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A13A61F93EF70004238D8 /* StoryboardManager.swift */; };
+		8D7C79AE1FC6C87A00C225F3 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 8D7C79B01FC6C87A00C225F3 /* Localizable.stringsdict */; };
 		8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7EAE4B1FB3DDF90040AEAB /* DesignableView.swift */; };
 		8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD41FC21AE3008DF629 /* InfoPlist.strings */; };
 		8D809BDA1FC2513F008DF629 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD91FC2513F008DF629 /* README.md */; };
@@ -108,7 +108,6 @@
 		8D4784D31F9077820067E0FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D4784E41F9078450067E0FE /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		8D49E6431FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAddItemTableViewCell.swift; sourceTree = "<group>"; };
-		8D4E2BBF1FC6401C00195D5C /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		8D4E2BC11FC655D300195D5C /* RecolorableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableTableViewCell.swift; sourceTree = "<group>"; };
 		8D4E2BC31FC6582700195D5C /* RecolorableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableTableView.swift; sourceTree = "<group>"; };
 		8D4E2BC61FC65C4E00195D5C /* RecolorableNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableNavigationBar.swift; sourceTree = "<group>"; };
@@ -119,6 +118,8 @@
 		8D6A13A21F93EC24004238D8 /* SetupWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWelcomeViewController.swift; sourceTree = "<group>"; };
 		8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoOverviewViewController.swift; sourceTree = "<group>"; };
 		8D6A13A61F93EF70004238D8 /* StoryboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardManager.swift; sourceTree = "<group>"; };
+		8D7C79AF1FC6C87A00C225F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		8D7C79B11FC6C87E00C225F3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		8D7EAE4B1FB3DDF90040AEAB /* DesignableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
 		8D809BD31FC21AE3008DF629 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		8D809BD51FC21AFD008DF629 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -353,7 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				8D589F761FC1A19500039610 /* Localizable.strings */,
-				8D4E2BBF1FC6401C00195D5C /* Localizable.stringsdict */,
+				8D7C79B01FC6C87A00C225F3 /* Localizable.stringsdict */,
 				8D809BD41FC21AE3008DF629 /* InfoPlist.strings */,
 			);
 			path = i18n;
@@ -629,7 +630,7 @@
 				8D589F741FC1A19500039610 /* Localizable.strings in Resources */,
 				8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */,
 				8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */,
-				8D4E2BC01FC6401C00195D5C /* Localizable.stringsdict in Resources */,
+				8D7C79AE1FC6C87A00C225F3 /* Localizable.stringsdict in Resources */,
 				8D809BDA1FC2513F008DF629 /* README.md in Resources */,
 				8D05144F1FC593AE00AC45CE /* Settings.storyboard in Resources */,
 				8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */,
@@ -845,6 +846,15 @@
 				8D3ECDFA1FC2178400B39654 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		8D7C79B01FC6C87A00C225F3 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8D7C79AF1FC6C87A00C225F3 /* en */,
+				8D7C79B11FC6C87E00C225F3 /* zh-Hans */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 		8D809BD41FC21AE3008DF629 /* InfoPlist.strings */ = {
