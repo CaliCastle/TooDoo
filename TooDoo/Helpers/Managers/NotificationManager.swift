@@ -36,6 +36,7 @@ final class NotificationManager {
     /// - UserAuthenticated: When the user passes authentication with biometric Touch ID, Face ID or Passcode
     /// - ShowAddCategory: Show add category
     /// - ShowAddToDo: Show add todo
+    /// - ShowSettings: Show settings
     /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
     /// - SettingMotionEffectsChanged: When the motion effect setting is changed
     /// - SettingThemeChanged: When the user changed color theme
@@ -45,8 +46,11 @@ final class NotificationManager {
         case UserNameChanged = "user-name-changed"
         case UserAvatarChanged = "user-avatar-changed"
         case UserAuthenticated = "user-authenticated"
+        
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
+        case ShowSettings = "show-settings"
+        
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
         
         case SettingMotionEffectsChanged = "setting-motion-effects-changed"

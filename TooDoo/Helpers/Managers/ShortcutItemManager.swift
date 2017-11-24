@@ -87,7 +87,7 @@ final class ShortcutItemManager {
             break
         default:
             // Settings
-            break
+            NotificationManager.send(notification: .ShowSettings)
         }
     }
     

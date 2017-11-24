@@ -113,3 +113,11 @@
  Settings
  */
 "settings.avatar.changed" = "Avatar changed!";
+
+/*
+ Category icons categories
+ */
+"category-icon-lifestyle" = "Lifestyle";
+"category-icon-work" = "Work";
+"category-icon-social" = "Social";
+"category-icon-other" = "Other";

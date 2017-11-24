@@ -116,3 +116,11 @@
  Settings
  */
 "settings.avatar.changed" = "头像已更改!";
+
+/*
+ Category icons categories
+ */
+"category-icon-lifestyle" = "生活";
+"category-icon-work" = "工作";
+"category-icon-social" = "社交";
+"category-icon-other" = "其他";

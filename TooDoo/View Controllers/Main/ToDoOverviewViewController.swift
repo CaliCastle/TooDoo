@@ -35,12 +35,15 @@ class ToDoOverviewViewController: UIViewController {
     /// - ShowCategory: Add/Edit a category
     /// - ShowReorderCategories: Bulk re-order/delete categories
     /// - ShowTodo: Add/Edit a todo
+    /// - ShowMenu: Show side menu
+    /// - ShowSettings: Show settings
     
     private enum Segue: String {
         case ShowCategory = "ShowCategory"
         case ShowReorderCategories = "ShowReoderCategories"
         case ShowTodo = "ShowTodo"
         case ShowMenu = "ShowMenu"
+        case ShowSettings = "ShowSettings"
     }
     
     /// Navigation ttems enum.
@@ -255,6 +258,7 @@ class ToDoOverviewViewController: UIViewController {
     fileprivate func handleNotifications() {
         NotificationManager.listen(self, do: #selector(showAddCategory), notification: .ShowAddCategory, object: nil)
         NotificationManager.listen(self, do: #selector(showAddTodo), notification: .ShowAddToDo, object: nil)
+        NotificationManager.listen(self, do: #selector(showSettings), notification: .ShowSettings, object: nil)
         NotificationManager.listen(self, do: #selector(updateAvatar(_:)), notification: .UserAvatarChanged, object: nil)
         NotificationManager.listen(self, do: #selector(updateName(_:)), notification: .UserNameChanged, object: nil)
         NotificationManager.listen(self, do: #selector(userHasAuthenticated), notification: .UserAuthenticated, object: nil)
@@ -430,6 +434,16 @@ class ToDoOverviewViewController: UIViewController {
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
     }
     
+    /// Show settings view controller.
+    
+    @objc fileprivate func showSettings() {
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
+        
+        performSegue(withIdentifier: Segue.ShowSettings.rawValue, sender: nil)
+    }
+    
     /// Update user avatar.
     
     @objc fileprivate func updateAvatar(_ notification: Notification) {
@@ -461,6 +475,8 @@ class ToDoOverviewViewController: UIViewController {
     @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
         setMotionEffects()
     }
+    
+    /// Set motion effects to views.
     
     private func setMotionEffects() {
         if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
@@ -916,6 +932,10 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
             
             todo.moveToTrash()
         }
+        
+        // Play click sound and haptic feedback
+        SoundManager.play(soundEffect: .Click)
+        Haptic.impact(.medium).generate()
         
         actionSheet.show()
     }

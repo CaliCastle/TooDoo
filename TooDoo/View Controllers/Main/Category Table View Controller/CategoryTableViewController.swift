@@ -61,7 +61,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     /// Default category icons.
     
-    let categoryIcons: [UIImage] = CategoryIcon.default()
+    let categoryIcons: [String: [UIImage]] = CategoryIcon.default()
     
     /// Selected color index.
     
@@ -125,6 +125,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         setupViews()
         animateNavigationBar()
         animateViews()
+        registerHeaderView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -142,9 +143,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
                 selectedColorIndex = IndexPath(item: index, section: selectedColorIndex.section)
             }
             
-            if let index = categoryIcons.index(of: category.categoryIcon()) {
-                selectedIconIndex = IndexPath(item: index, section: selectedIconIndex.section)
-            }
+            selectedIconIndex = CategoryIcon.getIconIndex(for: category.categoryIcon())
         }
         
         selectDefaultColor()
@@ -163,6 +162,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         // Configure gradient masks
         categoryColorCollectionView.layer.mask = gradientMaskForColors
         categoryIconCollectionView.layer.mask = gradientMaskForIcons
+        // Configure floating header layout
     }
     
     /// Configure name text field properties.
@@ -220,6 +220,13 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.035)
     }
     
+    /// Register header view for category icons.
+    
+    fileprivate func registerHeaderView() {
+        categoryIconCollectionView.register(UINib(nibName: CategoryIconHeaderView.nibName, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CategoryIconHeaderView.identifier)
+        categoryIconCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+    }
+    
     /// Change icon color accordingly.
     
     fileprivate func changeColors() {
@@ -240,9 +247,19 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     fileprivate func changeIcon() {
         guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
-        let icon = categoryIcons[selectedIconIndex.item]
+        headerView.icon = getCurrentIcon()
+    }
+    
+    /// Get current icon.
+    ///
+    /// - Returns: The current icon image
+    
+    fileprivate func getCurrentIcon() -> UIImage {
+        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex.section]] {
+            return icons[selectedIconIndex.item]
+        }
         
-        headerView.icon = icon
+        return (categoryIcons.first?.value.first)!
     }
     
     /// User tapped cancel button.
@@ -323,7 +340,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         let category = self.category ?? Category(context: context)
         category.name = name
         category.color(categoryColors[selectedColorIndex.item])
-        category.icon = CategoryIcon.defaultIconsName[selectedIconIndex.item]
+        
+        category.icon = CategoryIcon.getIconName(for: getCurrentIcon())
         
         // Add new order, created date
         if isAdding {
@@ -441,13 +459,17 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     /// How many sections in collection view.
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        guard collectionView.isEqual(categoryIconCollectionView) else { return 1 }
+
+        return categoryIcons.count
     }
     
     /// How many items each section.
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView.tag == CategoryCollectionType.Color.rawValue ? categoryColors.count : categoryIcons.count
+        guard collectionView.isEqual(categoryIconCollectionView) else { return categoryColors.count }
+        
+        return categoryIcons[CategoryIcon.iconCategoryIndexes[section]]!.count
     }
     
     /// Get each item for collection view.
@@ -469,7 +491,7 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
                 return UICollectionViewCell()
             }
             
-            cell.icon = categoryIcons[indexPath.item]
+            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
             cell.color = categoryColors[selectedColorIndex.item]
             
             return cell
@@ -507,8 +529,59 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             
             return insets
         default:
-            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 25)
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
         }
+    }
+    
+    /// Supplementary view.
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard collectionView.isEqual(categoryIconCollectionView) else { return UICollectionReusableView() }
+        
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CategoryIconHeaderView.identifier, for: indexPath) as! CategoryIconHeaderView
+            headerView.setText(CategoryIcon.iconCategoryIndexes[indexPath.section])
+            
+            return headerView
+        default:
+            break
+        }
+        
+        return UICollectionReusableView()
+    }
+}
+
+extension CategoryTableViewController: HorizontalFloatingHeaderLayoutDelegate {
+    
+    /// Collection view item size.
+    
+    func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderItemSizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 50, height: 50)
+    }
+    
+    /// Section size.
+    
+    func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderSizeForSectionAtIndex section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width / 3, height: 30)
+    }
+    
+    /// Section insets.
+    
+    func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderSectionInsetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 2, left: 10, bottom: 5, right: 0)
+    }
+    
+    /// Item spacing.
+    
+    func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderItemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 6
+    }
+    
+    /// Item line spacing.
+    
+    func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderColumnSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 6
     }
 }
 

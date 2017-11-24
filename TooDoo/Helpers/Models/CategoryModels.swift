@@ -39,33 +39,85 @@ final class CategoryColor {
 
 final class CategoryIcon {
     
-    /// Default icons as string (file suffix)
+    /// Icons plist file name.
     
-    static let defaultIconsName: [String] = [
-        "personal", "typer", "birthday-cake", "bell", "books",
-        "briefcase", "camera", "game", "cleaning", "cloakroom",
-        "flowers", "music", "outline", "dog", "pill", "pizza",
-        "pokeball", "stroller", "corgi", "wallet", "workout",
-        "workspace", "laptop", "smartphone", "buying", "buildings",
-        "airplane", "ingredients", "fruit", "chef", "calendar",
-        "house", "home", "pilers", "call", "beach", "cat", "car", "cap",
-        "flipflops", "heels", "love", "mail", "design", "dance", "code",
-        "party", "present", "progress", "running", "tickets", "scissors",
-        "yoga", "warning", "dribbble", "netflix", "skype", "spotify", "snapchat",
-        "messenger", "whatsapp", "instagram", "wechat", "weibo"
+    internal static let iconsFileName = "Category Icons"
+    
+    /// Icons prefix name.
+    
+    internal static let iconsPrefix = "category-icon-"
+    
+    /// Icons category indexes.
+    
+    open static let iconCategoryIndexes = [
+        "lifestyle", "work", "social", "other"
     ]
+    
+    /// Default icons with categories
+    ///
+    /// - lifestyle:
+    /// - social... etc
+    
+    static var defaultIcons: [String: [String]] = {
+        if let path = Bundle.main.url(forResource: iconsFileName, withExtension: "plist") {
+            if let data = try? Data(contentsOf: path) {
+                return try! PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! [String: [String]]
+            }
+        }
+        
+        return [:]
+    }()
     
     /// Get default icons for category.
     ///
     /// - Returns: Default icons
     
-    class func `default`() -> [UIImage] {
-        var icons: [UIImage] = []
+    class func `default`() -> [String: [UIImage]] {
+        var icons: [String: [UIImage]] = [:]
         
-        for iconName in defaultIconsName {
-            icons.append(UIImage(named: "category-icon-\(iconName)")!)
+        for iconCategory in defaultIcons {
+            icons[iconCategory.key] = []
+            
+            for iconName in iconCategory.value {
+                icons[iconCategory.key]?.append(UIImage(named: iconsPrefix + iconName)!)
+            }
         }
         
         return icons
+    }
+    
+    /// Get category icon index.
+    
+    class func getIconIndex(for icon: UIImage) -> IndexPath {
+        let icons = defaultIcons
+        var item = 0
+        
+        for iconCategory in icons {
+            for iconName in iconCategory.value {
+                if icon == UIImage(named: iconsPrefix + iconName) {
+                    return IndexPath(item: item, section: iconCategoryIndexes.index(of: iconCategory.key)!)
+                }
+                // Increment item
+                item = item + 1
+            }
+            // Reset item
+            item = 0
+        }
+        
+        return .zero
+    }
+    
+    /// Get category icon name suffix.
+    
+    class func getIconName(for icon: UIImage) -> String {
+        for iconCategory in defaultIcons {
+            for iconName in iconCategory.value {
+                if icon == UIImage(named: iconsPrefix + iconName) {
+                    return iconName
+                }
+            }
+        }
+        
+        return (defaultIcons.first?.value.first)!
     }
 }

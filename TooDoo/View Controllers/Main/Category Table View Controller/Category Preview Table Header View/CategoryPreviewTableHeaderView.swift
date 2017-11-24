@@ -57,7 +57,7 @@ class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
         super.awakeFromNib()
         
         color = CategoryColor.default().first
-        icon = CategoryIcon.default().first
+        icon = CategoryIcon.default().first?.value.first
         name = ""
     }
     

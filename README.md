@@ -42,7 +42,6 @@ _Supported devices:_
 
 ## Upcoming features:
 
-- Categorize icons for better UX
 - Location-sensitive notifications for to-dos
 - Search
 - iPad & Landscape orientation support
@@ -52,7 +51,6 @@ _Supported devices:_
 ### Open source libraries:
     - M13Checkbox
     - ChameleonFramework
-    - BouncyLayout
     - Typist
     - LTMorphingLabel
     - Haptica

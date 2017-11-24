@@ -166,7 +166,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         
         cardContainerView.backgroundColor = .white
         categoryNameLabel.text = ""
-        categoryIconImageView.image = CategoryIcon.default().first
+        categoryIconImageView.image = CategoryIcon.default().first?.value.first
         categoryTodosCountLabel.text = ""
     }
     
