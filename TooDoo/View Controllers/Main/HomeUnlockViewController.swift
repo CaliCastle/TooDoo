@@ -14,7 +14,7 @@ class HomeUnlockViewController: UIViewController {
     /// Storyboard identifier.
     
     static let identifier = "HomeUnlock"
-
+    
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var backgroundGradientView: GradientView!
@@ -31,7 +31,7 @@ class HomeUnlockViewController: UIViewController {
         
         authenticateUser()
     }
-
+    
     /// Perform authentication.
     
     private func authenticateUser() {
@@ -90,7 +90,23 @@ class HomeUnlockViewController: UIViewController {
             }) {
                 if $0 {
                     // Dismiss self once completed
-                    self.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: {
+                        /// Redirection after authentication
+                        if let identifier = DispatchManager.main.redirectSegueIdentifier {
+                            switch identifier {
+                            case ToDoOverviewViewController.Segue.ShowSettings.rawValue:
+                                NotificationManager.send(notification: .ShowSettings)
+                            case ToDoOverviewViewController.Segue.ShowCategory.rawValue:
+                                NotificationManager.send(notification: .ShowAddCategory)
+                            case ToDoOverviewViewController.Segue.ShowTodo.rawValue:
+                                NotificationManager.send(notification: .ShowAddToDo)
+                            default:
+                                break
+                            }
+                        }
+                        // Reset redirection
+                        DispatchManager.main.redirectSegueIdentifier = nil
+                    })
                 }
             }
         }

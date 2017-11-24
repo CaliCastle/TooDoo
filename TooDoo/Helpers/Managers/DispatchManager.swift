@@ -13,24 +13,43 @@ import CoreData
 
 final class DispatchManager {
     
+    /// Only instance.
+    
+    public static let main = DispatchManager()
+    
+    /// Redirection segue identifier.
+    
+    open var redirectSegueIdentifier: String?
+    
     // MARK: - Application Entry Point
     
-    class func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    open func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         configureAppearance()
         configureRootViewController(for: application)
         configureShortcutItems(for: application, with: launchOptions)
         configureInstallationDateIfNone()
+        registerNotifications()
     }
     
     // MARK: - Shortcut Item Trigger Entry Point
     
-    class func triggerShortcutItem(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
+    open func triggerShortcutItem(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
         ShortcutItemManager.triggered(shortcutItem: shortcutItem, for: application)
+    }
+    
+    /// Set redirect to identifier.
+    ///
+    /// - Parameter notification: Notification event
+    
+    @objc private func setRedirectTo(_ notification: Notification) {
+        guard let identifier = notification.object as? String else { return }
+        
+        redirectSegueIdentifier = identifier
     }
     
     // MARK: - Core Data Manager Configuration
     
-    fileprivate class func configureCoreDataManager() -> NSManagedObjectContext {
+    fileprivate func configureCoreDataManager() -> NSManagedObjectContext {
         // Instanstiate and listen for notifications
         let coreDataManager = CoreDataManager()
         
@@ -40,7 +59,7 @@ final class DispatchManager {
     
     // MARK: - View Controller Configuration
     
-    fileprivate class func configureRootViewController(for application: UIApplication) {
+    fileprivate func configureRootViewController(for application: UIApplication) {
         guard let appDelegate = application.delegate as? AppDelegate else { return }
         let managedObjectContext = configureCoreDataManager()
         
@@ -69,7 +88,7 @@ final class DispatchManager {
     
     // MARK: - 3D Touch Shortcut Items Configuration
     
-    fileprivate class func configureShortcutItems(for application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    fileprivate func configureShortcutItems(for application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         guard UserDefaultManager.userHasSetup() else { return }
         
         ShortcutItemManager.createItems(for: application)
@@ -77,14 +96,14 @@ final class DispatchManager {
     
     // MARK: - Appearance Configuration
     
-    fileprivate class func configureAppearance() {
+    fileprivate func configureAppearance() {
         let appearanceManager = AppearanceManager.standard
         appearanceManager.configureAppearances()
     }
     
     /// Once user has finished setup process.
     
-    @objc class func userHasSetup() {
+    @objc func userHasSetup() {
         // Create shortcut items
         ShortcutItemManager.createItems(for: UIApplication.shared)
         
@@ -94,7 +113,17 @@ final class DispatchManager {
     
     /// Configure installation to user defaults if none.
     
-    fileprivate static func configureInstallationDateIfNone() {
+    fileprivate func configureInstallationDateIfNone() {
         let _ = UserDefaultManager.userHasBeenUsingThisAppDaysCount()
     }
+    
+    /// Register notifications for handling.
+    
+    fileprivate func registerNotifications() {
+        NotificationManager.listen(self, do: #selector(setRedirectTo(_:)), notification: .UserAuthenticationRedirect, object: nil)
+    }
+    
+    /// Inaccessible initialization.
+    
+    private init() {}
 }

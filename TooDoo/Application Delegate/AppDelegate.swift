@@ -12,17 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    /// Dispatch manager singleton.
+    
+    let dispatchManager = DispatchManager.main
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Setup the Appearance, Core Data and etc.
-        DispatchManager.applicationLaunched(application: application, with: launchOptions)
+        dispatchManager.applicationLaunched(application: application, with: launchOptions)
         
         return true
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         // Trigger shortcut item from 3D Touch
-        DispatchManager.triggerShortcutItem(shortcutItem: shortcutItem, for: application)
+        dispatchManager.triggerShortcutItem(shortcutItem: shortcutItem, for: application)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

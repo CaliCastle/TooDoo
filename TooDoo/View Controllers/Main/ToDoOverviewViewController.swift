@@ -38,7 +38,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// - ShowMenu: Show side menu
     /// - ShowSettings: Show settings
     
-    private enum Segue: String {
+    public enum Segue: String {
         case ShowCategory = "ShowCategory"
         case ShowReorderCategories = "ShowReoderCategories"
         case ShowTodo = "ShowTodo"
@@ -212,6 +212,8 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         
         if UserDefaultManager.settingAuthenticationEnabled() {
             present(storyboard!.instantiateViewController(withIdentifier: HomeUnlockViewController.identifier), animated: false, completion: nil)
+        } else {
+            userAuthenticated = true
         }
     }
     
@@ -545,6 +547,14 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         default:
             break
         }
+    }
+    
+    /// Perform segues.
+    
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        if UserDefaultManager.settingAuthenticationEnabled() && !userAuthenticated { NotificationManager.send(notification: .UserAuthenticationRedirect, object: identifier); return }
+        
+        super.performSegue(withIdentifier: identifier, sender: nil)
     }
     
 }

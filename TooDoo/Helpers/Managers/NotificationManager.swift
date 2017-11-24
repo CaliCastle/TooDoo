@@ -34,6 +34,8 @@ final class NotificationManager {
     /// - UserNameChanged: When the user changed the name
     /// - UserAvatarChanged: When the user changed avatar
     /// - UserAuthenticated: When the user passes authentication with biometric Touch ID, Face ID or Passcode
+    /// - UserAuthenticationRedirect: When the user uses 3D Touch or other shortcuts trying to perform an action,
+    ///                               but need to be authenticated first through lock page
     /// - ShowAddCategory: Show add category
     /// - ShowAddToDo: Show add todo
     /// - ShowSettings: Show settings
@@ -46,6 +48,7 @@ final class NotificationManager {
         case UserNameChanged = "user-name-changed"
         case UserAvatarChanged = "user-avatar-changed"
         case UserAuthenticated = "user-authenticated"
+        case UserAuthenticationRedirect = "user-authentication-redirect"
         
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
