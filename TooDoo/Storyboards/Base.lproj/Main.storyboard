@@ -186,7 +186,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
-                                                            <rect key="frame" x="8" y="73.666666666666657" width="288" height="267.33333333333337"/>
+                                                            <rect key="frame" x="8" y="70.666666666666686" width="288" height="279"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <prototypes>
                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToDoItemTableCell" rowHeight="35" id="F0s-WT-Tl5" customClass="ToDoItemTableViewCell" customModule="TooDoo" customModuleProvider="target">
@@ -345,9 +345,9 @@
                                                         <constraint firstItem="943-gG-flz" firstAttribute="leading" secondItem="PLK-Jl-fkn" secondAttribute="leading" constant="8" id="1U8-Kl-ySS"/>
                                                         <constraint firstItem="wau-5q-WVn" firstAttribute="leading" secondItem="bYp-9c-1G8" secondAttribute="trailing" constant="8" id="93Q-PC-Iak"/>
                                                         <constraint firstAttribute="bottom" secondItem="T4s-2G-4VL" secondAttribute="bottom" id="95U-w1-BNR"/>
-                                                        <constraint firstItem="T4s-2G-4VL" firstAttribute="top" secondItem="943-gG-flz" secondAttribute="bottom" constant="8" id="J3O-bZ-40n"/>
+                                                        <constraint firstItem="T4s-2G-4VL" firstAttribute="top" secondItem="943-gG-flz" secondAttribute="bottom" id="J3O-bZ-40n"/>
                                                         <constraint firstAttribute="trailing" secondItem="943-gG-flz" secondAttribute="trailing" constant="8" id="Kvy-e1-Wnb"/>
-                                                        <constraint firstItem="943-gG-flz" firstAttribute="top" secondItem="0zk-Dj-DM1" secondAttribute="bottom" constant="5" id="QSL-2z-k7m"/>
+                                                        <constraint firstItem="943-gG-flz" firstAttribute="top" secondItem="0zk-Dj-DM1" secondAttribute="bottom" constant="2" id="QSL-2z-k7m"/>
                                                         <constraint firstItem="wau-5q-WVn" firstAttribute="top" secondItem="PLK-Jl-fkn" secondAttribute="top" constant="17" id="SQv-tq-87E"/>
                                                         <constraint firstItem="nGz-ZA-aUL" firstAttribute="height" secondItem="T4s-2G-4VL" secondAttribute="height" id="T2K-tl-e5a"/>
                                                         <constraint firstItem="nGz-ZA-aUL" firstAttribute="width" secondItem="T4s-2G-4VL" secondAttribute="width" id="Yrm-ta-4AM"/>

@@ -24,7 +24,7 @@
 "BAy-NV-rf6.normalTitle" = "删除事项";
 
 /* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
-"Dti-RI-Fq8.text" = "选择图标:";
+"Dti-RI-Fq8.text" = "选择图标: (可空)";
 
 /* Class = "UILabel"; text = "New Category"; ObjectID = "O0a-3Q-COc"; */
 "O0a-3Q-COc.text" = "新建分类";

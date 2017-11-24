@@ -13,7 +13,7 @@ import CoreData
 import SideMenu
 import ViewAnimator
 
-class ToDoOverviewViewController: UIViewController {
+class ToDoOverviewViewController: UIViewController, CALayerDelegate {
 
     /// Storyboard identifier
     
@@ -176,6 +176,12 @@ class ToDoOverviewViewController: UIViewController {
     /// Check if user has authenticated.
     
     var userAuthenticated = false
+    
+    /// Layer delegate.
+    
+    func action(for layer: CALayer, forKey event: String) -> CAAction? {
+        return NSNull()
+    }
     
     // MARK: - View Life Cycle
     
@@ -702,6 +708,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         // If the category is re-ordered, scroll to that category
         collectionView.scrollToItem(at: destinationIndexPath, at: .centeredHorizontally, animated: true)
     }
+
 }
 
 // MARK: - Handle Collection View Flow Layout.

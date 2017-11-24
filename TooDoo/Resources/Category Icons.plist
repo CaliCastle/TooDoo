@@ -4,7 +4,7 @@
 <dict>
 	<key>lifestyle</key>
 	<array>
-		<string>personal</string>
+		<string>progress</string>
 		<string>bill</string>
 		<string>card</string>
 		<string>piggybank</string>
@@ -104,7 +104,7 @@
 		<string>house</string>
 		<string>ingredients</string>
 		<string>pill</string>
-		<string>progress</string>
+		<string>personal</string>
 		<string>sakura</string>
 	</array>
 </dict>

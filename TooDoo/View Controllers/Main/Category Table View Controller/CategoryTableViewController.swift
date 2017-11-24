@@ -9,7 +9,6 @@
 import UIKit
 import Haptica
 import CoreData
-import BouncyLayout
 import ViewAnimator
 import DeckTransition
 
@@ -65,7 +64,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     /// Selected color index.
     
-    var selectedColorIndex: IndexPath = .init(item: 0, section: 0) {
+    var selectedColorIndex: IndexPath = .zero {
         didSet {
             changeColors()
         }
@@ -73,7 +72,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     /// Selected icon index.
     
-    var selectedIconIndex: IndexPath = .init(item: 0, section: 0) {
+    var selectedIconIndex: IndexPath? {
         didSet {
             changeIcon()
         }
@@ -162,7 +161,6 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         // Configure gradient masks
         categoryColorCollectionView.layer.mask = gradientMaskForColors
         categoryIconCollectionView.layer.mask = gradientMaskForIcons
-        // Configure floating header layout
     }
     
     /// Configure name text field properties.
@@ -190,7 +188,9 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     /// Select default icon in category icon collection view.
     
     fileprivate func selectDefaultIcon() {
-        categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: true, scrollPosition: .centeredHorizontally)
+        if let _ = category {
+            categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: true, scrollPosition: .centeredHorizontally)
+        }
     }
     
     /// Update gradient frame when scrolling.
@@ -255,8 +255,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     /// - Returns: The current icon image
     
     fileprivate func getCurrentIcon() -> UIImage {
-        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex.section]] {
-            return icons[selectedIconIndex.item]
+        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex!.section]] {
+            return icons[selectedIconIndex!.item]
         }
         
         return (categoryIcons.first?.value.first)!
@@ -341,7 +341,9 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         category.name = name
         category.color(categoryColors[selectedColorIndex.item])
         
-        category.icon = CategoryIcon.getIconName(for: getCurrentIcon())
+        if let _ = selectedIconIndex {
+            category.icon = CategoryIcon.getIconName(for: getCurrentIcon())
+        }
         
         // Add new order, created date
         if isAdding {

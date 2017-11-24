@@ -24,7 +24,7 @@
 "BAy-NV-rf6.normalTitle" = "Delete Item";
 
 /* Class = "UILabel"; text = "Choose an icon:"; ObjectID = "Dti-RI-Fq8"; */
-"Dti-RI-Fq8.text" = "Choose an icon:";
+"Dti-RI-Fq8.text" = "Choose an icon: (optional)";
 
 /* Class = "UILabel"; text = "New Category"; ObjectID = "O0a-3Q-COc"; */
 "O0a-3Q-COc.text" = "New Category";

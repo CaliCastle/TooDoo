@@ -47,6 +47,10 @@ final class CategoryIcon {
     
     internal static let iconsPrefix = "category-icon-"
     
+    /// The name for no icon.
+    
+    open static let noIconName = "none"
+    
     /// Icons category indexes.
     
     open static let iconCategoryIndexes = [
