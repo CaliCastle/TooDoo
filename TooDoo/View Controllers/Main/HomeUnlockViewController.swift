@@ -21,15 +21,25 @@ class HomeUnlockViewController: UIViewController {
     @IBOutlet var lockImageView: UIImageView!
     
     // MARK: - View Life Cycle.
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        backgroundGradientView.alpha = 1
-        lockImageView.alpha = 1
-        lockImageView.transform = .init(scaleX: 1, y: 1)
+        setupViews()
         
         authenticateUser()
+    }
+    
+    /// Set up views.
+    
+    fileprivate func setupViews() {
+        // Configure background gradient view
+        backgroundGradientView.alpha = 1
+        backgroundGradientView.startColor = currentThemeIsDark() ? UIColor(hexString: "4F4F4F") : .white
+        backgroundGradientView.endColor = currentThemeIsDark() ? UIColor(hexString: "2B2B2B") : UIColor.flatWhite().darken(byPercentage: 0.15)
+        // Configure lock image view
+        lockImageView.alpha = 1
+        lockImageView.transform = .init(scaleX: 1, y: 1)
     }
     
     /// Perform authentication.
@@ -115,7 +125,7 @@ class HomeUnlockViewController: UIViewController {
     /// Light status bar.
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return themeStatusBarStyle()
     }
     
 }

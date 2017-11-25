@@ -155,17 +155,17 @@
                                                     <rect key="frame" x="8" y="0.0" width="304" height="400"/>
                                                     <subviews>
                                                         <label opaque="NO" contentMode="left" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-9c-1G8">
-                                                            <rect key="frame" x="17" y="17" width="239" height="33"/>
+                                                            <rect key="frame" x="17" y="17" width="234" height="33"/>
                                                             <gestureRecognizers/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="category-icon-personal" translatesAutoresizingMaskIntoConstraints="NO" id="wau-5q-WVn">
-                                                            <rect key="frame" x="264" y="17" width="32" height="32"/>
+                                                            <rect key="frame" x="256" y="17" width="40" height="40"/>
                                                             <gestureRecognizers/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="32" id="Dx3-hg-qbU"/>
-                                                                <constraint firstAttribute="height" constant="32" id="feR-nC-5FO"/>
+                                                                <constraint firstAttribute="width" constant="40" id="Dx3-hg-qbU"/>
+                                                                <constraint firstAttribute="height" constant="40" id="feR-nC-5FO"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -343,7 +343,7 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="943-gG-flz" firstAttribute="leading" secondItem="PLK-Jl-fkn" secondAttribute="leading" constant="8" id="1U8-Kl-ySS"/>
-                                                        <constraint firstItem="wau-5q-WVn" firstAttribute="leading" secondItem="bYp-9c-1G8" secondAttribute="trailing" constant="8" id="93Q-PC-Iak"/>
+                                                        <constraint firstItem="wau-5q-WVn" firstAttribute="leading" secondItem="bYp-9c-1G8" secondAttribute="trailing" constant="5" id="93Q-PC-Iak"/>
                                                         <constraint firstAttribute="bottom" secondItem="T4s-2G-4VL" secondAttribute="bottom" id="95U-w1-BNR"/>
                                                         <constraint firstItem="T4s-2G-4VL" firstAttribute="top" secondItem="943-gG-flz" secondAttribute="bottom" id="J3O-bZ-40n"/>
                                                         <constraint firstAttribute="trailing" secondItem="943-gG-flz" secondAttribute="trailing" constant="8" id="Kvy-e1-Wnb"/>
@@ -495,7 +495,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="TooDoo" id="0Bt-i3-bCD">
                         <barButtonItem key="leftBarButtonItem" image="menu-hamburger" id="hhr-dY-cDm">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="navigationItemDidTap:" destination="hCj-vD-cOb" id="bTu-GC-Oxv"/>
                             </connections>
@@ -510,7 +509,6 @@
                             <barButtonItem tag="1" image="search-button" id="S4P-Kb-Byd">
                                 <inset key="imageInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="largeContentSizeImageInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="navigationItemDidTap:" destination="hCj-vD-cOb" id="8XT-4s-71U"/>
                                 </connections>
@@ -518,8 +516,12 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButton" destination="bsU-NU-cXs" id="0qs-sz-vhJ"/>
+                        <outlet property="backgroundGradientView" destination="ZUy-L5-o8r" id="mAY-ey-4rD"/>
                         <outlet property="greetingLabel" destination="e3V-9A-d9Q" id="7cA-vH-P5h"/>
                         <outlet property="greetingWithTimeLabel" destination="l9p-kw-NAc" id="nKS-Vr-Ups"/>
+                        <outlet property="menuBarButton" destination="hhr-dY-cDm" id="b4l-jV-fw6"/>
+                        <outlet property="searchBarButton" destination="S4P-Kb-Byd" id="w8A-te-2dM"/>
                         <outlet property="todayLabel" destination="fzt-6i-3oP" id="fCq-pV-lZe"/>
                         <outlet property="todoMessageLabel" destination="DsW-xc-lcL" id="k3K-XM-wJK"/>
                         <outlet property="todosCollectionView" destination="ogu-d4-Yvt" id="mg8-7z-mz2"/>
@@ -555,7 +557,7 @@
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <real key="value" value="8"/>
+                                                <real key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                                                 <size key="value" width="0.0" height="2"/>
@@ -564,7 +566,7 @@
                                                 <color key="value" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.34999999999999998"/>
+                                                <real key="value" value="0.40000000000000002"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -573,6 +575,7 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="sbv-y5-mgf" firstAttribute="centerX" secondItem="WCL-8z-OEP" secondAttribute="centerX" id="Q0j-Fu-nbH"/>
                                     <constraint firstItem="sbv-y5-mgf" firstAttribute="top" secondItem="WCL-8z-OEP" secondAttribute="top" constant="150" id="awa-e6-b2g"/>
@@ -587,6 +590,9 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0IS-1Q-0Sq" appends="YES" id="CyG-KW-Yyw"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -957,6 +963,9 @@
                         <outlet property="categoryColorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
                         <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
                         <outlet property="categoryNameTextField" destination="XYe-b2-iVD" id="IEM-ey-qcF"/>
+                        <outletCollection property="cellLabels" destination="Ymz-fk-4yv" collectionClass="NSMutableArray" id="eIB-Fb-MX5"/>
+                        <outletCollection property="cellLabels" destination="AEL-2z-JMy" collectionClass="NSMutableArray" id="YPp-Lx-Sqc"/>
+                        <outletCollection property="cellLabels" destination="Dti-RI-Fq8" collectionClass="NSMutableArray" id="QfR-AE-Tbq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k32-bO-hZd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1328,6 +1337,9 @@
                         <outlet property="dueIconImageView" destination="DqH-bO-R67" id="N5Z-w9-hV0"/>
                         <outlet property="dueTimeLabel" destination="la1-hR-EUt" id="tI8-fO-cfA"/>
                         <outlet property="goalTextField" destination="AqI-GN-X2o" id="lTQ-Xu-j3j"/>
+                        <outletCollection property="cellLabels" destination="anl-Mc-eRf" collectionClass="NSMutableArray" id="pr7-cj-Pds"/>
+                        <outletCollection property="cellLabels" destination="6Em-EM-2uI" collectionClass="NSMutableArray" id="N5A-6C-YCk"/>
+                        <outletCollection property="cellLabels" destination="Xop-1P-BWD" collectionClass="NSMutableArray" id="5Ng-rB-xjj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPM-NY-Tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>

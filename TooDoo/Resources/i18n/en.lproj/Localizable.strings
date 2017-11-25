@@ -96,6 +96,8 @@
 "actionsheet.actions.organize-categories" = "Organize Categories";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";
+"actionsheet.actions.complete-todo" = "Set Item Completed";
+"actionsheet.actions.uncomplete-todo" = "Set Item Incomplete";
 "actionsheet.actions.delete-todo" = "Delete Item";
 
 "alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";

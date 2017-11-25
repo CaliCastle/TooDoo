@@ -19,6 +19,7 @@
 		8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */; };
 		8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */; };
 		8D1F6A891FB67CA7004709E3 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A881FB67CA7004709E3 /* UIViewController.swift */; };
+		8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3924FA1FC8F29D0085186A /* RecolorableView.swift */; };
 		8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Category Icons.plist */; };
 		8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */; };
 		8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */; };
@@ -98,6 +99,7 @@
 		8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		8D1F6A881FB67CA7004709E3 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		8D3924FA1FC8F29D0085186A /* RecolorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableView.swift; sourceTree = "<group>"; };
 		8D3AA14A1FC76DE300862C4C /* Category Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Category Icons.plist"; sourceTree = "<group>"; };
 		8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
 		8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIconHeaderView.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				8D4E2BC11FC655D300195D5C /* RecolorableTableViewCell.swift */,
 				8D4E2BC31FC6582700195D5C /* RecolorableTableView.swift */,
 				8D4E2BC61FC65C4E00195D5C /* RecolorableNavigationBar.swift */,
+				8D3924FA1FC8F29D0085186A /* RecolorableView.swift */,
 			);
 			path = Recolorables;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */,
+				8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */,
 				8DCBEA611FB2E69D00AD34D9 /* UINavigationController.swift in Sources */,
 				8DAC562D1FC0C61900F6956F /* SelectCategoryTableViewCell.swift in Sources */,
 				8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */,

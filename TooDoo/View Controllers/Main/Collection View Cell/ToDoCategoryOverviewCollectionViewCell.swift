@@ -178,8 +178,10 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         categoryIconImageView.addGestureRecognizer(tapGestureForIcon)
         
         setMotionEffect(nil)
+        setShadowOpacity()
         
         NotificationManager.listen(self, do: #selector(setMotionEffect(_:)), notification: .SettingMotionEffectsChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
     }
     
     /// Prepare reuse.
@@ -193,6 +195,12 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         categoryTodosCountLabel.text = ""
     }
     
+    /// Set shadow opacity.
+    
+    fileprivate func setShadowOpacity() {
+        shadowOpacity = AppearanceManager.currentTheme() == .Dark ? 0.25 : 0.14
+    }
+    
     /// Set motion effect.
     
     @objc private func setMotionEffect(_ notifcation: Notification?) {
@@ -201,6 +209,12 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         } else {
             motionEffects.removeAll()
         }
+    }
+    
+    /// When the theme changed.
+    
+    @objc private func themeChanged() {
+        setShadowOpacity()
     }
     
     /// Set up fetched results controller.
@@ -362,6 +376,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
             
             return cell
         }
+        
         // Configure todo item cell
         let index = isAdding ? IndexPath(item: indexPath.item - 1, section: indexPath.section) : indexPath
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemTableViewCell.identifier, for: indexPath) as? ToDoItemTableViewCell else { return UITableViewCell() }
@@ -382,6 +397,14 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
             // Show keyboard for typing
             cell.goalTextField.becomeFirstResponder()
         }
+    }
+    
+    /// Select an item.
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard !isAdding else { return }
+        
+        showTodoMenu(for: fetchedResultsController.object(at: indexPath))
     }
     
     /// Scroll view did scroll.
@@ -479,6 +502,11 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                         // Fallback on earlier versions
                         todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
                     }
+                    
+                    // Reconfigure cell
+                    if let cell = todoItemsTableView.cellForRow(at: newIndexPath) as? ToDoItemTableViewCell {
+                        cell.todo = fetchedResultsController.object(at: newIndexPath)
+                    }
                 }
             default:
                 if let indexPath = indexPath {
@@ -489,6 +517,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                             todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
                         }, completion: nil)
                     } else {
+                        // Fallback on earlier versions
                         todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
                     }
                 }

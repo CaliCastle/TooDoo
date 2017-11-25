@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecolorableTableView: UITableView {
+class RecolorableTableView: UITableView, RecolorableView {
 
     @IBInspectable
     var solidBackground: Bool = true {
@@ -37,7 +37,7 @@ class RecolorableTableView: UITableView {
     
     /// Recolor views with theme.
     
-    @objc private func recolorViews(_ notification: Notification? = nil) {
+    @objc open func recolorViews(_ notification: Notification? = nil) {
         guard notification == nil else {
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {

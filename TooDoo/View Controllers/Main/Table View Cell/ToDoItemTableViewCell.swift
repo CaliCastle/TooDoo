@@ -49,6 +49,8 @@ class ToDoItemTableViewCell: UITableViewCell {
             moveToTrashButton.tintColor = textColor.withAlphaComponent(0.3)
             // Set completed
             completed = todo.completed
+            // Configure views
+            configureViews()
         }
     }
     
@@ -57,31 +59,8 @@ class ToDoItemTableViewCell: UITableViewCell {
     var completed: Bool = false {
         didSet {
             guard let todo = todo else { return }
-            
-            // Set checkbox state accordingly
-            checkBox.checkState = completed ? .checked : .unchecked
             // Save completed if different
             todo.complete(completed: completed)
-            
-            let textColor = getTextColor()
-            
-            if completed {
-                // Set strike through and color
-                let newColor = textColor.lighten(byPercentage: 0.35)!
-                
-                todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: newColor, .strikethroughStyle: 1.5, .strikethroughColor: newColor.withAlphaComponent(0.75)])
-                // Show move to trash button
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.moveToTrashButton.alpha = 1
-                })
-            } else {
-                // Set no strike through and color
-                todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: textColor, .strikethroughStyle: 0])
-                // Hide move to trash button
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.moveToTrashButton.alpha = 0
-                })
-            }
         }
     }
     
@@ -115,17 +94,57 @@ class ToDoItemTableViewCell: UITableViewCell {
         doubleTapGestureRecognizer.isEnabled = true
     }
     
+    /// Configure views accordingly.
+    
+    fileprivate func configureViews() {
+        let textColor = getTextColor()
+        
+        // Set checkbox state accordingly
+        checkBox.checkState = completed ? .checked : .unchecked
+        
+        if completed {
+            // Set strike through and color
+            let newColor = textColor.lighten(byPercentage: 0.35)!
+            
+            todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: newColor, .strikethroughStyle: 1.5, .strikethroughColor: newColor.withAlphaComponent(0.75)])
+            // Show move to trash button
+            UIView.animate(withDuration: 0.25, animations: {
+                self.moveToTrashButton.alpha = 1
+            })
+        } else {
+            // Set no strike through and color
+            todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: textColor, .strikethroughStyle: 0])
+            // Hide move to trash button
+            UIView.animate(withDuration: 0.25, animations: {
+                self.moveToTrashButton.alpha = 0
+            })
+        }
+    }
+    
+    /// Simulatedly touch checkbox.
+    
+    public func touchCheckbox() {
+        checkBox.toggleCheckState(true)
+        checkboxChanged(checkBox)
+    }
+    
     /// Touched checkbox.
     
     @IBAction func checkboxChanged(_ sender: M13Checkbox) {
+        toggleCheckbox()
+    }
+    
+    /// Toggle checkbox state.
+    
+    private func toggleCheckbox() {
         // Generate haptic feedback
-        Haptic.impact(sender.checkState == .unchecked ? .light : .heavy).generate()
+        Haptic.impact(checkBox.checkState == .unchecked ? .light : .heavy).generate()
         // Produce sound if checked
-        if sender.checkState == .checked {
+        if checkBox.checkState == .checked {
             SoundManager.play(soundEffect: .Drip)
         }
         
-        completed = sender.checkState == .checked
+        completed = checkBox.checkState == .checked
     }
     
     /// Move to trash button tapped.

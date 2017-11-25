@@ -44,7 +44,7 @@
                             <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                            <real key="value" value="0.40000000000000002"/>
+                            <real key="value" value="0.29999999999999999"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="25"/>

@@ -61,6 +61,7 @@ class ToDoTableViewController: UITableViewController {
     @IBOutlet var categoryNameLabel: UILabel!
     @IBOutlet var dueIconImageView: UIImageView!
     @IBOutlet var dueTimeLabel: UILabel!
+    @IBOutlet var cellLabels: [UILabel]!
     
     /// Dependency Injection for Managed Object Context.
     
@@ -120,6 +121,7 @@ class ToDoTableViewController: UITableViewController {
         super.viewDidLoad()
 
         setupViews()
+        configureColors()
         animateNavigationBar()
         animateViews()
     }
@@ -135,12 +137,43 @@ class ToDoTableViewController: UITableViewController {
         configureCategoryViews()
     }
     
+    /// Configure colors.
+    
+    fileprivate func configureColors() {
+        // Configure bar buttons
+        if let item = navigationItem.leftBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
+        }
+        
+        if let item = navigationItem.rightBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        }
+        
+        // Set black or white scroll indicator
+        tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
+        
+        let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
+        // Configure text field colors
+        goalTextField.tintColor = color
+        goalTextField.textColor = color
+        goalTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
+        // Change placeholder color to grayish
+        goalTextField.attributedPlaceholder = NSAttributedString(string: goalTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
+        
+        // Configure label colors
+        categoryNameLabel.textColor = color
+        for label in cellLabels {
+            label.textColor = color.lighten(byPercentage: 0.17)
+        }
+        dueTimeLabel.textColor = color
+        
+        categoryGradientBackgroundView.startColor = currentThemeIsDark() ? .gray : .white
+        categoryGradientBackgroundView.endColor = currentThemeIsDark() ? .gray : .white
+    }
+    
     /// Configure goal text field properties.
     
     fileprivate func configureGoalTextField() {
-        // Change placeholder color to grayish
-        goalTextField.attributedPlaceholder = NSAttributedString(string: goalTextField.placeholder!, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.5)])
-
         if let todo = todo {
             // If editing todo, fill out text field
             goalTextField.text = todo.goal
@@ -404,6 +437,12 @@ class ToDoTableViewController: UITableViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     /// Auto hide home indicator

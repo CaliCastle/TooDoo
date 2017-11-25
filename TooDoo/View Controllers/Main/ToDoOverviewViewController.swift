@@ -22,6 +22,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     // MARK: - Properties
     
     /// Interface builder outlets
+    @IBOutlet var backgroundGradientView: GradientView!
     @IBOutlet var userAvatarContainerView: DesignableView!
     @IBOutlet var userAvatarImageView: UIImageView!
     @IBOutlet var greetingLabel: UILabel!
@@ -29,6 +30,9 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     @IBOutlet var todayLabel: UILabel!
     @IBOutlet var todoMessageLabel: UILabel!
     @IBOutlet var todosCollectionView: UICollectionView!
+    @IBOutlet var addBarButton: UIBarButtonItem!
+    @IBOutlet var searchBarButton: UIBarButtonItem!
+    @IBOutlet var menuBarButton: UIBarButtonItem!
     
     /// Storyboard segues.
     ///
@@ -196,6 +200,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         fetchTodos()
         
         setupViews()
+        configureColors()
 
         startAnimations()
         
@@ -215,6 +220,8 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         } else {
             userAuthenticated = true
         }
+        
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     /// Release memory.
@@ -271,6 +278,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         NotificationManager.listen(self, do: #selector(updateName(_:)), notification: .UserNameChanged, object: nil)
         NotificationManager.listen(self, do: #selector(userHasAuthenticated), notification: .UserAuthenticated, object: nil)
         NotificationManager.listen(self, do: #selector(motionEffectSettingChanged(_:)), notification: .SettingMotionEffectsChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
     }
     
     /// Set up views properties.
@@ -281,6 +289,29 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         setupMessageLabel()
         setupTodosCollectionView()
         setupSideMenuGesture()
+        setupNavigationItems()
+    }
+    
+    /// Configure colors.
+    
+    fileprivate func configureColors() {
+        let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
+        
+        // Configure title color
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: color, .font: AppearanceManager.font(size: 18, weight: .DemiBold)]
+        // Configure background gradient
+        backgroundGradientView.startColor = currentThemeIsDark() ? UIColor(hexString: "4F4F4F") : .white
+        backgroundGradientView.endColor = currentThemeIsDark() ? UIColor(hexString: "2B2B2B") : UIColor(hexString: "E0E0E0")
+        // Configure shadow
+        userAvatarContainerView.shadowOpacity = currentThemeIsDark() ? 0.4 : 0.1
+        // Configure labels
+        greetingLabel.textColor = color
+        todayLabel.textColor = currentThemeIsDark() ? UIColor(hexString: "BAACAC") : UIColor(hexString: "7A7575")
+        todoMessageLabel.textColor = currentThemeIsDark() ? UIColor(hexString: "BAACAC") : UIColor(hexString: "7A7575")
+        // Configure bar buttons
+        menuBarButton.tintColor = color
+        searchBarButton.tintColor = color
+        addBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
     }
     
     /// Set up greetingWithTimeLabel.
@@ -293,15 +324,15 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         case 4..<12:
             // Morning
             greetingWithTimeLabel.text = "\("overview.greeting.time.morning".localized) ☀️"
-            greetingWithTimeLabel.textColor = UIColor(hexString: "F8E71C")
+            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.8862745098, green: 0.8431372549, blue: 0.1098039216, alpha: 1)
         case 12..<18:
             // Afternoon
             greetingWithTimeLabel.text = "\("overview.greeting.time.afternoon".localized) ☕️"
-            greetingWithTimeLabel.textColor = UIColor(hexString: "F5A623")
+            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.9607843137, green: 0.5785923148, blue: 0.251636308, alpha: 1)
         default:
             // Evening
             greetingWithTimeLabel.text = "\("overview.greeting.time.evening".localized) 🌙"
-            greetingWithTimeLabel.textColor = UIColor(hexString: "E8A278")
+            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.9098039216, green: 0.6352941176, blue: 0.4705882353, alpha: 1)
         }
     }
     
@@ -356,6 +387,17 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         menuPanGesture.addTarget(SideMenuManager.default.transition, action: #selector(SideMenuTransition.handlePresentMenuLeftScreenEdge))
     }
     
+    /// Set up navigation items.
+    
+    fileprivate func setupNavigationItems() {
+        // Fix when below iOS 11, bar button squashed
+        if #available(iOS 11, *) {
+            searchBarButton.imageInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        } else {
+            searchBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+    }
+    
     /// Configure user information to the designated views.
     
     fileprivate func configureUserSettings() {
@@ -368,10 +410,16 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         setMotionEffects()
     }
     
-    /// Light status bar.
+    /// Theme adjusted status bar.
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return themeStatusBarStyle()
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     /// Auto hide home indicator
@@ -496,6 +544,12 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         }
     }
     
+    /// When the theme changed.
+    
+    @objc fileprivate func themeChanged() {
+        configureColors()
+    }
+    
     /// Additional preparation for storyboard segue.
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -554,7 +608,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         if UserDefaultManager.settingAuthenticationEnabled() && !userAuthenticated { NotificationManager.send(notification: .UserAuthenticationRedirect, object: identifier); return }
         
-        super.performSegue(withIdentifier: identifier, sender: nil)
+        super.performSegue(withIdentifier: identifier, sender: sender)
     }
     
 }
@@ -940,8 +994,21 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
         
         // Add edit item button
         let _ = actionSheet.addButton("actionsheet.actions.edit-todo".localized) {
+            DispatchQueue.main.async {
+                Haptic.selection.generate()
+            }
+            
             self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
         }
+        // Add complete button
+        let _ = actionSheet.addButton(todo.completed ? "actionsheet.actions.uncomplete-todo".localized : "actionsheet.actions.complete-todo".localized) {
+            DispatchQueue.main.async {
+                Haptic.selection.generate()
+            }
+            
+            todo.complete(completed: !todo.completed)
+        }
+        // Add delete button
         let _ = actionSheet.addButton("actionsheet.actions.delete-todo".localized) {
             DispatchQueue.main.async {
                 Haptic.notification(.success).generate()

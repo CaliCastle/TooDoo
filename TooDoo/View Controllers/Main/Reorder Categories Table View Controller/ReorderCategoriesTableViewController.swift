@@ -70,8 +70,18 @@ class ReorderCategoriesTableViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         
         // Set theme color
-        navigationController?.navigationBar.barTintColor = .flatBlack()
-        tableView.backgroundColor = .flatBlack()
+        navigationController?.navigationBar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        tableView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        
+        if let item = navigationItem.leftBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
+        }
+        
+        if let item = navigationItem.rightBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        }
+        
+        tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
         
         // Disable scroll gesture to dismiss controller
         if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
@@ -97,6 +107,12 @@ class ReorderCategoriesTableViewController: UITableViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     /// Hidden home indicator for iPhone X

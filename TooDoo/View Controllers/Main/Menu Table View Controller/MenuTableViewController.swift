@@ -32,6 +32,8 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var authenticationIconImageView: UIImageView!
     @IBOutlet var switches: [UISwitch]!
     @IBOutlet var changeThemeButton: UIBarButtonItem!
+    @IBOutlet var locationButton: UIBarButtonItem!
+    @IBOutlet var menuLabels: [UILabel]!
     
     /// Main view controller.
     
@@ -41,8 +43,8 @@ class MenuTableViewController: UITableViewController {
     
     lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
-        imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(.lightContent)
-        imagePickerController.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "black-background"), for: .default)
+        imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
+        imagePickerController.navigationBar.setBackgroundImage(currentThemeIsDark() ? #imageLiteral(resourceName: "black-background") : #imageLiteral(resourceName: "white-background"), for: .default)
         imagePickerController.navigationBar.shadowImage = UIImage()
         imagePickerController.modalPresentationStyle = .popover
         imagePickerController.sourceType = .photoLibrary
@@ -89,6 +91,11 @@ class MenuTableViewController: UITableViewController {
         super.viewDidLoad()
 
         setupViews()
+        
+        navigationController?.toolbar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        navigationController?.setToolbarHidden(false, animated: false)
+        
+        registerNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,11 +108,33 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    /// Register notifications for handling.
+    
+    fileprivate func registerNotifications() {
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+    }
+    
+    /// When theme changed.
+    
+    @objc fileprivate func themeChanged() {
+        setupViews()
+        
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+            self.navigationController?.toolbar.barTintColor = self.currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        }, completion: nil)
+        
+        setNeedsStatusBarAppearanceUpdate()
+        
+        imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
+        imagePickerController.navigationBar.setBackgroundImage(currentThemeIsDark() ? #imageLiteral(resourceName: "black-background") : #imageLiteral(resourceName: "white-background"), for: .default)
+    }
+    
     /// Set up view properties.
     
     fileprivate func setupViews() {
         setupNavigationBarAndToolBar()
         setupTableView()
+        setupChangeThemeButton()
     }
     
     /// Set navigation bar to hidden and tool bar to visible.
@@ -114,11 +143,11 @@ class MenuTableViewController: UITableViewController {
         guard let navigationController = navigationController else { return }
         
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setToolbarHidden(false, animated: false)
-        
         navigationController.toolbar.isTranslucent = false
-        navigationController.toolbar.barTintColor = .flatBlack()
         navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        
+        changeThemeButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
+        locationButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
     }
     
     /// Set up change theme button image.
@@ -170,7 +199,7 @@ class MenuTableViewController: UITableViewController {
         for iconImageView in iconImageViews {
             // Bulk set image tint colors
             iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = .white
+            iconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
@@ -178,6 +207,9 @@ class MenuTableViewController: UITableViewController {
     
     fileprivate func configureSwitches() {
         for `switch` in switches {
+            `switch`.tintColor = currentThemeIsDark() ? .flatWhite() : .lightGray
+            `switch`.onTintColor = currentThemeIsDark() ? .flatMint() : .flatNavyBlue()
+            
             if `switch`.tag == 0 {
                 // Sounds switch
                 `switch`.isOn = UserDefaultManager.settingSoundsEnabled()
@@ -188,16 +220,23 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    /// Configure labels.
+    
+    fileprivate func configureLabels() {
+        for label in menuLabels {
+            label.textColor = currentThemeIsDark() ? .white : .flatBlack()
+        }
+    }
+    
     /// Set up table view.
     
     fileprivate func setupTableView() {
-        tableView.backgroundColor = .flatBlack()
+        tableView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         
         setupAuthenticationProperties()
-        
         configureIconImages()
-        
         configureSwitches()
+        configureLabels()
     }
     
     /// Sounds switch value changed.
@@ -235,21 +274,24 @@ class MenuTableViewController: UITableViewController {
     /// Change theme button did tap.
     
     @IBAction func themeButtonDidTap(_ sender: UIBarButtonItem) {
-//        switch UserDefaultManager.settingThemeMode() {
-//        case .Dark:
-//            // Change user defaults to Light
-//            AppearanceManager.changeTheme(to: .Light)
-//            // Set button to Dark mode
-//            sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
-//        case .Light:
-//            // Change user defaults to Dark
-//            AppearanceManager.changeTheme(to: .Dark)
-//            // Set button to Light mode
-//            sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
-//        }
-//
-//        // Send notification
-//        NotificationManager.send(notification: .SettingThemeChanged)
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
+        
+        switch UserDefaultManager.settingThemeMode() {
+        case .Dark:
+            // Change user defaults to Light
+            AppearanceManager.changeTheme(to: .Light)
+            // Set button to Dark mode
+            sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
+        case .Light:
+            // Change user defaults to Dark
+            AppearanceManager.changeTheme(to: .Dark)
+            // Set button to Light mode
+            sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
+        }
+
+        // Send notification
+        NotificationManager.send(notification: .SettingThemeChanged)
     }
     
     /// Set authentication switch to off state.
@@ -284,7 +326,10 @@ class MenuTableViewController: UITableViewController {
     /// Select row.
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.item != 5 else { return }
+        guard indexPath.item != 4 else { return }
+        
+        // Generate haptic
+        Haptic.selection.generate()
         
         switch indexPath.item {
         case 2:
@@ -299,7 +344,13 @@ class MenuTableViewController: UITableViewController {
     /// Light status bar.
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return themeStatusBarStyle()
+    }
+    
+    /// Status bar update animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     // MARK: - Hide Home Indicator for iPhone X
@@ -331,10 +382,6 @@ extension MenuTableViewController: MenuTableHeaderViewDelegate {
                 
             case .authorized:
                 // Access is granted by user.
-                // Generate haptic feedback
-                DispatchQueue.main.async() {
-                    Haptic.impact(.medium).generate()
-                }
                 // Present image picker
                 self.present(self.imagePickerController, animated: true, completion: nil)
             case .notDetermined:

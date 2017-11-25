@@ -21,7 +21,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.barTintColor = .flatBlack()
+        navigationController?.navigationBar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         setupTableView()
     }
     
@@ -38,7 +38,7 @@ class SettingsTableViewController: UITableViewController {
         for iconImageView in iconImageViews {
             // Bulk set image tint colors
             iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = .white
+            iconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
@@ -46,10 +46,6 @@ class SettingsTableViewController: UITableViewController {
     
     fileprivate func configureSwitches() {
         for `switch` in switches {
-            // Bulk set switch tint colors
-            `switch`.tintColor = .flatWhite()
-            `switch`.onTintColor = .flatMint()
-            
             if `switch`.tag == 0 {
                 // Motion switch
                 `switch`.isOn = UserDefaultManager.settingMotionEffectsEnabled()
@@ -60,7 +56,7 @@ class SettingsTableViewController: UITableViewController {
     /// Set up table view.
     
     fileprivate func setupTableView() {
-        tableView.backgroundColor = .flatBlack()
+        tableView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         
         configureIconImages()
         
@@ -77,6 +73,9 @@ class SettingsTableViewController: UITableViewController {
     /// Dismissal.
     
     @IBAction func doneButtonDidTap(_ sender: UIBarButtonItem) {
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
+        
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
@@ -84,6 +83,12 @@ class SettingsTableViewController: UITableViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
 
 }

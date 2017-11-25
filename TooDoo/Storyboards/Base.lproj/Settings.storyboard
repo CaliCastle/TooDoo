@@ -77,7 +77,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="0FB-X8-MeX">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="AIL-ST-U5d">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="doneButtonDidTap:" destination="0DN-7j-0Ql" id="t0f-5D-uKU"/>
                             </connections>

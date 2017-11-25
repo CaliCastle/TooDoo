@@ -18,7 +18,7 @@ protocol MenuTableHeaderViewDelegate {
     
 }
 
-class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
+class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
 
     /// Nib file name.
     
@@ -48,34 +48,40 @@ class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
         userNameTextView.delegate = self
         
         NotificationManager.listen(self, do: #selector(updateAvatar), notification: .UserAvatarChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
     }
     
     /// Set up views.
     
     public func setupViews() {
         // Configure content view
-        contentView.backgroundColor = .flatBlack()
+        contentView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         // Configure avatar
         userAvatarImageView.cornerRadius = userAvatarImageView.bounds.size.width / 2
         userAvatarImageView.layer.masksToBounds = true
         userAvatarImageView.image = UserDefaultManager.userAvatar()
         // Configure name
         userNameTextView.centerVertically()
-        userNameTextView.textColor = .white
         userNameTextView.text = UserDefaultManager.string(forKey: .UserName)
-        // Configure edit button
-        editButton.tintColor = UIColor.white.withAlphaComponent(0.6)
-        // Configure since image
-        sinceCheckImageView.tintColor = UIColor.white.withAlphaComponent(0.6)
         // Configure since label
         sinceLabel.text = "%d day(s) since installation".localizedPlural(UserDefaultManager.userHasBeenUsingThisAppDaysCount())
+        
+        configureColors()
+    }
+    
+    private func configureColors() {
+        userNameTextView.textColor = currentThemeIsDark() ? .white : .flatBlack()
+        userNameTextView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
+        userNameTextView.keyboardAppearance = currentThemeIsDark() ? .dark : .light
+        // Configure edit button
+        editButton.tintColor = currentThemeIsDark() ? UIColor.white.withAlphaComponent(0.6) : UIColor.black.withAlphaComponent(0.5)
+        // Configure since image
+        sinceCheckImageView.tintColor = currentThemeIsDark() ? UIColor.white.withAlphaComponent(0.6) : UIColor.black.withAlphaComponent(0.5)
     }
     
     /// User tapped edit button.
     
     @IBAction func editButtonDidTap(_ sender: UIButton) {
-        // Generate haptic feedback
-        Haptic.impact(.medium).generate()
         userNameTextView.becomeFirstResponder()
     }
     
@@ -84,7 +90,17 @@ class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
     @IBAction func userAvatarDidTap(_ sender: UITapGestureRecognizer) {
         guard let delegate = delegate else { return }
         
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
+        
         delegate.showChangeAvatar()
+    }
+    
+    /// Text view began editing.
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
     }
     
     /// Text view changed text.
@@ -119,5 +135,18 @@ class MenuTableHeaderView: UITableViewHeaderFooterView, UITextViewDelegate {
         guard let avatar = notification.object as? UIImage else { return }
         
         userAvatarImageView.image = avatar
+    }
+    
+    /// When the theme changed.
+    
+    @objc private func themeChanged() {
+        recolorViews()
+        configureColors()
+    }
+    
+    /// Check if the theme is dark.
+    
+    private func currentThemeIsDark() -> Bool {
+        return AppearanceManager.currentTheme() == .Dark
     }
 }

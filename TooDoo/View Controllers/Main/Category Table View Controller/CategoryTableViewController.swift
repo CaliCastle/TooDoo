@@ -89,6 +89,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     @IBOutlet var categoryNameTextField: UITextField!
     @IBOutlet var categoryColorCollectionView: UICollectionView!
     @IBOutlet var categoryIconCollectionView: UICollectionView!
+    @IBOutlet var cellLabels: [UILabel]!
     
     /// Gradient mask for color collection view.
     
@@ -122,6 +123,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         super.viewDidLoad()
 
         setupViews()
+        configureColors()
         animateNavigationBar()
         animateViews()
         registerHeaderView()
@@ -163,12 +165,40 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         categoryIconCollectionView.layer.mask = gradientMaskForIcons
     }
     
+    /// Configure colors.
+    
+    fileprivate func configureColors() {
+        // Configure bar buttons
+        if let item = navigationItem.leftBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
+        }
+        if let item = navigationItem.rightBarButtonItem {
+            item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        }
+        
+        // Set black or white scroll indicator
+        tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
+        
+        let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
+        // Configure text field colors
+        categoryNameTextField.tintColor = color
+        categoryNameTextField.textColor = color
+        categoryNameTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
+        // Change placeholder color to grayish
+        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
+        
+        // Configure label colors
+        for label in cellLabels {
+            label.textColor = color.lighten(byPercentage: 0.17)
+        }
+        
+        categoryColorCollectionView.shadowOpacity = currentThemeIsDark() ? 0.25 : 0.07
+        categoryIconCollectionView.shadowOpacity = currentThemeIsDark() ? 0.5 : 0.1
+    }
+    
     /// Configure name text field properties.
     
     fileprivate func configureNameTextField() {
-        // Change placeholder color to grayish
-        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.5)])
-        
         if let category = category {
             // If editing category, fill out text field
             categoryNameTextField.text = category.name
@@ -297,6 +327,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
             
             NotificationManager.showBanner(title: "notification.empty-name".localized, type: .warning)
             
+            categoryNameTextField.becomeFirstResponder()
+            
             return
         }
         
@@ -376,6 +408,12 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     /// Auto hide home indicator
@@ -514,7 +552,7 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
         }
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
-        Haptic.impact(.light).generate()
+        Haptic.selection.generate()
     }
     
     /// Set left spacing for collection.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecolorableNavigationBar: UINavigationBar {
+class RecolorableNavigationBar: UINavigationBar, RecolorableView {
 
     @IBInspectable
     var solidBackground: Bool = true {
@@ -33,7 +33,7 @@ class RecolorableNavigationBar: UINavigationBar {
         recolorViews()
     }
     
-    @objc private func recolorViews() {
+    @objc open func recolorViews(_ notification: Notification? = nil) {
         // Change to theme color
         switch AppearanceManager.currentTheme() {
         case .Dark:

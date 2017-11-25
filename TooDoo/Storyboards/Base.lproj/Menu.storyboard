@@ -335,6 +335,7 @@
                         <outlet property="authenticationIconImageView" destination="h7R-nk-XSS" id="zxD-up-ttg"/>
                         <outlet property="authenticationLabel" destination="sx5-od-7eX" id="8xA-dF-xMW"/>
                         <outlet property="changeThemeButton" destination="0a1-oN-NeP" id="MfQ-Lx-xib"/>
+                        <outlet property="locationButton" destination="K0Z-9S-HP7" id="j2y-rj-Cs1"/>
                         <outletCollection property="iconImageViews" destination="hZ0-sx-MvJ" collectionClass="NSMutableArray" id="LP7-nc-Ei5"/>
                         <outletCollection property="iconImageViews" destination="h7R-nk-XSS" collectionClass="NSMutableArray" id="ugr-L1-xC6"/>
                         <outletCollection property="iconImageViews" destination="qCv-Dz-qgF" collectionClass="NSMutableArray" id="n7L-JA-p4e"/>
@@ -344,6 +345,13 @@
                         <outletCollection property="iconImageViews" destination="LOR-gw-zON" collectionClass="NSMutableArray" id="RG5-A4-aHH"/>
                         <outletCollection property="switches" destination="FJG-d9-Udg" collectionClass="NSMutableArray" id="baD-4Y-G1k"/>
                         <outletCollection property="switches" destination="lHL-OA-01e" collectionClass="NSMutableArray" id="Nb7-l9-eKJ"/>
+                        <outletCollection property="menuLabels" destination="G8x-4Y-OrQ" collectionClass="NSMutableArray" id="TuV-sR-AiG"/>
+                        <outletCollection property="menuLabels" destination="sx5-od-7eX" collectionClass="NSMutableArray" id="yCY-lg-NeO"/>
+                        <outletCollection property="menuLabels" destination="I9o-AO-xfk" collectionClass="NSMutableArray" id="NA6-Ot-mkf"/>
+                        <outletCollection property="menuLabels" destination="bSb-UC-3OL" collectionClass="NSMutableArray" id="mSV-4s-Uai"/>
+                        <outletCollection property="menuLabels" destination="H6F-qx-bbo" collectionClass="NSMutableArray" id="tua-uu-81q"/>
+                        <outletCollection property="menuLabels" destination="grX-dl-AOu" collectionClass="NSMutableArray" id="eE3-OO-nbv"/>
+                        <outletCollection property="menuLabels" destination="QCm-fU-8sZ" collectionClass="NSMutableArray" id="vZU-xE-leE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M4W-eH-dri" userLabel="First Responder" sceneMemberID="firstResponder"/>

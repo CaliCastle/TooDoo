@@ -58,6 +58,7 @@ class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
         
         color = CategoryColor.default().first
         name = ""
+        gradientBackgroundView.shadowOpacity = AppearanceManager.currentTheme() == .Dark ? 0.3 : 0.18
     }
     
 }

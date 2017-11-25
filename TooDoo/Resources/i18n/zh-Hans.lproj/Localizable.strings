@@ -99,6 +99,8 @@
 "actionsheet.actions.organize-categories" = "管理所有分类";
 "actionsheet.todo.title" = "待办事项: ";
 "actionsheet.actions.edit-todo" = "编辑事项";
+"actionsheet.actions.complete-todo" = "已完成";
+"actionsheet.actions.uncomplete-todo" = "设为未完成";
 "actionsheet.actions.delete-todo" = "删除事项";
 
 "alert.delete-category" = "一旦分类被删除，其分类下的所有待办事项也会被删除";

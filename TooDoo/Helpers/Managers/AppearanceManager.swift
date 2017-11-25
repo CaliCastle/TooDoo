@@ -69,18 +69,20 @@ final class AppearanceManager {
     // MARK: - Navigation Bar
     
     internal func changeNavigationBarAppearance() {
-        // Set to white tint and title color
         UINavigationBar.appearance().shadowImage = UIImage()
-        UIBarButtonItem.appearance().setTitleTextAttributes([.font: AppearanceManager.font()], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([.font: AppearanceManager.font(size: 17, weight: .Medium)], for: .normal)
         
-        var color: UIColor = .white
-        
-        if theme == .Light {
-            color = .flatBlack()
-        }
+        // Set color contrast
+        let color: UIColor = theme == .Light ? .flatBlack() : .white
         
         UINavigationBar.appearance().tintColor = color
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: color, .font: AppearanceManager.font(size: 18, weight: .DemiBold)]
+        
+        UIBarButtonItem.appearance().tintColor = color
+        
+        if #available(iOS 11, *) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: color, .font: AppearanceManager.font(size: 27, weight: .DemiBold)]
+        }
     }
     
     // MARK: - Side Menu
@@ -96,7 +98,7 @@ final class AppearanceManager {
     
     internal func changeSwitchAppearance() {
         UISwitch.appearance().onTintColor = theme == .Dark ? .flatMint() : .flatNavyBlue()
-        UISwitch.appearance().tintColor = theme == .Dark ? .white : .flatWhite()
+        UISwitch.appearance().tintColor = theme == .Dark ? .flatWhite() : .lightGray
     }
     
     /// Get current theme.

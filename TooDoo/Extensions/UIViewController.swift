@@ -26,5 +26,21 @@ extension UIViewController: NavigationBarAnimatable {
             navigationController.navigationBar.transform = .init(translationX: 0, y: 0)
         }, completion: nil)
     }
+
+}
+
+extension UIViewController {
+    
+    /// Get status bar style based on appearnce.
+    
+    open func themeStatusBarStyle() -> UIStatusBarStyle {
+        return AppearanceManager.currentTheme() == .Dark ? .lightContent : .default
+    }
+    
+    /// Get current theme method.
+    
+    open func currentThemeIsDark() -> Bool {
+        return AppearanceManager.currentTheme() == .Dark
+    }
     
 }
