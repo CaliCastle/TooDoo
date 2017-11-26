@@ -97,8 +97,8 @@ final class AppearanceManager {
     // MARK: - Switch Controls.
     
     internal func changeSwitchAppearance() {
-        UISwitch.appearance().onTintColor = theme == .Dark ? .flatMint() : .flatNavyBlue()
-        UISwitch.appearance().tintColor = theme == .Dark ? .flatWhite() : .lightGray
+        UISwitch.appearance().tintColor = AppearanceManager.switchTintColor()
+        UISwitch.appearance().onTintColor = AppearanceManager.switchOnTintColor()
     }
     
     /// Get current theme.
@@ -113,6 +113,18 @@ final class AppearanceManager {
     
     class func changeTheme(to theme: ThemeMode) {
         UserDefaultManager.set(value: theme.rawValue, forKey: .SettingThemeMode)
+    }
+    
+    /// Switch on tint color.
+    
+    open static func switchOnTintColor() -> UIColor {
+        return currentTheme() == .Dark ? .flatMint() : .flatNavyBlue()
+    }
+    
+    /// Switch tint color.
+    
+    open static func switchTintColor() -> UIColor {
+        return currentTheme() == .Dark ? .white : .lightGray
     }
     
     /// Configure appearances.

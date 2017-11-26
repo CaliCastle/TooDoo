@@ -114,7 +114,7 @@ final class NotificationManager {
         
         content.title = "❗️\("notifications.todo.due.title".localized)".replacingOccurrences(of: "%name%", with: todo.category!.name!)
         content.categoryIdentifier = LocalNotifications.TodoDue.rawValue
-        content.body = "🔘 \(todo.goal!)"
+        content.body = todo.goal!
         content.sound = .default()
   
         // Create trigger

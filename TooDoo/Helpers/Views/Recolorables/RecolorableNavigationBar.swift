@@ -39,9 +39,11 @@ class RecolorableNavigationBar: UINavigationBar, RecolorableView {
         case .Dark:
             // Dark theme
             barTintColor = .flatBlack()
+            backgroundColor = .flatBlack()
         case .Light:
             // Light theme
             barTintColor = .flatWhite()
+            backgroundColor = .flatWhite()
         }
     }
 

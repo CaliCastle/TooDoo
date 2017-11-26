@@ -98,12 +98,14 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         guard let delegate = delegate else { return }
         guard !creating else { return }
         
+        // If empty string entered, reset state
+        guard validateUserInput(text: sender.text!) else { delegate.newTodoDoneEditing(todo: nil); return }
+        guard validateGoalLength(text: sender.text!) else { return }
+        
         creating = true
         
         // Hide keyboard
         sender.resignFirstResponder()
-        // If empty string entered, reset state
-        guard validateUserInput(text: sender.text!) else { delegate.newTodoDoneEditing(todo: nil); return }
         
         // Create new todo
         let todo = ToDo(context: managedObjectContext!)
@@ -126,6 +128,18 @@ class ToDoAddItemTableViewCell: UITableViewCell {
     
     private func validateUserInput(text: String) -> Bool {
         return text.trimmingCharacters(in: .whitespaces).count != 0
+    }
+    
+    /// Validate user input length.
+    
+    private func validateGoalLength(text: String) -> Bool {
+        guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= Category.goalMaxLimit() else {
+            NotificationManager.showBanner(title: "notification.goal-limit-maxed".localized.replacingOccurrences(of: "%d", with: "\(Category.goalMaxLimit())"), type: .danger)
+            
+            return false
+        }
+        
+        return true
     }
     
     /// When the user dragged the view.

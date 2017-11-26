@@ -43,6 +43,7 @@
 "notification.created-category" = "成功创建分类 - ";
 "notification.empty-goal" = "待办事项不能为空";
 "notification.empty-name" = "名字不能为空";
+"notification.goal-limit-maxed" = "待办事项不能超过%d个字符";
 "notification.name-exists" = "名字已存在";
 
 /*

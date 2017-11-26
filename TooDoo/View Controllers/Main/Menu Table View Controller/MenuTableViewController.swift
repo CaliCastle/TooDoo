@@ -207,8 +207,8 @@ class MenuTableViewController: UITableViewController {
     
     fileprivate func configureSwitches() {
         for `switch` in switches {
-            `switch`.tintColor = currentThemeIsDark() ? .flatWhite() : .lightGray
-            `switch`.onTintColor = currentThemeIsDark() ? .flatMint() : .flatNavyBlue()
+            `switch`.tintColor = AppearanceManager.switchTintColor()
+            `switch`.onTintColor = AppearanceManager.switchOnTintColor()
             
             if `switch`.tag == 0 {
                 // Sounds switch
@@ -223,8 +223,8 @@ class MenuTableViewController: UITableViewController {
     /// Configure labels.
     
     fileprivate func configureLabels() {
-        for label in menuLabels {
-            label.textColor = currentThemeIsDark() ? .white : .flatBlack()
+        menuLabels.forEach {
+            $0.textColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
@@ -277,21 +277,23 @@ class MenuTableViewController: UITableViewController {
         // Generate haptic feedback
         Haptic.impact(.medium).generate()
         
-        switch UserDefaultManager.settingThemeMode() {
-        case .Dark:
-            // Change user defaults to Light
-            AppearanceManager.changeTheme(to: .Light)
-            // Set button to Dark mode
-            sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
-        case .Light:
-            // Change user defaults to Dark
-            AppearanceManager.changeTheme(to: .Dark)
-            // Set button to Light mode
-            sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
+        DispatchQueue.main.async {
+            switch UserDefaultManager.settingThemeMode() {
+            case .Dark:
+                // Change user defaults to Light
+                AppearanceManager.changeTheme(to: .Light)
+                // Set button to Dark mode
+                sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
+            case .Light:
+                // Change user defaults to Dark
+                AppearanceManager.changeTheme(to: .Dark)
+                // Set button to Light mode
+                sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
+            }
+            
+            // Send notification
+            NotificationManager.send(notification: .SettingThemeChanged)
         }
-
-        // Send notification
-        NotificationManager.send(notification: .SettingThemeChanged)
     }
     
     /// Set authentication switch to off state.
@@ -334,7 +336,7 @@ class MenuTableViewController: UITableViewController {
         switch indexPath.item {
         case 2:
             dismiss(animated: true, completion: {
-                self.mainViewController?.performSegue(withIdentifier: Segue.ShowSettings.rawValue, sender: nil)
+                NotificationManager.send(notification: .ShowSettings)
             })
         default:
             break
@@ -345,12 +347,6 @@ class MenuTableViewController: UITableViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return themeStatusBarStyle()
-    }
-    
-    /// Status bar update animation.
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .fade
     }
     
     // MARK: - Hide Home Indicator for iPhone X

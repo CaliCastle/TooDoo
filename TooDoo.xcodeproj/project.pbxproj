@@ -79,6 +79,7 @@
 		8DF35D631FBE54FA001877F4 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D621FBE54FA001877F4 /* ToDo.swift */; };
 		8DF35D651FBE6E47001877F4 /* drip.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DF35D641FBE6DD7001877F4 /* drip.caf */; };
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
+		8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
 		8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0571FC5074D00162996 /* Menu.storyboard */; };
 		8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */; };
@@ -89,7 +90,6 @@
 		8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUnlockViewController.swift; sourceTree = "<group>"; };
 		8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMotionEffect.swift; sourceTree = "<group>"; };
 		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
-		8D0514531FC593B100AC45CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		8D0514551FC593B300AC45CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
@@ -170,6 +170,8 @@
 		8DF35D621FBE54FA001877F4 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		8DF35D641FBE6DD7001877F4 /* drip.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = drip.caf; sourceTree = "<group>"; };
 		8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
+		8DF55B291FCAE85900A1DA95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8DF7B04F1FC502A100162996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuTableHeaderView.xib; sourceTree = "<group>"; };
 		8DF7B0521FC502A600162996 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuTableHeaderView.strings; sourceTree = "<group>"; };
 		8DF7B0541FC502A800162996 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuTableHeaderView.strings"; sourceTree = "<group>"; };
@@ -558,9 +560,26 @@
 			path = "Todo Table View Controller";
 			sourceTree = "<group>";
 		};
+		8DF55B2A1FCAED1C00A1DA95 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		8DF55B2B1FCAED2100A1DA95 /* General */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		8DF7B05E1FC50DB400162996 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				8DF55B2B1FCAED2100A1DA95 /* General */,
+				8DF55B2A1FCAED1C00A1DA95 /* Notifications */,
 				8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */,
 			);
 			path = Settings;
@@ -804,6 +823,7 @@
 				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
+				8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */,
 				8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */,
 				8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */,
 				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
@@ -830,8 +850,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8D0514501FC593AE00AC45CE /* Base */,
-				8D0514531FC593B100AC45CE /* en */,
 				8D0514551FC593B300AC45CE /* zh-Hans */,
+				8DF55B291FCAE85900A1DA95 /* en */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";

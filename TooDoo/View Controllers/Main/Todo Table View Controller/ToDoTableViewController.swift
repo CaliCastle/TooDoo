@@ -120,8 +120,8 @@ class ToDoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupViews()
         configureColors()
+        setupViews()
         animateNavigationBar()
         animateViews()
     }
@@ -237,14 +237,9 @@ class ToDoTableViewController: UITableViewController {
     
     @IBAction func doneDidTap(_ sender: Any) {
         // If empty string entered, reset state
-        guard validateUserInput(text: goalTextField.text!) else {
-            goalTextField.text = ""
-            goalTextField.becomeFirstResponder()
-            
-            NotificationManager.showBanner(title: "notification.empty-goal".localized, type: .warning)
-            
-            return
-        }
+        guard validateUserInput(text: goalTextField.text!) else { return }
+        // If longer than length limit
+        guard validateGoalLength(text: goalTextField.text!) else { return }
         
         tableView.endEditing(true)
         
@@ -290,7 +285,28 @@ class ToDoTableViewController: UITableViewController {
     /// Validate user input.
     
     private func validateUserInput(text: String) -> Bool {
-        return text.trimmingCharacters(in: .whitespaces).count != 0
+        guard text.trimmingCharacters(in: .whitespaces).count != 0 else {
+            NotificationManager.showBanner(title: "notification.empty-goal".localized, type: .warning)
+            goalTextField.text = ""
+            goalTextField.becomeFirstResponder()
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    /// Validate user input length.
+    
+    private func validateGoalLength(text: String) -> Bool {
+        guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= Category.goalMaxLimit() else {
+            NotificationManager.showBanner(title: "notification.goal-limit-maxed".localized.replacingOccurrences(of: "%d", with: "\(Category.goalMaxLimit())"), type: .danger)
+            goalTextField.becomeFirstResponder()
+            
+            return false
+        }
+        
+        return true
     }
     
     /// When user changed due switch state.

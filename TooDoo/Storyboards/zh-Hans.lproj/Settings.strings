@@ -3,4 +3,16 @@
 "0FB-X8-MeX.title" = "设置";
 
 /* Class = "UILabel"; text = "Motion Effects"; ObjectID = "ZEh-by-Kfo"; */
-"ZEh-by-Kfo.text" = "位移视差";
+"1ke-5t-BG6.text" = "位移视差";
+
+/* Class = "UILabel"; text = "All Settings"; ObjectID = "3Ib-Ds-oL8"; */
+"3Ib-Ds-oL8.text" = "总设置";
+
+/* Class = "UINavigationItem"; title = "All Settings"; ObjectID = "mfs-AP-gLJ"; */
+"mfs-AP-gLJ.title" = "总设置";
+
+/* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "qfy-2H-xvs"; */
+"qfy-2H-xvs.headerTitle" = "通用";
+
+/* Class = "UITableViewSection"; headerTitle = "Look & Feel"; ObjectID = "xgH-4F-3dO"; */
+"xgH-4F-3dO.headerTitle" = "界面&样式";

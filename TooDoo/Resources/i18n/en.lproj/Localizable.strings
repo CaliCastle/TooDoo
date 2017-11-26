@@ -43,6 +43,7 @@
 "notification.created-category" = "Created Category - ";
 "notification.empty-goal" = "Goal cannot be empty";
 "notification.empty-name" = "Name cannot be empty";
+"notification.goal-limit-maxed" = "Goal cannot be longer than %d characters";
 "notification.name-exists" = "Name already exists";
 
 /*

@@ -416,12 +416,6 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         return themeStatusBarStyle()
     }
     
-    /// Status bar animation.
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .fade
-    }
-    
     /// Auto hide home indicator
     
     @available(iOS 11, *)
@@ -597,7 +591,11 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
             
             destinationViewController.goal = goal
             destinationViewController.category = category
+        case Segue.ShowSettings.rawValue:
+            let destination = segue.destination as! UINavigationController
+            let destinationViewController = destination.viewControllers.first as! SettingsTableViewController
             
+            destinationViewController.mainViewController = self
         default:
             break
         }
@@ -606,6 +604,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// Perform segues.
     
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        // Check for redirection
         if UserDefaultManager.settingAuthenticationEnabled() && !userAuthenticated { NotificationManager.send(notification: .UserAuthenticationRedirect, object: identifier); return }
         
         super.performSegue(withIdentifier: identifier, sender: sender)

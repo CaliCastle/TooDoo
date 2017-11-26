@@ -2,5 +2,17 @@
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "0FB-X8-MeX"; */
 "0FB-X8-MeX.title" = "Settings";
 
-/* Class = "UILabel"; text = "Motion Effects"; ObjectID = "ZEh-by-Kfo"; */
-"ZEh-by-Kfo.text" = "Motion Effects";
+/* Class = "UILabel"; text = "Motion Effects"; ObjectID = "1ke-5t-BG6"; */
+"1ke-5t-BG6.text" = "Motion Effects";
+
+/* Class = "UILabel"; text = "All Settings"; ObjectID = "3Ib-Ds-oL8"; */
+"3Ib-Ds-oL8.text" = "General;
+
+/* Class = "UINavigationItem"; title = "All Settings"; ObjectID = "mfs-AP-gLJ"; */
+"mfs-AP-gLJ.title" = "General";
+
+/* Class = "UITableViewSection"; headerTitle = "General"; ObjectID = "qfy-2H-xvs"; */
+"qfy-2H-xvs.headerTitle" = "General";
+
+/* Class = "UITableViewSection"; headerTitle = "Look & Feel"; ObjectID = "xgH-4F-3dO"; */
+"xgH-4F-3dO.headerTitle" = "Look & Feel";

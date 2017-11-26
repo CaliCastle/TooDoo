@@ -25,10 +25,24 @@ extension UINavigationController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        guard let statusBarStyle = visibleViewController?.preferredStatusBarStyle else { return .lightContent }
+        guard let statusBarStyle = visibleViewController?.preferredStatusBarStyle else { return currentThemeIsDark() ? .lightContent : .default }
         
         return statusBarStyle
     }
@@ -38,7 +52,7 @@ extension UINavigationController {
 extension UIImagePickerController {
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return currentThemeIsDark() ? .lightContent : .default
     }
     
 }
