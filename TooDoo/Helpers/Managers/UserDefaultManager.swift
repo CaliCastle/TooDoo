@@ -21,6 +21,7 @@ final class UserDefaultManager {
     /// - SettingAuthentication: The authentication lock for entering the app option in settings
     /// - SettingThemeMode: The dark or light mode in settings
     /// - SettingMotionEffects: The motion effect animation
+    /// - SettingNotificationMessage: The custom notification message
     
     enum Key: String {
         case UserName = "user-name"
@@ -32,6 +33,8 @@ final class UserDefaultManager {
         case SettingAuthentication = "setting-authentication"
         case SettingThemeMode = "setting-theme-mode"
         case SettingMotionEffects = "setting-motion-effects"
+        
+        case SettingNotificationMessage = "setting-notification-message"
     }
     
     static let userDefaults = UserDefaults.standard

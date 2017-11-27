@@ -142,6 +142,7 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
     @objc private func themeChanged() {
         recolorViews()
         configureColors()
+        userNameTextView.centerVertically()
     }
     
     /// Check if the theme is dark.

@@ -40,6 +40,7 @@ final class NotificationManager {
     /// - ShowAddToDo: Show add todo
     /// - ShowSettings: Show settings
     /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
+    /// - UpdateStatusBar: Update the status bar
     /// - SettingMotionEffectsChanged: When the motion effect setting is changed
     /// - SettingThemeChanged: When the user changed color theme
     
@@ -55,6 +56,7 @@ final class NotificationManager {
         case ShowSettings = "show-settings"
         
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
+        case UpdateStatusBar = "update-status-bar"
         
         case SettingMotionEffectsChanged = "setting-motion-effects-changed"
         case SettingThemeChanged = "setting-theme-changed"
@@ -112,7 +114,14 @@ final class NotificationManager {
         // Configure content
         let content = UNMutableNotificationContent()
         
-        content.title = "❗️\("notifications.todo.due.title".localized)".replacingOccurrences(of: "%name%", with: todo.category!.name!)
+        // Set title
+        if let title = UserDefaultManager.string(forKey: .SettingNotificationMessage) {
+            content.title = title
+        } else {
+            content.title = "notifications.todo.due.title".localized
+        }
+        
+        content.title = content.title.replacingOccurrences(of: "@", with: todo.category!.name!)
         content.categoryIdentifier = LocalNotifications.TodoDue.rawValue
         content.body = todo.goal!
         content.sound = .default()

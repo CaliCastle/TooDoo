@@ -37,7 +37,7 @@
 /*
  Notifications.
  */
-"notifications.todo.due.title" = "你有一个 %name% 的待办事项";
+"notifications.todo.due.title" = "❗️你有一个@的待办事项";
 
 "notification.deleted-category" = "分类已删除！";
 "notification.created-category" = "成功创建分类 - ";

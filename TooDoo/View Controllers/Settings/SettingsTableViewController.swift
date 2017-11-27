@@ -9,32 +9,19 @@
 import UIKit
 import Haptica
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var iconImageViews: [UIImageView]!
-    @IBOutlet var switches: [UISwitch]!
     @IBOutlet var cellLabels: [UILabel]!
-    
-    var mainViewController: ToDoOverviewViewController?
+    @IBOutlet var switches: [UISwitch]!
     
     // MARK: - View Life Cycle.
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.navigationBar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
-        navigationItem.rightBarButtonItem?.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
         
-        setupTableView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // Generate haptic feedback
-        Haptic.impact(.light).generate()
     }
     
     /// Configure icon image views.
@@ -50,30 +37,27 @@ class SettingsTableViewController: UITableViewController {
     /// Configure switches.
     
     fileprivate func configureSwitches() {
-        for `switch` in switches {
-            if `switch`.tag == 0 {
+        switches.forEach {
+            if $0.tag == 0 {
                 // Motion switch
-                `switch`.isOn = UserDefaultManager.settingMotionEffectsEnabled()
+                $0.isOn = UserDefaultManager.settingMotionEffectsEnabled()
             }
-        }
-    }
-    
-    /// Configure labels.
-    
-    fileprivate func configureLabels() {
-        cellLabels.forEach {
-            $0.textColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
     /// Set up table view.
     
-    fileprivate func setupTableView() {
-        tableView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+    internal override func setupTableView() {
+        super.setupTableView()
         
         configureIconImages()
-        configureLabels()
         configureSwitches()
+    }
+    
+    /// Set cell labels
+    
+    override func getCellLabels() -> [UILabel]? {
+        return cellLabels
     }
     
     /// Motion effects switch changed.
@@ -83,23 +67,19 @@ class SettingsTableViewController: UITableViewController {
         NotificationManager.send(notification: .SettingMotionEffectsChanged)
     }
     
-    /// Dismissal.
+    /// When cell is about to be displayed.
     
-    @IBAction func doneButtonDidTap(_ sender: UIBarButtonItem) {
-        // Generate haptic feedback
-        Haptic.impact(.medium).generate()
-        
-        navigationController?.dismiss(animated: true, completion: {
-            if let mainViewController = self.mainViewController {
-                mainViewController.setNeedsStatusBarAppearanceUpdate()
-            }
-        })
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.prepareDisclosureIndicator()
     }
     
-    /// Light status bar.
+    /// Prepare for segue.
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        DispatchQueue.main.async {
+            // Generate haptic feedback
+            Haptic.selection.generate()
+        }
     }
 
 }

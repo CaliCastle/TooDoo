@@ -16,3 +16,12 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Look & Feel"; ObjectID = "xgH-4F-3dO"; */
 "xgH-4F-3dO.headerTitle" = "界面&样式";
+
+/* Class = "UITableViewSection"; ObjectID = "Qpf-y4-5eP"; */
+"Qpf-y4-5eP.footerTitle" = "使用 @ 来代替类别名称。(比如： 一个在'工作'类别里的待办事项, '你有一个@的待办事项' 会显示成 '你有一个工作的待办事项')";
+
+"Fxl-qE-KWK.text" = "开启通知提醒";
+
+"dUh-Si-LBV.text" = "通知标题:";
+
+"PSE-Nm-hRW.placeholder" = "✎ 输入自定义标题";

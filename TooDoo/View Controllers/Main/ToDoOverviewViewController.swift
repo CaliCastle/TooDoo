@@ -279,6 +279,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         NotificationManager.listen(self, do: #selector(userHasAuthenticated), notification: .UserAuthenticated, object: nil)
         NotificationManager.listen(self, do: #selector(motionEffectSettingChanged(_:)), notification: .SettingMotionEffectsChanged, object: nil)
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(updateStatusBar), notification: .UpdateStatusBar, object: nil)
     }
     
     /// Set up views properties.
@@ -467,9 +468,11 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// Show add todo view controller.
     
     @objc fileprivate func showAddTodo() {
-        // Play click sound
-        SoundManager.play(soundEffect: .Click)
-        Haptic.impact(.light).generate()
+        DispatchQueue.main.async {
+            // Play click sound
+            SoundManager.play(soundEffect: .Click)
+            Haptic.impact(.medium).generate()
+        }
         
         performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: nil)
     }
@@ -477,9 +480,11 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// Show add category view controller.
     
     @objc fileprivate func showAddCategory() {
-        // Play click sound
-        SoundManager.play(soundEffect: .Click)
-        Haptic.impact(.medium).generate()
+        DispatchQueue.main.async {
+            // Play click sound
+            SoundManager.play(soundEffect: .Click)
+            Haptic.impact(.medium).generate()
+        }
         
         performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
     }
@@ -487,9 +492,11 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// Show settings view controller.
     
     @objc fileprivate func showSettings() {
-        // Play click sound
-        SoundManager.play(soundEffect: .Click)
-        Haptic.impact(.medium).generate()
+        DispatchQueue.main.async {
+            // Play click sound
+            SoundManager.play(soundEffect: .Click)
+            Haptic.impact(.medium).generate()
+        }
         
         performSegue(withIdentifier: Segue.ShowSettings.rawValue, sender: nil)
     }
@@ -524,6 +531,12 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     
     @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
         setMotionEffects()
+    }
+    
+    /// Update the status bar
+    
+    @objc fileprivate func updateStatusBar() {
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     /// Set motion effects to views.
@@ -591,11 +604,6 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
             
             destinationViewController.goal = goal
             destinationViewController.category = category
-        case Segue.ShowSettings.rawValue:
-            let destination = segue.destination as! UINavigationController
-            let destinationViewController = destination.viewControllers.first as! SettingsTableViewController
-            
-            destinationViewController.mainViewController = self
         default:
             break
         }

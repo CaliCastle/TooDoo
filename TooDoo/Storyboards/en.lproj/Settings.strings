@@ -5,8 +5,8 @@
 /* Class = "UILabel"; text = "Motion Effects"; ObjectID = "1ke-5t-BG6"; */
 "1ke-5t-BG6.text" = "Motion Effects";
 
-/* Class = "UILabel"; text = "All Settings"; ObjectID = "3Ib-Ds-oL8"; */
-"3Ib-Ds-oL8.text" = "General;
+/* Class = "UILabel"; text = "General"; ObjectID = "3Ib-Ds-oL8"; */
+"3Ib-Ds-oL8.text" = "General";
 
 /* Class = "UINavigationItem"; title = "All Settings"; ObjectID = "mfs-AP-gLJ"; */
 "mfs-AP-gLJ.title" = "General";
@@ -16,3 +16,12 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Look & Feel"; ObjectID = "xgH-4F-3dO"; */
 "xgH-4F-3dO.headerTitle" = "Look & Feel";
+
+/* Class = "UITableViewSection"; ObjectID = "Qpf-y4-5eP"; */
+"Qpf-y4-5eP.footerTitle" = "Use @ for the category name as the placeholder. (eg. a todo item in Work category, 'Todo due in @' will appear as 'Todo due in Work')";
+
+"Fxl-qE-KWK.text" = "Enable notifications";
+
+"dUh-Si-LBV.text" = "Notification message:";
+
+"PSE-Nm-hRW.placeholder" = "✎ Enter custom message";

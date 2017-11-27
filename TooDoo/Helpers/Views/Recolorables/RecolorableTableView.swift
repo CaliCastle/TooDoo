@@ -38,10 +38,15 @@ class RecolorableTableView: UITableView, RecolorableView {
     /// Recolor views with theme.
     
     @objc open func recolorViews(_ notification: Notification? = nil) {
+        let currentTheme = AppearanceManager.currentTheme()
+        
+        // Set indicator style
+        indicatorStyle = currentTheme == .Dark ? .white : .black
+        
         guard notification == nil else {
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-                switch AppearanceManager.currentTheme() {
+                switch currentTheme {
                 case .Dark:
                     // Dark theme
                     self.backgroundColor = .flatBlack()
@@ -56,7 +61,7 @@ class RecolorableTableView: UITableView, RecolorableView {
         
         if solidBackground {
             // Change to theme color
-            switch AppearanceManager.currentTheme() {
+            switch currentTheme {
             case .Dark:
                 // Dark theme
                 backgroundColor = .flatBlack()

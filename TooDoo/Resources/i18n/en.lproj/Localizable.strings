@@ -37,7 +37,7 @@
 /*
  Notifications
  */
-"notifications.todo.due.title" = "Todo due in %name%";
+"notifications.todo.due.title" = "❗️Todo due in @";
 
 "notification.deleted-category" = "Category Deleted!";
 "notification.created-category" = "Created Category - ";

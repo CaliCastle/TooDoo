@@ -10,7 +10,6 @@
 		3CB54E0EF5F8FF069BCA2FD2 /* Pods_TooDoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 956F67EA935055512DB22579 /* Pods_TooDoo.framework */; };
 		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */; };
-		8D05144F1FC593AE00AC45CE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0514511FC593AE00AC45CE /* Settings.storyboard */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
@@ -68,6 +67,10 @@
 		8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA591FB2A62D00AD34D9 /* success.caf */; };
 		8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */; };
 		8DCBEA611FB2E69D00AD34D9 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA601FB2E69D00AD34D9 /* UINavigationController.swift */; };
+		8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0514511FC593AE00AC45CE /* Settings.storyboard */; };
+		8DCC7EF91FCBA09B000E99BA /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7EF81FCBA09B000E99BA /* UITableViewCell.swift */; };
+		8DCC7EFB1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7EFA1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift */; };
+		8DCC7EFE1FCBBB1A000E99BA /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC7EFD1FCBBB1A000E99BA /* SettingTableViewController.swift */; };
 		8DD3D6D61FB797EE00BE4FEF /* CategoryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6D51FB797EE00BE4FEF /* CategoryModels.swift */; };
 		8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */; };
 		8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */; };
@@ -159,6 +162,9 @@
 		8DCBEA5A1FB2A62E00AD34D9 /* click.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.caf; sourceTree = "<group>"; };
 		8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		8DCBEA601FB2E69D00AD34D9 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		8DCC7EF81FCBA09B000E99BA /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
+		8DCC7EFA1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8DCC7EFD1FCBBB1A000E99BA /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		8DD3D6D51FB797EE00BE4FEF /* CategoryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModels.swift; sourceTree = "<group>"; };
 		8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryColorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -295,6 +301,7 @@
 		8D4784DE1F9077BB0067E0FE /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8DCC7EFC1FCBBB04000E99BA /* View Controllers */,
 				8DD3D6D41FB797CC00BE4FEF /* Models */,
 				8D9BCBBE1F92F15D00721980 /* Managers */,
 				8D4784E31F90782F0067E0FE /* Views */,
@@ -314,6 +321,7 @@
 				8DBA55911FC430F80012B941 /* UITextView.swift */,
 				8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */,
 				8D4E2BC81FC6AB3700195D5C /* IndexPath.swift */,
+				8DCC7EF81FCBA09B000E99BA /* UITableViewCell.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -490,6 +498,14 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		8DCC7EFC1FCBBB04000E99BA /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8DCC7EFD1FCBBB1A000E99BA /* SettingTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		8DD3D6D41FB797CC00BE4FEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +587,7 @@
 		8DF55B2B1FCAED2100A1DA95 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				8DCC7EFA1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -658,6 +675,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */,
 				8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */,
 				8D3AA1521FC7BDB100862C4C /* CategoryIconHeaderView.xib in Resources */,
 				8DF35D651FBE6E47001877F4 /* drip.caf in Resources */,
@@ -676,7 +694,6 @@
 				8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */,
 				8D7C79AE1FC6C87A00C225F3 /* Localizable.stringsdict in Resources */,
 				8D809BDA1FC2513F008DF629 /* README.md in Resources */,
-				8D05144F1FC593AE00AC45CE /* Settings.storyboard in Resources */,
 				8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */,
 				8DB49E561FB8D859003240E1 /* alert-round.png in Resources */,
 			);
@@ -791,6 +808,7 @@
 				8D4E2BC41FC6582700195D5C /* RecolorableTableView.swift in Sources */,
 				8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */,
+				8DCC7EF91FCBA09B000E99BA /* UITableViewCell.swift in Sources */,
 				8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */,
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
@@ -818,6 +836,7 @@
 				8D589F731FC1A00700039610 /* String.swift in Sources */,
 				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
+				8DCC7EFB1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift in Sources */,
 				8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */,
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
 				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
@@ -832,6 +851,7 @@
 				8DF35D631FBE54FA001877F4 /* ToDo.swift in Sources */,
 				8D1F6A821FB64F6F004709E3 /* ShortcutItemManager.swift in Sources */,
 				8DB49E631FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift in Sources */,
+				8DCC7EFE1FCBBB1A000E99BA /* SettingTableViewController.swift in Sources */,
 				8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */,
 				8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */,
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
