@@ -148,9 +148,9 @@ extension UserDefaultManager {
         // Retreive dates
         let today = Date()
         let installationDate = dateFormatter.date(from: installationDateAsString) ?? today
-        let dateDiffInDays = Date().timeIntervalSince(installationDate) / 12 / 6 / 6 / 100
+        let dateDiffInDays = Calendar.current.dateComponents([.day], from: installationDate, to: today).day
         
-        return Int(dateDiffInDays)
+        return Int(dateDiffInDays!)
     }
     
     /// Set user installation date to today's date.
