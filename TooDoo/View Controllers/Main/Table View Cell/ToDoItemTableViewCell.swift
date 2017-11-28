@@ -83,12 +83,18 @@ class ToDoItemTableViewCell: UITableViewCell {
     @IBOutlet var todoItemGoalLabel: UILabel!
     @IBOutlet var moveToTrashButton: UIButton!
     
+    @IBOutlet var dueContainerView: UIView!
+    @IBOutlet var dueImageView: UIImageView!
+    @IBOutlet var dueLabel: UILabel!
+    
     /// Additional setup.
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         todoItemGoalLabel.text = ""
+        dueContainerView.alpha = 0
+        dueLabel.text = ""
         backgroundColor = .clear
         // Configure double tap gesture
         doubleTapGestureRecognizer.isEnabled = true
@@ -110,6 +116,7 @@ class ToDoItemTableViewCell: UITableViewCell {
             // Show move to trash button
             UIView.animate(withDuration: 0.25, animations: {
                 self.moveToTrashButton.alpha = 1
+                self.dueContainerView.alpha = 0
             })
         } else {
             // Set no strike through and color
@@ -118,6 +125,19 @@ class ToDoItemTableViewCell: UITableViewCell {
             UIView.animate(withDuration: 0.25, animations: {
                 self.moveToTrashButton.alpha = 0
             })
+            
+            if let due = todo?.due {
+                // Set due time label
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                dueImageView.tintColor = textColor.withAlphaComponent(0.4)
+                dueLabel.textColor = textColor.withAlphaComponent(0.4)
+                dueLabel.text = dateFormatter.string(from: due)
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.dueContainerView.alpha = 1
+                })
+            }
         }
     }
     
@@ -163,6 +183,8 @@ class ToDoItemTableViewCell: UITableViewCell {
         checkBox.checkState = .unchecked
         todoItemGoalLabel.text = ""
         moveToTrashButton.alpha = 0
+        dueContainerView.alpha = 0
+        dueLabel.text = ""
     }
     
     /// Todo double tapped.

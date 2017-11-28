@@ -89,7 +89,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             
             // Configure todo items table view
             configureTodoItemsTableView()
-            gradientMaskForTodos.frame = CGRect(x: 0, y: -10, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         }
     }
     
@@ -130,25 +129,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     lazy var motionEffect: UIMotionEffect = {
         return .twoAxesShift(strength: 25)
     }()
-    
-    /// Gradent mask for icon collection view.
-    
-    private lazy var gradientMaskForTodos: CAGradientLayer = {
-        let gradientMask = CAGradientLayer()
-        gradientMask.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradientMask.locations = [0, 0.035, 0.965, 1]
-        gradientMask.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientMask.endPoint = CGPoint(x: 0.5, y: 1)
-        gradientMask.delegate = self
-        
-        return gradientMask
-    }()
-    
-    /// Layer delegate method.
-    
-    override func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        return NSNull()
-    }
     
     /// Keyboard manager.
     
@@ -293,8 +273,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
     /// Configure todo items table view.
     
     fileprivate func configureTodoItemsTableView() {
-        todoItemsTableView.layer.mask = gradientMaskForTodos
-        updateGradientFrame()
+        
     }
     
     /// Configure todo items.
@@ -405,20 +384,6 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
         guard !isAdding else { return }
         
         showTodoMenu(for: fetchedResultsController.object(at: indexPath))
-    }
-    
-    /// Scroll view did scroll.
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isEqual(todoItemsTableView) {
-            updateGradientFrame()
-        }
-    }
-    
-    /// Update gradient frame.
-    
-    private func updateGradientFrame() {
-        gradientMaskForTodos.frame = CGRect(x: 0, y: todoItemsTableView.contentOffset.y, width: todoItemsTableView.bounds.width, height: todoItemsTableView.bounds.height)
     }
 
 }
