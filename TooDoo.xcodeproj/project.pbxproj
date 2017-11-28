@@ -127,6 +127,7 @@
 		8D4E2BC31FC6582700195D5C /* RecolorableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableTableView.swift; sourceTree = "<group>"; };
 		8D4E2BC61FC65C4E00195D5C /* RecolorableNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableNavigationBar.swift; sourceTree = "<group>"; };
 		8D4E2BC81FC6AB3700195D5C /* IndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPath.swift; sourceTree = "<group>"; };
+		8D51942C1FCD932F00110B59 /* TooDoo 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TooDoo 1.1.xcdatamodel"; sourceTree = "<group>"; };
 		8D589F721FC1A00700039610 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		8D589F751FC1A19500039610 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8D6A139E1F93E2FC004238D8 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
@@ -1129,9 +1130,10 @@
 		8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8D51942C1FCD932F00110B59 /* TooDoo 1.1.xcdatamodel */,
 				8D4784CE1F9077820067E0FE /* TooDoo.xcdatamodel */,
 			);
-			currentVersion = 8D4784CE1F9077820067E0FE /* TooDoo.xcdatamodel */;
+			currentVersion = 8D51942C1FCD932F00110B59 /* TooDoo 1.1.xcdatamodel */;
 			path = TooDoo.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
