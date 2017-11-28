@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import ViewAnimator
 import BulletinBoard
+import UserNotifications
 
 class NotificationSettingsTableViewController: SettingTableViewController {
 
@@ -19,14 +21,16 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     @IBOutlet var notificationWidgetView: UIView!
     @IBOutlet var notificationWidgetMessageLabel: UILabel!
     
+    private let defaultMessage = "notifications.todo.due.title".localized
+    
     /// Stored notification message.
     
     private var notificationMessage: String = "" {
         didSet {
             // Check if empty string
             guard notificationMessage.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
-                messageTextField.text = "notifications.todo.due.title".localized
-                notificationWidgetMessageLabel.text = "notifications.todo.due.title".localized.replacingOccurrences(of: "@", with: "Model.Category".localized)
+                messageTextField.text = defaultMessage
+                notificationWidgetMessageLabel.text = defaultMessage.replacingOccurrences(of: "@", with: "Model.Category".localized)
                 
                 return
             }
@@ -79,6 +83,18 @@ class NotificationSettingsTableViewController: SettingTableViewController {
 
         notificationWidgetView.backgroundColor = currentThemeIsDark() ? UIColor.white.withAlphaComponent(0.8) : UIColor.white.withAlphaComponent(0.9)
         configureTextField()
+        animateViews()
+        
+        // Register notification when user comes back to the app
+        NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { _ in
+            self.checkNotificationPermission()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkNotificationPermission()
     }
     
     /// Configure text field.
@@ -94,14 +110,14 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         if let message = UserDefaultManager.string(forKey: .SettingNotificationMessage) {
             notificationMessage = message
         } else {
-            notificationMessage = "notifications.todo.due.title".localized
+            notificationMessage = defaultMessage
         }
     }
     
     /// Save notification message.
     
     fileprivate func saveNotificationMessage(_ message: String) {
-        guard message.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else {
+        guard message.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 && message != defaultMessage else {
             UserDefaultManager.remove(for: .SettingNotificationMessage)
             notificationMessage = ""
             
@@ -109,6 +125,63 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         }
         
         UserDefaultManager.set(value: message, forKey: .SettingNotificationMessage)
+    }
+    
+    /// Animate views.
+    
+    fileprivate func animateViews() {
+        notificationWidgetView.transform = .init(scaleX: 0.1, y: 0.1)
+        
+        UIView.animate(withDuration: 0.5, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 3.5, options: [], animations: {
+            self.notificationWidgetView.transform = .init(scaleX: 1, y: 1)
+        }, completion: nil)
+    }
+    
+    /// Check for notification permission.
+    
+    private func checkNotificationPermission() {
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        center.getNotificationSettings {
+            switch $0.authorizationStatus {
+            case .authorized:
+                self.hasNotificationPermission()
+            default:
+                center.requestAuthorization(options: options) { (granted, error) in
+                    if !granted {
+                        self.noNotificationPermission()
+                    } else {
+                        self.hasNotificationPermission()
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Called when no notification permissions in settings.
+    
+    private func noNotificationPermission() {
+        DispatchQueue.main.async {
+            // Ask for permission
+            self.bulletinManager.backgroundViewStyle = .blurredDark
+            self.bulletinManager.prepare()
+            self.bulletinManager.presentBulletin(above: self)
+            
+            self.enableSwitch.setOn(false, animated: true)
+            self.messageTextField.isEnabled = false
+            self.notificationWidgetView.alpha = 0.15
+        }
+    }
+    
+    /// Called when notification permission granted in settings.
+    
+    private func hasNotificationPermission() {
+        DispatchQueue.main.async {
+            self.enableSwitch.setOn(true, animated: true)
+            self.messageTextField.isEnabled = true
+            self.notificationWidgetView.alpha = 1
+        }
     }
     
     /// When message ends editing.

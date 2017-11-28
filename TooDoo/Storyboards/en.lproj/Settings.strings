@@ -18,10 +18,19 @@
 "xgH-4F-3dO.headerTitle" = "Look & Feel";
 
 /* Class = "UITableViewSection"; ObjectID = "Qpf-y4-5eP"; */
+"Qpf-y4-5eP.headerTitle" = "To enable/disable notification, go to System Settings";
+
+/* Class = "UITableViewSection"; ObjectID = "Qpf-y4-5eP"; */
 "Qpf-y4-5eP.footerTitle" = "Use @ for the category name as the placeholder. (eg. a todo item in Work category, 'Todo due in @' will appear as 'Todo due in Work')";
+
+"5ZD-KG-2qS.text" = "Notifications";
+
+"FfJ-in-Bzm.title" = "Notifications";
 
 "Fxl-qE-KWK.text" = "Enable notifications";
 
 "dUh-Si-LBV.text" = "Notification message:";
 
 "PSE-Nm-hRW.placeholder" = "✎ Enter custom message";
+
+"bWR-5i-ucd.text" = "Just now";
