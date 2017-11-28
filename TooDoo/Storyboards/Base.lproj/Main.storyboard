@@ -1233,8 +1233,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="" id="1oZ-uL-QIB">
+                                <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="pxy-ey-C3J" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="225" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="261" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pxy-ey-C3J" id="I1e-0c-3KB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
@@ -1268,7 +1272,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="9PM-1D-W2u" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="295" width="375" height="130"/>
+                                        <rect key="frame" x="0.0" y="331" width="375" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9PM-1D-W2u" id="aaI-RJ-BU1">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
@@ -1302,12 +1306,56 @@
                                             <outletCollection property="gestureRecognizers" destination="rmV-LR-1iA" appends="YES" id="nJA-HX-oWp"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="Bgc-eC-KyY" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="461" width="375" height="105"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bgc-eC-KyY" id="CZM-Sn-Ji0">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NoT-6P-sNQ">
+                                                    <rect key="frame" x="16" y="17.666666666666664" width="59" height="24.666666666666664"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hti-zR-Ryc">
+                                                    <rect key="frame" x="16" y="58" width="343" height="29"/>
+                                                    <segments>
+                                                        <segment title="Off"/>
+                                                        <segment title="Daily"/>
+                                                        <segment title="Weekly"/>
+                                                        <segment title="Montly"/>
+                                                    </segments>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </segmentedControl>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No repeat" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sax-sF-e4L">
+                                                    <rect key="frame" x="285.66666666666669" y="19" width="73.333333333333314" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Hti-zR-Ryc" secondAttribute="bottom" constant="8" id="6Xl-Wz-2Xl"/>
+                                                <constraint firstItem="NoT-6P-sNQ" firstAttribute="leading" secondItem="CZM-Sn-Ji0" secondAttribute="leadingMargin" id="9fl-3H-5gE"/>
+                                                <constraint firstItem="Hti-zR-Ryc" firstAttribute="trailing" secondItem="CZM-Sn-Ji0" secondAttribute="trailingMargin" id="EqL-j5-WiT"/>
+                                                <constraint firstItem="sax-sF-e4L" firstAttribute="top" secondItem="CZM-Sn-Ji0" secondAttribute="topMargin" constant="8" id="GkU-7d-pKH"/>
+                                                <constraint firstItem="NoT-6P-sNQ" firstAttribute="top" secondItem="CZM-Sn-Ji0" secondAttribute="topMargin" constant="6" id="JV5-rz-wtC"/>
+                                                <constraint firstItem="Hti-zR-Ryc" firstAttribute="leading" secondItem="CZM-Sn-Ji0" secondAttribute="leadingMargin" id="WPl-aV-0DB"/>
+                                                <constraint firstItem="sax-sF-e4L" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NoT-6P-sNQ" secondAttribute="trailing" constant="20" id="cae-QE-R2I"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="sax-sF-e4L" secondAttribute="trailing" id="fEs-2A-cTX"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="" id="1oZ-uL-QIB">
+                            <tableViewSection footerTitle="" id="UPk-il-q7i">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="Xha-ca-TKG">
-                                        <rect key="frame" x="0.0" y="461" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="602" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xha-ca-TKG" id="WHl-p6-1id">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -1376,6 +1424,7 @@
                         <outletCollection property="cellLabels" destination="anl-Mc-eRf" collectionClass="NSMutableArray" id="pr7-cj-Pds"/>
                         <outletCollection property="cellLabels" destination="6Em-EM-2uI" collectionClass="NSMutableArray" id="N5A-6C-YCk"/>
                         <outletCollection property="cellLabels" destination="Xop-1P-BWD" collectionClass="NSMutableArray" id="5Ng-rB-xjj"/>
+                        <outletCollection property="cellLabels" destination="NoT-6P-sNQ" collectionClass="NSMutableArray" id="k09-Bi-SoG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPM-NY-Tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1390,7 +1439,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1569" y="1034"/>
+            <point key="canvasLocation" x="1568.8" y="1033.7438423645322"/>
         </scene>
         <!--Select Category-->
         <scene sceneID="oBN-GC-bHN">

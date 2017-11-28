@@ -19,6 +19,10 @@
 "Todos" = "Todos";
 "Today" = "Today";
 
+"version" = "version";
+"Beta" = "Beta";
+"Build" = "Build";
+
 /* Authentication */
 "Face ID" = "Face ID";
 "Passcode" = "Passcode";

@@ -47,7 +47,15 @@ class ToDoTableViewController: UITableViewController {
     
     /// Stored has due property.
     
-    var hasDue: Bool = false
+    var hasDue: Bool = false {
+        didSet {
+            if hasDue {
+                tableView.insertRows(at: [selectDueTimeIndexPath], with: .automatic)
+            } else {
+                tableView.deleteRows(at: [selectDueTimeIndexPath], with: .automatic)
+            }
+        }
+    }
     
     /// Stored goal property.
     
@@ -70,6 +78,10 @@ class ToDoTableViewController: UITableViewController {
     /// Default date format.
     
     let dateFormat = "MMM dd, EEE hh:mm aa".localized
+    
+    /// Select due time index path.
+    
+    let selectDueTimeIndexPath = IndexPath(row: 3, section: 0)
     
     /// Stored due date property.
     
@@ -323,13 +335,6 @@ class ToDoTableViewController: UITableViewController {
         }
         
         hasDue = sender.isOn
-    
-        // Insert or delete due time row
-        if hasDue {
-            tableView.insertRows(at: [IndexPath(item: tableView.numberOfRows(inSection: 0), section: 0)], with: .automatic)
-        } else {
-            tableView.deleteRows(at: [IndexPath(item: tableView.numberOfRows(inSection: 0) - 1, section: 0)], with: .automatic)
-        }
     }
     
     /// When user tapped due time.
@@ -410,13 +415,15 @@ class ToDoTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return isAdding ? 1 : 2
+        return isAdding ? 2 : 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return hasDue ? 4 : 3
+            return 2
+        case 1:
+            return hasDue ? 3 : 1
         default:
             return 1
         }
@@ -453,12 +460,6 @@ class ToDoTableViewController: UITableViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    /// Status bar animation.
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .fade
     }
     
     /// Auto hide home indicator

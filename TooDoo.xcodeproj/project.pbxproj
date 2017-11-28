@@ -18,6 +18,7 @@
 		8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */; };
 		8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */; };
 		8D1F6A891FB67CA7004709E3 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A881FB67CA7004709E3 /* UIViewController.swift */; };
+		8D26DA8D1FCD40A200F61FE7 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DA8C1FCD40A200F61FE7 /* Bundle.swift */; };
 		8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3924FA1FC8F29D0085186A /* RecolorableView.swift */; };
 		8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Category Icons.plist */; };
 		8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */; };
@@ -102,6 +103,7 @@
 		8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		8D1F6A861FB679C8004709E3 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		8D1F6A881FB67CA7004709E3 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		8D26DA8C1FCD40A200F61FE7 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		8D3924FA1FC8F29D0085186A /* RecolorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableView.swift; sourceTree = "<group>"; };
 		8D3AA14A1FC76DE300862C4C /* Category Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Category Icons.plist"; sourceTree = "<group>"; };
 		8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				8D05144D1FC57E6C00AC45CE /* UIMotionEffect.swift */,
 				8D4E2BC81FC6AB3700195D5C /* IndexPath.swift */,
 				8DCC7EF81FCBA09B000E99BA /* UITableViewCell.swift */,
+				8D26DA8C1FCD40A200F61FE7 /* Bundle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */,
 				8DCC7EF91FCBA09B000E99BA /* UITableViewCell.swift in Sources */,
 				8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */,
+				8D26DA8D1FCD40A200F61FE7 /* Bundle.swift in Sources */,
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
 				8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */,

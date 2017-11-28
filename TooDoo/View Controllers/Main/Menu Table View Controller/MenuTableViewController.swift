@@ -11,7 +11,6 @@ import Photos
 import Haptica
 import ViewAnimator
 import BulletinBoard
-import LocalAuthentication
 
 class MenuTableViewController: UITableViewController {
     
@@ -28,12 +27,11 @@ class MenuTableViewController: UITableViewController {
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var iconImageViews: [UIImageView]!
-    @IBOutlet var authenticationLabel: UILabel!
-    @IBOutlet var authenticationIconImageView: UIImageView!
-    @IBOutlet var switches: [UISwitch]!
     @IBOutlet var changeThemeButton: UIBarButtonItem!
     @IBOutlet var locationButton: UIBarButtonItem!
     @IBOutlet var menuLabels: [UILabel]!
+    
+    @IBOutlet var appVersionLabel: UILabel!
     
     /// Main view controller.
     
@@ -119,10 +117,6 @@ class MenuTableViewController: UITableViewController {
     @objc fileprivate func themeChanged() {
         setupViews()
         
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            self.navigationController?.toolbar.barTintColor = self.currentThemeIsDark() ? .flatBlack() : .flatWhite()
-        }, completion: nil)
-        
         setNeedsStatusBarAppearanceUpdate()
         
         imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
@@ -135,6 +129,7 @@ class MenuTableViewController: UITableViewController {
         setupNavigationBarAndToolBar()
         setupTableView()
         setupChangeThemeButton()
+        setVersionText()
     }
     
     /// Set navigation bar to hidden and tool bar to visible.
@@ -145,6 +140,8 @@ class MenuTableViewController: UITableViewController {
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.toolbar.isTranslucent = false
         navigationController.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        navigationController.toolbar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        navigationController.toolbar.backgroundColor = .clear
         
         changeThemeButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         locationButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
@@ -161,62 +158,19 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
-    /// Set up authentication properties.
+    /// Set version text.
     
-    fileprivate func setupAuthenticationProperties() {
-        // Check for biometric types
-        let context = LAContext()
-        
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            if #available(iOS 11, *) {
-                switch context.biometryType {
-                case .faceID:
-                    // Supports Face ID
-                    authenticationIconImageView.image = #imageLiteral(resourceName: "face-id-icon")
-                    authenticationLabel.text = "Face ID".localized
-                case .none:
-                    // No biometric type
-                    authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
-                    authenticationLabel.text = "Passcode".localized
-                default:
-                    // Touch ID
-                    break
-                }
-            }
-        } else {
-            // No biometric type
-            authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
-            authenticationLabel.text = "Passcode".localized
-            authenticationLabel.isEnabled = false
-            switches.last?.isEnabled = false
-        }
+    fileprivate func setVersionText() {
+        appVersionLabel.text = Bundle.main.localizedVersionLabelString
     }
     
     /// Configure icon image views.
     
     fileprivate func configureIconImages() {
-        for iconImageView in iconImageViews {
+        iconImageViews.forEach {
             // Bulk set image tint colors
-            iconImageView.image = iconImageView.image?.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-        }
-    }
-    
-    /// Configure switches.
-    
-    fileprivate func configureSwitches() {
-        for `switch` in switches {
-            `switch`.tintColor = AppearanceManager.switchTintColor()
-            `switch`.onTintColor = AppearanceManager.switchOnTintColor()
-            
-            if `switch`.tag == 0 {
-                // Sounds switch
-                `switch`.isOn = UserDefaultManager.settingSoundsEnabled()
-            } else {
-                // Authentication switch
-                `switch`.isOn = UserDefaultManager.settingAuthenticationEnabled()
-            }
+            $0.image = $0.image?.withRenderingMode(.alwaysTemplate)
+            $0.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
@@ -233,42 +187,8 @@ class MenuTableViewController: UITableViewController {
     fileprivate func setupTableView() {
         tableView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         
-        setupAuthenticationProperties()
         configureIconImages()
-        configureSwitches()
         configureLabels()
-    }
-    
-    /// Sounds switch value changed.
-    
-    @IBAction func soundsSwitchChanged(_ sender: UISwitch) {
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingSounds)
-    }
-    
-    /// Authentication switch value changed.
-    
-    @IBAction func authenticationSwitchChanged(_ sender: UISwitch) {
-        let context = LAContext()
-        let reason = "permission.authentication.reason".localized
-        
-        var authError: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, evaluateError in
-                if success {
-                    // User authenticated successfully
-                    DispatchQueue.main.async {
-                        UserDefaultManager.set(value: sender.isOn, forKey: .SettingAuthentication)
-                    }
-                } else {
-                    // User did not authenticate successfully
-                    self.authenticationFailed(sender)
-                }
-            }
-        } else {
-            // Could not evaluate policy
-            authenticationFailed(sender)
-        }
     }
 
     /// Change theme button did tap.
@@ -296,14 +216,6 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
-    /// Set authentication switch to off state.
-    
-    private func authenticationFailed(_ sender: UISwitch) {
-        DispatchQueue.main.async {
-            sender.setOn(false, animated: true)
-        }
-    }
-    
     // MARK: - Table View Related
 
     /// Table header height.
@@ -328,13 +240,13 @@ class MenuTableViewController: UITableViewController {
     /// Select row.
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.item != 4 else { return }
+        guard indexPath.item != 2 else { return }
         
         // Generate haptic
         Haptic.selection.generate()
         
         switch indexPath.item {
-        case 2:
+        case 0:
             dismiss(animated: true, completion: {
                 NotificationManager.send(notification: .ShowSettings)
             })

@@ -336,16 +336,17 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard category != nil else { return 0 }
-        guard let section = fetchedResultsController.sections?[section] else { return 0 }
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
+        guard isAdding && section == 0 else { return sectionInfo.numberOfObjects }
         
-        return isAdding ? section.numberOfObjects + 1 : section.numberOfObjects
+        return sectionInfo.numberOfObjects + 1
     }
     
     /// Configure cell.
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure add todo item cell
-        if isAdding && indexPath.item == 0 {
+        if isAdding && indexPath == .zero {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
             
             cell.delegate = self

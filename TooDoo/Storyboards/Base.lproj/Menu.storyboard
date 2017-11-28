@@ -26,98 +26,8 @@
                         <sections>
                             <tableViewSection id="fGY-Y6-DKA">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="YAs-aK-m8l" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YAs-aK-m8l" id="cU2-kI-Rb9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sounds-icon" translatesAutoresizingMaskIntoConstraints="NO" id="hZ0-sx-MvJ">
-                                                    <rect key="frame" x="30" y="9" width="35" height="35"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="H3b-Vq-edF"/>
-                                                        <constraint firstAttribute="width" constant="35" id="jmM-B2-KYa"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sounds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8x-4Y-OrQ">
-                                                    <rect key="frame" x="80" y="14.666666666666666" width="226" height="24.666666666666671"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FJG-d9-Udg">
-                                                    <rect key="frame" x="311" y="11" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.31372549019607843" green="0.8901960784313725" blue="0.76078431372549016" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="soundsSwitchChanged:" destination="UmB-by-Qdc" eventType="valueChanged" id="JMh-KS-h3W"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="FJG-d9-Udg" secondAttribute="trailing" constant="15" id="8Z3-5a-pGg"/>
-                                                <constraint firstItem="G8x-4Y-OrQ" firstAttribute="centerY" secondItem="cU2-kI-Rb9" secondAttribute="centerY" id="PpB-FQ-NcY"/>
-                                                <constraint firstItem="FJG-d9-Udg" firstAttribute="centerY" secondItem="cU2-kI-Rb9" secondAttribute="centerY" id="RhV-Fj-vA1"/>
-                                                <constraint firstItem="G8x-4Y-OrQ" firstAttribute="leading" secondItem="hZ0-sx-MvJ" secondAttribute="trailing" constant="15" id="cuA-Fm-jhY"/>
-                                                <constraint firstItem="hZ0-sx-MvJ" firstAttribute="leading" secondItem="cU2-kI-Rb9" secondAttribute="leading" constant="30" id="l7P-Aj-6wg"/>
-                                                <constraint firstItem="hZ0-sx-MvJ" firstAttribute="centerY" secondItem="cU2-kI-Rb9" secondAttribute="centerY" id="sEm-9t-xZ5"/>
-                                                <constraint firstItem="FJG-d9-Udg" firstAttribute="leading" secondItem="G8x-4Y-OrQ" secondAttribute="trailing" constant="5" id="voz-up-tDB"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="P4O-he-zgV" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="53" width="375" height="53"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P4O-he-zgV" id="p0h-9U-vey">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="h7R-nk-XSS">
-                                                    <rect key="frame" x="30" y="9" width="35" height="35"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="gZN-2r-PWf"/>
-                                                        <constraint firstAttribute="width" constant="35" id="zxB-zg-CUU"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sx5-od-7eX">
-                                                    <rect key="frame" x="80" y="14.666666666666666" width="226" height="24.666666666666671"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lHL-OA-01e">
-                                                    <rect key="frame" x="311" y="11" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="authenticationSwitchChanged:" destination="UmB-by-Qdc" eventType="valueChanged" id="7zc-Zh-gUB"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="sx5-od-7eX" firstAttribute="leading" secondItem="h7R-nk-XSS" secondAttribute="trailing" constant="15" id="MNg-KM-pAr"/>
-                                                <constraint firstItem="h7R-nk-XSS" firstAttribute="leading" secondItem="p0h-9U-vey" secondAttribute="leading" constant="30" id="WNs-nf-Lxz"/>
-                                                <constraint firstItem="lHL-OA-01e" firstAttribute="centerY" secondItem="p0h-9U-vey" secondAttribute="centerY" id="XhF-zy-Wtq"/>
-                                                <constraint firstAttribute="trailing" secondItem="lHL-OA-01e" secondAttribute="trailing" constant="15" id="bgg-FN-pFd"/>
-                                                <constraint firstItem="h7R-nk-XSS" firstAttribute="centerY" secondItem="p0h-9U-vey" secondAttribute="centerY" id="iBe-Bf-MRg"/>
-                                                <constraint firstItem="lHL-OA-01e" firstAttribute="leading" secondItem="sx5-od-7eX" secondAttribute="trailing" constant="5" id="lSG-YQ-GBb"/>
-                                                <constraint firstItem="sx5-od-7eX" firstAttribute="centerY" secondItem="p0h-9U-vey" secondAttribute="centerY" id="nWk-j0-NzO"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="6uW-jD-dmD" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="106" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6uW-jD-dmD" id="X7C-X0-tuC">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
@@ -153,7 +63,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="LQj-tV-uYD" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="159" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="53" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LQj-tV-uYD" id="tz8-hF-ezT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
@@ -189,7 +99,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="18" id="cfO-XO-qu0">
-                                        <rect key="frame" x="0.0" y="212" width="375" height="18"/>
+                                        <rect key="frame" x="0.0" y="106" width="375" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cfO-XO-qu0" id="ZPN-I0-M1z">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="18"/>
@@ -201,7 +111,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="4E8-uR-KtN" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="230" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="124" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4E8-uR-KtN" id="YCv-Gb-Ton">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
@@ -237,7 +147,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="cRU-eP-Q9f" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="283" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="177" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cRU-eP-Q9f" id="UaD-hm-iRL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
@@ -273,7 +183,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="vVn-we-KnC" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="336" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="230" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vVn-we-KnC" id="KqB-Xd-EP4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
@@ -308,6 +218,30 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" id="RCo-kM-K37">
+                                        <rect key="frame" x="0.0" y="283" width="375" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RCo-kM-K37" id="B5b-xS-cUd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TooDoo version v1.0.0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D44-K9-des">
+                                                    <rect key="frame" x="125.33333333333331" y="19.333333333333329" width="125" height="16.666666666666671"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="12"/>
+                                                    <color key="textColor" red="0.61960784313725492" green="0.61960784313725492" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="D44-K9-des" firstAttribute="centerY" secondItem="B5b-xS-cUd" secondAttribute="centerY" id="ANZ-j8-9jz"/>
+                                                <constraint firstItem="D44-K9-des" firstAttribute="centerX" secondItem="B5b-xS-cUd" secondAttribute="centerX" id="cUD-SC-iFK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -332,21 +266,14 @@
                     </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <connections>
-                        <outlet property="authenticationIconImageView" destination="h7R-nk-XSS" id="zxD-up-ttg"/>
-                        <outlet property="authenticationLabel" destination="sx5-od-7eX" id="8xA-dF-xMW"/>
+                        <outlet property="appVersionLabel" destination="D44-K9-des" id="HlK-5g-MqQ"/>
                         <outlet property="changeThemeButton" destination="0a1-oN-NeP" id="MfQ-Lx-xib"/>
                         <outlet property="locationButton" destination="K0Z-9S-HP7" id="j2y-rj-Cs1"/>
-                        <outletCollection property="iconImageViews" destination="hZ0-sx-MvJ" collectionClass="NSMutableArray" id="LP7-nc-Ei5"/>
-                        <outletCollection property="iconImageViews" destination="h7R-nk-XSS" collectionClass="NSMutableArray" id="ugr-L1-xC6"/>
                         <outletCollection property="iconImageViews" destination="qCv-Dz-qgF" collectionClass="NSMutableArray" id="n7L-JA-p4e"/>
                         <outletCollection property="iconImageViews" destination="Xo4-Ma-Ixt" collectionClass="NSMutableArray" id="nKE-Wy-Bp8"/>
                         <outletCollection property="iconImageViews" destination="gKL-oB-Uhl" collectionClass="NSMutableArray" id="koe-Yw-wrO"/>
                         <outletCollection property="iconImageViews" destination="RxD-Ut-He5" collectionClass="NSMutableArray" id="cP8-QE-cCb"/>
                         <outletCollection property="iconImageViews" destination="LOR-gw-zON" collectionClass="NSMutableArray" id="RG5-A4-aHH"/>
-                        <outletCollection property="switches" destination="FJG-d9-Udg" collectionClass="NSMutableArray" id="baD-4Y-G1k"/>
-                        <outletCollection property="switches" destination="lHL-OA-01e" collectionClass="NSMutableArray" id="Nb7-l9-eKJ"/>
-                        <outletCollection property="menuLabels" destination="G8x-4Y-OrQ" collectionClass="NSMutableArray" id="TuV-sR-AiG"/>
-                        <outletCollection property="menuLabels" destination="sx5-od-7eX" collectionClass="NSMutableArray" id="yCY-lg-NeO"/>
                         <outletCollection property="menuLabels" destination="I9o-AO-xfk" collectionClass="NSMutableArray" id="NA6-Ot-mkf"/>
                         <outletCollection property="menuLabels" destination="bSb-UC-3OL" collectionClass="NSMutableArray" id="mSV-4s-Uai"/>
                         <outletCollection property="menuLabels" destination="H6F-qx-bbo" collectionClass="NSMutableArray" id="tua-uu-81q"/>
@@ -366,8 +293,6 @@
         <image name="light-mode-icon" width="33" height="33"/>
         <image name="location-icon" width="33" height="33"/>
         <image name="settings-icon" width="34" height="34"/>
-        <image name="sounds-icon" width="33" height="33"/>
-        <image name="touch-id-icon" width="33" height="33"/>
         <image name="trash-alt-icon" width="33" height="33"/>
     </resources>
 </document>

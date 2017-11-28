@@ -17,6 +17,7 @@
 /* Class = "UITableViewSection"; headerTitle = "Look & Feel"; ObjectID = "xgH-4F-3dO"; */
 "xgH-4F-3dO.headerTitle" = "界面&样式";
 
+"PfQ-Ym-gsc.text" = "音效";
 
 /* Class = "UITableViewSection"; ObjectID = "Qpf-y4-5eP"; */
 "Qpf-y4-5eP.headerTitle" = "开启/关闭通知提醒, 请前往系统设置中修改";

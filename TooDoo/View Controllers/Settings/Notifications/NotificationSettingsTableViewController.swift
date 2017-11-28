@@ -184,6 +184,18 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         }
     }
     
+    /// Open system settings.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.item == 1 else { return }
+        
+        guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
+        
+        if UIApplication.shared.canOpenURL(openSettingsURL) {
+            UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
     /// When message ends editing.
     
     @IBAction func messageDidEndEditing(_ sender: UITextField) {
