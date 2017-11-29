@@ -159,6 +159,8 @@ class ToDoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        modalPresentationCapturesStatusBarAppearance = true
+        
         configureColors()
         setupViews()
         animateNavigationBar()
@@ -171,6 +173,11 @@ class ToDoTableViewController: UITableViewController {
         navigationItem.title = isAdding ? "todo-table.add-todo".localized : "todo-table.edit-todo".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
+        
+        // Remove delete button when creating new todo
+        if isAdding, let items = toolbarItems {
+            setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
+        }
         
         configureGoalTextField()
         configureCategoryViews()
@@ -185,9 +192,17 @@ class ToDoTableViewController: UITableViewController {
         if let item = navigationItem.leftBarButtonItem {
             item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
         }
-        
+        // Set done navigation bar button color
         if let item = navigationItem.rightBarButtonItem {
             item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        }
+        // Set done toolbar button color
+        if let items = toolbarItems {
+            if let item = items.first(where: {
+                return $0.tag == 1
+            }) {
+                item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+            }
         }
         
         // Set black or white scroll indicator

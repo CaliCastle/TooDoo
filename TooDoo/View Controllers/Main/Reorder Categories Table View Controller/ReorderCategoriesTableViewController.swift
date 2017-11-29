@@ -48,6 +48,8 @@ class ReorderCategoriesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        modalPresentationCapturesStatusBarAppearance = true
+        
         setupViews()
         fetchCategories()
         animateViews()

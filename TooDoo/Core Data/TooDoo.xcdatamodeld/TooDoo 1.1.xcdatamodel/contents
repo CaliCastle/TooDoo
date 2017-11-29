@@ -21,6 +21,7 @@
         <attribute name="locationType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="movedToTrashAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="remindAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="repeatEndDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="repeatInterval" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -29,6 +30,6 @@
     </entity>
     <elements>
         <element name="Category" positionX="0" positionY="72" width="128" height="165"/>
-        <element name="ToDo" positionX="-36" positionY="9" width="128" height="270"/>
+        <element name="ToDo" positionX="-36" positionY="9" width="128" height="285"/>
     </elements>
 </model>

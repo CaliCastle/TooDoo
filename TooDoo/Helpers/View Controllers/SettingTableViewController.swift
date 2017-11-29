@@ -16,6 +16,8 @@ open class SettingTableViewController: UITableViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        modalPresentationCapturesStatusBarAppearance = true
+        
         configureRightNavigationButton()
         
         setupTableView()

@@ -122,6 +122,8 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        modalPresentationCapturesStatusBarAppearance = true
+        
         setupViews()
         configureColors()
         animateNavigationBar()
@@ -158,6 +160,11 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
         
+        // Remove delete button when creating new category
+        if isAdding, let items = toolbarItems {
+            setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
+        }
+        
         // Configure name text field
         configureNameTextField()
         // Configure gradient masks
@@ -174,6 +181,13 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         }
         if let item = navigationItem.rightBarButtonItem {
             item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        }
+        if let items = toolbarItems {
+            if let item = items.first(where: {
+                return $0.tag == 1
+            }) {
+                item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+            }
         }
         
         // Set black or white scroll indicator
@@ -337,7 +351,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     
     /// User tapped delete button.
     
-    @IBAction func deleteDidTap(_ sender: UIButton) {
+    @IBAction func deleteDidTap(_ sender: Any) {
         // Generate haptic feedback and play sound
         Haptic.notification(.warning).generate()
         SoundManager.play(soundEffect: .Click)
@@ -427,12 +441,6 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
 // MARK: - Handle Table View Delegate
 
 extension CategoryTableViewController {
-    
-    /// If not adding, display delete section.
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return isAdding ? 1 : 2
-    }
     
     /// Adjust scroll behavior for dismissal.
     

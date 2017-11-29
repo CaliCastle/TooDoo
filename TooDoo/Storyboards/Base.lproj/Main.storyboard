@@ -657,7 +657,7 @@
         <!--Navigation Controller-->
         <scene sceneID="C1p-7o-72M">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C1K-bA-8mE" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="C1K-bA-8mE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" largeTitles="YES" id="sbd-0d-r85" customClass="RecolorableNavigationBar" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
@@ -669,6 +669,10 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="yUS-hZ-noK" customClass="RecolorableToolBar" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="729" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="w4P-w9-vgK" kind="relationship" relationship="rootViewController" id="1KS-eC-eqK"/>
                     </connections>
@@ -898,78 +902,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="IcV-Ep-QyC">
-                                        <rect key="frame" x="0.0" y="630" width="375" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IcV-Ep-QyC" id="xCu-ZT-BB9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wH7-Qc-AgL" customClass="DesignableButton" customModule="TooDoo" customModuleProvider="target">
-                                                    <rect key="frame" x="104.66666666666669" y="12" width="166" height="45"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                                    <inset key="contentEdgeInsets" minX="60" minY="10" maxX="60" maxY="10"/>
-                                                    <state key="normal" title="Done">
-                                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="20"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="doneDidTap:" destination="w4P-w9-vgK" eventType="touchUpInside" id="s24-NT-X9o"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="wH7-Qc-AgL" firstAttribute="centerX" secondItem="xCu-ZT-BB9" secondAttribute="centerX" id="KJA-2R-OY0"/>
-                                                <constraint firstItem="wH7-Qc-AgL" firstAttribute="centerY" secondItem="xCu-ZT-BB9" secondAttribute="centerY" id="Vxa-Xu-yUL"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="Mrn-eP-f0J">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="VDz-AF-84g">
-                                        <rect key="frame" x="0.0" y="700" width="375" height="80"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VDz-AF-84g" id="RRn-de-edb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfa-hc-62R">
-                                                    <rect key="frame" x="33" y="15.333333333333336" width="309" height="50.000000000000007"/>
-                                                    <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="GnR-Eu-ldM"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                                    <state key="normal" title="Delete Category">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="25"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="deleteDidTap:" destination="w4P-w9-vgK" eventType="touchUpInside" id="fcA-kq-b0w"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="cfa-hc-62R" secondAttribute="trailing" constant="25" id="Oud-vs-huk"/>
-                                                <constraint firstItem="cfa-hc-62R" firstAttribute="centerY" secondItem="RRn-de-edb" secondAttribute="centerY" id="RVH-BR-jIX"/>
-                                                <constraint firstItem="cfa-hc-62R" firstAttribute="leading" secondItem="RRn-de-edb" secondAttribute="leadingMargin" constant="25" id="YmF-4d-F3L"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableViewCell>
-                                </cells>
+                                <cells/>
                             </tableViewSection>
                         </sections>
                         <userDefinedRuntimeAttributes>
@@ -980,6 +916,21 @@
                             <outlet property="delegate" destination="w4P-w9-vgK" id="UVi-iR-HZP"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem image="trash-alt-icon" style="done" id="e6K-ps-uk7">
+                            <color key="tintColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="deleteDidTap:" destination="w4P-w9-vgK" id="68V-xA-fAO"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem tag="10" style="plain" systemItem="flexibleSpace" id="qsb-WE-sFB"/>
+                        <barButtonItem tag="1" image="checkmark-filled-circle-icon" style="done" id="SMO-bj-d6d">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="doneDidTap:" destination="w4P-w9-vgK" id="fXW-td-9gX"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="New Category" id="fr8-v1-isn">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="1cw-48-Vgl">
                             <color key="tintColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -987,7 +938,7 @@
                                 <action selector="cancelDidTap:" destination="w4P-w9-vgK" id="zI5-b6-8Hu"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="checkmark-filled-circle-icon" style="done" id="R5r-Z3-6pX">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="R5r-Z3-6pX">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-8" maxY="0.0"/>
                             <color key="tintColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -995,6 +946,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="categoryColorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
                         <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
@@ -1112,9 +1064,9 @@
         <!--Add Todo-->
         <scene sceneID="c7B-8a-N6C">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1387,11 +1339,11 @@
                                         <rect key="frame" x="0.0" y="643" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
-                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <rect key="frame" x="14.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1427,6 +1379,12 @@
                                 <action selector="deleteDidTap:" destination="VJ3-YR-ah3" id="ZRg-JZ-DTL"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem tag="10" style="plain" systemItem="flexibleSpace" id="gFZ-4o-JPP"/>
+                        <barButtonItem tag="1" image="checkmark-filled-circle-icon" style="done" id="xfT-zD-scZ">
+                            <connections>
+                                <action selector="doneDidTap:" destination="VJ3-YR-ah3" id="wWU-Wr-9jy"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Add Todo" id="Vs2-HY-QQw">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="mPr-tf-hqg">
@@ -1435,7 +1393,7 @@
                                 <action selector="cancelDidTap:" destination="VJ3-YR-ah3" id="LN1-ht-fRH"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="checkmark-filled-circle-icon" style="done" id="lez-07-UgL">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="lez-07-UgL">
                             <color key="tintColor" red="1" green="0.98431372549019602" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneDidTap:" destination="VJ3-YR-ah3" id="d61-1p-0Yy"/>
@@ -1482,7 +1440,7 @@
         <!--Select Category-->
         <scene sceneID="oBN-GC-bHN">
             <objects>
-                <tableViewController id="W45-Ee-kwV" customClass="SelectCategoryTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="W45-Ee-kwV" customClass="SelectCategoryTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vDD-0P-eKv" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1539,7 +1497,8 @@
         <!--Navigation Controller-->
         <scene sceneID="qh6-GS-mVE">
             <objects>
-                <navigationController hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="TlB-gP-We0" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="TlB-gP-We0" sceneMemberID="viewController">
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="myX-wD-073" customClass="RecolorableNavigationBar" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
