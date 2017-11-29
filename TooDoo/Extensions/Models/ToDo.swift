@@ -17,10 +17,13 @@ extension ToDo {
             self.completed = completed
             completedAt = completed ? Date() : nil
             
-            if completed {
-                NotificationManager.removeTodoDueNotification(for: self)
-            } else {
-                NotificationManager.registerTodoDueNotification(for: self)
+            // Handle notifications
+            DispatchQueue.main.async {
+                if self.completed {
+                    NotificationManager.removeTodoReminderNotification(for: self)
+                } else {
+                    NotificationManager.registerTodoReminderNotification(for: self)
+                }
             }
         }
     }
@@ -36,7 +39,27 @@ extension ToDo {
     func moveToTrash() {
         movedToTrashAt = Date()
         // Remove from notifications
-        NotificationManager.removeTodoDueNotification(for: self)
+        NotificationManager.removeTodoReminderNotification(for: self)
+    }
+    
+    /// Set reminder date.
+    
+    func setReminder(_ remindDate: Date?) {
+        if let remindDate = remindDate {
+            remindAt = remindDate
+            
+            // Register local notification
+            DispatchQueue.main.async {
+                NotificationManager.registerTodoReminderNotification(for: self)
+            }
+        } else {
+            remindAt = nil
+            
+            // Remove local notification
+            DispatchQueue.main.async {
+                NotificationManager.removeTodoReminderNotification(for: self)
+            }
+        }
     }
     
     /// Get object identifier.

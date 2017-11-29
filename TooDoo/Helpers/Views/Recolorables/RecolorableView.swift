@@ -68,6 +68,8 @@ class RecolorableToolBar: UIToolbar, RecolorableView {
                 self.barTintColor = .flatWhite()
             }
         }, completion: nil)
+        
+        setShadowImage(UIImage(), forToolbarPosition: .any)
     }
     
 }

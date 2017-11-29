@@ -79,7 +79,8 @@
 /*
  ToDo Table View Controller.
  */
-"todo-table.select-due-time" = "选择提醒时间";
+"todo-table.select-due-time" = "设置截止时间";
+"todo-table.select-reminder" = "设置提醒时间";
 "todo-table.no-notifications-access.title" = "提醒通知已关闭";
 "todo-table.no-notifications-access.description" = "本应用未获得通知权限，请在 系统设置 中开启";
 "todo-table.add-todo" = "添加待办事项";

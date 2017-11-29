@@ -1112,9 +1112,9 @@
         <!--Add Todo-->
         <scene sceneID="c7B-8a-N6C">
             <objects>
-                <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1237,21 +1237,21 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="" id="1oZ-uL-QIB">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="pxy-ey-C3J" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="261" width="375" height="70"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="40" id="pxy-ey-C3J" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="261" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pxy-ey-C3J" id="I1e-0c-3KB">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xop-1P-BWD">
-                                                    <rect key="frame" x="16" y="22.666666666666664" width="94" height="24.666666666666664"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xop-1P-BWD">
+                                                    <rect key="frame" x="16" y="7.6666666666666661" width="94" height="24.666666666666671"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tg8-Jh-Icg">
-                                                    <rect key="frame" x="310" y="19.666666666666671" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="4.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <color key="onTintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <connections>
                                                         <action selector="dueSwitchChanged:" destination="VJ3-YR-ah3" eventType="valueChanged" id="Dam-8o-r1R"/>
@@ -1271,21 +1271,21 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="9PM-1D-W2u" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="331" width="375" height="130"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="115" id="9PM-1D-W2u" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="301" width="375" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9PM-1D-W2u" id="aaI-RJ-BU1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select due time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="la1-hR-EUt">
-                                                    <rect key="frame" x="115.99999999999999" y="66.333333333333329" width="143.66666666666663" height="27.333333333333329"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="la1-hR-EUt">
+                                                    <rect key="frame" x="152.66666666666666" y="59.000000000000007" width="70.666666666666657" height="27.333333333333336"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-notification-access" translatesAutoresizingMaskIntoConstraints="NO" id="DqH-bO-R67">
-                                                    <rect key="frame" x="162.66666666666666" y="7.6666666666666643" width="50" height="50"/>
+                                                    <rect key="frame" x="162.66666666666666" y="0.33333333333333215" width="50" height="50"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="D7B-v2-TFw"/>
@@ -1306,88 +1306,108 @@
                                             <outletCollection property="gestureRecognizers" destination="rmV-LR-1iA" appends="YES" id="nJA-HX-oWp"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="Bgc-eC-KyY" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="461" width="375" height="105"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="" id="DNv-hl-27a">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="40" id="Jiq-d7-VoP" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="452" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bgc-eC-KyY" id="CZM-Sn-Ji0">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jiq-d7-VoP" id="7FL-kz-1Jj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NoT-6P-sNQ">
-                                                    <rect key="frame" x="16" y="17.666666666666664" width="59" height="24.666666666666664"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqy-Md-3Pb">
+                                                    <rect key="frame" x="16" y="7.6666666666666661" width="95.333333333333329" height="24.666666666666671"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hti-zR-Ryc">
-                                                    <rect key="frame" x="16" y="58" width="343" height="29"/>
-                                                    <segments>
-                                                        <segment title="Off"/>
-                                                        <segment title="Daily"/>
-                                                        <segment title="Weekly"/>
-                                                        <segment title="Montly"/>
-                                                    </segments>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </segmentedControl>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No repeat" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sax-sF-e4L">
-                                                    <rect key="frame" x="285.66666666666669" y="19" width="73.333333333333314" height="22"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wgd-3n-PTC">
+                                                    <rect key="frame" x="310" y="4.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <color key="onTintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                    <connections>
+                                                        <action selector="remindSwitchChanged:" destination="VJ3-YR-ah3" eventType="valueChanged" id="FPZ-h1-fem"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Gqy-Md-3Pb" firstAttribute="leading" secondItem="7FL-kz-1Jj" secondAttribute="leadingMargin" id="1JH-nr-H4j"/>
+                                                <constraint firstItem="Wgd-3n-PTC" firstAttribute="centerY" secondItem="7FL-kz-1Jj" secondAttribute="centerY" id="8Dm-ir-93G"/>
+                                                <constraint firstItem="Wgd-3n-PTC" firstAttribute="trailing" secondItem="7FL-kz-1Jj" secondAttribute="trailingMargin" id="MDe-5U-TFK"/>
+                                                <constraint firstItem="Gqy-Md-3Pb" firstAttribute="centerY" secondItem="7FL-kz-1Jj" secondAttribute="centerY" id="Xkz-au-GfK"/>
+                                                <constraint firstItem="Wgd-3n-PTC" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Gqy-Md-3Pb" secondAttribute="trailing" constant="200" id="azp-RU-T2q"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="115" id="aHX-tG-kmu" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="492" width="375" height="115"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aHX-tG-kmu" id="c3y-m0-oVV">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set reminder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNl-Be-xmW">
+                                                    <rect key="frame" x="128.33333333333334" y="59.000000000000007" width="119.66666666666666" height="27.333333333333336"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-notification-access" translatesAutoresizingMaskIntoConstraints="NO" id="KbQ-iF-4hK">
+                                                    <rect key="frame" x="162.66666666666666" y="0.33333333333333215" width="50" height="50"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="7Ry-Ls-fe7"/>
+                                                        <constraint firstAttribute="width" constant="50" id="RtK-mK-8Sy"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Hti-zR-Ryc" secondAttribute="bottom" constant="8" id="6Xl-Wz-2Xl"/>
-                                                <constraint firstItem="NoT-6P-sNQ" firstAttribute="leading" secondItem="CZM-Sn-Ji0" secondAttribute="leadingMargin" id="9fl-3H-5gE"/>
-                                                <constraint firstItem="Hti-zR-Ryc" firstAttribute="trailing" secondItem="CZM-Sn-Ji0" secondAttribute="trailingMargin" id="EqL-j5-WiT"/>
-                                                <constraint firstItem="sax-sF-e4L" firstAttribute="top" secondItem="CZM-Sn-Ji0" secondAttribute="topMargin" constant="8" id="GkU-7d-pKH"/>
-                                                <constraint firstItem="NoT-6P-sNQ" firstAttribute="top" secondItem="CZM-Sn-Ji0" secondAttribute="topMargin" constant="6" id="JV5-rz-wtC"/>
-                                                <constraint firstItem="Hti-zR-Ryc" firstAttribute="leading" secondItem="CZM-Sn-Ji0" secondAttribute="leadingMargin" id="WPl-aV-0DB"/>
-                                                <constraint firstItem="sax-sF-e4L" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NoT-6P-sNQ" secondAttribute="trailing" constant="20" id="cae-QE-R2I"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="sax-sF-e4L" secondAttribute="trailing" id="fEs-2A-cTX"/>
+                                                <constraint firstItem="dNl-Be-xmW" firstAttribute="centerY" secondItem="c3y-m0-oVV" secondAttribute="centerY" constant="15" id="5Jg-4V-a9Q"/>
+                                                <constraint firstItem="dNl-Be-xmW" firstAttribute="top" secondItem="KbQ-iF-4hK" secondAttribute="bottom" constant="8" id="SCt-2l-nhk"/>
+                                                <constraint firstItem="dNl-Be-xmW" firstAttribute="centerX" secondItem="c3y-m0-oVV" secondAttribute="centerX" id="VRE-SA-u7f"/>
+                                                <constraint firstItem="KbQ-iF-4hK" firstAttribute="centerX" secondItem="c3y-m0-oVV" secondAttribute="centerX" id="nNe-Cu-S0I"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="782-PP-4to" appends="YES" id="MAo-r2-nXh"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="" id="UPk-il-q7i">
+                            <tableViewSection footerTitle="" id="a8s-y2-nGr">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="Xha-ca-TKG">
-                                        <rect key="frame" x="0.0" y="602" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CXM-rx-Ykz" detailTextLabel="9I4-z1-x06" rowHeight="50" style="IBUITableViewCellStyleValue1" id="edF-ps-9eR" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="643" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xha-ca-TKG" id="WHl-p6-1id">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BAy-NV-rf6">
-                                                    <rect key="frame" x="41" y="15.333333333333336" width="293" height="50.000000000000007"/>
-                                                    <color key="backgroundColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="9sv-l7-HnP"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
-                                                    <state key="normal" title="Delete Item">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="25"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="deleteDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="dEI-S7-qOl"/>
-                                                    </connections>
-                                                </button>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
+                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="No repeat" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9I4-z1-x06">
+                                                    <rect key="frame" x="270.66666666666669" y="16" width="69.333333333333329" height="20.666666666666668"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="BAy-NV-rf6" firstAttribute="leading" secondItem="WHl-p6-1id" secondAttribute="leadingMargin" constant="25" id="TG9-ir-61s"/>
-                                                <constraint firstItem="BAy-NV-rf6" firstAttribute="centerY" secondItem="WHl-p6-1id" secondAttribute="centerY" id="od2-SM-MVG"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="BAy-NV-rf6" secondAttribute="trailing" constant="25" id="yFd-Na-zk9"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1400,6 +1420,14 @@
                             <outlet property="delegate" destination="VJ3-YR-ah3" id="cPA-RC-1ow"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem image="trash-alt-icon" id="mgW-xY-wfK">
+                            <color key="tintColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="deleteDidTap:" destination="VJ3-YR-ah3" id="ZRg-JZ-DTL"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Add Todo" id="Vs2-HY-QQw">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="mPr-tf-hqg">
                             <color key="tintColor" white="1" alpha="0.60000002379999995" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1414,17 +1442,22 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="categoryGradientBackgroundView" destination="7La-da-whW" id="hXj-lE-gki"/>
                         <outlet property="categoryIconImageView" destination="IiF-sx-vug" id="LT8-aL-vhn"/>
                         <outlet property="categoryNameLabel" destination="8zA-aa-c2W" id="LEl-Gh-yJC"/>
-                        <outlet property="dueIconImageView" destination="DqH-bO-R67" id="N5Z-w9-hV0"/>
+                        <outlet property="dueSwitch" destination="tg8-Jh-Icg" id="91u-mh-mWB"/>
                         <outlet property="dueTimeLabel" destination="la1-hR-EUt" id="tI8-fO-cfA"/>
                         <outlet property="goalTextField" destination="AqI-GN-X2o" id="lTQ-Xu-j3j"/>
+                        <outlet property="reminderLabel" destination="dNl-Be-xmW" id="gRL-Ig-vMA"/>
+                        <outlet property="reminderSwitch" destination="Wgd-3n-PTC" id="h92-W1-ZNk"/>
+                        <outlet property="repeatLabel" destination="9I4-z1-x06" id="0VD-1a-Vam"/>
                         <outletCollection property="cellLabels" destination="anl-Mc-eRf" collectionClass="NSMutableArray" id="pr7-cj-Pds"/>
                         <outletCollection property="cellLabels" destination="6Em-EM-2uI" collectionClass="NSMutableArray" id="N5A-6C-YCk"/>
                         <outletCollection property="cellLabels" destination="Xop-1P-BWD" collectionClass="NSMutableArray" id="5Ng-rB-xjj"/>
-                        <outletCollection property="cellLabels" destination="NoT-6P-sNQ" collectionClass="NSMutableArray" id="k09-Bi-SoG"/>
+                        <outletCollection property="cellLabels" destination="Gqy-Md-3Pb" collectionClass="NSMutableArray" id="NPk-tG-TO0"/>
+                        <outletCollection property="cellLabels" destination="CXM-rx-Ykz" collectionClass="NSMutableArray" id="det-pQ-9pj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPM-NY-Tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1436,6 +1469,11 @@
                 <tapGestureRecognizer id="rmV-LR-1iA">
                     <connections>
                         <action selector="dueTimeDidTap:" destination="VJ3-YR-ah3" id="6g2-oM-vCr"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="782-PP-4to">
+                    <connections>
+                        <action selector="reminderDidTap:" destination="VJ3-YR-ah3" id="yoQ-v8-OjW"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -1492,6 +1530,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Select Category" id="Umf-Me-WFp"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8m0-IR-9ED" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1500,7 +1539,7 @@
         <!--Navigation Controller-->
         <scene sceneID="qh6-GS-mVE">
             <objects>
-                <navigationController id="TlB-gP-We0" sceneMemberID="viewController">
+                <navigationController hidesBottomBarWhenPushed="YES" toolbarHidden="NO" id="TlB-gP-We0" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="myX-wD-073" customClass="RecolorableNavigationBar" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1513,6 +1552,10 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="3Dq-72-x30" customClass="RecolorableToolBar" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="729" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="VJ3-YR-ah3" kind="relationship" relationship="rootViewController" id="Pjz-hI-7Kw"/>
                     </connections>
@@ -1535,6 +1578,7 @@
         <image name="pencil-icon" width="25" height="25"/>
         <image name="plus-button" width="25" height="25"/>
         <image name="search-button" width="25" height="25"/>
+        <image name="trash-alt-icon" width="33" height="33"/>
         <image name="trash-icon" width="25" height="25"/>
         <image name="unlock-icon" width="300" height="300"/>
     </resources>

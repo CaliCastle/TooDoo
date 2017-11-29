@@ -38,6 +38,8 @@ class ToDoTableViewController: UITableViewController {
             guard let todo = todo else { return }
             category = todo.category
             goal = todo.goal!
+            hasDue = todo.due != nil
+            hasReminder = todo.remindAt != nil
         }
     }
     
@@ -49,11 +51,15 @@ class ToDoTableViewController: UITableViewController {
     
     var hasDue: Bool = false {
         didSet {
-            if hasDue {
-                tableView.insertRows(at: [selectDueTimeIndexPath], with: .automatic)
-            } else {
-                tableView.deleteRows(at: [selectDueTimeIndexPath], with: .automatic)
-            }
+            guard hasDue != oldValue else { return }
+        }
+    }
+    
+    /// Stored has reminder property.
+    
+    var hasReminder: Bool = false {
+        didSet {
+            guard hasReminder != oldValue else { return }
         }
     }
     
@@ -67,9 +73,13 @@ class ToDoTableViewController: UITableViewController {
     @IBOutlet var categoryGradientBackgroundView: GradientView!
     @IBOutlet var categoryIconImageView: UIImageView!
     @IBOutlet var categoryNameLabel: UILabel!
-    @IBOutlet var dueIconImageView: UIImageView!
     @IBOutlet var dueTimeLabel: UILabel!
+    @IBOutlet var reminderLabel: UILabel!
+    @IBOutlet var repeatLabel: UILabel!
     @IBOutlet var cellLabels: [UILabel]!
+    
+    @IBOutlet var dueSwitch: UISwitch!
+    @IBOutlet var reminderSwitch: UISwitch!
     
     /// Dependency Injection for Managed Object Context.
     
@@ -81,7 +91,11 @@ class ToDoTableViewController: UITableViewController {
     
     /// Select due time index path.
     
-    let selectDueTimeIndexPath = IndexPath(row: 3, section: 0)
+    let selectDueTimeIndexPath = IndexPath(row: 1, section: 1)
+    
+    /// Select remind time index path.
+    
+    let selectRemindTimeIndexPath = IndexPath(row: 1, section: 2)
     
     /// Stored due date property.
     
@@ -93,6 +107,19 @@ class ToDoTableViewController: UITableViewController {
             dateFormatter.dateFormat = dateFormat
             
             dueTimeLabel.text = dateFormatter.string(from: dueDate)
+        }
+    }
+    
+    /// Stored remind date.
+    
+    var remindDate: Date? {
+        didSet {
+            guard let remindDate = remindDate else { reminderLabel.text = "todo-table.select-reminder".localized; return }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = dateFormat
+            
+            reminderLabel.text = dateFormatter.string(from: remindDate)
         }
     }
     
@@ -147,6 +174,8 @@ class ToDoTableViewController: UITableViewController {
         
         configureGoalTextField()
         configureCategoryViews()
+        configureDueDate()
+        configureReminder()
     }
     
     /// Configure colors.
@@ -221,6 +250,26 @@ class ToDoTableViewController: UITableViewController {
         categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
     }
     
+    /// Configure due date.
+    
+    fileprivate func configureDueDate() {
+        dueSwitch.isOn = hasDue
+        
+        if let todo = todo {
+            dueDate = todo.due
+        }
+    }
+    
+    /// Configure reminder.
+    
+    fileprivate func configureReminder() {
+        reminderSwitch.isOn = hasReminder
+        
+        if let todo = todo {
+            remindDate = todo.remindAt
+        }
+    }
+    
     /// Animate views.
     
     fileprivate func animateViews() {
@@ -280,14 +329,13 @@ class ToDoTableViewController: UITableViewController {
             category.addToTodos(todo)
         }
         
-        // Set due notification
+        // Set due date
         if let due = dueDate {
             todo.due = due
-            
-            DispatchQueue.main.async {
-                NotificationManager.registerTodoDueNotification(for: todo)
-            }
         }
+        
+        // Set reminder
+        todo.setReminder(remindDate)
         
         // Generate haptic feedback and play sound
         Haptic.notification(.success).generate()
@@ -327,14 +375,40 @@ class ToDoTableViewController: UITableViewController {
         tableView.endEditing(true)
     
         // If set due time
-        if sender.isOn {
-            // Check notification authorization
-            checkNotificationPermission()
-        } else {
+        if !sender.isOn {
             dueDate = nil
         }
         
         hasDue = sender.isOn
+        
+        // Perform table view sync
+        if hasDue {
+            tableView.insertRows(at: [selectDueTimeIndexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [selectDueTimeIndexPath], with: .automatic)
+        }
+    }
+    
+    /// When user changed reminder switch.
+    
+    @IBAction func remindSwitchChanged(_ sender: UISwitch) {
+        tableView.endEditing(true)
+        
+        if sender.isOn {
+            // Check notification authorization
+            checkNotificationPermission()
+        } else {
+            remindDate = nil
+        }
+        
+        hasReminder = sender.isOn
+        
+        // Perform table view sync
+        if hasReminder {
+            tableView.insertRows(at: [selectRemindTimeIndexPath], with: .automatic)
+        } else {
+            tableView.deleteRows(at: [selectRemindTimeIndexPath], with: .automatic)
+        }
     }
     
     /// When user tapped due time.
@@ -348,6 +422,31 @@ class ToDoTableViewController: UITableViewController {
         dateTimePicker.dateFormat = dateFormat
         dateTimePicker.completionHandler = {
             self.dueDate = $0
+        }
+    }
+    
+    /// When user tapped set reminder.
+    
+    @IBAction func reminderDidTap(_ sender: Any) {
+        var selectedDate = dueDate ?? Date()
+        var maximumDate = dueDate
+        
+        if let remindDate = remindDate {
+            selectedDate = remindDate
+        }
+        
+        if maximumDate != nil {
+            maximumDate = Calendar.current.date(byAdding: .hour, value: 1, to: maximumDate!)
+        }
+        
+        let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: Date(), maximumDate: maximumDate)
+        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.cancelButtonTitle = "Cancel".localized
+        dateTimePicker.doneButtonTitle = "Done".localized
+        dateTimePicker.todayButtonTitle = "Today".localized
+        dateTimePicker.dateFormat = dateFormat
+        dateTimePicker.completionHandler = {
+            self.remindDate = $0
         }
     }
     
@@ -413,17 +512,15 @@ class ToDoTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return isAdding ? 2 : 3
-    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 2
         case 1:
-            return hasDue ? 3 : 1
+            return hasDue ? 2 : 1
+        case 2:
+            return hasReminder ? 2 : 1
         default:
             return 1
         }

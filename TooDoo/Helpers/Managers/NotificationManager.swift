@@ -107,10 +107,10 @@ final class NotificationManager {
     ///
     /// - Parameter todo: The todo item
     
-    public class func registerTodoDueNotification(for todo: ToDo) {
-        guard let due = todo.due else { return }
+    public class func registerTodoReminderNotification(for todo: ToDo) {
+        guard let remindAt = todo.remindAt else { return }
         
-        let components = Calendar.current.dateComponents([.minute, .hour, .day, .month, .year], from: due)
+        let components = Calendar.current.dateComponents([.minute, .hour, .day, .month, .year], from: remindAt)
         // Configure content
         let content = UNMutableNotificationContent()
         
@@ -144,7 +144,7 @@ final class NotificationManager {
     ///
     /// - Parameter todo: The todo item
     
-    public class func removeTodoDueNotification(for todo: ToDo) {
+    public class func removeTodoReminderNotification(for todo: ToDo) {
         guard todo.completed || todo.isMovedToTrash() else { return }
         
         let center = UNUserNotificationCenter.current()

@@ -45,7 +45,7 @@
 "XYe-b2-iVD.placeholder" = "✎ Category name";
 
 /* Class = "UILabel"; text = "Due time"; ObjectID = "Xop-1P-BWD"; */
-"Xop-1P-BWD.text" = "Due time";
+"Xop-1P-BWD.text" = "Due date";
 
 /* Class = "UILabel"; text = "Name:"; ObjectID = "Ymz-fk-4yv"; */
 "Ymz-fk-4yv.text" = "Name:";
@@ -75,7 +75,7 @@
 "l9p-kw-NAc.text" = "Good morning";
 
 /* Class = "UILabel"; text = "Select due time"; ObjectID = "la1-hR-EUt"; */
-"la1-hR-EUt.text" = "Select due time";
+"la1-hR-EUt.text" = "Set due";
 
 /* Class = "UIButton"; normalTitle = "Done"; ObjectID = "wH7-Qc-AgL"; */
 "wH7-Qc-AgL.normalTitle" = "Done";
@@ -85,3 +85,7 @@
 
 /* Class = "UINavigationItem"; title = "Categories"; ObjectID = "ycy-I5-cbe"; */
 "ycy-I5-cbe.title" = "Categories";
+
+"dNl-Be-xmW.text" = "Set reminder";
+
+"CXM-rx-Ykz.text" = "Repeat";

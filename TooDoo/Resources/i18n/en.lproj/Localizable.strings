@@ -76,7 +76,8 @@
 /*
  ToDo Table View Controller.
  */
-"todo-table.select-due-time" = "Select due time";
+"todo-table.select-due-time" = "Set due";
+"todo-table.select-reminder" = "Set reminder";
 "todo-table.no-notifications-access.title" = "Notification Disabled";
 "todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in System Settings";
 "todo-table.add-todo" = "Add Todo";
