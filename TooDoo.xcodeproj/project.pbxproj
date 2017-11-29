@@ -76,6 +76,9 @@
 		8DD3D6DB1FB79C8B00BE4FEF /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */; };
 		8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */; };
 		8DD3D6E31FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD3D6E21FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift */; };
+		8DD7CAED1FCEB4BB00EFA73A /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD7CAEC1FCEB4BB00EFA73A /* LocaleManager.swift */; };
+		8DD7CAF01FCEC68100EFA73A /* LanguageSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD7CAEF1FCEC68100EFA73A /* LanguageSettingsTableViewController.swift */; };
+		8DD7CAF31FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD7CAF21FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift */; };
 		8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE287E41FC2DE16008EFE91 /* MenuTableViewController.swift */; };
 		8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1E51FBC13670026E65B /* ReorderCategoriesTableViewController.swift */; };
 		8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */; };
@@ -172,6 +175,9 @@
 		8DD3D6DA1FB79C8B00BE4FEF /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8DD3D6DD1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		8DD3D6E21FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		8DD7CAEC1FCEB4BB00EFA73A /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
+		8DD7CAEF1FCEC68100EFA73A /* LanguageSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8DD7CAF21FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		8DE287E41FC2DE16008EFE91 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		8DE7F1E51FBC13670026E65B /* ReorderCategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCategoriesTableViewController.swift; sourceTree = "<group>"; };
 		8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCategoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -430,6 +436,7 @@
 				8D1F6A811FB64F6F004709E3 /* ShortcutItemManager.swift */,
 				8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */,
 				8DE7F1EA1FBC44470026E65B /* AlertManager.swift */,
+				8DD7CAEC1FCEB4BB00EFA73A /* LocaleManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -545,6 +552,23 @@
 			path = "Category Icon Collection View Cell";
 			sourceTree = "<group>";
 		};
+		8DD7CAEE1FCEC66100EFA73A /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				8DD7CAF11FCEC68800EFA73A /* Table View Cell */,
+				8DD7CAEF1FCEC68100EFA73A /* LanguageSettingsTableViewController.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		8DD7CAF11FCEC68800EFA73A /* Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8DD7CAF21FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift */,
+			);
+			path = "Table View Cell";
+			sourceTree = "<group>";
+		};
 		8DE287E31FC2DDF3008EFE91 /* Menu Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +615,7 @@
 		8DF55B2B1FCAED2100A1DA95 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				8DD7CAEE1FCEC66100EFA73A /* Language */,
 				8DCC7EFA1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift */,
 			);
 			path = General;
@@ -840,10 +865,12 @@
 				8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */,
 				8D589F731FC1A00700039610 /* String.swift in Sources */,
 				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
+				8DD7CAED1FCEB4BB00EFA73A /* LocaleManager.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
 				8DCC7EFB1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift in Sources */,
 				8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */,
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
+				8DD7CAF31FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift in Sources */,
 				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,
@@ -862,6 +889,7 @@
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
 				8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */,
 				8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */,
+				8DD7CAF01FCEC68100EFA73A /* LanguageSettingsTableViewController.swift in Sources */,
 				8DBA55921FC430F80012B941 /* UITextView.swift in Sources */,
 				8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */,
 				8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */,

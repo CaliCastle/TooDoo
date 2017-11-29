@@ -22,6 +22,7 @@ final class UserDefaultManager {
     /// - SettingThemeMode: The dark or light mode in settings
     /// - SettingMotionEffects: The motion effect animation
     /// - SettingNotificationMessage: The custom notification message
+    /// - SettingLanguage: The language locale
     
     enum Key: String {
         case UserName = "user-name"
@@ -35,6 +36,8 @@ final class UserDefaultManager {
         case SettingMotionEffects = "setting-motion-effects"
         
         case SettingNotificationMessage = "setting-notification-message"
+        
+        case SettingLanguage = "setting-language"
     }
     
     static let userDefaults = UserDefaults.standard

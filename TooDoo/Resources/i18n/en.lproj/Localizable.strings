@@ -122,6 +122,30 @@
  */
 "settings.avatar.changed" = "Avatar changed!";
 
+"settings.sounds" = "Sounds";
+"settings.motion-effects" = "Motion Effects";
+
+/*
+ Setting titles
+ */
+"settings.titles.index" = "Settings";
+"settings.titles.general" = "General";
+"settings.titles.general.language" = "Language";
+"settings.titles.notifications" = "Notifications";
+
+// Setting headers
+"settings.headers.general" = "General";
+"settings.headers.look-and-feel" = "Look & Feel";
+
+// Setting Notifications
+"settings.notifications.footer" = "Use @ for the category name as the placeholder. (eg. a todo item in Work category, 'Todo due in @' will appear as 'Todo due in Work')";
+"settings.notifications.header" = "To enable/disable notification, go to System Settings";
+"Fxl-qE-KWK.text" = "Enable notifications";
+"dUh-Si-LBV.text" = "Notification message:";
+"PSE-Nm-hRW.placeholder" = "✎ Enter custom message";
+"bWR-5i-ucd.text" = "Just now";
+"83Q-F0-iKd.text" = "Go to system settings";
+
 /*
  Category icons categories
  */

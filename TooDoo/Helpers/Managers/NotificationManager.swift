@@ -43,6 +43,7 @@ final class NotificationManager {
     /// - UpdateStatusBar: Update the status bar
     /// - SettingMotionEffectsChanged: When the motion effect setting is changed
     /// - SettingThemeChanged: When the user changed color theme
+    /// - SettingLocaleChanged: When the user changed language.
     
     public enum Notifications: String, NotificationName {
         case UserHasSetup = "user-has-setup"
@@ -60,6 +61,7 @@ final class NotificationManager {
         
         case SettingMotionEffectsChanged = "setting-motion-effects-changed"
         case SettingThemeChanged = "setting-theme-changed"
+        case SettingLocaleChanged = "setting-locale-changed"
     }
     
     /// Local Notifications.

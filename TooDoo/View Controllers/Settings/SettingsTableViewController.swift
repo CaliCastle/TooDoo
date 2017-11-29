@@ -36,6 +36,7 @@ class SettingsTableViewController: SettingTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "settings.titles.index".localized
         setVersionText()
     }
     

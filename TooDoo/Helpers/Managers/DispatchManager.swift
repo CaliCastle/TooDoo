@@ -24,11 +24,18 @@ final class DispatchManager {
     // MARK: - Application Entry Point
     
     open func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        configureLocale()
         configureAppearance()
         configureRootViewController(for: application)
         configureShortcutItems(for: application, with: launchOptions)
         configureInstallationDateIfNone()
         registerNotifications()
+    }
+    
+    // MARK: - Configure application locale.
+    
+    fileprivate func configureLocale() {
+        let _ = LocaleManager.default
     }
     
     // MARK: - Shortcut Item Trigger Entry Point

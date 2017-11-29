@@ -8,24 +8,45 @@
 
 import UIKit
 
-class GeneralSettingsTableViewController: UITableViewController {
+class GeneralSettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     
+    @IBOutlet var cellLabels: [UILabel]!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var languageLabel: UILabel!
+    
+    
+    @IBOutlet var currentLanguageLabel: UILabel!
     
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        currentLanguageLabel.text = LocaleManager.default.languageDescription(for: LocaleManager.default.currentLanguage)
     }
     
-    /// Light status bar.
+    /// Localize interface.
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    override func localizeInterface() {
+        super.localizeInterface()
+        
+        title = "settings.titles.general".localized
+        languageLabel.text = "settings.titles.general.language".localized
     }
-
+    
+    /// Get cell labels.
+    
+    override func getCellLabels() -> [UILabel]? {
+        return cellLabels
+    }
+    
 }

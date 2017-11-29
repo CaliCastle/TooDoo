@@ -13,20 +13,19 @@ extension String {
     /// Localized shortcut.
     
     var localized: String {
-        
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.localizedBundle(), value: "", comment: "")
     }
     
     /// Localized with comment.
     
     func localized(with comment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: comment)
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.localizedBundle(), value: "", comment: comment)
     }
     
     /// Localized with plural.
     
     func localizedPlural(_ variable: Int) -> String {
-        return String(format: NSLocalizedString(self, comment: ""), arguments: [variable])
+        return String(format: NSLocalizedString(self, tableName: nil, bundle: Bundle.localizedBundle(), value: "", comment: ""), arguments: [variable])
     }
     
 }

@@ -60,5 +60,16 @@ extension Bundle {
         
         return localizedAppName + " \("version".localized + " " + version)\(isBeta ? "\n\("Beta".localized) \("Build".localized) \(build)" : "")"
     }
-
+    
+    /// Get localized bundle.
+    ///
+    /// - Returns: The bundle in the specific localization
+    
+    public class func localizedBundle() -> Bundle {
+        let bundlePath = Bundle.main.path(forResource: LocaleManager.default.currentLanguage.string(), ofType: "lproj")
+        let bundle = Bundle(path: bundlePath!)
+        
+        return bundle!
+    }
+    
 }

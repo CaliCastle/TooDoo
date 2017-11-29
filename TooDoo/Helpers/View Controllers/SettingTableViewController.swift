@@ -9,26 +9,43 @@
 import UIKit
 import Haptica
 
-open class SettingTableViewController: UITableViewController {
+open class SettingTableViewController: UITableViewController, LocalizableInterface {
     
     // MARK: - View Life Cycle.
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        localizeInterface()
+        
         modalPresentationCapturesStatusBarAppearance = true
         
         configureRightNavigationButton()
         
         setupTableView()
+        
+        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+    }
+    
+    deinit {
+        NotificationManager.remove(self, notification: .SettingLocaleChanged, object: nil)
     }
     
     /// Configure the right bar button.
     
     private func configureRightNavigationButton() {
         /// Add right bar button
-        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidTap(_:)))
+        let rightBarButton = UIBarButtonItem(title: "Done".localized, style: .done, target: self, action: #selector(doneButtonDidTap(_:)))
         navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        if let rightBarButton = navigationItem.rightBarButtonItem {
+            rightBarButton.title = "Done".localized
+            navigationItem.rightBarButtonItem = rightBarButton
+        }
     }
     
     /// Configure labels.
