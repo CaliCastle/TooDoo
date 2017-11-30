@@ -47,7 +47,7 @@ class RecolorableTableViewCell: UITableViewCell, RecolorableView {
             return
         }
         
-        if AppearanceManager.currentTheme() == .Dark {
+        if AppearanceManager.default.theme == .Dark {
             backgroundColor = solidBackground ? .flatBlack() : .clear
             contentView.backgroundColor = solidBackground ? .flatBlack() : .clear
             tintColor = .flatWhite()

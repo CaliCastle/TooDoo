@@ -266,9 +266,14 @@
                     </toolbarItems>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <connections>
+                        <outlet property="aboutLabel" destination="H6F-qx-bbo" id="pjM-xG-ooJ"/>
                         <outlet property="appVersionLabel" destination="D44-K9-des" id="HlK-5g-MqQ"/>
                         <outlet property="changeThemeButton" destination="0a1-oN-NeP" id="MfQ-Lx-xib"/>
+                        <outlet property="feedbackLabel" destination="QCm-fU-8sZ" id="qxt-en-JTh"/>
+                        <outlet property="helpLabel" destination="grX-dl-AOu" id="vbS-Pu-wwY"/>
                         <outlet property="locationButton" destination="K0Z-9S-HP7" id="j2y-rj-Cs1"/>
+                        <outlet property="settingsLabel" destination="I9o-AO-xfk" id="j1b-qj-UVO"/>
+                        <outlet property="trashLabel" destination="bSb-UC-3OL" id="AFB-pv-ob2"/>
                         <outletCollection property="iconImageViews" destination="qCv-Dz-qgF" collectionClass="NSMutableArray" id="n7L-JA-p4e"/>
                         <outletCollection property="iconImageViews" destination="Xo4-Ma-Ixt" collectionClass="NSMutableArray" id="nKE-Wy-Bp8"/>
                         <outletCollection property="iconImageViews" destination="gKL-oB-Uhl" collectionClass="NSMutableArray" id="koe-Yw-wrO"/>

@@ -15,7 +15,7 @@ protocol ReorderCategoriesTableViewControllerDelegate {
     func categoriesDoneOrganizing()
 }
 
-class ReorderCategoriesTableViewController: UITableViewController {
+class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
 
     /// Managed Object Context.
     
@@ -48,6 +48,7 @@ class ReorderCategoriesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        localizeInterface()
         modalPresentationCapturesStatusBarAppearance = true
         
         setupViews()
@@ -62,6 +63,12 @@ class ReorderCategoriesTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.setEditing(true, animated: true)
         }
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        title = "manage-categories.title".localized
     }
     
     /// Setup views.
@@ -131,6 +138,14 @@ class ReorderCategoriesTableViewController: UITableViewController {
         }
     }
     
+    /// Set editing titles.
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        editButtonItem.title = editing ? "Done".localized : "Edit".localized
+    }
+    
     // MARK: - Table view data source
 
     /// Number of sections.
@@ -172,6 +187,14 @@ class ReorderCategoriesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+    /// Localized delete button.
+    
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Delete".localized
+    }
+    
+    // Commit editing for deletion.
  
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {

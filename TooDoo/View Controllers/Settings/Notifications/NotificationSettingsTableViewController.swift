@@ -21,6 +21,15 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     @IBOutlet var notificationWidgetView: UIView!
     @IBOutlet var notificationWidgetMessageLabel: UILabel!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var enableLabel: UILabel!
+    @IBOutlet var goToSystemSettingsLabel: UILabel!
+    @IBOutlet var notificationMessageLabel: UILabel!
+    @IBOutlet var justNowLabel: UILabel!
+    
+    // MARK: - Properties.
+    
     private let defaultMessage = "notifications.todo.due.title".localized
     
     /// Stored notification message.
@@ -95,6 +104,19 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         super.viewDidAppear(animated)
         
         checkNotificationPermission()
+    }
+    
+    /// Localize interface.
+    
+    override func localizeInterface() {
+        super.localizeInterface()
+        
+        title = "settings.titles.notifications".localized
+        enableLabel.text = "Fxl-qE-KWK.text".localized
+        goToSystemSettingsLabel.text = "83Q-F0-iKd.text".localized
+        notificationMessageLabel.text = "dUh-Si-LBV.text".localized
+        messageTextField.placeholder = "PSE-Nm-hRW.placeholder".localized
+        justNowLabel.text = "bWR-5i-ucd.text".localized
     }
     
     /// Configure text field.
@@ -194,6 +216,18 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         if UIApplication.shared.canOpenURL(openSettingsURL) {
             UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
         }
+    }
+    
+    /// Header title.
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "settings.notifications.header".localized
+    }
+    
+    /// Footer title.
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "settings.notifications.footer".localized
     }
     
     /// When message ends editing.

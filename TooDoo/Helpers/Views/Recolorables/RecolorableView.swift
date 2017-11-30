@@ -18,7 +18,7 @@ class RecolorableTableHeaderView: UITableViewHeaderFooterView, RecolorableView {
     
     open func recolorViews(_ notification: Notification? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
-            switch AppearanceManager.currentTheme() {
+            switch AppearanceManager.default.theme {
             case .Dark:
                 // Dark theme
                 self.contentView.backgroundColor = .flatBlack()
@@ -59,7 +59,7 @@ class RecolorableToolBar: UIToolbar, RecolorableView {
     @objc open func recolorViews(_ notification: Notification? = nil) {
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             // Change to theme color
-            switch AppearanceManager.currentTheme() {
+            switch AppearanceManager.default.theme {
             case .Dark:
                 // Dark theme
                 self.barTintColor = .flatBlack()

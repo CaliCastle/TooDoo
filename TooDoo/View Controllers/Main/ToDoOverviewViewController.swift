@@ -13,7 +13,7 @@ import CoreData
 import SideMenu
 import ViewAnimator
 
-class ToDoOverviewViewController: UIViewController, CALayerDelegate {
+class ToDoOverviewViewController: UIViewController {
 
     /// Storyboard identifier
     
@@ -192,18 +192,17 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleNotifications()
-
-        configureUserSettings()
-        
+        // Localize interface
+        localizeInterface()
+        // Start fetching data
         fetchCategories()
         fetchTodos()
-        
+        // Set up views
         setupViews()
         configureColors()
-
         startAnimations()
         
+        handleNotifications()
         // Auto update time label
         timer.fire()
     }
@@ -231,6 +230,19 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         
         // Stop the timer
         timer.invalidate()
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface(_ notification: Notification? = nil) {
+        // Set up user data
+        configureUserSettings()
+        
+        if let _ = notification {
+            setupTimeLabel()
+            setupTodayLabel()
+            setupMessageLabel()
+        }
     }
     
     /// Save context changes.
@@ -280,6 +292,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
         NotificationManager.listen(self, do: #selector(motionEffectSettingChanged(_:)), notification: .SettingMotionEffectsChanged, object: nil)
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
         NotificationManager.listen(self, do: #selector(updateStatusBar), notification: .UpdateStatusBar, object: nil)
+        NotificationManager.listen(self, do: #selector(localizeInterface(_:)), notification: .SettingLocaleChanged, object: nil)
     }
     
     /// Set up views properties.
@@ -340,7 +353,7 @@ class ToDoOverviewViewController: UIViewController, CALayerDelegate {
     /// Set up today label.
     
     fileprivate func setupTodayLabel() {
-        let dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter.localized()
         // Format date to 'Monday, Nov 6'
         dateFormatter.dateFormat = "EEEE, MMM d".localized
         

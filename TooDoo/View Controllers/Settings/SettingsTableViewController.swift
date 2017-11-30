@@ -23,6 +23,13 @@ class SettingsTableViewController: SettingTableViewController {
     
     @IBOutlet var appVersionLabel: UILabel!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var generalLabel: UILabel!
+    @IBOutlet var notificationsLabel: UILabel!
+    @IBOutlet var soundsLabel: UILabel!
+    @IBOutlet var motionEffectsLabel: UILabel!
+    
     /// Switch types.
     
     private enum Switch: Int {
@@ -36,8 +43,20 @@ class SettingsTableViewController: SettingTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    /// Localize interface.
+    
+    override func localizeInterface() {
+        super.localizeInterface()
+        
         title = "settings.titles.index".localized
+        generalLabel.text = "settings.titles.general".localized
+        notificationsLabel.text = "settings.titles.notifications".localized
+        soundsLabel.text = "settings.sounds".localized
+        motionEffectsLabel.text = "settings.motion-effects".localized
         setVersionText()
+        setupAuthenticationProperties()
     }
     
     /// Configure icon image views.
@@ -75,7 +94,6 @@ class SettingsTableViewController: SettingTableViewController {
     internal override func setupTableView() {
         super.setupTableView()
         
-        setupAuthenticationProperties()
         configureIconImages()
         configureSwitches()
     }
@@ -179,6 +197,21 @@ class SettingsTableViewController: SettingTableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.prepareDisclosureIndicator()
+    }
+    
+    /// Table header titles.
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "settings.headers.general".localized
+        case 1:
+            return "settings.headers.look-and-feel".localized
+        case 2:
+            return "settings.headers.privacy".localized
+        default:
+            return nil
+        }
     }
     
     /// Prepare for segue.

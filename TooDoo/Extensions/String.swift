@@ -25,7 +25,7 @@ extension String {
     /// Localized with plural.
     
     func localizedPlural(_ variable: Int) -> String {
-        return String(format: NSLocalizedString(self, tableName: nil, bundle: Bundle.localizedBundle(), value: "", comment: ""), arguments: [variable])
+        return String(format: self.localized, variable)
     }
     
 }

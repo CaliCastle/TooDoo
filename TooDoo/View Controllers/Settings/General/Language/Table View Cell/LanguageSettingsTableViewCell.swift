@@ -20,7 +20,7 @@ class LanguageSettingsTableViewCell: RecolorableTableViewCell {
         super.awakeFromNib()
         
         accessoryType = .none
-        textLabel?.textColor = AppearanceManager.currentTheme() == .Dark ? .white : .flatBlack()
+        textLabel?.textColor = AppearanceManager.default.theme == .Dark ? .white : .flatBlack()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -28,6 +28,11 @@ class LanguageSettingsTableViewCell: RecolorableTableViewCell {
 
         // Configure the view for the selected state
         accessoryType = selected ? .checkmark : .none
+        
+        if selected {
+            tintColor = AppearanceManager.default.theme == .Dark ? .flatYellow() : .flatBlue()
+            textLabel?.textColor = AppearanceManager.default.theme == .Dark ? .flatYellow() : .flatBlue()
+        }
     }
 
 }

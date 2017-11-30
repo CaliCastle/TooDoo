@@ -26,7 +26,7 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
     
 }
 
-class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
+class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
 
     /// Reuse identifier.
     
@@ -79,6 +79,7 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
             let primaryColor = category.categoryColor()
             let contrastColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.15)
             
+            localizeInterface()
             configureCardContainerView(contrastColor)
             configureCategoryName(category, primaryColor)
             configureCategoryIcon(category, primaryColor)
@@ -162,6 +163,11 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         
         NotificationManager.listen(self, do: #selector(setMotionEffect(_:)), notification: .SettingMotionEffectsChanged, object: nil)
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+    }
+    
+    deinit {
+        NotificationManager.remove(self)
     }
     
     /// Prepare reuse.
@@ -175,10 +181,20 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell {
         categoryTodosCountLabel.text = ""
     }
     
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        if let category = category {
+            configureCategoryTodoCount(category)
+        }
+        
+        addTodoButton.setTitle("category-cards.add-todo".localized, for: .normal)
+    }
+    
     /// Set shadow opacity.
     
     fileprivate func setShadowOpacity() {
-        shadowOpacity = AppearanceManager.currentTheme() == .Dark ? 0.25 : 0.14
+        shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.25 : 0.14
     }
     
     /// Set motion effect.

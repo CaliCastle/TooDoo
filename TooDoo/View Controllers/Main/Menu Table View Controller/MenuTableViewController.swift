@@ -12,7 +12,7 @@ import Haptica
 import ViewAnimator
 import BulletinBoard
 
-class MenuTableViewController: UITableViewController {
+class MenuTableViewController: UITableViewController, LocalizableInterface {
     
     /// Storyboard segues.
     
@@ -32,6 +32,14 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet var menuLabels: [UILabel]!
     
     @IBOutlet var appVersionLabel: UILabel!
+    
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var settingsLabel: UILabel!
+    @IBOutlet var trashLabel: UILabel!
+    @IBOutlet var aboutLabel: UILabel!
+    @IBOutlet var helpLabel: UILabel!
+    @IBOutlet var feedbackLabel: UILabel!
     
     /// Main view controller.
     
@@ -55,6 +63,55 @@ class MenuTableViewController: UITableViewController {
     /// The bulletin manager that manages page bulletin items.
     
     lazy var bulletinManager: BulletinManager = {
+        return configureBulletinManager()
+    }()
+    
+    // MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        localizeInterface()
+        setupViews()
+        
+        navigationController?.toolbar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        navigationController?.setToolbarHidden(false, animated: false)
+        
+        registerNotifications()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.animateViews(animations: [AnimationType.from(direction: .left, offset: 12)], duration: 0.2, animationInterval: 0.056)
+        
+        if let menuHeaderView = tableView.headerView(forSection: 0) as? MenuTableHeaderView {
+            menuHeaderView.setupViews()
+        }
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        settingsLabel.text = "settings.titles.index".localized
+        trashLabel.text = "menu.trash".localized
+        aboutLabel.text = "menu.about-toodoo".localized
+        helpLabel.text = "menu.help".localized
+        feedbackLabel.text = "menu.feedback".localized
+        setVersionText()
+        bulletinManager = configureBulletinManager()
+    }
+    
+    /// Register notifications for handling.
+    
+    fileprivate func registerNotifications() {
+        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+    }
+    
+    /// Configure bulletin manager.
+    
+    fileprivate func configureBulletinManager() -> BulletinManager {
         let rootItem = PageBulletinItem(title: "setup.no-photo-access.title".localized)
         rootItem.image = #imageLiteral(resourceName: "no-photo-access")
         rootItem.descriptionText = "setup.no-photo-access.description".localized
@@ -81,35 +138,6 @@ class MenuTableViewController: UITableViewController {
         }
         
         return BulletinManager(rootItem: rootItem)
-    }()
-    
-    // MARK: - View Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupViews()
-        
-        navigationController?.toolbar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
-        navigationController?.setToolbarHidden(false, animated: false)
-        
-        registerNotifications()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        tableView.animateViews(animations: [AnimationType.from(direction: .left, offset: 12)], duration: 0.2, animationInterval: 0.056)
-        
-        if let menuHeaderView = tableView.headerView(forSection: 0) as? MenuTableHeaderView {
-            menuHeaderView.setupViews()
-        }
-    }
-    
-    /// Register notifications for handling.
-    
-    fileprivate func registerNotifications() {
-        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
     }
     
     /// When theme changed.
@@ -129,7 +157,6 @@ class MenuTableViewController: UITableViewController {
         setupNavigationBarAndToolBar()
         setupTableView()
         setupChangeThemeButton()
-        setVersionText()
     }
     
     /// Set navigation bar to hidden and tool bar to visible.
@@ -196,23 +223,9 @@ class MenuTableViewController: UITableViewController {
     @IBAction func themeButtonDidTap(_ sender: UIBarButtonItem) {
         // Generate haptic feedback
         Haptic.impact(.medium).generate()
-        
+        // Change theme
         DispatchQueue.main.async {
-            switch UserDefaultManager.settingThemeMode() {
-            case .Dark:
-                // Change user defaults to Light
-                AppearanceManager.changeTheme(to: .Light)
-                // Set button to Dark mode
-                sender.image = #imageLiteral(resourceName: "dark-mode-icon").withRenderingMode(.alwaysTemplate)
-            case .Light:
-                // Change user defaults to Dark
-                AppearanceManager.changeTheme(to: .Dark)
-                // Set button to Light mode
-                sender.image = #imageLiteral(resourceName: "light-mode-icon").withRenderingMode(.alwaysTemplate)
-            }
-            
-            // Send notification
-            NotificationManager.send(notification: .SettingThemeChanged)
+            AppearanceManager.default.changeTheme()
         }
     }
     

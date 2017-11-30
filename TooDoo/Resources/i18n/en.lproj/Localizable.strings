@@ -8,6 +8,7 @@
 
 /* Common phrases */
 "Get started" = "Get started with TooDoo";
+"Edit" = "Edit";
 "Cancel" = "Cancel";
 "Done" = "Done";
 "OK" = "OK";
@@ -33,7 +34,7 @@
 /*
  Shortcut Items.
  */
-"shortcut.items.add-todo" = "New Todo";
+"shortcut.items.add-todo" = "New To-do";
 "shortcut.items.add-category" = "New Category";
 "shortcut.items.search" = "Search";
 "shortcut.items.settings" = "Settings";
@@ -41,7 +42,7 @@
 /*
  Notifications
  */
-"notifications.todo.due.title" = "❗️Todo due in @";
+"notifications.todo.due.title" = "❗️To-do due in @";
 
 "notification.deleted-category" = "Category Deleted!";
 "notification.created-category" = "Created Category - ";
@@ -72,29 +73,52 @@
 "overview.greeting.time.evening" = "Good evening";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "Today is";
+"overview.new-category" = "New Category";
+
+/*
+ Category cards interface
+ */
+"category-cards.add-todo" = "Add To-do";
 
 /*
  ToDo Table View Controller.
  */
+"todo-table.todo-goal" = "Todo goal:";
+"todo-table-goal-placeholder" = "✎ Set your to-do goal";
+"todo-table.category" = "Category:";
+"todo-table.due-date" = "Due date";
+"todo-table.remind-me" = "Remind me";
+"todo-table.repeat" = "Repeat";
 "todo-table.select-due-time" = "Set due";
 "todo-table.select-reminder" = "Set reminder";
 "todo-table.no-notifications-access.title" = "Notification Disabled";
 "todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in System Settings";
-"todo-table.add-todo" = "Add Todo";
-"todo-table.edit-todo" = "Edit Todo";
+"todo-table.add-todo" = "Add To-do";
+"todo-table.edit-todo" = "Edit To-do";
 "todo-table.select-category" = "Select a category";
+
+// Select category Table View Controller.
+"select-category.title" = "Select Category";
 
 /*
  Category Table View Controller.
  */
+"category-table.name" = "Name:";
+"category-table.name.placeholder" = "✎ Category name";
+"category-table.choose-color" = "Choose a color:";
+"category-table.choose-icon" = "Choose an icon:(optional)";
 
 
+/*
+ Reorder Categories Table View Controller.
+ */
+"manage-categories.title" = "Manage Categories";
 
 /*
  Action Sheet & Alert
  */
 "actionsheet.create-a" = "Create a";
-"actionsheet.new-todo" = "New Todo";
+"actionsheet.new-todo" = "New To-do";
 "actionsheet.new-category" = "New Category";
 "actionsheet.category.title" = "Category - ";
 "actionsheet.actions.edit-category" = "Edit Category";
@@ -108,7 +132,7 @@
 
 "alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";
 "alert.error-fetching-category" = "Unable to fetch categories";
-"alert.error-fetching-todo" = "Unable to fetch todos";
+"alert.error-fetching-todo" = "Unable to fetch to-dos";
 "alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";
 "alert.authentication-failed" = "Authentication failed, please try again";
 
@@ -116,6 +140,14 @@
  Permission
  */
 "permission.authentication.reason" = "Authenticate for unlocking app under privacy protection";
+
+/*
+ Menu
+ */
+"menu.about-toodoo" = "About TooDoo";
+"menu.feedback" = "Feedback";
+"menu.trash" = "Trash";
+"menu.help" = "Help";
 
 /*
  Settings
@@ -136,6 +168,7 @@
 // Setting headers
 "settings.headers.general" = "General";
 "settings.headers.look-and-feel" = "Look & Feel";
+"settings.headers.privacy" = "Privacy";
 
 // Setting Notifications
 "settings.notifications.footer" = "Use @ for the category name as the placeholder. (eg. a todo item in Work category, 'Todo due in @' will appear as 'Todo due in Work')";

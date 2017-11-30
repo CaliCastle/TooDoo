@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddCategoryOverviewCollectionViewCell: UICollectionViewCell {
+class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
     
     /// Reuse identifier.
     
@@ -28,9 +28,11 @@ class AddCategoryOverviewCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        localizeInterface()
         setupViews()
         
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
     }
     
     override func prepareForReuse() {
@@ -39,11 +41,21 @@ class AddCategoryOverviewCollectionViewCell: UICollectionViewCell {
         setupViews()
     }
     
+    deinit {
+        NotificationManager.remove(self)
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        newCategoryLabel.text = "overview.new-category".localized
+    }
+    
     /// Set up views.
     
     fileprivate func setupViews() {
-        cardContainerView.shadowOpacity = AppearanceManager.currentTheme() == .Dark ? 0.4 : 0.1
-        newCategoryLabel.textColor = AppearanceManager.currentTheme() == .Dark ? .white : .flatBlack()
+        cardContainerView.shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.4 : 0.1
+        newCategoryLabel.textColor = AppearanceManager.default.theme == .Dark ? .white : .flatBlack()
     }
     
     /// When the theme has changed.

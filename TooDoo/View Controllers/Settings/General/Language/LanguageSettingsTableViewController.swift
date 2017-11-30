@@ -63,4 +63,9 @@ class LanguageSettingsTableViewController: UITableViewController {
         let _ = navigationController?.popViewController(animated: true)
     }
 
+    /// Light status bar.
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

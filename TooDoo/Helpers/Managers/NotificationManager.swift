@@ -92,6 +92,12 @@ final class NotificationManager {
         center.removeObserver(observer, name: notification.name, object: object)
     }
     
+    /// Remove from all notifications.
+    
+    public class func remove(_ observer: Any) {
+        center.removeObserver(observer)
+    }
+    
     /// Display a banner message.
     ///
     /// - Parameters:

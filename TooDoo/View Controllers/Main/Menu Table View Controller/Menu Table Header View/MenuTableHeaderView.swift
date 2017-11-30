@@ -18,7 +18,7 @@ protocol MenuTableHeaderViewDelegate {
     
 }
 
-class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
+class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, LocalizableInterface {
 
     /// Nib file name.
     
@@ -41,6 +41,8 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.localizeInterface()
+        
         DispatchQueue.main.async {
             self.setupViews()
         }
@@ -49,6 +51,14 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
         
         NotificationManager.listen(self, do: #selector(updateAvatar), notification: .UserAvatarChanged, object: nil)
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
+        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+    }
+    
+    /// Localize interface.
+    
+    @objc internal func localizeInterface() {
+        // Configure since label
+        sinceLabel.text = "%d day(s) since installation".localizedPlural(UserDefaultManager.userHasBeenUsingThisAppDaysCount())
     }
     
     /// Set up views.
@@ -63,11 +73,11 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
         // Configure name
         userNameTextView.centerVertically()
         userNameTextView.text = UserDefaultManager.string(forKey: .UserName)
-        // Configure since label
-        sinceLabel.text = "%d day(s) since installation".localizedPlural(UserDefaultManager.userHasBeenUsingThisAppDaysCount())
         
         configureColors()
     }
+    
+    /// Configure colors.
     
     private func configureColors() {
         userNameTextView.textColor = currentThemeIsDark() ? .white : .flatBlack()
@@ -148,6 +158,6 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate {
     /// Check if the theme is dark.
     
     private func currentThemeIsDark() -> Bool {
-        return AppearanceManager.currentTheme() == .Dark
+        return AppearanceManager.default.theme == .Dark
     }
 }

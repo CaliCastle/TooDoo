@@ -938,7 +938,7 @@
                                 <action selector="cancelDidTap:" destination="w4P-w9-vgK" id="zI5-b6-8Hu"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="R5r-Z3-6pX">
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="R5r-Z3-6pX">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-8" maxY="0.0"/>
                             <color key="tintColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -951,6 +951,9 @@
                         <outlet property="categoryColorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
                         <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
                         <outlet property="categoryNameTextField" destination="XYe-b2-iVD" id="IEM-ey-qcF"/>
+                        <outlet property="chooseColorLabel" destination="AEL-2z-JMy" id="CgN-cy-pyI"/>
+                        <outlet property="chooseIconLabel" destination="Dti-RI-Fq8" id="gXy-pg-Axe"/>
+                        <outlet property="nameLabel" destination="Ymz-fk-4yv" id="kW9-iQ-Jmm"/>
                         <outletCollection property="cellLabels" destination="Ymz-fk-4yv" collectionClass="NSMutableArray" id="eIB-Fb-MX5"/>
                         <outletCollection property="cellLabels" destination="AEL-2z-JMy" collectionClass="NSMutableArray" id="YPp-Lx-Sqc"/>
                         <outletCollection property="cellLabels" destination="Dti-RI-Fq8" collectionClass="NSMutableArray" id="QfR-AE-Tbq"/>
@@ -1065,8 +1068,8 @@
         <scene sceneID="c7B-8a-N6C">
             <objects>
                 <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1339,11 +1342,11 @@
                                         <rect key="frame" x="0.0" y="643" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
-                                                    <rect key="frame" x="14.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1393,7 +1396,7 @@
                                 <action selector="cancelDidTap:" destination="VJ3-YR-ah3" id="LN1-ht-fRH"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="lez-07-UgL">
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="lez-07-UgL">
                             <color key="tintColor" red="1" green="0.98431372549019602" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doneDidTap:" destination="VJ3-YR-ah3" id="d61-1p-0Yy"/>
@@ -1404,13 +1407,17 @@
                     <connections>
                         <outlet property="categoryGradientBackgroundView" destination="7La-da-whW" id="hXj-lE-gki"/>
                         <outlet property="categoryIconImageView" destination="IiF-sx-vug" id="LT8-aL-vhn"/>
+                        <outlet property="categoryLabel" destination="6Em-EM-2uI" id="5Fz-R3-DQe"/>
                         <outlet property="categoryNameLabel" destination="8zA-aa-c2W" id="LEl-Gh-yJC"/>
+                        <outlet property="dueDateLabel" destination="Xop-1P-BWD" id="Eiw-5E-q2V"/>
                         <outlet property="dueSwitch" destination="tg8-Jh-Icg" id="91u-mh-mWB"/>
                         <outlet property="dueTimeLabel" destination="la1-hR-EUt" id="tI8-fO-cfA"/>
                         <outlet property="goalTextField" destination="AqI-GN-X2o" id="lTQ-Xu-j3j"/>
+                        <outlet property="remindMeLabel" destination="Gqy-Md-3Pb" id="Pm6-Hc-zrE"/>
                         <outlet property="reminderLabel" destination="dNl-Be-xmW" id="gRL-Ig-vMA"/>
                         <outlet property="reminderSwitch" destination="Wgd-3n-PTC" id="h92-W1-ZNk"/>
-                        <outlet property="repeatLabel" destination="9I4-z1-x06" id="0VD-1a-Vam"/>
+                        <outlet property="repeatCellLabel" destination="CXM-rx-Ykz" id="8EF-yD-qXU"/>
+                        <outlet property="todoGoalLabel" destination="anl-Mc-eRf" id="vOl-fr-Q4x"/>
                         <outletCollection property="cellLabels" destination="anl-Mc-eRf" collectionClass="NSMutableArray" id="pr7-cj-Pds"/>
                         <outletCollection property="cellLabels" destination="6Em-EM-2uI" collectionClass="NSMutableArray" id="N5A-6C-YCk"/>
                         <outletCollection property="cellLabels" destination="Xop-1P-BWD" collectionClass="NSMutableArray" id="5Ng-rB-xjj"/>

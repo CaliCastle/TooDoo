@@ -35,7 +35,7 @@ class RecolorableNavigationBar: UINavigationBar, RecolorableView {
     
     @objc open func recolorViews(_ notification: Notification? = nil) {
         // Change to theme color
-        switch AppearanceManager.currentTheme() {
+        switch AppearanceManager.default.theme {
         case .Dark:
             // Dark theme
             barTintColor = .flatBlack()

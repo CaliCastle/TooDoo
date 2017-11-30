@@ -13,13 +13,11 @@ class GeneralSettingsTableViewController: SettingTableViewController {
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var cellLabels: [UILabel]!
+    @IBOutlet var currentLanguageLabel: UILabel!
     
     // MARK: - Localizable Outlets.
     
     @IBOutlet var languageLabel: UILabel!
-    
-    
-    @IBOutlet var currentLanguageLabel: UILabel!
     
     // MARK: - View Life Cycle.
     

@@ -38,7 +38,7 @@ class RecolorableTableView: UITableView, RecolorableView {
     /// Recolor views with theme.
     
     @objc open func recolorViews(_ notification: Notification? = nil) {
-        let currentTheme = AppearanceManager.currentTheme()
+        let currentTheme = AppearanceManager.default.theme
         
         // Set indicator style
         indicatorStyle = currentTheme == .Dark ? .white : .black

@@ -8,6 +8,7 @@
 
 /* Common phrases */
 "Get started" = "开始使用 TooDoo";
+"Edit" = "编辑";
 "Cancel" = "取消";
 "Done" = "完成";
 "OK" = "好吧";
@@ -72,25 +73,45 @@
 "overview.greeting.time.evening" = "晚上好";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "今天是";
-/* FIXME: */
-"overview.message.todo.count" = "今天有%count%个待办事项";
-"overview.message.todo.zero" = "今天暂无待办事项";
+"overview.new-category" = "新建分类";
+
+/*
+ Category cards interface
+ */
+"category-cards.add-todo" = "添加待办事项";
 
 /*
  ToDo Table View Controller.
  */
+"todo-table.todo-goal" = "待办目标:";
+"todo-table-goal-placeholder" = "✎ 输入目标";
+"todo-table.category" = "类别:";
+"todo-table.due-date" = "截止日期";
+"todo-table.remind-me" = "提醒通知";
+"todo-table.repeat" = "重复事项";
 "todo-table.select-due-time" = "设置截止时间";
 "todo-table.select-reminder" = "设置提醒时间";
 "todo-table.no-notifications-access.title" = "提醒通知已关闭";
 "todo-table.no-notifications-access.description" = "本应用未获得通知权限，请在 系统设置 中开启";
-"todo-table.add-todo" = "添加待办事项";
-"todo-table.edit-todo" = "编辑待办事项";
+"todo-table.add-todo" = "添加待办";
+"todo-table.edit-todo" = "编辑待办";
 "todo-table.select-category" = "选择所属分类";
+
+// Select category Table View Controller.
+"select-category.title" = "选择分类";
 
 /*
  Category Table View Controller.
  */
+"category-table.name" = "名称:";
+"category-table.name.placeholder" = "✎ 类别名称";
+"category-table.choose-color" = "选择颜色:";
+"category-table.choose-icon" = "选择图标:(可选)";
 
+/*
+ Reorder Categories Table View Controller.
+ */
+"manage-categories.title" = "分类管理";
 
 
 /*
@@ -119,6 +140,14 @@
  Permission
  */
 "permission.authentication.reason" = "为了保护隐私与未来解锁本应用";
+
+/*
+ Menu
+ */
+"menu.about-toodoo" = "关于TooDoo";
+"menu.feedback" = "反馈意见";
+"menu.trash" = "垃圾箱";
+"menu.help" = "帮助";
 
 /*
  Settings

@@ -104,8 +104,7 @@ final class DispatchManager {
     // MARK: - Appearance Configuration
     
     fileprivate func configureAppearance() {
-        let appearanceManager = AppearanceManager.standard
-        appearanceManager.configureAppearances()
+        AppearanceManager.default.configureAppearances()
     }
     
     /// Once user has finished setup process.

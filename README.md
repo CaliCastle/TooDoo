@@ -16,9 +16,12 @@ TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a
     - [x] English
     - [x] 简体中文
     - [ ] Deutsch
+    - [ ] Français
+    - [ ] Español
 - [x] Motion effects to tilt UI
 - [x] Change user's name and avatar
-- [x] Settings page
+- [x] Dark / Light theme
+- [x] Change language on the fly
 
 ## Requirements for running:
 **iOS 10.0+**
@@ -35,10 +38,10 @@ _Supported devices:_
 
 ### Known issues:
 **Minor issues**
-- Somehow after reordering categories, category collection cell would seem to display improperly.
+- None
 
 **Major issues**
-- For __iOS 10.*__, navigation item search icon squashed due to auto-layout changes introduced in __iOS 11__.
+- None
 
 ## Upcoming features:
 

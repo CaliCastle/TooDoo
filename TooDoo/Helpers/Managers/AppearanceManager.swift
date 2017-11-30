@@ -37,13 +37,11 @@ final class AppearanceManager {
     
     /// Singleton standard instance.
     
-    public static let standard = AppearanceManager()
+    public static let `default` = AppearanceManager()
     
-    /// Theme variable.
+    /// Current theme variable.
     
-    private lazy var theme: ThemeMode = {
-        return AppearanceManager.currentTheme()
-    }()
+    open var theme: ThemeMode = .Dark
     
     /// Get main font
     ///
@@ -91,7 +89,7 @@ final class AppearanceManager {
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuPresentMode = .viewSlideInOut
         SideMenuManager.default.menuShadowOpacity = 0.15
-        SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 0.8
+        SideMenuManager.default.menuWidth = 300
     }
     
     // MARK: - Switch Controls.
@@ -105,26 +103,42 @@ final class AppearanceManager {
     ///
     /// - Returns: The current theme enum
     
-    class func currentTheme() -> ThemeMode {
+    internal func currentTheme() -> ThemeMode {
         return UserDefaultManager.settingThemeMode()
     }
     
     /// Set current theme.
     
-    class func changeTheme(to theme: ThemeMode) {
+    open func changeTheme() {
+        // Change theme accordingly
+        switch theme {
+        case .Dark:
+            theme = .Light
+        case .Light:
+            theme = .Dark
+        }
+        
+        // Save theme to user defaults
         UserDefaultManager.set(value: theme.rawValue, forKey: .SettingThemeMode)
+        
+        // Change global appearances
+        changeSwitchAppearance()
+        changeNavigationBarAppearance()
+        
+        // Send notification
+        NotificationManager.send(notification: .SettingThemeChanged)
     }
     
     /// Switch on tint color.
     
     open static func switchOnTintColor() -> UIColor {
-        return currentTheme() == .Dark ? .flatMint() : .flatNavyBlue()
+        return AppearanceManager.default.theme == .Dark ? .flatMint() : .flatNavyBlue()
     }
     
     /// Switch tint color.
     
     open static func switchTintColor() -> UIColor {
-        return currentTheme() == .Dark ? .white : .lightGray
+        return AppearanceManager.default.theme == .Dark ? .white : .lightGray
     }
     
     /// Configure appearances.
@@ -138,14 +152,7 @@ final class AppearanceManager {
     /// Private init
     
     private init() {
-        // Listen for theme change event
-        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
-    }
-    
-    @objc private func themeChanged() {
-        theme = AppearanceManager.currentTheme()
-        
-        configureAppearances()
+        theme = currentTheme()
     }
     
 }

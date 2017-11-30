@@ -20,7 +20,7 @@ protocol CategoryTableViewControllerDelegate {
     
 }
 
-class CategoryTableViewController: UITableViewController, CALayerDelegate {
+class CategoryTableViewController: UITableViewController, LocalizableInterface, CALayerDelegate {
 
     /// Category collection type.
     ///
@@ -91,6 +91,12 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     @IBOutlet var categoryIconCollectionView: UICollectionView!
     @IBOutlet var cellLabels: [UILabel]!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var chooseColorLabel: UILabel!
+    @IBOutlet var chooseIconLabel: UILabel!
+    
     /// Gradient mask for color collection view.
     
     private lazy var gradientMaskForColors: CAGradientLayer = {
@@ -122,6 +128,7 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        localizeInterface()
         modalPresentationCapturesStatusBarAppearance = true
         
         setupViews()
@@ -153,10 +160,24 @@ class CategoryTableViewController: UITableViewController, CALayerDelegate {
         selectDefaultIcon()
     }
     
+    /// Localize interface.
+    
+    internal func localizeInterface() {
+        title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
+        
+        categoryNameTextField.placeholder = "category-table.name.placeholder".localized
+        nameLabel.text = "category-table.name".localized
+        chooseColorLabel.text = "category-table.choose-color".localized
+        chooseIconLabel.text = "category-table.choose-icon".localized
+        
+        if let rightBarButton = navigationItem.rightBarButtonItem {
+            rightBarButton.title = "Done".localized
+        }
+    }
+    
     /// Additional views setup.
     
     fileprivate func setupViews() {
-        navigationItem.title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
         

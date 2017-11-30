@@ -46,6 +46,8 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
             rightBarButton.title = "Done".localized
             navigationItem.rightBarButtonItem = rightBarButton
         }
+        
+        tableView.reloadData()
     }
     
     /// Configure labels.

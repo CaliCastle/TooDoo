@@ -47,7 +47,7 @@ class CategoryIconHeaderView: UICollectionReusableView {
     /// Configure color.
     
     fileprivate func configureColor() {
-        switch AppearanceManager.currentTheme() {
+        switch AppearanceManager.default.theme {
         case .Light:
             sectionTitleLabel.textColor = .flatBlack()
         default:

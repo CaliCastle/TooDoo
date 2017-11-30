@@ -15,7 +15,7 @@ import DateTimePicker
 import DeckTransition
 import UserNotifications
 
-class ToDoTableViewController: UITableViewController {
+class ToDoTableViewController: UITableViewController, LocalizableInterface {
 
     /// Segue enum.
     ///
@@ -81,6 +81,14 @@ class ToDoTableViewController: UITableViewController {
     @IBOutlet var dueSwitch: UISwitch!
     @IBOutlet var reminderSwitch: UISwitch!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var todoGoalLabel: UILabel!
+    @IBOutlet var categoryLabel: UILabel!
+    @IBOutlet var dueDateLabel: UILabel!
+    @IBOutlet var remindMeLabel: UILabel!
+    @IBOutlet var repeatCellLabel: UILabel!
+    
     /// Dependency Injection for Managed Object Context.
     
     var managedObjectContext: NSManagedObjectContext?
@@ -103,8 +111,8 @@ class ToDoTableViewController: UITableViewController {
         didSet {
             guard let dueDate = dueDate else { dueTimeLabel.text = "todo-table.select-due-time".localized; return }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = dateFormat
+            let dateFormatter = DateFormatter.localized()
+            dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
             
             dueTimeLabel.text = dateFormatter.string(from: dueDate)
         }
@@ -116,8 +124,8 @@ class ToDoTableViewController: UITableViewController {
         didSet {
             guard let remindDate = remindDate else { reminderLabel.text = "todo-table.select-reminder".localized; return }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = dateFormat
+            let dateFormatter = DateFormatter.localized()
+            dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
             
             reminderLabel.text = dateFormatter.string(from: remindDate)
         }
@@ -159,6 +167,7 @@ class ToDoTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        localizeInterface()
         modalPresentationCapturesStatusBarAppearance = true
         
         configureColors()
@@ -167,10 +176,28 @@ class ToDoTableViewController: UITableViewController {
         animateViews()
     }
     
+    /// Localize interface.
+    
+    internal func localizeInterface() {
+        title = isAdding ? "todo-table.add-todo".localized : "todo-table.edit-todo".localized
+        
+        goalTextField.placeholder = "todo-table-goal-placeholder".localized
+        todoGoalLabel.text = "todo-table.todo-goal".localized
+        categoryLabel.text = "todo-table.category".localized
+        dueDateLabel.text = "todo-table.due-date".localized
+        dueTimeLabel.text = "todo-table.select-due-time".localized
+        remindMeLabel.text = "todo-table.remind-me".localized
+        reminderLabel.text = "todo-table.select-reminder".localized
+        repeatCellLabel.text = "todo-table.repeat".localized
+        
+        if let rightBarButton = navigationItem.rightBarButtonItem {
+            rightBarButton.title = "Done".localized
+        }
+    }
+    
     /// Setup views.
     
     fileprivate func setupViews() {
-        navigationItem.title = isAdding ? "todo-table.add-todo".localized : "todo-table.edit-todo".localized
         // Remove redundant white lines
         tableView.tableFooterView = UIView()
         

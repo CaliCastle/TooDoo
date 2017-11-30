@@ -34,13 +34,13 @@ extension UIViewController {
     /// Get status bar style based on appearnce.
     
     open func themeStatusBarStyle() -> UIStatusBarStyle {
-        return AppearanceManager.currentTheme() == .Dark ? .lightContent : .default
+        return AppearanceManager.default.theme == .Dark ? .lightContent : .default
     }
     
     /// Get current theme method.
     
     open func currentThemeIsDark() -> Bool {
-        return AppearanceManager.currentTheme() == .Dark
+        return AppearanceManager.default.theme == .Dark
     }
     
 }
