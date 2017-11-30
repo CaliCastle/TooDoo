@@ -7,6 +7,7 @@
 //
 
 import Photos
+import EventKit
 import UserNotifications
 
 final class PermissionManager {
@@ -14,6 +15,8 @@ final class PermissionManager {
     /// Singleton instance.
     
     static let `default` = PermissionManager()
+    
+    public let eventStore = EKEventStore()
     
     /// Request photo access.
     ///
@@ -50,6 +53,72 @@ final class PermissionManager {
                     completion(granted)
                 }
             }
+        }
+    }
+    
+    /// Request calendars access.
+    ///
+    /// - Parameter completion: Completion handler
+    
+    public func requestCalendarsAccess(_ completion: @escaping (Bool) -> Void) {
+        let status = EKEventStore.authorizationStatus(for: .event)
+        
+        switch status {
+        case .authorized:
+            completion(true)
+        default:
+            // Request access
+            eventStore.requestAccess(to: .event) { (hasAccess, error) in
+                completion(hasAccess)
+            }
+        }
+    }
+    
+    /// Request reminders access.
+    ///
+    /// - Parameter completion: Completion handler
+    
+    public func requestRemindersAccess(_ completion: @escaping (Bool) -> Void) {
+        let status = EKEventStore.authorizationStatus(for: .reminder)
+        
+        switch status {
+        case .authorized:
+            completion(true)
+        default:
+            // Request access
+            eventStore.requestAccess(to: .reminder) { (hasAccess, error) in
+                completion(hasAccess)
+            }
+        }
+    }
+    
+    /// Check if user granted calendars access.
+    ///
+    /// - Returns: Granted or not
+    
+    public func checkCalendarsAccess() -> Bool {
+        let status = EKEventStore.authorizationStatus(for: .event)
+        
+        switch status {
+        case .authorized:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    /// Check if user granted reminders access.
+    ///
+    /// - Returns: Granted or not
+    
+    public func checkRemindersAccess() -> Bool {
+        let status = EKEventStore.authorizationStatus(for: .reminder)
+        
+        switch status {
+        case .authorized:
+            return true
+        default:
+            return false
         }
     }
     

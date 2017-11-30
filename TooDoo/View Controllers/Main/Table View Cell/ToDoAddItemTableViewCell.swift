@@ -119,6 +119,8 @@ class ToDoAddItemTableViewCell: UITableViewCell {
         if let category = category {
             category.addToTodos(todo)
         }
+        // Created to-do
+        todo.created()
         
         // Notify delegate
         delegate.newTodoDoneEditing(todo: todo)

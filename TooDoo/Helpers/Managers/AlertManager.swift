@@ -67,9 +67,9 @@ final class AlertManager {
     /// Configure photo access bulletin manager.
     
     open class func photoAccessBulletinManager() -> BulletinManager {
-        let rootItem = FeedbackPageBulletinItem(title: "setup.no-photo-access.title".localized)
+        let rootItem = FeedbackPageBulletinItem(title: "permission.no-photo-access.title".localized)
         rootItem.image = #imageLiteral(resourceName: "no-photo-access")
-        rootItem.descriptionText = "setup.no-photo-access.description".localized
+        rootItem.descriptionText = "permission.no-photo-access.description".localized
         rootItem.actionButtonTitle = "Give access".localized
         rootItem.alternativeButtonTitle = "Not now".localized
         
@@ -94,9 +94,9 @@ final class AlertManager {
     /// Configure notification access bulletin manager.
     
     open class func notificationAccessBulletinManager() -> BulletinManager {
-        let rootItem = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        let rootItem = FeedbackPageBulletinItem(title: "permission.no-notifications-access.title".localized)
         rootItem.image = #imageLiteral(resourceName: "no-notification-access")
-        rootItem.descriptionText = "todo-table.no-notifications-access.description".localized
+        rootItem.descriptionText = "permission.no-notifications-access.description".localized
         rootItem.actionButtonTitle = "Give access".localized
         rootItem.alternativeButtonTitle = "Not now".localized
         
@@ -134,10 +134,9 @@ final class AlertManager {
     /// - Returns: The bulletin item
     
     open class func makeCalendarsAccessPage() -> PageBulletinItem {
-        let item = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        let item = FeedbackPageBulletinItem(title: "permission.no-calendars-access.title".localized)
         item.image = #imageLiteral(resourceName: "calendar-access")
-        item.descriptionText = "todo-table.no-notifications-access.description".localized
-        item.interfaceFactory.actionButtonTitleColor = .flatRed()
+        item.descriptionText = "permission.no-calendars-access.description".localized
         item.actionButtonTitle = "Give access".localized
         item.alternativeButtonTitle = "Not now".localized
         
@@ -146,7 +145,7 @@ final class AlertManager {
         
         // Prompt calendars permission
         item.actionHandler = { item in
-            
+            DispatchManager.main.openSystemSettings()
             
             item.manager?.dismissBulletin()
         }
@@ -164,9 +163,9 @@ final class AlertManager {
     /// - Returns: The bulletin item
     
     open class func makeRemindersAccessPage() -> PageBulletinItem {
-        let item = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        let item = FeedbackPageBulletinItem(title: "permission.no-reminders-access.title".localized)
         item.image = #imageLiteral(resourceName: "reminder-access")
-        item.descriptionText = "todo-table.no-notifications-access.description".localized
+        item.descriptionText = "permission.no-reminders-access.description".localized
         item.actionButtonTitle = "Give access".localized
         item.alternativeButtonTitle = "Not now".localized
         
@@ -175,7 +174,7 @@ final class AlertManager {
         
         // Prompt reminders permission
         item.actionHandler = { item in
-            
+            DispatchManager.main.openSystemSettings()
             
             item.manager?.dismissBulletin()
         }

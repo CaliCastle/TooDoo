@@ -21,6 +21,7 @@
 		8D2075BA1FCF9E6600FBE622 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075B91FCF9E6600FBE622 /* DateFormatter.swift */; };
 		8D2075BE1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075BD1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift */; };
 		8D2075C01FCFF2F100FBE622 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075BF1FCFF2F100FBE622 /* PermissionManager.swift */; };
+		8D2075C31FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */; };
 		8D26DA8D1FCD40A200F61FE7 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DA8C1FCD40A200F61FE7 /* Bundle.swift */; };
 		8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3924FA1FC8F29D0085186A /* RecolorableView.swift */; };
 		8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Category Icons.plist */; };
@@ -112,6 +113,7 @@
 		8D2075B91FCF9E6600FBE622 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		8D2075BD1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPageBulletinItem.swift; sourceTree = "<group>"; };
 		8D2075BF1FCFF2F100FBE622 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8D26DA8C1FCD40A200F61FE7 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		8D3924FA1FC8F29D0085186A /* RecolorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableView.swift; sourceTree = "<group>"; };
 		8D3AA14A1FC76DE300862C4C /* Category Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Category Icons.plist"; sourceTree = "<group>"; };
@@ -250,6 +252,14 @@
 				8D2075BD1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift */,
 			);
 			path = Bulletin;
+			sourceTree = "<group>";
+		};
+		8D2075C11FCFFEA500FBE622 /* Calendars */ = {
+			isa = PBXGroup;
+			children = (
+				8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */,
+			);
+			path = Calendars;
 			sourceTree = "<group>";
 		};
 		8D3AA14C1FC7994300862C4C /* Collection View */ = {
@@ -643,6 +653,7 @@
 			children = (
 				8DF55B2B1FCAED2100A1DA95 /* General */,
 				8DF55B2A1FCAED1C00A1DA95 /* Notifications */,
+				8D2075C11FCFFEA500FBE622 /* Calendars */,
 				8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */,
 			);
 			path = Settings;
@@ -859,6 +870,7 @@
 				8D26DA8D1FCD40A200F61FE7 /* Bundle.swift in Sources */,
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
+				8D2075C31FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift in Sources */,
 				8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */,
 				8D05144E1FC57E6C00AC45CE /* UIMotionEffect.swift in Sources */,
 				8D6A13A31F93EC24004238D8 /* SetupWelcomeViewController.swift in Sources */,

@@ -69,6 +69,9 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
     /// Set up table view.
     
     open func setupTableView() {
+        // Remove redundant lines
+        tableView.tableFooterView = UIView()
+        
         configureLabels()
     }
     

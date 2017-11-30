@@ -7,8 +7,34 @@
 //
 
 import UIKit
+import EventKit
 
 extension ToDo {
+    
+    /// Created to-do.
+    
+    func created() {
+        let eventStore = EKEventStore()
+        let reminder = EKReminder(eventStore: eventStore)
+        
+        if let calendar = eventStore.defaultCalendarForNewReminders() {
+            reminder.calendar = calendar
+            reminder.title = goal!
+            reminder.isCompleted = false
+            reminder.notes = note
+            
+            if let due = due {
+                reminder.dueDateComponents = Calendar.current.dateComponents(in: .current, from: due)
+            }
+            
+            do {
+                try eventStore.save(reminder, commit: true)
+            } catch {
+                print("Error trying to save EKReminder")
+                print("\(error.localizedDescription)")
+            }
+        }
+    }
     
     /// Set completed attribute.
     

@@ -354,6 +354,8 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         // Set reminder
         todo.setReminder(remindDate)
         
+        todo.created()
+        
         // Generate haptic feedback and play sound
         Haptic.notification(.success).generate()
         SoundManager.play(soundEffect: .Success)

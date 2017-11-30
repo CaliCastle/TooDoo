@@ -54,8 +54,6 @@
 /*
  Setup Welcome View Controller.
  */
-"setup.no-photo-access.title" = "No Photo Access";
-"setup.no-photo-access.description" = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos";
 "setup.complete.skipped" = "Let's start using TooDoo";
 "setup.complete.custom.title" = "Nice pic!";
 "setup.complete.custom.message" = "And no worries! I don't judge";
@@ -91,8 +89,6 @@
 "todo-table.repeat" = "Repeat";
 "todo-table.select-due-time" = "Set due";
 "todo-table.select-reminder" = "Set reminder";
-"todo-table.no-notifications-access.title" = "Notification Disabled";
-"todo-table.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in System Settings";
 "todo-table.add-todo" = "Add To-do";
 "todo-table.edit-todo" = "Edit To-do";
 "todo-table.select-category" = "Select a category";
@@ -140,6 +136,15 @@
  Permission
  */
 "permission.authentication.reason" = "Authenticate for unlocking app under privacy protection";
+"permission.no-photo-access.title" = "No Photo Access";
+"permission.no-photo-access.description" = "You need to grant this application with 'Read & Write' access, you can turn it on in settings Privacy > Photos";
+"permission.no-notifications-access.title" = "Notification Disabled";
+"permission.no-notifications-access.description" = "You need to grant this application access to send you notifications, you can turn it on in System Settings";
+"permission.no-calendars-access.title" = "No Calendars Access";
+"permission.no-calendars-access.description" = "You need to grant this application access to Calendars, you can turn it on in System Settings";
+"permission.no-reminders-access.title" = "No Reminders Access";
+"permission.no-reminders-access.description" = "You need to grant this application access to Reminders, you can turn it on in System Settings";
+
 
 /*
  Menu
@@ -164,6 +169,7 @@
 "settings.titles.general" = "General";
 "settings.titles.general.language" = "Language";
 "settings.titles.notifications" = "Notifications";
+"settings.titles.calendars" = "Calendars";
 
 // Setting headers
 "settings.headers.general" = "General";
@@ -178,6 +184,11 @@
 "PSE-Nm-hRW.placeholder" = "✎ Enter custom message";
 "bWR-5i-ucd.text" = "Just now";
 "83Q-F0-iKd.text" = "Go to system settings";
+
+// Setting Calendars
+"settings.calendars.footer" = "To enable/disable Calenders and Reminders, go to system Settings";
+"settings.calendars.sync-calendars" = "Sync Calendars";
+"settings.calendars.sync-reminders" = "Sync Reminders";
 
 /*
  Category icons categories

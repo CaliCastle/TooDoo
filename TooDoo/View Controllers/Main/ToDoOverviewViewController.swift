@@ -182,12 +182,6 @@ class ToDoOverviewViewController: UIViewController {
     
     var userAuthenticated = false
     
-    /// Layer delegate.
-    
-    func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        return NSNull()
-    }
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {

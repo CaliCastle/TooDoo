@@ -54,8 +54,6 @@
 /*
  Setup Welcome View Controller.
  */
-"setup.no-photo-access.title" = "无相册权限";
-"setup.no-photo-access.description" = "本应用未获得照片的读写权限, 请在系统设置的 '隐私' > '照片' 中开启";
 "setup.complete.skipped" = "开始使用TooDoo吧";
 "setup.complete.custom.title" = "照片不错！";
 "setup.complete.custom.message" = "别担心，我会捍卫你的隐私!";
@@ -91,8 +89,6 @@
 "todo-table.repeat" = "重复事项";
 "todo-table.select-due-time" = "设置截止时间";
 "todo-table.select-reminder" = "设置提醒时间";
-"todo-table.no-notifications-access.title" = "提醒通知已关闭";
-"todo-table.no-notifications-access.description" = "本应用未获得通知权限，请在 系统设置 中开启";
 "todo-table.add-todo" = "添加待办";
 "todo-table.edit-todo" = "编辑待办";
 "todo-table.select-category" = "选择所属分类";
@@ -140,6 +136,14 @@
  Permission
  */
 "permission.authentication.reason" = "为了保护隐私与未来解锁本应用";
+"permission.no-photo-access.title" = "无相册权限";
+"permission.no-photo-access.description" = "本应用未获得照片的读写权限, 请在系统设置的 '隐私' > '照片' 中开启";
+"permission.no-notifications-access.title" = "提醒通知已关闭";
+"permission.no-notifications-access.description" = "本应用未获得提醒通知权限，请在 系统设置 中开启";
+"permission.no-calendars-access.title" = " 无日历权限";
+"permission.no-calendars-access.description" = "本应用未获得日历权限, 请在 系统设置 中开启";
+"permission.no-reminders-access.title" = "无提醒事项权限";
+"permission.no-reminders-access.description" = "本应用未获得提醒事项权限, 请在 系统设置 中开启";
 
 /*
  Menu
@@ -164,6 +168,7 @@
 "settings.titles.general" = "总设置";
 "settings.titles.general.language" = "语言";
 "settings.titles.notifications" = "通知提醒";
+"settings.titles.calendars" = "日历";
 
 // Setting headers
 "settings.headers.general" = "通用";
@@ -172,12 +177,17 @@
 
 // Setting Notifications
 "settings.notifications.footer" = "使用 @ 来代替类别名称。(比如： 一个在'工作'类别里的待办事项, '你有一个@的待办事项' 会显示成 '你有一个工作的待办事项')";
-"settings.notifications.header" = "开启/关闭通知提醒, 请前往系统设置中修改";
+"settings.notifications.header" = "若想开启/关闭通知提醒, 请前往系统设置中修改";
 "Fxl-qE-KWK.text" = "开启通知提醒";
 "dUh-Si-LBV.text" = "通知标题:";
 "PSE-Nm-hRW.placeholder" = "✎ 输入自定义标题";
 "bWR-5i-ucd.text" = "刚刚";
 "83Q-F0-iKd.text" = "前往系统设置";
+
+// Setting Calendars
+"settings.calendars.footer" = "若想开启/关闭日历与提醒事项同步, 请前往系统设置中修改";
+"settings.calendars.sync-calendars" = "同步日历";
+"settings.calendars.sync-reminders" = "同步提醒事项";
 
 /*
  Category icons categories
