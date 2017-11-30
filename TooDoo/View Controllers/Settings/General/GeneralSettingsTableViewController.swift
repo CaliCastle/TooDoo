@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 
 class GeneralSettingsTableViewController: SettingTableViewController {
 
@@ -47,4 +48,10 @@ class GeneralSettingsTableViewController: SettingTableViewController {
         return cellLabels
     }
     
+    /// Select a row.
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Generate haptic feedback
+        Haptic.selection.generate()
+    }
 }

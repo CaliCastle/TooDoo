@@ -9,18 +9,19 @@
 import UIKit
 import Hokusai
 import Haptica
+import BulletinBoard
 
 final class AlertManager {
     
     /// Show caregory deletion alert.
     
-    class func showCategoryDeleteAlert(in controller: FCAlertViewDelegate, title: String) {
+    open class func showCategoryDeleteAlert(in controller: FCAlertViewDelegate, title: String) {
         showAlert(in: controller, title: title, subtitle: "alert.delete-category".localized, doneButtonTitle: "Delete".localized, buttons: ["Nope".localized])
     }
     
     /// Show general alert.
     
-    class func showAlert(_ type: FCAlertType = .caution, in controller: FCAlertViewDelegate, title: String, subtitle: String, doneButtonTitle: String, buttons: [String]) {
+    open class func showAlert(_ type: FCAlertType = .caution, in controller: FCAlertViewDelegate, title: String, subtitle: String, doneButtonTitle: String, buttons: [String]) {
         // Generate haptic feedback
         if type == .caution || type == .warning {
             Haptic.notification(.warning).generate()
@@ -45,7 +46,7 @@ final class AlertManager {
     
     /// Get action sheet.
     
-    class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
+    open class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
         // Show action sheet
         let actionSheet = Hokusai(headline: headline)
         
@@ -61,5 +62,129 @@ final class AlertManager {
         actionSheet.cancelButtonTitle = cancelButtonTitle.localized
         
         return actionSheet
+    }
+    
+    /// Configure photo access bulletin manager.
+    
+    open class func photoAccessBulletinManager() -> BulletinManager {
+        let rootItem = FeedbackPageBulletinItem(title: "setup.no-photo-access.title".localized)
+        rootItem.image = #imageLiteral(resourceName: "no-photo-access")
+        rootItem.descriptionText = "setup.no-photo-access.description".localized
+        rootItem.actionButtonTitle = "Give access".localized
+        rootItem.alternativeButtonTitle = "Not now".localized
+        
+        rootItem.shouldCompactDescriptionText = true
+        rootItem.isDismissable = true
+        
+        // Take user to the settings page
+        rootItem.actionHandler = { item in
+            DispatchManager.main.openSystemSettings()
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        rootItem.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return BulletinManager(rootItem: rootItem)
+    }
+    
+    /// Configure notification access bulletin manager.
+    
+    open class func notificationAccessBulletinManager() -> BulletinManager {
+        let rootItem = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        rootItem.image = #imageLiteral(resourceName: "no-notification-access")
+        rootItem.descriptionText = "todo-table.no-notifications-access.description".localized
+        rootItem.actionButtonTitle = "Give access".localized
+        rootItem.alternativeButtonTitle = "Not now".localized
+        
+        rootItem.shouldCompactDescriptionText = true
+        rootItem.isDismissable = true
+        
+        // Take user to the settings page
+        rootItem.actionHandler = { item in
+            DispatchManager.main.openSystemSettings()
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        rootItem.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return BulletinManager(rootItem: rootItem)
+    }
+    
+    /// Get calendars and reminders access bulletin manager.
+    ///
+    /// - Returns: The bulletin manager to be displayed
+    
+    open class func calendarsAndRemindersAccessBulletinManager() -> BulletinManager {
+        let rootItem = makeCalendarsAccessPage()
+        rootItem.nextItem = makeRemindersAccessPage()
+        
+        return BulletinManager(rootItem: rootItem)
+    }
+    
+    /// Make calendars permission page.
+    ///
+    /// - Returns: The bulletin item
+    
+    open class func makeCalendarsAccessPage() -> PageBulletinItem {
+        let item = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        item.image = #imageLiteral(resourceName: "calendar-access")
+        item.descriptionText = "todo-table.no-notifications-access.description".localized
+        item.interfaceFactory.actionButtonTitleColor = .flatRed()
+        item.actionButtonTitle = "Give access".localized
+        item.alternativeButtonTitle = "Not now".localized
+        
+        item.shouldCompactDescriptionText = true
+        item.isDismissable = true
+        
+        // Prompt calendars permission
+        item.actionHandler = { item in
+            
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        item.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return item
+    }
+    
+    /// Make reminders permission page.
+    ///
+    /// - Returns: The bulletin item
+    
+    open class func makeRemindersAccessPage() -> PageBulletinItem {
+        let item = FeedbackPageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
+        item.image = #imageLiteral(resourceName: "reminder-access")
+        item.descriptionText = "todo-table.no-notifications-access.description".localized
+        item.actionButtonTitle = "Give access".localized
+        item.alternativeButtonTitle = "Not now".localized
+        
+        item.shouldCompactDescriptionText = true
+        item.isDismissable = true
+        
+        // Prompt reminders permission
+        item.actionHandler = { item in
+            
+            
+            item.manager?.dismissBulletin()
+        }
+        
+        // Dismiss bulletin
+        item.alternativeHandler = { item in
+            item.manager?.dismissBulletin()
+        }
+        
+        return item
     }
 }

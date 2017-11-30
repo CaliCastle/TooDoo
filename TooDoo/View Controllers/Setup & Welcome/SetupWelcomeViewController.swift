@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Photos
 import Haptica
 import CoreData
 import BulletinBoard
@@ -108,32 +107,7 @@ class SetupWelcomeViewController: UIViewController {
     /// The bulletin manager that manages page bulletin items.
     
     lazy var bulletinManager: BulletinManager = {
-        let rootItem = PageBulletinItem(title: "setup.no-photo-access.title".localized)
-        rootItem.image = #imageLiteral(resourceName: "no-photo-access")
-        rootItem.descriptionText = "setup.no-photo-access.description".localized
-        rootItem.actionButtonTitle = "Give access".localized
-        rootItem.alternativeButtonTitle = "Not now".localized
-        
-        rootItem.shouldCompactDescriptionText = true
-        rootItem.isDismissable = true
-        
-        // Take user to the settings page
-        rootItem.actionHandler = { item in
-            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
-            
-            if UIApplication.shared.canOpenURL(openSettingsURL) {
-                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
-            }
-            
-            item.manager?.dismissBulletin()
-        }
-        
-        // Dismiss bulletin
-        rootItem.alternativeHandler = { item in
-            item.manager?.dismissBulletin()
-        }
-        
-        return BulletinManager(rootItem: rootItem)
+        return AlertManager.photoAccessBulletinManager()
     }()
     
     // MARK: - View Life Cycle
@@ -341,28 +315,8 @@ class SetupWelcomeViewController: UIViewController {
         SoundManager.play(soundEffect: .Click)
         
         // Check for access authorization
-        PHPhotoLibrary.requestAuthorization { (status) in
-            switch status {
-                
-            case .authorized:
-                // Access is granted by user.
-                DispatchQueue.main.async() {
-                    // Generate haptic feedback
-                    Haptic.impact(.medium).generate()
-                    
-                    // Present image picker
-                    self.present(self.imagePickerController, animated: true, completion: nil)
-                }
-                break
-                
-            case .notDetermined:
-                // It is not determined until now.
-                fallthrough
-            case .restricted:
-                // User do not have access to photo album.
-                fallthrough
-            case .denied:
-                // User has denied the permission.
+        PermissionManager.default.requestPhotoAccess {
+            guard $0 else {
                 DispatchQueue.main.async() {
                     // Generate haptic feedback
                     Haptic.notification(.warning).generate()
@@ -371,7 +325,17 @@ class SetupWelcomeViewController: UIViewController {
                     self.bulletinManager.prepare()
                     self.bulletinManager.presentBulletin(above: self)
                 }
-                break
+                
+                return
+            }
+            
+            // Access is granted by user.
+            DispatchQueue.main.async() {
+                // Generate haptic feedback
+                Haptic.impact(.medium).generate()
+                
+                // Present image picker
+                self.present(self.imagePickerController, animated: true, completion: nil)
             }
         }
     }

@@ -57,6 +57,7 @@ class SettingsTableViewController: SettingTableViewController {
         motionEffectsLabel.text = "settings.motion-effects".localized
         setVersionText()
         setupAuthenticationProperties()
+        configureIconImages()
     }
     
     /// Configure icon image views.
@@ -111,10 +112,12 @@ class SettingsTableViewController: SettingTableViewController {
                 case .faceID:
                     // Supports Face ID
                     authenticationIconImageView.image = #imageLiteral(resourceName: "face-id-icon")
+                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
                     authenticationLabel.text = "Face ID".localized
                 case .none:
                     // No biometric type
                     authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
+                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
                     authenticationLabel.text = "Passcode".localized
                 default:
                     // Touch ID

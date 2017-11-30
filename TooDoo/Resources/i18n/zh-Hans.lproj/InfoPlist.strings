@@ -14,3 +14,9 @@ NSPhotoLibraryUsageDescription = "图片选择功能需要相册访问权限";
 
 /* Face ID Usage Description */
 NSFaceIDUsageDescription = "为了保护隐私与未来解锁本应用";
+
+/* Calendar Usage Description */
+NSCalendarsUsageDescription = "需要日历权限来读取写入待办事项";
+
+/* Reminder Usage Description */
+NSRemindersUsageDescription = "需要提醒事项权限来读取写入待办事项";

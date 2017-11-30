@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 
 class LanguageSettingsTableViewController: UITableViewController {
 
@@ -58,6 +59,9 @@ class LanguageSettingsTableViewController: UITableViewController {
     /// Select a language.
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Generate haptic feedback
+        Haptic.notification(.success).generate()
+        
         LocaleManager.default.changeLocale(to: languages[indexPath.row])
         
         let _ = navigationController?.popViewController(animated: true)

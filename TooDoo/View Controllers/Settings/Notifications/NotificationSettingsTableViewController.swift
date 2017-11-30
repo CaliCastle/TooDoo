@@ -9,7 +9,6 @@
 import UIKit
 import ViewAnimator
 import BulletinBoard
-import UserNotifications
 
 class NotificationSettingsTableViewController: SettingTableViewController {
 
@@ -57,32 +56,7 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     /// Bulletin manager.
     
     lazy var bulletinManager: BulletinManager = {
-        let rootItem = PageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
-        rootItem.image = #imageLiteral(resourceName: "no-notification-access")
-        rootItem.descriptionText = "todo-table.no-notifications-access.description".localized
-        rootItem.actionButtonTitle = "Give access".localized
-        rootItem.alternativeButtonTitle = "Not now".localized
-        
-        rootItem.shouldCompactDescriptionText = true
-        rootItem.isDismissable = true
-        
-        // Take user to the settings page
-        rootItem.actionHandler = { item in
-            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
-            
-            if UIApplication.shared.canOpenURL(openSettingsURL) {
-                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
-            }
-            
-            item.manager?.dismissBulletin()
-        }
-        
-        // Dismiss bulletin
-        rootItem.alternativeHandler = { item in
-            item.manager?.dismissBulletin()
-        }
-        
-        return BulletinManager(rootItem: rootItem)
+        return AlertManager.notificationAccessBulletinManager()
     }()
     
     // MARK: - View Life Cycle.
@@ -162,21 +136,11 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     /// Check for notification permission.
     
     private func checkNotificationPermission() {
-        let center = UNUserNotificationCenter.current()
-        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
-        
-        center.getNotificationSettings {
-            switch $0.authorizationStatus {
-            case .authorized:
+        PermissionManager.default.requestNotificationsAccess {
+            if $0 {
                 self.hasNotificationPermission()
-            default:
-                center.requestAuthorization(options: options) { (granted, error) in
-                    if !granted {
-                        self.noNotificationPermission()
-                    } else {
-                        self.hasNotificationPermission()
-                    }
-                }
+            } else {
+                self.noNotificationPermission()
             }
         }
     }

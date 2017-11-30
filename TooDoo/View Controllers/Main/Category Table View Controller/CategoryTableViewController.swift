@@ -129,7 +129,6 @@ class CategoryTableViewController: UITableViewController, LocalizableInterface, 
         super.viewDidLoad()
 
         localizeInterface()
-        modalPresentationCapturesStatusBarAppearance = true
         
         setupViews()
         configureColors()

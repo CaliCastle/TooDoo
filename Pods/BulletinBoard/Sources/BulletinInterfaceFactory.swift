@@ -68,7 +68,7 @@ public class BulletinInterfaceFactory {
         titleLabel.adjustsFontSizeToFitWidth = true
 
 //        titleLabel.font = UIFont.systemFont(ofSize: titleFontSize, weight: UIFontWeightMedium)
-        titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: titleFontSize)
+        titleLabel.font = UIFont(name: "AvenirNext-Medium", size: titleFontSize)
         titleLabel.text = title
 
         return titleLabel

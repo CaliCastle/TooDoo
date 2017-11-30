@@ -21,9 +21,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>18</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow access to store to-do into Calendars</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow access to store to-do into Reminders</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Authenticate for unlocking app under privacy protection</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -79,9 +79,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         Haptic.impact(.medium).generate()
         
         // Dismiss and update status bar
-        navigationController?.dismiss(animated: true, completion: {
-            NotificationManager.send(notification: .UpdateStatusBar)
-        })
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     /// Light status bar.

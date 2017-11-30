@@ -14,3 +14,9 @@ NSPhotoLibraryUsageDescription = "Allow access for photo selection use";
 
 /* Face ID Usage Description */
 NSFaceIDUsageDescription = "Authenticate for unlocking app under privacy protection";
+
+/* Calendars Usage Description */
+NSCalendarsUsageDescription = "Allow access to store to-do into Calendars";
+
+/* Reminders Usage Description */
+NSRemindersUsageDescription = "Allow access to store to-do into Reminders";

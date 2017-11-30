@@ -129,6 +129,16 @@ final class DispatchManager {
         NotificationManager.listen(self, do: #selector(setRedirectTo(_:)), notification: .UserAuthenticationRedirect, object: nil)
     }
     
+    /// Open app's system settings.
+    
+    public func openSystemSettings() {
+        guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
+        
+        if UIApplication.shared.canOpenURL(openSettingsURL) {
+            UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
+        }
+    }
+    
     /// Inaccessible initialization.
     
     private init() {}

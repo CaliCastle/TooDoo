@@ -47,6 +47,14 @@ extension UINavigationController {
         return statusBarStyle
     }
     
+    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag, completion: completion)
+        
+        DispatchQueue.main.async {
+            NotificationManager.send(notification: .UpdateStatusBar)
+        }
+    }
+    
 }
 
 extension UIImagePickerController {

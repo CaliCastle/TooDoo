@@ -151,6 +151,7 @@ class ToDoOverviewViewController: UIViewController {
         // 1 minute timer
         let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
             self.saveData()
+            self.setupTimeLabel()
         })
         
         return timer
@@ -549,7 +550,10 @@ class ToDoOverviewViewController: UIViewController {
     /// Update the status bar
     
     @objc fileprivate func updateStatusBar() {
-        setNeedsStatusBarAppearanceUpdate()
+        // Delay update status bar style
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     /// Set motion effects to views.

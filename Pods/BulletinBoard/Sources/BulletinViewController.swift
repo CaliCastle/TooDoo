@@ -72,7 +72,7 @@ final class BulletinViewController: UIViewController, UIGestureRecognizerDelegat
 
         // Content View
 
-        contentView.layer.cornerRadius = 12
+        contentView.layer.cornerRadius = 20
 
         leadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor, constant: 12)
         trailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -12)

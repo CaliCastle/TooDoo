@@ -13,7 +13,6 @@ import ViewAnimator
 import BulletinBoard
 import DateTimePicker
 import DeckTransition
-import UserNotifications
 
 class ToDoTableViewController: UITableViewController, LocalizableInterface {
 
@@ -134,32 +133,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     /// Bulletin manager.
     
     lazy var bulletinManager: BulletinManager = {
-        let rootItem = PageBulletinItem(title: "todo-table.no-notifications-access.title".localized)
-        rootItem.image = #imageLiteral(resourceName: "no-notification-access")
-        rootItem.descriptionText = "todo-table.no-notifications-access.description".localized
-        rootItem.actionButtonTitle = "Give access".localized
-        rootItem.alternativeButtonTitle = "Not now".localized
-        
-        rootItem.shouldCompactDescriptionText = true
-        rootItem.isDismissable = true
-        
-        // Take user to the settings page
-        rootItem.actionHandler = { item in
-            guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
-            
-            if UIApplication.shared.canOpenURL(openSettingsURL) {
-                UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
-            }
-            
-            item.manager?.dismissBulletin()
-        }
-        
-        // Dismiss bulletin
-        rootItem.alternativeHandler = { item in
-            item.manager?.dismissBulletin()
-        }
-        
-        return BulletinManager(rootItem: rootItem)
+        return AlertManager.notificationAccessBulletinManager()
     }()
     
     // MARK: - View Life Cycle.
@@ -249,6 +223,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
             label.textColor = color.lighten(byPercentage: 0.17)
         }
         dueTimeLabel.textColor = color
+        reminderLabel.textColor = color
         
         categoryGradientBackgroundView.startColor = currentThemeIsDark() ? .gray : .white
         categoryGradientBackgroundView.endColor = currentThemeIsDark() ? .gray : .white
@@ -509,19 +484,9 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     /// Check for notification permission.
     
     private func checkNotificationPermission() {
-        let center = UNUserNotificationCenter.current()
-        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
-        
-        center.getNotificationSettings {
-            switch $0.authorizationStatus {
-            case .authorized:
-                return
-            default:
-                center.requestAuthorization(options: options) { (granted, error) in
-                    if !granted {
-                        self.noNotificationPermission()
-                    }
-                }
+        PermissionManager.default.requestNotificationsAccess {
+            if !$0 {
+                self.noNotificationPermission()
             }
         }
     }
