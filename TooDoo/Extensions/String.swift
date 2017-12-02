@@ -24,7 +24,7 @@ extension String {
     
     /// Localized with plural.
     
-    func localizedPlural(_ variable: Int) -> String {
+    func localizedPlural(_ variable: CVarArg) -> String {
         return String(format: self.localized, variable)
     }
     
