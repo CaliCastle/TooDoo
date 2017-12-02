@@ -318,6 +318,8 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         guard validateUserInput(text: goalTextField.text!) else { return }
         // If longer than length limit
         guard validateGoalLength(text: goalTextField.text!) else { return }
+        // If no category selected, show alert
+        guard validateCategory() else { return }
         
         tableView.endEditing(true)
         
@@ -340,20 +342,16 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
             // Add created at date
             todo.createdAt = Date()
         }
-        
         // Set its category
         if let category = category {
             category.addToTodos(todo)
         }
-        
         // Set due date
         if let due = dueDate {
             todo.due = due
         }
-        
         // Set reminder
         todo.setReminder(remindDate)
-        
         todo.created()
         
         // Generate haptic feedback and play sound
@@ -381,6 +379,19 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= Category.goalMaxLimit() else {
             NotificationManager.showBanner(title: "notification.goal-limit-maxed".localized.replacingOccurrences(of: "%d", with: "\(Category.goalMaxLimit())"), type: .danger)
             goalTextField.becomeFirstResponder()
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    /// When user didn't select a category.
+    
+    private func validateCategory() -> Bool {
+        guard let _ = category else {
+            NotificationManager.showBanner(title: "notification.no-selected-category".localized, type: .warning)
+            performSegue(withIdentifier: Segue.SelectCategory.rawValue, sender: nil)
             
             return false
         }

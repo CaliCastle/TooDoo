@@ -49,6 +49,7 @@
 "notification.empty-goal" = "待办事项不能为空";
 "notification.empty-name" = "名字不能为空";
 "notification.goal-limit-maxed" = "待办事项不能超过%d个字符";
+"notification.no-selected-category" = "必须选择一个分类";
 "notification.name-exists" = "名字已存在";
 
 /*
@@ -186,8 +187,8 @@
 
 // Setting Calendars
 "settings.calendars.footer" = "若想开启/关闭日历与提醒事项同步, 请前往系统设置中修改";
-"settings.calendars.sync-calendars" = "同步日历";
-"settings.calendars.sync-reminders" = "同步提醒事项";
+"settings.calendars.sync-calendars" = "同步到日历";
+"settings.calendars.sync-reminders" = "同步到提醒事项";
 
 /*
  Category icons categories

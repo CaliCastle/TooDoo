@@ -25,6 +25,22 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
     
     // MARK: - Properties.
     
+    /// Has Calendars access.
+    
+    var hasCalendarsAccess: Bool = false {
+        didSet {
+            calendarSwitch.isEnabled = hasCalendarsAccess
+        }
+    }
+    
+    /// Has Reminders access.
+    
+    var hasRemindersAccess: Bool = false {
+        didSet {
+            reminderSwitch.isEnabled = hasRemindersAccess
+        }
+    }
+    
     /// Calendars bulletin.
     
     lazy var bulletinManagerForCalendars: BulletinManager = {
@@ -42,6 +58,7 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureSwitches()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,13 +78,20 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
         goToSystemSettingsLabel.text = "83Q-F0-iKd.text".localized
     }
     
+    /// Configure switches.
+    
+    fileprivate func configureSwitches() {
+        calendarSwitch.setOn(UserDefaultManager.bool(forKey: .SettingCalendarsSync), animated: true)
+        reminderSwitch.setOn(UserDefaultManager.bool(forKey: .SettingRemindersSync), animated: true)
+    }
+    
     /// Check permissions.
     
     fileprivate func checkPermissions() {
         // Request calendars access
         PermissionManager.default.requestCalendarsAccess { (hasCalendarsAccess) in
             DispatchQueue.main.async {
-                self.calendarSwitch.setOn(hasCalendarsAccess, animated: false)
+                self.hasCalendarsAccess = hasCalendarsAccess
                 
                 if !hasCalendarsAccess {
                     self.bulletinManagerForCalendars.prepare()
@@ -77,7 +101,7 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
             
             PermissionManager.default.requestRemindersAccess { (hasRemindersAccess) in
                 DispatchQueue.main.async {
-                    self.reminderSwitch.setOn(hasRemindersAccess, animated: false)
+                    self.hasRemindersAccess = hasRemindersAccess
                     
                     if !hasRemindersAccess {
                         self.bulletinManagerForReminders.prepare()
@@ -94,6 +118,24 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
         super.setupTableView()
         
         
+    }
+    
+    /// Calendar sync changed.
+    
+    @IBAction func calendarSyncChanged(_ sender: UISwitch) {
+        guard sender.isEnabled else { return }
+        
+        // Set user defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .SettingCalendarsSync)
+    }
+    
+    /// Reminders sync changed.
+    
+    @IBAction func reminderSyncChanged(_ sender: UISwitch) {
+        guard sender.isEnabled else { return }
+        
+        // Set user defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .SettingRemindersSync)
     }
     
     /// Footer titles.

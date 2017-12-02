@@ -14,6 +14,50 @@ extension ToDo {
     /// Created to-do.
     
     func created() {
+        // Create events if enabled
+        createToEvents()
+        // Create reminders if enabled
+        createToReminders()
+    }
+    
+    /// Create to events with EventKit.
+    
+    func createToEvents() {
+        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync) else { return }
+        
+        let eventStore = EKEventStore()
+        let event = EKEvent(eventStore: eventStore)
+        
+        if let calendar = eventStore.defaultCalendarForNewEvents {
+            event.calendar = calendar
+            event.title = goal!
+            event.notes = note
+            
+            if let due = due {
+                event.startDate = due
+                event.endDate = due
+            } else {
+                event.startDate = Date()
+                event.endDate = Date()
+                event.isAllDay = true
+            }
+            
+            do {
+                try eventStore.save(event, span: .thisEvent, commit: true)
+                // Save event identifier
+                eventIdentifier = event.eventIdentifier
+            } catch {
+                print("Error trying to save EKEvent")
+                print("\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Create to reminders with EventKit.
+    
+    func createToReminders() {
+        guard UserDefaultManager.bool(forKey: .SettingRemindersSync) else { return }
+        
         let eventStore = EKEventStore()
         let reminder = EKReminder(eventStore: eventStore)
         
@@ -29,6 +73,8 @@ extension ToDo {
             
             do {
                 try eventStore.save(reminder, commit: true)
+                // Save reminder identifier
+                reminderIdentifier = reminder.calendarItemIdentifier
             } catch {
                 print("Error trying to save EKReminder")
                 print("\(error.localizedDescription)")
@@ -47,6 +93,8 @@ extension ToDo {
             DispatchQueue.main.async {
                 if self.completed {
                     NotificationManager.removeTodoReminderNotification(for: self)
+                    // Remove from events
+                    self.removeFromEvents()
                 } else {
                     NotificationManager.registerTodoReminderNotification(for: self)
                 }
@@ -64,8 +112,48 @@ extension ToDo {
     
     func moveToTrash() {
         movedToTrashAt = Date()
+        // Remove from events
+        removeFromEvents()
+        // Remove from reminders
+        removeFromReminders()
         // Remove from notifications
         NotificationManager.removeTodoReminderNotification(for: self)
+    }
+    
+    /// Remove from events.
+    
+    func removeFromEvents() {
+        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync), let identifier = eventIdentifier else { return }
+        
+        let eventStore = EKEventStore()
+        let event = eventStore.event(withIdentifier: identifier)
+        
+        if let event = event {
+            do {
+                try eventStore.remove(event, span: .thisEvent, commit: true)
+            } catch {
+                print("Error trying to remove a EKEvent")
+                print("\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Remove from reminders.
+    
+    func removeFromReminders() {
+        guard UserDefaultManager.bool(forKey: .SettingRemindersSync), let identifier = reminderIdentifier else { return }
+        
+        let eventStore = EKEventStore()
+        let reminder = eventStore.calendarItem(withIdentifier: identifier)
+        
+        if let reminder = reminder as? EKReminder {
+            do {
+                try eventStore.remove(reminder, commit: true)
+            } catch {
+                print("Error trying to remove a EKEvent")
+                print("\(error.localizedDescription)")
+            }
+        }
     }
     
     /// Set reminder date.

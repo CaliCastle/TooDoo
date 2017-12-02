@@ -49,6 +49,7 @@
 "notification.empty-goal" = "Goal cannot be empty";
 "notification.empty-name" = "Name cannot be empty";
 "notification.goal-limit-maxed" = "Goal cannot be longer than %d characters";
+"notification.no-selected-category" = "You must select a category first";
 "notification.name-exists" = "Name already exists";
 
 /*
@@ -187,8 +188,8 @@
 
 // Setting Calendars
 "settings.calendars.footer" = "To enable/disable Calenders and Reminders, go to system Settings";
-"settings.calendars.sync-calendars" = "Sync Calendars";
-"settings.calendars.sync-reminders" = "Sync Reminders";
+"settings.calendars.sync-calendars" = "Sync to Calendars";
+"settings.calendars.sync-reminders" = "Sync to Reminders";
 
 /*
  Category icons categories

@@ -23,6 +23,8 @@ final class UserDefaultManager {
     /// - SettingMotionEffects: The motion effect animation
     /// - SettingNotificationMessage: The custom notification message
     /// - SettingLanguage: The language locale
+    /// - SettingCalendarsSync: Sync to calendars setting
+    /// - SettingRemindersSync: Sync to reminders setting
     
     enum Key: String {
         case UserName = "user-name"
@@ -34,10 +36,10 @@ final class UserDefaultManager {
         case SettingAuthentication = "setting-authentication"
         case SettingThemeMode = "setting-theme-mode"
         case SettingMotionEffects = "setting-motion-effects"
-        
         case SettingNotificationMessage = "setting-notification-message"
-        
         case SettingLanguage = "setting-language"
+        case SettingCalendarsSync = "setting-calendars-sync"
+        case SettingRemindersSync = "setting-reminders-sync"
     }
     
     static let userDefaults = UserDefaults.standard
@@ -83,11 +85,19 @@ final class UserDefaultManager {
     
     /// Get value for key
     ///
-    /// - Parameter key: The unique user default key
+    /// - Parameters:
+    ///   - key: The unique user default key
+    ///   - default: Default value
     /// - Returns: The value
     
-    class func get(forKey key: Key) -> Any? {
-        return userDefaults.value(forKey: key.rawValue)
+    class func get(forKey key: Key, _ default: Any? = nil) -> Any? {
+        let value = userDefaults.value(forKey: key.rawValue)
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return value
     }
     
     /// Get integer for key
