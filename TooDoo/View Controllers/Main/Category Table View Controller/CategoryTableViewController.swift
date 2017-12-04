@@ -12,14 +12,6 @@ import CoreData
 import ViewAnimator
 import DeckTransition
 
-protocol CategoryTableViewControllerDelegate {
-    
-    func validateCategory(_ category: Category?, with name: String) -> Bool
-    
-    func deleteCategory(_ category: Category)
-    
-}
-
 class CategoryTableViewController: UITableViewController, LocalizableInterface, CALayerDelegate {
 
     /// Category collection type.

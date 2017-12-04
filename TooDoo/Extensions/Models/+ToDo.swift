@@ -11,6 +11,14 @@ import EventKit
 
 extension ToDo {
     
+    /// The max length limit for goal string.
+    ///
+    /// - Returns: The max characters limit in integer
+    
+    open class func goalMaxLimit() -> Int {
+        return 70
+    }
+    
     /// Created to-do.
     
     func created() {

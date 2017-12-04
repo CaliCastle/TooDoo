@@ -59,6 +59,7 @@
 		8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC8F851FB041F4006207F6 /* CornerRadiusView.swift */; };
 		8DB277F81FD5D93A00EB774B /* NavigationBarAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB277F71FD5D93A00EB774B /* NavigationBarAnimatable.swift */; };
 		8DB277FA1FD5DA4600EB774B /* LocalizableInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB277F91FD5DA4600EB774B /* LocalizableInterface.swift */; };
+		8DB277FD1FD60A8700EB774B /* CategoryTableViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB277FC1FD60A8700EB774B /* CategoryTableViewControllerDelegate.swift */; };
 		8DB49E561FB8D859003240E1 /* alert-round.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E4E1FB8D859003240E1 /* alert-round.png */; };
 		8DB49E571FB8D859003240E1 /* close-round.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E4F1FB8D859003240E1 /* close-round.png */; };
 		8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB49E501FB8D859003240E1 /* FCAlertView.swift */; };
@@ -164,6 +165,7 @@
 		8DAC8F851FB041F4006207F6 /* CornerRadiusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusView.swift; sourceTree = "<group>"; };
 		8DB277F71FD5D93A00EB774B /* NavigationBarAnimatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarAnimatable.swift; sourceTree = "<group>"; };
 		8DB277F91FD5DA4600EB774B /* LocalizableInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableInterface.swift; sourceTree = "<group>"; };
+		8DB277FC1FD60A8700EB774B /* CategoryTableViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewControllerDelegate.swift; sourceTree = "<group>"; };
 		8DB49E4E1FB8D859003240E1 /* alert-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert-round.png"; sourceTree = "<group>"; };
 		8DB49E4F1FB8D859003240E1 /* close-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close-round.png"; sourceTree = "<group>"; };
 		8DB49E501FB8D859003240E1 /* FCAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCAlertView.swift; sourceTree = "<group>"; };
@@ -509,10 +511,19 @@
 		8DB277F61FD5D92100EB774B /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				8DB277FB1FD60A7D00EB774B /* View Controllers */,
 				8DB277F71FD5D93A00EB774B /* NavigationBarAnimatable.swift */,
 				8DB277F91FD5DA4600EB774B /* LocalizableInterface.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8DB277FB1FD60A7D00EB774B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8DB277FC1FD60A8700EB774B /* CategoryTableViewControllerDelegate.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		8DB49E4D1FB8D859003240E1 /* FCAlertView */ = {
@@ -922,6 +933,7 @@
 				8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */,
 				8DCBEA611FB2E69D00AD34D9 /* +UINavigationController.swift in Sources */,
 				8DAC562D1FC0C61900F6956F /* SelectCategoryTableViewCell.swift in Sources */,
+				8DB277FD1FD60A8700EB774B /* CategoryTableViewControllerDelegate.swift in Sources */,
 				8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */,
 				8DB49E5C1FB8D859003240E1 /* FCAlertViewDelegate.swift in Sources */,
 				8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */,

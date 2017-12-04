@@ -244,13 +244,21 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     /// Configure category related views.
     
     fileprivate func configureCategoryViews() {
-        guard let category = category else {
-            categoryNameLabel.text = "todo-table.select-category".localized
-            categoryIconImageView.tintColor = .white
+        // If no category selected
+        if self.category == nil {
+            // Select default category
+            self.category = Category.default()
             
-            return
+            // No categories at all
+            guard let _ = self.category else {
+                categoryNameLabel.text = "todo-table.select-category".localized
+                categoryIconImageView.tintColor = .white
+                
+                return
+            }
         }
-        
+       
+        let category = self.category!
         let categoryColor = category.categoryColor()
         // Set gradient colors
         categoryGradientBackgroundView.startColor = categoryColor.lighten(byPercentage: 0.1)
@@ -372,8 +380,8 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     /// Validate user input length.
     
     private func validateGoalLength(text: String) -> Bool {
-        guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= Category.goalMaxLimit() else {
-            NotificationManager.showBanner(title: "notification.goal-limit-maxed".localized.replacingOccurrences(of: "%d", with: "\(Category.goalMaxLimit())"), type: .danger)
+        guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= ToDo.goalMaxLimit() else {
+            NotificationManager.showBanner(title: "notification.goal-limit-maxed".localized.replacingOccurrences(of: "%d", with: "\(ToDo.goalMaxLimit())"), type: .danger)
             goalTextField.becomeFirstResponder()
             
             return false
@@ -520,7 +528,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         case Segue.SelectCategory.rawValue:
             guard let destination = segue.destination as? SelectCategoryTableViewController else { return }
             destination.selectedCategory = category
-//            destination.managedObjectContext = managedObjectContext
+
             destination.delegate = self
         default:
             break

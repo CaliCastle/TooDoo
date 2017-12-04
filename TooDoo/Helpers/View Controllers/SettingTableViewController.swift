@@ -41,7 +41,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
     
     /// Localize interface.
     
-    @objc internal func localizeInterface() {
+    @objc public func localizeInterface() {
         if let rightBarButton = navigationItem.rightBarButtonItem {
             rightBarButton.title = "Done".localized
             navigationItem.rightBarButtonItem = rightBarButton

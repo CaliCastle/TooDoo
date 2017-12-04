@@ -35,12 +35,29 @@ extension Category {
         workCategory.createdAt = Date()
     }
     
-    /// The max length limit for goal string.
+    /// Get default category.
     ///
-    /// - Returns: The max characters limit in integer
+    /// - Returns: The default category
     
-    open class func goalMaxLimit() -> Int {
-        return 70
+    class func `default`() -> Category? {
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        
+        fetchRequest.sortDescriptors = [Category.newestFirst()]
+        fetchRequest.fetchLimit = 1
+        
+        if let categories = try? CoreDataManager.main.persistentContainer.viewContext.fetch(fetchRequest) {
+            return categories.first
+        }
+        
+        return nil
+    }
+    
+    /// Newest first sort descriptor.
+    ///
+    /// - Returns: Sort descriptor for newest first
+    
+    class func newestFirst() -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(Category.order), ascending: true)
     }
     
     /// Get category color.
