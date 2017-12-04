@@ -8,12 +8,6 @@
 
 import Foundation
 
-protocol LocalizableInterface {
-    
-    func localizeInterface()
-    
-}
-
 final class LocaleManager {
     
     /// Locale manager singleton.

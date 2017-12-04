@@ -12,6 +12,10 @@ import CoreData
 
 final class CoreDataManager {
     
+    // MARK: - Singleton
+    
+    static let main = CoreDataManager()
+    
     // MARK: - Core Data Stack
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -25,7 +29,7 @@ final class CoreDataManager {
         return container
     }()
     
-    init() {
+    private init() {
         setupNotificationHandling()
     }
     

@@ -16,10 +16,6 @@ protocol ReorderCategoriesTableViewControllerDelegate {
 }
 
 class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
-
-    /// Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
     
     /// Fetched Results Controller.
     
@@ -31,7 +27,7 @@ class ReorderCategoriesTableViewController: UITableViewController, LocalizableIn
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -267,7 +263,7 @@ extension ReorderCategoriesTableViewController: FCAlertViewDelegate {
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
         guard let category = deletingCategory else { return }
         // Delete category from context
-        managedObjectContext!.delete(category)
+        managedObjectContext.delete(category)
         // Reset deleting category
         deletingCategory = nil
     }

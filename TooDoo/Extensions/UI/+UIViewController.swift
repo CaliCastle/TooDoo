@@ -1,5 +1,5 @@
 //
-//  UIViewController.swift
+//  +UIViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/10/17.
@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-protocol NavigationBarAnimatable {
-    func animateNavigationBar()
-}
+import CoreData
 
 extension UIViewController: NavigationBarAnimatable {
     
@@ -30,6 +27,12 @@ extension UIViewController: NavigationBarAnimatable {
 }
 
 extension UIViewController {
+    
+    /// Dependency Injection for Managed Object Context.
+    
+    open var managedObjectContext: NSManagedObjectContext {
+        return CoreDataManager.main.persistentContainer.viewContext
+    }
     
     /// Get status bar style based on appearnce.
     

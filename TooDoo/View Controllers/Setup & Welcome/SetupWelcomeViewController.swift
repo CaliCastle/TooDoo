@@ -54,10 +54,6 @@ class SetupWelcomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    /// Dependency Injection for Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// User attributes.
     
     var userName: String? {
@@ -363,13 +359,8 @@ class SetupWelcomeViewController: UIViewController {
         guard let identifier = segue.identifier else { return }
         
         if identifier == Segue.GetStarted.rawValue {
-            let destination = segue.destination as! UINavigationController
-            let mainController = destination.topViewController as! ToDoOverviewViewController
-            
-            mainController.managedObjectContext = managedObjectContext
-            
             // Create default category
-            Category.createDefault(context: managedObjectContext!)
+            Category.createDefault(context: managedObjectContext)
         }
     }
     

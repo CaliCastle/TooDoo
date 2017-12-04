@@ -50,10 +50,6 @@ class CategoryTableViewController: UITableViewController, LocalizableInterface, 
     
     var newCategoryOrder: Int16 = 0
     
-    /// Dependency Injection for Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// Default category colors.
     
     let categoryColors: [UIColor] = CategoryColor.default()
@@ -393,7 +389,7 @@ class CategoryTableViewController: UITableViewController, LocalizableInterface, 
     
     fileprivate func saveCategory() {
         // Retreive context
-        guard let context = managedObjectContext, let delegate = delegate else { return }
+        guard let delegate = delegate else { return }
         // Create or use current category
         let name = categoryNameTextField.text?.trimmingCharacters(in: .whitespaces)
         
@@ -403,7 +399,7 @@ class CategoryTableViewController: UITableViewController, LocalizableInterface, 
         }
         
         // Assign properties
-        let category = self.category ?? Category(context: context)
+        let category = self.category ?? Category(context: managedObjectContext)
         category.name = name
         category.color(categoryColors[selectedColorIndex.item])
         

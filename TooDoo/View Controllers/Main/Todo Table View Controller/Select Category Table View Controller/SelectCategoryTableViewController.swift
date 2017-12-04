@@ -19,10 +19,6 @@ class SelectCategoryTableViewController: UITableViewController {
     
     var selectedCategory: Category?
     
-    /// Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// Fetched results controller.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
@@ -33,7 +29,7 @@ class SelectCategoryTableViewController: UITableViewController {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "categories")
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "categories")
         
         return fetchedResultsController
     }()

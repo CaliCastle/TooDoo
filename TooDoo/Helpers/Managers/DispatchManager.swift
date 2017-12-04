@@ -58,7 +58,7 @@ final class DispatchManager {
     
     fileprivate func configureCoreDataManager() -> NSManagedObjectContext {
         // Instanstiate and listen for notifications
-        let coreDataManager = CoreDataManager()
+        let coreDataManager = CoreDataManager.main
         
         // Create new private context with concurrency
         return coreDataManager.persistentContainer.viewContext
@@ -68,13 +68,10 @@ final class DispatchManager {
     
     fileprivate func configureRootViewController(for application: UIApplication) {
         guard let appDelegate = application.delegate as? AppDelegate else { return }
-        let managedObjectContext = configureCoreDataManager()
         
         // Check to see if user has set up
         guard UserDefaultManager.userHasSetup() else {
             let welcomeViewController = StoryboardManager.initiateViewController(in: .Setup) as! SetupWelcomeViewController
-            
-            welcomeViewController.managedObjectContext = managedObjectContext
             
             appDelegate.window?.rootViewController = welcomeViewController
             
@@ -87,7 +84,6 @@ final class DispatchManager {
         guard let navigationController = StoryboardManager.main().instantiateInitialViewController() as? UINavigationController else { return }
         guard let rootViewController = navigationController.topViewController as? ToDoOverviewViewController else { return }
         
-        rootViewController.managedObjectContext = managedObjectContext
         navigationController.viewControllers = [rootViewController]
         
         appDelegate.window?.rootViewController = navigationController

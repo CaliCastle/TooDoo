@@ -88,10 +88,6 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     @IBOutlet var remindMeLabel: UILabel!
     @IBOutlet var repeatCellLabel: UILabel!
     
-    /// Dependency Injection for Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// Default date format.
     
     let dateFormat = "MMM dd, EEE hh:mm aa".localized
@@ -332,7 +328,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
 
     private func saveTodo() {
         // Create new todo
-        let todo = self.todo ?? ToDo(context: managedObjectContext!)
+        let todo = self.todo ?? ToDo(context: managedObjectContext)
         let goal = (goalTextField.text?.trimmingCharacters(in: .whitespaces))!
         // Configure attributes
         todo.goal = goal
@@ -524,7 +520,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         case Segue.SelectCategory.rawValue:
             guard let destination = segue.destination as? SelectCategoryTableViewController else { return }
             destination.selectedCategory = category
-            destination.managedObjectContext = managedObjectContext
+//            destination.managedObjectContext = managedObjectContext
             destination.delegate = self
         default:
             break

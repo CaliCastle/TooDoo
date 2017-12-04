@@ -62,10 +62,6 @@ class ToDoOverviewViewController: UIViewController {
         case Add
     }
     
-    /// Dependency Injection for Managed Object Context
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// Fetched results controller for categories fetching.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
@@ -76,7 +72,7 @@ class ToDoOverviewViewController: UIViewController {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "categories")
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "categories")
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -106,7 +102,7 @@ class ToDoOverviewViewController: UIViewController {
         fetchRequest.sortDescriptors = []
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: "todos")
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "todos")
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -435,11 +431,11 @@ class ToDoOverviewViewController: UIViewController {
     // MARK: - Handle Interface Builder Actions.
     
     @IBAction func navigationItemDidTap(_ sender: UIBarButtonItem) {
-        /// FIXME
         switch sender.tag {
         case NavigationItem.Add.rawValue:
             showAddNewItem()
         case NavigationItem.Search.rawValue:
+            /// FIXME
             print("Search!")
         default:
             showSideMenu()
@@ -578,8 +574,6 @@ class ToDoOverviewViewController: UIViewController {
             // About to show add/edit category
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! CategoryTableViewController
-            // Pass through managed object context
-            destinationViewController.managedObjectContext = managedObjectContext
             
             guard let categories = fetchedResultsController.fetchedObjects else { return }
             
@@ -594,15 +588,12 @@ class ToDoOverviewViewController: UIViewController {
             // About to show reorder categories
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ReorderCategoriesTableViewController
-            
-            destinationViewController.managedObjectContext = managedObjectContext
+
             destinationViewController.delegate = self
         case Segue.ShowTodo.rawValue:
             // About to show add/edit todo
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ToDoTableViewController
-            // Pass through managed object context
-            destinationViewController.managedObjectContext = managedObjectContext
             
             if let sender = sender, sender is ToDo {
                 destinationViewController.todo = sender as? ToDo
@@ -999,10 +990,8 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     /// Delete the category.
     
     func deleteCategory(_ category: Category) {
-        guard let context = managedObjectContext else { return }
-        
         // Delete from context
-        context.delete(category)
+        managedObjectContext.delete(category)
     }
     
     /// Show menu for todo.
