@@ -42,7 +42,7 @@ extension Category {
     class func `default`() -> Category? {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         
-        fetchRequest.sortDescriptors = [Category.newestFirst()]
+        fetchRequest.sortDescriptors = [Category.ordered()]
         fetchRequest.fetchLimit = 1
         
         if let categories = try? CoreDataManager.main.persistentContainer.viewContext.fetch(fetchRequest) {
@@ -56,7 +56,7 @@ extension Category {
     ///
     /// - Returns: Sort descriptor for newest first
     
-    class func newestFirst() -> NSSortDescriptor {
+    class func ordered() -> NSSortDescriptor {
         return NSSortDescriptor(key: #keyPath(Category.order), ascending: true)
     }
     

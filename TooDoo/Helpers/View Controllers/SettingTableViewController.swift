@@ -8,6 +8,7 @@
 
 import UIKit
 import Haptica
+import ViewAnimator
 
 open class SettingTableViewController: UITableViewController, LocalizableInterface {
     
@@ -21,14 +22,16 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         modalPresentationCapturesStatusBarAppearance = true
         
         configureRightNavigationButton()
-        
         setupTableView()
         
-        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+        // Fade in and move up cells
+        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 28)], animationInterval: 0.065)
+     
+        listen(for: .SettingLocaleChanged, then: #selector(localizeInterface))
     }
     
     deinit {
-        NotificationManager.remove(self, notification: .SettingLocaleChanged, object: nil)
+        NotificationManager.remove(self)
     }
     
     /// Configure the right bar button.

@@ -125,12 +125,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
         return swipeGestureRecognizer
     }()
     
-    /// Motion effect for collection cell.
-    
-    lazy var motionEffect: UIMotionEffect = {
-        return .twoAxesShift(strength: 25)
-    }()
-    
     /// Keyboard manager.
     
     let keyboard = Typist()
@@ -158,12 +152,10 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
         categoryNameLabel.addGestureRecognizer(tapGestureForName)
         categoryIconImageView.addGestureRecognizer(tapGestureForIcon)
         
-        setMotionEffect(nil)
         setShadowOpacity()
         
-        NotificationManager.listen(self, do: #selector(setMotionEffect(_:)), notification: .SettingMotionEffectsChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+        listen(for: .SettingThemeChanged, then: #selector(themeChanged))
+        listen(for: .SettingLocaleChanged, then: #selector(localizeInterface))
     }
     
     deinit {
@@ -175,10 +167,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        cardContainerView.backgroundColor = .white
-        categoryNameLabel.text = ""
-        categoryIconImageView.image = CategoryIcon.default().first?.value.first
-        categoryTodosCountLabel.text = ""
     }
     
     /// Localize interface.
@@ -195,16 +183,6 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
     
     fileprivate func setShadowOpacity() {
         shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.25 : 0.14
-    }
-    
-    /// Set motion effect.
-    
-    @objc private func setMotionEffect(_ notifcation: Notification?) {
-        if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
-            motionEffects.append(motionEffect)
-        } else {
-            motionEffects.removeAll()
-        }
     }
     
     /// When the theme changed.

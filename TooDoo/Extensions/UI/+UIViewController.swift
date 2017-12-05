@@ -34,6 +34,12 @@ extension UIViewController {
         return CoreDataManager.main.persistentContainer.viewContext
     }
     
+    /// Quickly add self to notification center.
+    
+    internal func listen(for notification: NotificationManager.Notifications, then do: Selector, object: Any? = nil) {
+        NotificationManager.listen(self, do: `do`, notification: notification, object: object)
+    }
+    
     /// Get status bar style based on appearnce.
     
     open func themeStatusBarStyle() -> UIStatusBarStyle {

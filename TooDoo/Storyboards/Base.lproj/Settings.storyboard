@@ -489,30 +489,39 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="50" id="p35-U3-42d" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120.33333333333334" width="375" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="65" id="p35-U3-42d" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="120.33333333333334" width="375" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p35-U3-42d" id="oTt-i4-GuS">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to system settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83Q-F0-iKd">
-                                                    <rect key="frame" x="16" y="13.333333333333334" width="309" height="23.666666666666664"/>
+                                                    <rect key="frame" x="16" y="20.666666666666664" width="303" height="23.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iOS-settings" translatesAutoresizingMaskIntoConstraints="NO" id="4Av-jw-QJn">
+                                                    <rect key="frame" x="327" y="16.666666666666671" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="4Zs-Dp-BTG"/>
+                                                        <constraint firstAttribute="height" constant="32" id="uqw-Ch-EZJ"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="83Q-F0-iKd" firstAttribute="leading" secondItem="oTt-i4-GuS" secondAttribute="leadingMargin" id="57p-az-neL"/>
-                                                <constraint firstAttribute="trailing" secondItem="83Q-F0-iKd" secondAttribute="trailing" constant="16" id="WPL-XZ-XQp"/>
+                                                <constraint firstItem="4Av-jw-QJn" firstAttribute="leading" secondItem="83Q-F0-iKd" secondAttribute="trailing" constant="8" id="KhM-Nd-C49"/>
+                                                <constraint firstItem="4Av-jw-QJn" firstAttribute="centerY" secondItem="oTt-i4-GuS" secondAttribute="centerY" id="LWB-MA-rXy"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Av-jw-QJn" secondAttribute="trailing" constant="16" id="QtE-9q-WZL"/>
                                                 <constraint firstItem="83Q-F0-iKd" firstAttribute="centerY" secondItem="oTt-i4-GuS" secondAttribute="centerY" id="jeW-2Z-L4n"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="165" id="Dnt-xB-DRq" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="170.33333333333334" width="375" height="165"/>
+                                        <rect key="frame" x="0.0" y="185.33333333333334" width="375" height="165"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dnt-xB-DRq" id="98A-ap-hID">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="165"/>
@@ -662,7 +671,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kOY-a6-FXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1506" y="-467"/>
+            <point key="canvasLocation" x="1504.8" y="-467.73399014778329"/>
         </scene>
         <!--Calendars-->
         <scene sceneID="3wb-VR-kjp">
@@ -737,24 +746,35 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="55" id="f7h-fv-WHg" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="135" width="375" height="55"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="50" id="f7h-fv-WHg" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="135" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f7h-fv-WHg" id="kOZ-nC-r0g">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to system settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph4-r3-pb5">
-                                                    <rect key="frame" x="16" y="15.666666666666666" width="309" height="23.666666666666671"/>
+                                                    <rect key="frame" x="16" y="13.333333333333334" width="303" height="23.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iOS-settings" translatesAutoresizingMaskIntoConstraints="NO" id="CvE-S2-N78">
+                                                    <rect key="frame" x="327" y="9" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="HEj-nZ-5Fq"/>
+                                                        <constraint firstAttribute="width" constant="32" id="a8m-H1-30A"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="cGh-z2-JlQ"/>
+                                                        <constraint firstAttribute="height" constant="32" id="o1d-sw-Lz6"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="ph4-r3-pb5" secondAttribute="trailing" constant="16" id="VRY-w6-9YG"/>
+                                                <constraint firstAttribute="trailing" secondItem="CvE-S2-N78" secondAttribute="trailing" constant="16" id="D25-Hj-SMf"/>
+                                                <constraint firstItem="CvE-S2-N78" firstAttribute="leading" secondItem="ph4-r3-pb5" secondAttribute="trailing" constant="8" id="DcB-Mt-Pes"/>
                                                 <constraint firstItem="ph4-r3-pb5" firstAttribute="leading" secondItem="kOZ-nC-r0g" secondAttribute="leadingMargin" id="nKz-eB-vn4"/>
                                                 <constraint firstItem="ph4-r3-pb5" firstAttribute="centerY" secondItem="kOZ-nC-r0g" secondAttribute="centerY" id="uB4-Cp-IBx"/>
+                                                <constraint firstItem="CvE-S2-N78" firstAttribute="centerY" secondItem="kOZ-nC-r0g" secondAttribute="centerY" id="y58-CX-4hK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -809,6 +829,7 @@
     </scenes>
     <resources>
         <image name="calendar" width="30" height="30"/>
+        <image name="iOS-settings" width="240" height="240"/>
         <image name="motion-icon" width="33" height="33"/>
         <image name="notification-icon" width="33" height="33"/>
         <image name="settings-gear-icon" width="33" height="33"/>

@@ -165,13 +165,19 @@ class ToDoOverviewViewController: UIViewController {
     /// Motion effect for avatar view.
     
     lazy var motionEffectForAvatar: UIMotionEffect = {
-        return .twoAxesShift(strength: 8)
+        return .twoAxesShift(strength: -8)
     }()
     
     /// Motion effect for greeting label.
     
     lazy var motionEffectForGreeting: UIMotionEffect = {
-        return .twoAxesShift(strength: 12)
+        return .twoAxesShift(strength: -12)
+    }()
+    
+    /// Motion effect for category collection cells.
+    
+    lazy var motionEffectForCategories: UIMotionEffect = {
+        return .twoAxesShift(strength: 28)
     }()
     
     /// Check if user has authenticated.
@@ -274,16 +280,16 @@ class ToDoOverviewViewController: UIViewController {
     /// Set up notification handling.
     
     fileprivate func handleNotifications() {
-        NotificationManager.listen(self, do: #selector(showAddCategory), notification: .ShowAddCategory, object: nil)
-        NotificationManager.listen(self, do: #selector(showAddTodo), notification: .ShowAddToDo, object: nil)
-        NotificationManager.listen(self, do: #selector(showSettings), notification: .ShowSettings, object: nil)
-        NotificationManager.listen(self, do: #selector(updateAvatar(_:)), notification: .UserAvatarChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(updateName(_:)), notification: .UserNameChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(userHasAuthenticated), notification: .UserAuthenticated, object: nil)
-        NotificationManager.listen(self, do: #selector(motionEffectSettingChanged(_:)), notification: .SettingMotionEffectsChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(updateStatusBar), notification: .UpdateStatusBar, object: nil)
-        NotificationManager.listen(self, do: #selector(localizeInterface(_:)), notification: .SettingLocaleChanged, object: nil)
+        listen(for: .ShowAddToDo, then: #selector(showAddTodo))
+        listen(for: .ShowSettings, then: #selector(showSettings))
+        listen(for: .UserNameChanged, then: #selector(updateName(_:)))
+        listen(for: .ShowAddCategory, then: #selector(showAddCategory))
+        listen(for: .UpdateStatusBar, then: #selector(updateStatusBar))
+        listen(for: .SettingThemeChanged, then: #selector(themeChanged))
+        listen(for: .UserAvatarChanged, then: #selector(updateAvatar(_:)))
+        listen(for: .UserAuthenticated, then: #selector(userHasAuthenticated))
+        listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
+        listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
     }
     
     /// Set up views properties.
@@ -292,9 +298,9 @@ class ToDoOverviewViewController: UIViewController {
         setupTimeLabel()
         setupTodayLabel()
         setupMessageLabel()
-        setupTodosCollectionView()
         setupSideMenuGesture()
         setupNavigationItems()
+        setupTodosCollectionView()
     }
     
     /// Configure colors.
@@ -552,9 +558,11 @@ class ToDoOverviewViewController: UIViewController {
         if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
             userAvatarContainerView.addMotionEffect(motionEffectForAvatar)
             greetingLabel.addMotionEffect(motionEffectForGreeting)
+            todosCollectionView.addMotionEffect(motionEffectForCategories)
         } else {
             userAvatarContainerView.removeMotionEffect(motionEffectForAvatar)
             greetingLabel.removeMotionEffect(motionEffectForGreeting)
+            todosCollectionView.removeMotionEffect(motionEffectForCategories)
         }
     }
     
