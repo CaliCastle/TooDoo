@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 import LocalAuthentication
 
 class HomeUnlockViewController: UIViewController {
@@ -69,6 +70,9 @@ class HomeUnlockViewController: UIViewController {
     /// User taps unlock icon.
     
     @IBAction func unlockDidTap(_ sender: Any) {
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
+        
         authenticateUser()
     }
     
@@ -80,6 +84,10 @@ class HomeUnlockViewController: UIViewController {
         
         alertController.addAction(alertAction)
         
+        DispatchQueue.main.async {
+            Haptic.notification(.error).generate()
+        }
+        
         present(alertController, animated: true, completion: nil)
     }
     
@@ -90,6 +98,9 @@ class HomeUnlockViewController: UIViewController {
         NotificationManager.send(notification: .UserAuthenticated)
         
         DispatchQueue.main.async {
+            // Generate haptic feedback
+            Haptic.notification(.success).generate()
+            
             // Animate views
             UIView.animate(withDuration: 0.25) {
                 self.backgroundGradientView.alpha = 0

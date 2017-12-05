@@ -22,8 +22,9 @@ class FeedbackPageBulletinItem: PageBulletinItem {
     
     override func actionButtonTapped(sender: UIButton) {
         
-        // Play an haptic feedback
+        // Play an haptic feedback and a sound
         Haptic.impact(feedbackStyle).generate()
+        SoundManager.play(soundEffect: .Click)
         
         // Call super
         super.actionButtonTapped(sender: sender)

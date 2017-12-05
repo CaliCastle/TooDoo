@@ -13,19 +13,29 @@ import Foundation
 
 final class SoundManager {
     
-    /// Different sound effects
+    /// Different sound effects.
     ///
     /// - Click: A click sound
     /// - Success: A success sound
     /// - Chord: A chord sound
     /// - Drip: A pop drip sound
+    /// - Notification: A notification sound
     
     enum SoundEffect: String {
         case Click = "click"
         case Success = "success"
         case Chord = "chord"
         case Drip = "drip"
+        case Notification = "notification"
+        
+        func fileName() -> String {
+            return "\(rawValue).\(SoundManager.fileExtension)"
+        }
     }
+    
+    /// File extension for sounds.
+    
+    static let fileExtension = "m4a"
     
     /// Play sound effect
     ///
@@ -35,7 +45,7 @@ final class SoundManager {
         // Check for sounds setting before playing
         guard UserDefaultManager.settingSoundsEnabled() else { return }
         
-        let soundFileUrl = Bundle.main.url(forResource: soundEffect.rawValue, withExtension: "caf")
+        let soundFileUrl = Bundle.main.url(forResource: soundEffect.rawValue, withExtension: SoundManager.fileExtension)
         
         Peep.play(sound: soundFileUrl)
     }

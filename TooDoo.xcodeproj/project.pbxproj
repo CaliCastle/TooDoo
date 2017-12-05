@@ -50,6 +50,11 @@
 		8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD41FC21AE3008DF629 /* InfoPlist.strings */; };
 		8D809BDA1FC2513F008DF629 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD91FC2513F008DF629 /* README.md */; };
 		8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C3151F949A40003C767C /* AppearanceManager.swift */; };
+		8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDC1FD7467600208896 /* chord.m4a */; };
+		8D8D1EE21FD74A7100208896 /* click.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDE1FD7467700208896 /* click.m4a */; };
+		8D8D1EE31FD74A7100208896 /* drip.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDD1FD7467700208896 /* drip.m4a */; };
+		8D8D1EE41FD74A7100208896 /* notification.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EE01FD7467700208896 /* notification.m4a */; };
+		8D8D1EE51FD74A7100208896 /* success.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDF1FD7467700208896 /* success.m4a */; };
 		8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBBF1F92F19100721980 /* DispatchManager.swift */; };
 		8D9BCBC21F92FC9800721980 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */; };
 		8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */; };
@@ -70,9 +75,6 @@
 		8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */; };
 		8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */; };
 		8DBA55921FC430F80012B941 /* +UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA55911FC430F80012B941 /* +UITextView.swift */; };
-		8DCBEA5B1FB2A63700AD34D9 /* chord.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA541FB2A5B000AD34D9 /* chord.caf */; };
-		8DCBEA5C1FB2A63700AD34D9 /* click.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5A1FB2A62E00AD34D9 /* click.caf */; };
-		8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DCBEA591FB2A62D00AD34D9 /* success.caf */; };
 		8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */; };
 		8DCBEA611FB2E69D00AD34D9 /* +UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */; };
 		8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0514511FC593AE00AC45CE /* Settings.storyboard */; };
@@ -91,7 +93,6 @@
 		8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */; };
 		8DE7F1EB1FBC44470026E65B /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE7F1EA1FBC44470026E65B /* AlertManager.swift */; };
 		8DF35D631FBE54FA001877F4 /* +ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D621FBE54FA001877F4 /* +ToDo.swift */; };
-		8DF35D651FBE6E47001877F4 /* drip.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8DF35D641FBE6DD7001877F4 /* drip.caf */; };
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 		8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
@@ -156,6 +157,11 @@
 		8D809BD61FC21B26008DF629 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D809BD91FC2513F008DF629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8D88C3151F949A40003C767C /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		8D8D1EDC1FD7467600208896 /* chord.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.m4a; sourceTree = "<group>"; };
+		8D8D1EDD1FD7467700208896 /* drip.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = drip.m4a; sourceTree = "<group>"; };
+		8D8D1EDE1FD7467700208896 /* click.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.m4a; sourceTree = "<group>"; };
+		8D8D1EDF1FD7467700208896 /* success.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.m4a; sourceTree = "<group>"; };
+		8D8D1EE01FD7467700208896 /* notification.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification.m4a; sourceTree = "<group>"; };
 		8D9BCBBF1F92F19100721980 /* DispatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchManager.swift; sourceTree = "<group>"; };
 		8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -177,9 +183,6 @@
 		8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryPreviewTableHeaderView.xib; sourceTree = "<group>"; };
 		8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableHeaderView.swift; sourceTree = "<group>"; };
 		8DBA55911FC430F80012B941 /* +UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITextView.swift"; sourceTree = "<group>"; };
-		8DCBEA541FB2A5B000AD34D9 /* chord.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.caf; sourceTree = "<group>"; };
-		8DCBEA591FB2A62D00AD34D9 /* success.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.caf; sourceTree = "<group>"; };
-		8DCBEA5A1FB2A62E00AD34D9 /* click.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.caf; sourceTree = "<group>"; };
 		8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UINavigationController.swift"; sourceTree = "<group>"; };
 		8DCC7EF81FCBA09B000E99BA /* +UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITableViewCell.swift"; sourceTree = "<group>"; };
@@ -197,7 +200,6 @@
 		8DE7F1E81FBC18B70026E65B /* ReorderCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		8DE7F1EA1FBC44470026E65B /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		8DF35D621FBE54FA001877F4 /* +ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+ToDo.swift"; sourceTree = "<group>"; };
-		8DF35D641FBE6DD7001877F4 /* drip.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = drip.caf; sourceTree = "<group>"; };
 		8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 		8DF55B291FCAE85900A1DA95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -569,10 +571,11 @@
 		8DCBEA561FB2A5DA00AD34D9 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				8DF35D641FBE6DD7001877F4 /* drip.caf */,
-				8DCBEA541FB2A5B000AD34D9 /* chord.caf */,
-				8DCBEA5A1FB2A62E00AD34D9 /* click.caf */,
-				8DCBEA591FB2A62D00AD34D9 /* success.caf */,
+				8D8D1EDC1FD7467600208896 /* chord.m4a */,
+				8D8D1EDE1FD7467700208896 /* click.m4a */,
+				8D8D1EDD1FD7467700208896 /* drip.m4a */,
+				8D8D1EE01FD7467700208896 /* notification.m4a */,
+				8D8D1EDF1FD7467700208896 /* success.m4a */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -773,15 +776,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */,
+				8D8D1EE21FD74A7100208896 /* click.m4a in Resources */,
+				8D8D1EE31FD74A7100208896 /* drip.m4a in Resources */,
+				8D8D1EE41FD74A7100208896 /* notification.m4a in Resources */,
+				8D8D1EE51FD74A7100208896 /* success.m4a in Resources */,
 				8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */,
 				8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */,
 				8D3AA1521FC7BDB100862C4C /* CategoryIconHeaderView.xib in Resources */,
-				8DF35D651FBE6E47001877F4 /* drip.caf in Resources */,
 				8DB49E571FB8D859003240E1 /* close-round.png in Resources */,
-				8DCBEA5B1FB2A63700AD34D9 /* chord.caf in Resources */,
-				8DCBEA5C1FB2A63700AD34D9 /* click.caf in Resources */,
 				8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */,
-				8DCBEA5D1FB2A63700AD34D9 /* success.caf in Resources */,
 				8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */,
 				8DB49E591FB8D859003240E1 /* checkmark-round.png in Resources */,
 				8D1599051FAAE7220004846F /* Setup.storyboard in Resources */,

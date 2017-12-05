@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 import CoreData
 import ViewAnimator
 import DeckTransition
@@ -129,6 +130,11 @@ class ReorderCategoriesTableViewController: UITableViewController, LocalizableIn
     /// User tapped cancel.
     
     @IBAction func cancelDidTap(_ sender: UIBarButtonItem) {
+        // Generate haptic feedback
+        Haptic.impact(.light).generate()
+        // End editing
+        tableView.endEditing(true)
+        
         navigationController?.dismiss(animated: true) {
             self.delegate?.categoriesDoneOrganizing()
         }

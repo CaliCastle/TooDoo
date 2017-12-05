@@ -509,8 +509,6 @@ class ToDoOverviewViewController: UIViewController {
     
     @objc fileprivate func showSettings() {
         DispatchQueue.main.async {
-            // Play click sound
-            SoundManager.play(soundEffect: .Click)
             Haptic.impact(.medium).generate()
         }
         
@@ -932,8 +930,9 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
         currentRelatedCategoryIndex = selectedIndexPath
         
-        // Generate haptic feedback
+        // Generate haptic feedback and play a sound
         Haptic.impact(.light).generate()
+        SoundManager.play(soundEffect: .Drip)
         
         let category = fetchedResultsController.object(at: selectedIndexPath)
         // Show action sheet
@@ -964,6 +963,8 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         let category = fetchedResultsController.object(at: index)
         
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
         AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
     }
     
