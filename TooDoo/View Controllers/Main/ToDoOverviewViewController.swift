@@ -162,16 +162,22 @@ class ToDoOverviewViewController: UIViewController {
         return gestureRecognizer
     }()
     
+    /// Motion effect for background view.
+    
+    lazy var motionEffectForBackground: UIMotionEffect = {
+        return .twoAxesShift(strength: -10)
+    }()
+    
     /// Motion effect for avatar view.
     
     lazy var motionEffectForAvatar: UIMotionEffect = {
-        return .twoAxesShift(strength: -8)
+        return .twoAxesShift(strength: 10)
     }()
     
     /// Motion effect for greeting label.
     
     lazy var motionEffectForGreeting: UIMotionEffect = {
-        return .twoAxesShift(strength: -12)
+        return .twoAxesShift(strength: -10)
     }()
     
     /// Motion effect for category collection cells.
@@ -556,10 +562,12 @@ class ToDoOverviewViewController: UIViewController {
     
     private func setMotionEffects() {
         if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
+            backgroundGradientView.addMotionEffect(motionEffectForBackground)
             userAvatarContainerView.addMotionEffect(motionEffectForAvatar)
             greetingLabel.addMotionEffect(motionEffectForGreeting)
             todosCollectionView.addMotionEffect(motionEffectForCategories)
         } else {
+            backgroundGradientView.removeMotionEffect(motionEffectForBackground)
             userAvatarContainerView.removeMotionEffect(motionEffectForAvatar)
             greetingLabel.removeMotionEffect(motionEffectForGreeting)
             todosCollectionView.removeMotionEffect(motionEffectForCategories)

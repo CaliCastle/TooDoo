@@ -48,7 +48,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZUy-L5-o8r" customClass="GradientView" customModule="TooDoo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="-10" y="-10" width="395" height="832"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="YES"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="startColor">
@@ -510,16 +510,16 @@
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="fzt-6i-3oP" secondAttribute="trailing" constant="30" id="96o-gz-cUc"/>
                             <constraint firstItem="l9p-kw-NAc" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="9b4-jp-oth"/>
                             <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="DsW-xc-lcL" secondAttribute="bottom" constant="20" id="Afo-cb-DS3"/>
-                            <constraint firstItem="ZUy-L5-o8r" firstAttribute="top" secondItem="meb-ds-NIi" secondAttribute="top" id="CKc-s3-EZz"/>
+                            <constraint firstItem="ZUy-L5-o8r" firstAttribute="top" secondItem="meb-ds-NIi" secondAttribute="top" constant="-10" id="CKc-s3-EZz"/>
                             <constraint firstItem="DsW-xc-lcL" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="HFM-wA-S2p"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="top" secondItem="ukM-SL-0bF" secondAttribute="bottom" constant="20" id="HQM-Yy-8PU"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="l9p-kw-NAc" secondAttribute="trailing" constant="30" id="JVc-yL-yNA"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="Nwj-Ge-Mff"/>
-                            <constraint firstAttribute="trailing" secondItem="ZUy-L5-o8r" secondAttribute="trailing" id="Oob-cu-qAg"/>
+                            <constraint firstAttribute="trailing" secondItem="ZUy-L5-o8r" secondAttribute="trailing" constant="-10" id="Oob-cu-qAg"/>
                             <constraint firstItem="ukM-SL-0bF" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="WfH-ch-sIV"/>
                             <constraint firstItem="DsW-xc-lcL" firstAttribute="top" secondItem="fzt-6i-3oP" secondAttribute="bottom" constant="2" id="YCC-WY-D2z"/>
-                            <constraint firstAttribute="bottom" secondItem="ZUy-L5-o8r" secondAttribute="bottom" id="Z5B-hm-BGY"/>
-                            <constraint firstItem="ZUy-L5-o8r" firstAttribute="leading" secondItem="meb-ds-NIi" secondAttribute="leading" id="aMj-GB-tIg"/>
+                            <constraint firstAttribute="bottom" secondItem="ZUy-L5-o8r" secondAttribute="bottom" constant="-10" id="Z5B-hm-BGY"/>
+                            <constraint firstItem="ZUy-L5-o8r" firstAttribute="leading" secondItem="meb-ds-NIi" secondAttribute="leading" constant="-10" id="aMj-GB-tIg"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="e3V-9A-d9Q" secondAttribute="trailing" constant="20" id="cfZ-Fj-WUB"/>
                             <constraint firstItem="l9p-kw-NAc" firstAttribute="top" secondItem="e3V-9A-d9Q" secondAttribute="bottom" constant="11" id="cm7-yP-GBl"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="DsW-xc-lcL" secondAttribute="trailing" constant="8" id="eZl-Yf-E0N"/>
@@ -1068,8 +1068,8 @@
         <scene sceneID="c7B-8a-N6C">
             <objects>
                 <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1342,11 +1342,11 @@
                                         <rect key="frame" x="0.0" y="643" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
-                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <rect key="frame" x="14.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1540,7 +1540,7 @@
         <image name="category-icon-personal" width="200" height="200"/>
         <image name="checkmark-filled-circle-icon" width="34" height="34"/>
         <image name="menu-hamburger" width="25" height="25"/>
-        <image name="no-notification-access" width="85" height="85"/>
+        <image name="no-notification-access" width="128" height="128"/>
         <image name="pencil-icon" width="25" height="25"/>
         <image name="plus-button" width="25" height="25"/>
         <image name="search-button" width="25" height="25"/>
