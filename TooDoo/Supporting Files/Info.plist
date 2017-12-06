@@ -55,5 +55,47 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon-primary</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>Bumblebee</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-bumblebee</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Navy</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-navy</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Navy Alt</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-navy-alt</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
