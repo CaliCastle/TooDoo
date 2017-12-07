@@ -8,7 +8,7 @@
 
 import UIKit
 import Haptica
-import ViewAnimator
+import DeckTransition
 
 open class SettingTableViewController: UITableViewController, LocalizableInterface {
     
@@ -23,9 +23,6 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         
         configureRightNavigationButton()
         setupTableView()
-        
-        // Fade in and move up cells
-        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 28)], animationInterval: 0.065)
      
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface))
     }
@@ -88,10 +85,40 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
+    open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView.isEqual(tableView) else { return }
+        
+        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
+            if scrollView.contentOffset.y > 0 {
+                // Normal behavior if the `scrollView` isn't scrolled to the top
+                delegate.isDismissEnabled = false
+            } else {
+                if scrollView.isDecelerating {
+                    // If the `scrollView` is scrolled to the top but is decelerating
+                    // that means a swipe has been performed. The view and
+                    // scrollview's subviews are both translated in response to this.
+                    view.transform = .init(translationX: 0, y: -scrollView.contentOffset.y)
+                    scrollView.subviews.forEach({
+                        $0.transform = .init(translationX: 0, y: scrollView.contentOffset.y)
+                    })
+                } else {
+                    // If the user has panned to the top, the scrollview doesnʼt bounce and
+                    // the dismiss gesture is enabled.
+                    delegate.isDismissEnabled = true
+                }
+            }
+        }
+    }
+    
     /// Light status bar.
     
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
+    /// Hide home indicator.
+    
+    open override func prefersHomeIndicatorAutoHidden() -> Bool {
+        return true
+    }
 }

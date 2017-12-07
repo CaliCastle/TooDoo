@@ -20,6 +20,7 @@ final class SoundManager {
     /// - Chord: A chord sound
     /// - Drip: A pop drip sound
     /// - Notification: A notification sound
+    /// - DueNotification: A due notification sound
     
     enum SoundEffect: String {
         case Click = "click"
@@ -27,6 +28,7 @@ final class SoundManager {
         case Chord = "chord"
         case Drip = "drip"
         case Notification = "notification"
+        case DueNotification = "due_notification"
         
         func fileName() -> String {
             return "\(rawValue).\(SoundManager.fileExtension)"

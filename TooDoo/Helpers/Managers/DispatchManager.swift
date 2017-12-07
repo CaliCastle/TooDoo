@@ -41,7 +41,7 @@ final class DispatchManager {
     // MARK: - Shortcut Item Trigger Entry Point
     
     open func triggerShortcutItem(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
-        ShortcutItemManager.triggered(shortcutItem: shortcutItem, for: application)
+        ApplicationManager.triggered(shortcutItem: shortcutItem, for: application)
     }
     
     /// Set redirect to identifier.
@@ -94,7 +94,7 @@ final class DispatchManager {
     fileprivate func configureShortcutItems(for application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         guard UserDefaultManager.userHasSetup() else { return }
         
-        ShortcutItemManager.createItems(for: application)
+        ApplicationManager.createShortcutItems(for: application)
     }
     
     // MARK: - Appearance Configuration
@@ -107,7 +107,7 @@ final class DispatchManager {
     
     @objc func userHasSetup() {
         // Create shortcut items
-        ShortcutItemManager.createItems(for: UIApplication.shared)
+        ApplicationManager.createShortcutItems(for: UIApplication.shared)
         
         // Remove from user setup notification
         NotificationManager.remove(self, notification: .UserHasSetup, object: nil)

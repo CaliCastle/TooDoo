@@ -18,6 +18,8 @@ class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var cellLabels: [UILabel]!
     @IBOutlet var switches: [UISwitch]!
     
+    @IBOutlet var appIconImageView: UIImageView!
+    
     @IBOutlet var authenticationLabel: UILabel!
     @IBOutlet var authenticationIconImageView: UIImageView!
     
@@ -40,9 +42,10 @@ class SettingsTableViewController: SettingTableViewController {
     }
     
     // MARK: - View Life Cycle.
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
     }
     
@@ -60,6 +63,13 @@ class SettingsTableViewController: SettingTableViewController {
         setVersionText()
         setupAuthenticationProperties()
         configureIconImages()
+    }
+    
+    /// Configure app icon to be cornered.
+    
+    fileprivate func configureAppIconImage() {
+        appIconImageView.cornerRadius = 6
+        appIconImageView.layer.masksToBounds = true
     }
     
     /// Configure icon image views.
@@ -97,6 +107,7 @@ class SettingsTableViewController: SettingTableViewController {
     internal override func setupTableView() {
         super.setupTableView()
         
+        configureAppIconImage()
         configureIconImages()
         configureSwitches()
     }
@@ -218,6 +229,24 @@ class SettingsTableViewController: SettingTableViewController {
             return nil
         }
     }
+    
+    /// Table view rows.
+    
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        switch section {
+//        case 0:
+//            // Generals
+//            return 3
+//        case 1:
+//            // Look & Feel
+//            return 3
+//        case 2:
+//            // Privacy
+//            return 1
+//        default:
+//            return 1
+//        }
+//    }
     
     /// Prepare for segue.
     

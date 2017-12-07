@@ -132,7 +132,7 @@ final class NotificationManager {
         content.title = content.title.replacingOccurrences(of: "@", with: todo.category!.name!)
         content.categoryIdentifier = LocalNotifications.TodoDue.rawValue
         content.body = todo.goal!
-        content.sound = UNNotificationSound(named: SoundManager.SoundEffect.Notification.fileName())
+        content.sound = UNNotificationSound(named: SoundManager.SoundEffect.DueNotification.fileName())
   
         // Create trigger
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)

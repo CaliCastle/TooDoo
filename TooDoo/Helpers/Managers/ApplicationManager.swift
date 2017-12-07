@@ -1,5 +1,5 @@
 //
-//  ShortcutItemManager.swift
+//  ApplicationManager.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/10/17.
@@ -10,7 +10,7 @@ import UIKit
 
 /// Manager for Shortcut Items
 
-final class ShortcutItemManager {
+final class ApplicationManager {
     
     /// Shortcut item icons.
     ///
@@ -40,10 +40,52 @@ final class ShortcutItemManager {
         case Settings = "settings"
     }
     
+    /// Prefix for icon names.
+    
+    static let iconNamePrefix = "icon-"
+    
+    /// Icon names for alternate icon.
+    ///
+    /// - Primary: Default icon
+    /// - Rose: Red icon
+    /// - Indigo: Dark blue icon
+    /// - Flamingo: Pink icon
+    /// - Mocha: Brown icon
+    /// - Olive: Green alt icon
+    /// - Blush: Light red icon
+    /// - Ebony: Black icon
+    /// - Emerald: Green icon
+    /// - Bumblebee: Primary alt icon
+    /// - Navy: Blue icon
+    /// - NavyAlt: Blue alt icon
+    
+    public enum IconName: String {
+        case Primary = "primary"
+        case Rose = "rose"
+        case Indigo = "indigo"
+        case Flamingo = "flamingo"
+        case Mocha = "mocha"
+        case Olive = "olive"
+        case Blush = "blush"
+        case Ebony = "ebony"
+        case Emerald = "emerald"
+        case Bumblebee = "bumblebee"
+        case Navy = "navy"
+        case NavyAlt = "navy-alt"
+        
+        func imageName() -> String {
+            return ApplicationManager.iconNamePrefix + rawValue
+        }
+        
+        func displayName() -> String {
+            return rawValue.capitalized.replacingOccurrences(of: "-", with: " ")
+        }
+    }
+    
     /// Create shortcut items for 3D Touch.
     
-    class func createItems(for application: UIApplication) {
-        guard !hasItems(for: application) else { return }
+    class func createShortcutItems(for application: UIApplication) {
+        guard !hasShortcutItems(for: application) else { return }
         
         let checkmarkIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddTodo.rawValue)
         let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "shortcut.items.add-todo".localized, localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)
@@ -70,6 +112,16 @@ final class ShortcutItemManager {
         return "\(Bundle.main.bundleIdentifier!).\(suffix.rawValue)"
     }
     
+    /// Check if application has shortcut items already.
+    ///
+    /// - Returns: The result
+    
+    private class func hasShortcutItems(for application: UIApplication) -> Bool {
+        guard let items = application.shortcutItems else { return false }
+        
+        return items.count > 0
+    }
+    
     /// Triggered shortcut item from 3D Touch.
     
     class func triggered(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
@@ -91,13 +143,52 @@ final class ShortcutItemManager {
         }
     }
     
-    /// Check if application has shortcut items already.
-    ///
-    /// - Returns: The result
+    /// Get all alternate icons.
     
-    private class func hasItems(for application: UIApplication) -> Bool {
-        guard let items = application.shortcutItems else { return false }
+    class func alternateIcons() -> [IconName] {
+        return [
+            IconName.Primary,
+            IconName.Bumblebee,
+            IconName.Navy,
+            IconName.NavyAlt,
+            IconName.Mocha,
+            IconName.Rose,
+            IconName.Flamingo,
+            IconName.Indigo,
+            IconName.Blush,
+            IconName.Ebony,
+            IconName.Emerald,
+            IconName.Olive
+        ]
+    }
+    
+    /// Get current alternate icon name.
+    
+    @available(iOS 10.3, *)
+    class func currentAlternateIcon() -> IconName {
+        guard var iconName = UIApplication.shared.alternateIconName else { return .Primary }
         
-        return items.count > 0
+        iconName = iconName.replacingOccurrences(of: " ", with: "-").lowercased()
+        if let icon = IconName(rawValue: iconName) {
+            return icon
+        }
+        
+        return .Primary
+    }
+    
+    /// Change app's alternate icon.
+    ///
+    /// - Parameter iconName: The icon name
+    
+    @available(iOS 10.3, *)
+    class func changeAppIcon(to iconName: IconName) {
+        UIApplication.shared.setAlternateIconName(iconName.displayName())
+    }
+    
+    /// Reset app's alternate icon.
+    
+    @available(iOS 10.3, *)
+    class func resetAppIcon() {
+        UIApplication.shared.setAlternateIconName(nil)
     }
 }
