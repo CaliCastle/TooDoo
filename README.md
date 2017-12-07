@@ -1,9 +1,13 @@
 # TooDoo - Todo List Made Simple
 <p align="center">
     <img src="https://github.com/CaliCastle/TooDoo/raw/master/TooDoo/Resources/Assets.xcassets/AppIcon.appiconset/App%20Icon%2060%403x.png" />
+    <img src="https://github.com/CaliCastle/TooDoo/raw/master/Images/TooDoo%20App%20Icon%20Colors.png" />
 </p>
 
 TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a daily basis and painless create new todos in seconds.
+
+## Welcome Showcase:
+![Welcome Showcase](https://github.com/CaliCastle/TooDoo/raw/master/Images/TooDoo_Welcome_ShowCase.gif)
 
 > __Written only in Swift 4__
 
