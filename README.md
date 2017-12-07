@@ -1,6 +1,5 @@
 # TooDoo - Todo List Made Simple
 <p align="center">
-    <img src="https://github.com/CaliCastle/TooDoo/raw/master/TooDoo/Resources/Assets.xcassets/AppIcon.appiconset/App%20Icon%2060%403x.png" />
     <img src="https://github.com/CaliCastle/TooDoo/raw/master/Images/TooDoo%20App%20Icon%20Colors.png" />
 </p>
 
