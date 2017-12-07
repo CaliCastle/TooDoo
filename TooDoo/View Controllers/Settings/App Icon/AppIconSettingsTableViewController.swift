@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 
 class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
     
@@ -106,9 +107,7 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
     /// Adjust scroll behavior for dismissal.
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isEqual(appIconsCollectionView) {
-            updateGradientFrame()
-        }
+        guard !scrollView.isEqual(appIconsCollectionView) else { updateGradientFrame(); return }
         
         super.scrollViewDidScroll(scrollView)
     }
@@ -172,27 +171,42 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     
     /// Set icon cell selected.
     
-    fileprivate func setCellSelected(_ selected: Bool, for cell: AppIconCollectionViewCell) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+    fileprivate func setCellSelected(_ selected: Bool, for cell: AppIconCollectionViewCell, animated: Bool = false) {
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                if selected {
+                    cell.checkmark.transform = .init(scaleX: 1, y: 1)
+                    cell.checkmark.alpha = 1
+                    cell.checkmark.tintColor = self.currentThemeIsDark() ? .flatWhite() : .flatBlack()
+                    cell.selectedOverlay.alpha = 1
+                    cell.selectedOverlay.backgroundColor = self.currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.5)
+                } else {
+                    cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
+                    cell.checkmark.alpha = 0
+                    cell.selectedOverlay.alpha = 0
+                }
+            })
+        } else {
             if selected {
                 cell.checkmark.transform = .init(scaleX: 1, y: 1)
                 cell.checkmark.alpha = 1
-                cell.checkmark.tintColor = self.currentThemeIsDark() ? .flatWhite() : .flatBlack()
+                cell.checkmark.tintColor = currentThemeIsDark() ? .flatWhite() : .flatBlack()
                 cell.selectedOverlay.alpha = 1
                 cell.selectedOverlay.backgroundColor = self.currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.5)
             } else {
-                cell.checkmark.transform = .init(scaleX: 0, y: 0)
+                cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
                 cell.checkmark.alpha = 0
                 cell.selectedOverlay.alpha = 0
             }
-        })
+        }
     }
     
     /// Select an app icon.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? AppIconCollectionViewCell {
-            setCellSelected(true, for: cell)
+            setCellSelected(true, for: cell, animated: true)
+            Haptic.notification(.success).generate()
         }
         
         if #available(iOS 10.3, *) {
@@ -207,7 +221,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? AppIconCollectionViewCell {
-            setCellSelected(false, for: cell)
+            setCellSelected(false, for: cell, animated: true)
         }
     }
     
