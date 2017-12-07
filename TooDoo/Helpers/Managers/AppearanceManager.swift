@@ -125,6 +125,11 @@ final class AppearanceManager {
         changeSwitchAppearance()
         changeNavigationBarAppearance()
         
+        // Change app icon
+        if #available(iOS 10.3, *), UserDefaultManager.bool(forKey: .SettingAppIconChangedWithTheme) {
+            ApplicationManager.changeAppIcon(to: theme == .Dark ? .Primary : .Navy)
+        }
+        
         // Send notification
         NotificationManager.send(notification: .SettingThemeChanged)
     }

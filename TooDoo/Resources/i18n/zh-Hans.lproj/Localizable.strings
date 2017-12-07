@@ -170,6 +170,7 @@
 "settings.titles.general.language" = "语言";
 "settings.titles.notifications" = "通知提醒";
 "settings.titles.calendars" = "日历";
+"settings.titles.app-icon" = "App图标";
 
 // Setting headers
 "settings.headers.general" = "通用";
@@ -189,6 +190,9 @@
 "settings.calendars.footer" = "若想开启/关闭日历与提醒事项同步, 请前往系统设置中修改";
 "settings.calendars.sync-calendars" = "同步到日历";
 "settings.calendars.sync-reminders" = "同步到提醒事项";
+
+// Setting App Icon
+"settings.app-icon.change-with-theme" = "与主题同步";
 
 /*
  Category icons categories

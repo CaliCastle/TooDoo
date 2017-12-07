@@ -349,6 +349,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="appIconImageView" destination="Wsg-po-7Ch" id="NNg-Ye-5Gs"/>
+                        <outlet property="appIconLabel" destination="w8T-Pa-04L" id="gZM-oZ-cGj"/>
                         <outlet property="appVersionLabel" destination="3hO-rj-Cxi" id="ZrP-WZ-jFR"/>
                         <outlet property="authenticationIconImageView" destination="WFy-D4-1Xw" id="fV2-iL-RyN"/>
                         <outlet property="authenticationLabel" destination="riX-v5-UWi" id="JCA-Dm-OUl"/>
@@ -863,6 +864,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="K9v-vB-lA4">
                                                     <rect key="frame" x="310" y="7" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="changeWithThemeChanged:" destination="scd-AG-3Bx" eventType="valueChanged" id="deB-BI-Hsj"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -1014,6 +1018,7 @@
                     </tableView>
                     <connections>
                         <outlet property="appIconsCollectionView" destination="duo-YW-lHb" id="6TG-xq-bbo"/>
+                        <outlet property="changeWithThemeLabel" destination="ZK1-Jv-4ZN" id="R8m-3u-wfx"/>
                         <outlet property="iconChangeWithThemeSwitch" destination="K9v-vB-lA4" id="Rua-zf-m2D"/>
                         <outletCollection property="cellLabels" destination="ZK1-Jv-4ZN" collectionClass="NSMutableArray" id="hBm-Ed-iBz"/>
                     </connections>

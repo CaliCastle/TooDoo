@@ -171,6 +171,7 @@
 "settings.titles.general.language" = "Language";
 "settings.titles.notifications" = "Notifications";
 "settings.titles.calendars" = "Calendars";
+"settings.titles.app-icon" = "App Icon";
 
 // Setting headers
 "settings.headers.general" = "General";
@@ -190,6 +191,9 @@
 "settings.calendars.footer" = "To enable/disable Calenders and Reminders, go to system Settings";
 "settings.calendars.sync-calendars" = "Sync to Calendars";
 "settings.calendars.sync-reminders" = "Sync to Reminders";
+
+// Setting App Icon
+"settings.app-icon.change-with-theme" = "Change with theme";
 
 /*
  Category icons categories

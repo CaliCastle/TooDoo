@@ -182,6 +182,8 @@ final class ApplicationManager {
     
     @available(iOS 10.3, *)
     class func changeAppIcon(to iconName: IconName) {
+        guard iconName != .Primary else { resetAppIcon(); return }
+        
         UIApplication.shared.setAlternateIconName(iconName.displayName())
     }
     

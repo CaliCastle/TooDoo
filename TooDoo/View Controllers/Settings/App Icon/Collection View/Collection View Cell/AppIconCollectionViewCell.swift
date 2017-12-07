@@ -32,6 +32,7 @@ class AppIconCollectionViewCell: UICollectionViewCell {
         
         selectedOverlay.alpha = 0
         checkmark.alpha = 0
+        checkmark.tintColor = .white
         checkmark.transform = .init(scaleX: 0, y: 0)
     }
     

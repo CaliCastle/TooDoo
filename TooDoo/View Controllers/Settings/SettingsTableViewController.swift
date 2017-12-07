@@ -30,6 +30,7 @@ class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var generalLabel: UILabel!
     @IBOutlet var notificationsLabel: UILabel!
     @IBOutlet var calendarsLabel: UILabel!
+    @IBOutlet var appIconLabel: UILabel!
     @IBOutlet var soundsLabel: UILabel!
     @IBOutlet var motionEffectsLabel: UILabel!
     
@@ -58,6 +59,7 @@ class SettingsTableViewController: SettingTableViewController {
         generalLabel.text = "settings.titles.general".localized
         notificationsLabel.text = "settings.titles.notifications".localized
         calendarsLabel.text = "settings.titles.calendars".localized
+        appIconLabel.text = "settings.titles.app-icon".localized
         soundsLabel.text = "settings.sounds".localized
         motionEffectsLabel.text = "settings.motion-effects".localized
         setVersionText()

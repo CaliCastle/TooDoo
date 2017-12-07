@@ -25,6 +25,7 @@ final class UserDefaultManager {
     /// - SettingLanguage: The language locale
     /// - SettingCalendarsSync: Sync to calendars setting
     /// - SettingRemindersSync: Sync to reminders setting
+    /// - SettingAppIconChangedWithTheme: Sync app icon with theme
     
     enum Key: String {
         case UserName = "user-name"
@@ -40,6 +41,7 @@ final class UserDefaultManager {
         case SettingLanguage = "setting-language"
         case SettingCalendarsSync = "setting-calendars-sync"
         case SettingRemindersSync = "setting-reminders-sync"
+        case SettingAppIconChangedWithTheme = "setting-app-icon-changed-with-theme"
     }
     
     static let userDefaults = UserDefaults.standard

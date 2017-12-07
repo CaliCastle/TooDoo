@@ -17,6 +17,10 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
     @IBOutlet var cellLabels: [UILabel]!
     @IBOutlet var appIconsCollectionView: UICollectionView!
     
+    // MARK: - Localizable Outlets.
+    
+    @IBOutlet var changeWithThemeLabel: UILabel!
+    
     // MARK: - Properties
     
     let appIcons = ApplicationManager.alternateIcons()
@@ -39,23 +43,49 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
     private var canChangeAppIcon: Bool = true {
         didSet {
             if canChangeAppIcon != oldValue, !canChangeAppIcon {
-                if #available(iOS 11.0, *) {
-                    tableView.performBatchUpdates({
-                        tableView.deleteSections([0], with: .none)
-                    }, completion: nil)
-                } else {
-                    // Fallback on earlier versions
-                    tableView.deleteSections([0], with: .none)
+                DispatchQueue.main.async {
+                    if #available(iOS 11.0, *) {
+                        self.tableView.performBatchUpdates({
+                            self.tableView.deleteSections(IndexSet(integer: 0), with: .none)
+                        }, completion: nil)
+                    } else {
+                        // Fallback on earlier versions
+                        self.tableView.deleteSections(IndexSet(integer: 0), with: .none)
+                    }
                 }
             }
         }
+    }
+    
+    /// Helper for change with theme option.
+    
+    private var changedWithTheme: Bool = false {
+        didSet {
+            if changedWithTheme != oldValue, changedWithTheme {
+                appIconsCollectionView.isUserInteractionEnabled = false
+                appIconsCollectionView.alpha = 0.35
+            } else {
+                appIconsCollectionView.isUserInteractionEnabled = true
+                appIconsCollectionView.alpha = 1
+            }
+        }
+    }
+    
+    /// Localize interface.
+    
+    override func localizeInterface() {
+        super.localizeInterface()
+        
+        title = "settings.titles.app-icon".localized
+        changeWithThemeLabel.text = "settings.app-icon.change-with-theme".localized
     }
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        configureSwitches()
         configureAppIconsCollectionView()
     }
     
@@ -72,6 +102,11 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
         return NSNull()
     }
 
+    fileprivate func configureSwitches() {
+        changedWithTheme = UserDefaultManager.bool(forKey: .SettingAppIconChangedWithTheme)
+        iconChangeWithThemeSwitch.setOn(changedWithTheme, animated: false)
+    }
+    
     /// Check for alternate icons support.
     
     fileprivate func checkAlternateIconSupport() {
@@ -118,10 +153,32 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
         return cellLabels
     }
     
+    /// Change with theme option changed.
+    
+    @IBAction func changeWithThemeChanged(_ sender: UISwitch) {
+        changedWithTheme = sender.isOn
+        
+        // Save setting
+        UserDefaultManager.set(value: sender.isOn, forKey: .SettingAppIconChangedWithTheme)
+        
+        if #available(iOS 10.3, *), sender.isOn {
+            ApplicationManager.changeAppIcon(to: currentThemeIsDark() ? .Primary : .Navy)
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return canChangeAppIcon ? 2 : 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return canChangeAppIcon ? 2 : 1
+        default:
+            return 1
+        }
     }
 
 }
@@ -161,6 +218,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
             let icon = appIcons[indexPath.item]
             
             cell.iconNameLabel.text = icon.displayName()
+            cell.iconNameLabel.textColor = currentThemeIsDark() ? .white : .flatBlack()
             cell.iconImageView.cornerRadius = 12
             cell.iconImageView.layer.masksToBounds = true
             cell.iconImageView.image = UIImage(named: icon.imageName())
@@ -174,30 +232,27 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     fileprivate func setCellSelected(_ selected: Bool, for cell: AppIconCollectionViewCell, animated: Bool = false) {
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
-                if selected {
-                    cell.checkmark.transform = .init(scaleX: 1, y: 1)
-                    cell.checkmark.alpha = 1
-                    cell.checkmark.tintColor = self.currentThemeIsDark() ? .flatWhite() : .flatBlack()
-                    cell.selectedOverlay.alpha = 1
-                    cell.selectedOverlay.backgroundColor = self.currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.5)
-                } else {
-                    cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
-                    cell.checkmark.alpha = 0
-                    cell.selectedOverlay.alpha = 0
-                }
+                self.configureCellSelected(selected, for: cell)
             })
         } else {
-            if selected {
-                cell.checkmark.transform = .init(scaleX: 1, y: 1)
-                cell.checkmark.alpha = 1
-                cell.checkmark.tintColor = currentThemeIsDark() ? .flatWhite() : .flatBlack()
-                cell.selectedOverlay.alpha = 1
-                cell.selectedOverlay.backgroundColor = self.currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.5)
-            } else {
-                cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
-                cell.checkmark.alpha = 0
-                cell.selectedOverlay.alpha = 0
-            }
+            configureCellSelected(selected, for: cell)
+        }
+    }
+    
+    /// Configure cell to be selected.
+    
+    fileprivate func configureCellSelected(_ selected: Bool, for cell: AppIconCollectionViewCell) {
+        if selected {
+            cell.iconNameLabel.textColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+            cell.checkmark.transform = .init(scaleX: 1, y: 1)
+            cell.checkmark.alpha = 1
+            cell.selectedOverlay.alpha = 1
+            cell.selectedOverlay.backgroundColor = currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.75)
+        } else {
+            cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
+            cell.checkmark.alpha = 0
+            cell.selectedOverlay.alpha = 0
+            cell.iconNameLabel.textColor = currentThemeIsDark() ? .white : .flatBlack()
         }
     }
     
