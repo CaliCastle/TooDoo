@@ -28,6 +28,8 @@
 		8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */; };
 		8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */; };
 		8D3AA1521FC7BDB100862C4C /* CategoryIconHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA1511FC7BDB100862C4C /* CategoryIconHeaderView.xib */; };
+		8D3E977E1FD9DF4A00AAEE31 /* icon-unicorn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D3E977C1FD9DF4900AAEE31 /* icon-unicorn@2x.png */; };
+		8D3E977F1FD9DF4A00AAEE31 /* icon-unicorn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D3E977D1FD9DF4A00AAEE31 /* icon-unicorn@3x.png */; };
 		8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784C61F9077820067E0FE /* AppDelegate.swift */; };
 		8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D4784CA1F9077820067E0FE /* Main.storyboard */; };
 		8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */; };
@@ -151,6 +153,8 @@
 		8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
 		8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIconHeaderView.swift; sourceTree = "<group>"; };
 		8D3AA1511FC7BDB100862C4C /* CategoryIconHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryIconHeaderView.xib; sourceTree = "<group>"; };
+		8D3E977C1FD9DF4900AAEE31 /* icon-unicorn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@2x.png"; sourceTree = "<group>"; };
+		8D3E977D1FD9DF4A00AAEE31 /* icon-unicorn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@3x.png"; sourceTree = "<group>"; };
 		8D3ECDF41FC216FF00B39654 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Setup.strings; sourceTree = "<group>"; };
 		8D3ECDF61FC2174800B39654 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		8D3ECDF71FC2178300B39654 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -330,6 +334,15 @@
 				8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */,
 			);
 			path = "Collection View";
+			sourceTree = "<group>";
+		};
+		8D3E977B1FD9DEC700AAEE31 /* Unicorn */ = {
+			isa = PBXGroup;
+			children = (
+				8D3E977C1FD9DF4900AAEE31 /* icon-unicorn@2x.png */,
+				8D3E977D1FD9DF4A00AAEE31 /* icon-unicorn@3x.png */,
+			);
+			path = Unicorn;
 			sourceTree = "<group>";
 		};
 		8D4784BA1F9077820067E0FE = {
@@ -529,6 +542,7 @@
 			children = (
 				8DABC26D1FD7EA2400933ED0 /* icon-primary@2x.png */,
 				8DABC26E1FD7EA2400933ED0 /* icon-primary@3x.png */,
+				8D3E977B1FD9DEC700AAEE31 /* Unicorn */,
 				8DCFF0FF1FD92E04009532A2 /* Olive */,
 				8DCFF0FE1FD92DFB009532A2 /* Rose */,
 				8DCFF0FD1FD92DF5009532A2 /* Indigo */,
@@ -997,6 +1011,7 @@
 				8DCFF11E1FD92FF5009532A2 /* icon-blush@2x.png in Resources */,
 				8DCFF11B1FD92FC8009532A2 /* icon-ebony@3x.png in Resources */,
 				8DABC2621FD7E3CE00933ED0 /* icon-navy@3x.png in Resources */,
+				8D3E977E1FD9DF4A00AAEE31 /* icon-unicorn@2x.png in Resources */,
 				8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */,
 				8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */,
 				8DB49E591FB8D859003240E1 /* checkmark-round.png in Resources */,
@@ -1013,6 +1028,7 @@
 				8D589F741FC1A19500039610 /* Localizable.strings in Resources */,
 				8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */,
 				8D4784CC1F9077820067E0FE /* Main.storyboard in Resources */,
+				8D3E977F1FD9DF4A00AAEE31 /* icon-unicorn@3x.png in Resources */,
 				8D7C79AE1FC6C87A00C225F3 /* Localizable.stringsdict in Resources */,
 				8D809BDA1FC2513F008DF629 /* README.md in Resources */,
 				8DABC2701FD7EA2500933ED0 /* icon-primary@3x.png in Resources */,

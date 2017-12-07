@@ -103,8 +103,14 @@ extension ToDo {
                     NotificationManager.removeTodoReminderNotification(for: self)
                     // Remove from events
                     self.removeFromEvents()
+                    // Set completed to reminders
+                    self.setCompletedToReminders(completed: completed)
                 } else {
                     NotificationManager.registerTodoReminderNotification(for: self)
+                    // Restore to events
+                    self.createToEvents()
+                    // Set completed to reminders
+                    self.setCompletedToReminders(completed: completed)
                 }
             }
         }
@@ -126,6 +132,27 @@ extension ToDo {
         removeFromReminders()
         // Remove from notifications
         NotificationManager.removeTodoReminderNotification(for: self)
+    }
+    
+    /// Complete to reminders.
+    
+    func setCompletedToReminders(completed: Bool) {
+        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync), let identifier = reminderIdentifier else { return }
+        
+        let eventStore = EKEventStore()
+        let reminder = eventStore.calendarItem(withIdentifier: identifier)
+        
+        if let reminder = reminder as? EKReminder {
+            reminder.completionDate = completed ? Date() : nil
+            reminder.isCompleted = completed
+            
+            do {
+                try eventStore.save(reminder, commit: true)
+            } catch {
+                print("Error trying to remove a EKEvent")
+                print("\(error.localizedDescription)")
+            }
+        }
     }
     
     /// Remove from events.
