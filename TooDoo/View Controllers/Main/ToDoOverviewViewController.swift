@@ -459,7 +459,7 @@ class ToDoOverviewViewController: UIViewController {
     
     /// Show menu for more options.
     
-    fileprivate func showSideMenu() {
+    @IBAction fileprivate func showSideMenu() {
         // Play click sound
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
