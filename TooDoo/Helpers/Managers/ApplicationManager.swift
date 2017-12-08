@@ -196,4 +196,36 @@ final class ApplicationManager {
     class func resetAppIcon() {
         UIApplication.shared.setAlternateIconName(nil)
     }
+
+    /// Get top view controller.
+    
+    internal static func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController! {
+        // Tab Bar View Controller
+        if rootViewController is UITabBarController {
+            let tabbarController =  rootViewController as! UITabBarController
+            
+            return topViewControllerWithRootViewController(rootViewController: tabbarController.selectedViewController)
+        }
+        // Navigation ViewController
+        if rootViewController is UINavigationController {
+            let navigationController = rootViewController as! UINavigationController
+            
+            return topViewControllerWithRootViewController(rootViewController: navigationController.visibleViewController)
+        }
+        // Presented View Controller
+        if let controller = rootViewController.presentedViewController {
+            return topViewControllerWithRootViewController(rootViewController: controller)
+        } else {
+            return rootViewController
+        }
+    }
+    
+    /// Get top view controller in window.
+    
+    class func getTopViewControllerInWindow() -> UIViewController? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        guard let window = appDelegate.window else { return nil }
+        
+        return topViewControllerWithRootViewController(rootViewController: window.rootViewController)
+    }
 }

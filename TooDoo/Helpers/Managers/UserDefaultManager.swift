@@ -13,35 +13,65 @@ import UIKit
 final class UserDefaultManager {
     
     /// User Default keys
-    ///
-    /// - UserName: User's name
-    /// - UserAvatar: User's avatar image
-    /// - UserHasBeenUsingSince: Count how many days has the user been using this app
-    /// - SettingSounds: The sounds option in settings
-    /// - SettingAuthentication: The authentication lock for entering the app option in settings
-    /// - SettingThemeMode: The dark or light mode in settings
-    /// - SettingMotionEffects: The motion effect animation
-    /// - SettingNotificationMessage: The custom notification message
-    /// - SettingLanguage: The language locale
-    /// - SettingCalendarsSync: Sync to calendars setting
-    /// - SettingRemindersSync: Sync to reminders setting
-    /// - SettingAppIconChangedWithTheme: Sync app icon with theme
     
     enum Key: String {
+        // - User's name
         case UserName = "user-name"
+        // - User's avatar image
         case UserAvatar = "user-avatar"
-        
+        // - Count how many days has the user been using this app
         case UserHasBeenUsingSince = "user-has-been-using-since"
+    }
+    
+    /// User Setting Keys
+    
+    enum SettingKey: String {
+        /*
+         General settings
+         */
+        /// - The language locale
+        case Language = "language"
         
-        case SettingSounds = "setting-sounds"
-        case SettingAuthentication = "setting-authentication"
-        case SettingThemeMode = "setting-theme-mode"
-        case SettingMotionEffects = "setting-motion-effects"
-        case SettingNotificationMessage = "setting-notification-message"
-        case SettingLanguage = "setting-language"
-        case SettingCalendarsSync = "setting-calendars-sync"
-        case SettingRemindersSync = "setting-reminders-sync"
-        case SettingAppIconChangedWithTheme = "setting-app-icon-changed-with-theme"
+        /*
+         Look & Feel settings
+         */
+        /// - Sync app icon with theme
+        case AppIconChangedWithTheme = "icon-changed-with-theme"
+        /// - The sounds option
+        case Sounds = "sounds"
+        /// - The dark or light mode
+        case ThemeMode = "theme-mode"
+        /// - The motion effect animation
+        case MotionEffects = "motion-effects"
+        
+        /*
+         Notification settings
+         */
+        /// - The custom notification message
+        case NotificationMessage = "notification-message"
+        
+        /*
+         Calendar settings
+         */
+        /// - Sync to calendars setting
+        case CalendarsSync = "calendars-sync"
+        /// - Sync to reminders setting
+        case RemindersSync = "reminders-sync"
+        
+        /*
+         Privacy settings
+         */
+        /// - The authentication lock for opening the app
+        case Authentication = "authentication"
+        /// - Lock app when leaving immediately
+        case LockWhenLeaving = "lock-when-leaving"
+        /// - Blur content to protect privacy
+        case BlurContent = "blur-content"
+        
+        /// Get string.
+        func string() -> String {
+            return "setting-\(rawValue)"
+        }
     }
     
     static let userDefaults = UserDefaults.standard
@@ -55,6 +85,15 @@ final class UserDefaultManager {
         return userDefaults.string(forKey: key.rawValue)
     }
     
+    /// Get a string for user settings key
+    ///
+    /// - Parameter key: The User Setting Key
+    /// - Returns: String result
+    
+    class func string(forKey key: SettingKey) -> String? {
+        return userDefaults.string(forKey: key.string())
+    }
+    
     /// Get an image for a user defaults key
     ///
     /// - Parameter key: The User Default Key
@@ -62,6 +101,17 @@ final class UserDefaultManager {
     
     class func image(forKey key: Key) -> UIImage? {
         guard let imageData = UserDefaults.standard.data(forKey: key.rawValue) else { return nil }
+        
+        return UIImage(data: imageData)
+    }
+    
+    /// Get an image for a user settings key
+    ///
+    /// - Parameter key: The User Setting Key
+    /// - Returns: Image result
+    
+    class func image(forKey key: SettingKey) -> UIImage? {
+        guard let imageData = UserDefaults.standard.data(forKey: key.string()) else { return nil }
         
         return UIImage(data: imageData)
     }
@@ -75,6 +125,15 @@ final class UserDefaultManager {
         return userDefaults.bool(forKey: key.rawValue)
     }
     
+    /// Get boolean for a User Settings key
+    ///
+    /// - Parameter key: The User Setting key
+    /// - Returns: Boolean result
+    
+    class func bool(forKey key: SettingKey) -> Bool {
+        return userDefaults.bool(forKey: key.string())
+    }
+    
     /// Set a value for a User Defaults key
     ///
     /// - Parameters:
@@ -83,6 +142,16 @@ final class UserDefaultManager {
     
     class func set(value: Any?, forKey key: Key) {
         userDefaults.set(value, forKey: key.rawValue)
+    }
+    
+    /// Set a value for a User Settings key
+    ///
+    /// - Parameters:
+    ///   - value: The value to be set
+    ///   - key: The unique user settings key
+    
+    class func set(value: Any?, forKey key: SettingKey) {
+        userDefaults.set(value, forKey: key.string())
     }
     
     /// Get value for key
@@ -94,6 +163,23 @@ final class UserDefaultManager {
     
     class func get(forKey key: Key, _ default: Any? = nil) -> Any? {
         let value = userDefaults.value(forKey: key.rawValue)
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return value
+    }
+    
+    /// Get value for key
+    ///
+    /// - Parameters:
+    ///   - key: The unique user settings key
+    ///   - default: Default value
+    /// - Returns: The value
+    
+    class func get(forKey key: SettingKey, _ default: Any? = nil) -> Any? {
+        let value = userDefaults.value(forKey: key.string())
         
         if let `default` = `default`, value == nil {
             return `default`
@@ -127,6 +213,14 @@ final class UserDefaultManager {
     
     class func remove(for key: Key) {
         userDefaults.removeObject(forKey: key.rawValue)
+    }
+    
+    /// Remove a User Setting object
+    ///
+    /// - Parameter key: The User Default key
+    
+    class func remove(for key: SettingKey) {
+        userDefaults.removeObject(forKey: key.string())
     }
     
     // Private init
@@ -191,19 +285,25 @@ extension UserDefaultManager {
     /// See if sounds setting is enabled.
     
     class func settingSoundsEnabled() -> Bool {
-        return userDefaults.value(forKey: Key.SettingSounds.rawValue) == nil ? true : bool(forKey: .SettingSounds)
+        return userDefaults.value(forKey: SettingKey.Sounds.rawValue) == nil ? true : bool(forKey: .Sounds)
     }
     
-    /// See if authentication setting is enabled.
+    /// See if authentication setting is enabled. (Lock on exit)
     
     class func settingAuthenticationEnabled() -> Bool {
-        return bool(forKey: .SettingAuthentication)
+        return bool(forKey: .Authentication)
+    }
+    
+    /// See if lock on leaving setting is enabled.
+    
+    class func settingLockWhenLeaving() -> Bool {
+        return bool(forKey: .LockWhenLeaving)
     }
     
     /// See if motion effect is enabled.
     
     class func settingMotionEffectsEnabled() -> Bool {
-        return bool(forKey: .SettingMotionEffects)
+        return bool(forKey: .MotionEffects)
     }
     
     /// Get current theme mode.
@@ -211,7 +311,7 @@ extension UserDefaultManager {
     /// - Returns: The theme mode
     
     class func settingThemeMode() -> AppearanceManager.ThemeMode {
-        guard let themeMode = get(forKey: .SettingThemeMode) as? String else { return .Dark }
+        guard let themeMode = get(forKey: .ThemeMode) as? String else { return .Dark }
         
         switch themeMode {
         case AppearanceManager.ThemeMode.Dark.rawValue:

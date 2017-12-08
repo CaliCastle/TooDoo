@@ -123,7 +123,7 @@ final class NotificationManager {
         let content = UNMutableNotificationContent()
         
         // Set title
-        if let title = UserDefaultManager.string(forKey: .SettingNotificationMessage) {
+        if let title = UserDefaultManager.string(forKey: .NotificationMessage) {
             content.title = title
         } else {
             content.title = "notifications.todo.due.title".localized

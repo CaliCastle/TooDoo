@@ -11,7 +11,6 @@ target 'TooDoo' do
   # Pods for TooDoo
   pod 'M13Checkbox'
   pod 'ChameleonFramework/Swift'
-#  pod 'BouncyLayout'
   pod 'Typist'
   pod 'LTMorphingLabel'
   pod 'Haptica'
@@ -24,5 +23,7 @@ target 'TooDoo' do
   pod 'NotificationBannerSwift'
   pod 'DateTimePicker'
   pod 'SideMenu'
-  
+#  pod 'BTNavigationDropdownMenu', :git => 'https://github.com/zkrige/BTNavigationDropdownMenu.git'
+#  pod 'TwicketSegmentedControl'
+
 end

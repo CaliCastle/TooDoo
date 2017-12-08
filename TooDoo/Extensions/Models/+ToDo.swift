@@ -31,7 +31,7 @@ extension ToDo {
     /// Create to events with EventKit.
     
     func createToEvents() {
-        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync) else { return }
+        guard UserDefaultManager.bool(forKey: .CalendarsSync) else { return }
         
         let eventStore = EKEventStore()
         let event = EKEvent(eventStore: eventStore)
@@ -64,7 +64,7 @@ extension ToDo {
     /// Create to reminders with EventKit.
     
     func createToReminders() {
-        guard UserDefaultManager.bool(forKey: .SettingRemindersSync) else { return }
+        guard UserDefaultManager.bool(forKey: .RemindersSync) else { return }
         
         let eventStore = EKEventStore()
         let reminder = EKReminder(eventStore: eventStore)
@@ -137,7 +137,7 @@ extension ToDo {
     /// Complete to reminders.
     
     func setCompletedToReminders(completed: Bool) {
-        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync), let identifier = reminderIdentifier else { return }
+        guard UserDefaultManager.bool(forKey: .CalendarsSync), let identifier = reminderIdentifier else { return }
         
         let eventStore = EKEventStore()
         let reminder = eventStore.calendarItem(withIdentifier: identifier)
@@ -158,7 +158,7 @@ extension ToDo {
     /// Remove from events.
     
     func removeFromEvents() {
-        guard UserDefaultManager.bool(forKey: .SettingCalendarsSync), let identifier = eventIdentifier else { return }
+        guard UserDefaultManager.bool(forKey: .CalendarsSync), let identifier = eventIdentifier else { return }
         
         let eventStore = EKEventStore()
         let event = eventStore.event(withIdentifier: identifier)
@@ -176,7 +176,7 @@ extension ToDo {
     /// Remove from reminders.
     
     func removeFromReminders() {
-        guard UserDefaultManager.bool(forKey: .SettingRemindersSync), let identifier = reminderIdentifier else { return }
+        guard UserDefaultManager.bool(forKey: .RemindersSync), let identifier = reminderIdentifier else { return }
         
         let eventStore = EKEventStore()
         let reminder = eventStore.calendarItem(withIdentifier: identifier)

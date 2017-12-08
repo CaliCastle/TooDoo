@@ -103,7 +103,7 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         messageTextField.attributedPlaceholder = NSAttributedString(string: messageTextField.placeholder!, attributes: [.foregroundColor: isDarkTheme ? UIColor.white.withAlphaComponent(0.6) : UIColor.black.withAlphaComponent(0.6)])
         messageTextField.keyboardAppearance = isDarkTheme ? .dark : .light
         // Pre-fill text
-        if let message = UserDefaultManager.string(forKey: .SettingNotificationMessage) {
+        if let message = UserDefaultManager.string(forKey: .NotificationMessage) {
             notificationMessage = message
         } else {
             notificationMessage = defaultMessage
@@ -114,13 +114,13 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     
     fileprivate func saveNotificationMessage(_ message: String) {
         guard message.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 && message != defaultMessage else {
-            UserDefaultManager.remove(for: .SettingNotificationMessage)
+            UserDefaultManager.remove(for: .NotificationMessage)
             notificationMessage = ""
             
             return
         }
         
-        UserDefaultManager.set(value: message, forKey: .SettingNotificationMessage)
+        UserDefaultManager.set(value: message, forKey: .NotificationMessage)
     }
     
     /// Animate views.

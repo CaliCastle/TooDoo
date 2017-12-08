@@ -119,14 +119,14 @@ final class AppearanceManager {
         }
         
         // Save theme to user defaults
-        UserDefaultManager.set(value: theme.rawValue, forKey: .SettingThemeMode)
+        UserDefaultManager.set(value: theme.rawValue, forKey: .ThemeMode)
         
         // Change global appearances
         changeSwitchAppearance()
         changeNavigationBarAppearance()
         
         // Change app icon
-        if #available(iOS 10.3, *), UserDefaultManager.bool(forKey: .SettingAppIconChangedWithTheme) {
+        if #available(iOS 10.3, *), UserDefaultManager.bool(forKey: .AppIconChangedWithTheme) {
             ApplicationManager.changeAppIcon(to: theme == .Dark ? .Primary : .Navy)
         }
         

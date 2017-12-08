@@ -72,6 +72,11 @@ class SettingsTableViewController: SettingTableViewController {
     fileprivate func configureAppIconImage() {
         appIconImageView.cornerRadius = 6
         appIconImageView.layer.masksToBounds = true
+        
+        if #available(iOS 10.3, *) {
+            let iconName = ApplicationManager.currentAlternateIcon()
+            appIconImageView.image = UIImage(named: iconName.imageName())
+        }
     }
     
     /// Configure icon image views.
@@ -167,13 +172,13 @@ class SettingsTableViewController: SettingTableViewController {
     /// Sounds switch value changed.
     
     @IBAction func soundsSwitchChanged(_ sender: UISwitch) {
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingSounds)
+        UserDefaultManager.set(value: sender.isOn, forKey: .Sounds)
     }
     
     /// Motion effects switch changed.
     
     @IBAction func motionEffectSwitchChanged(_ sender: UISwitch) {
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingMotionEffects)
+        UserDefaultManager.set(value: sender.isOn, forKey: .MotionEffects)
         NotificationManager.send(notification: .SettingMotionEffectsChanged)
     }
     
@@ -190,7 +195,7 @@ class SettingsTableViewController: SettingTableViewController {
                 if success {
                     // User authenticated successfully
                     DispatchQueue.main.async {
-                        UserDefaultManager.set(value: sender.isOn, forKey: .SettingAuthentication)
+                        UserDefaultManager.set(value: sender.isOn, forKey: .Authentication)
                     }
                 } else {
                     // User did not authenticate successfully

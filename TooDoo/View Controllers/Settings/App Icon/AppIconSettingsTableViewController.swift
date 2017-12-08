@@ -103,7 +103,7 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
     }
 
     fileprivate func configureSwitches() {
-        changedWithTheme = UserDefaultManager.bool(forKey: .SettingAppIconChangedWithTheme)
+        changedWithTheme = UserDefaultManager.bool(forKey: .AppIconChangedWithTheme)
         iconChangeWithThemeSwitch.setOn(changedWithTheme, animated: false)
     }
     
@@ -159,7 +159,7 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
         changedWithTheme = sender.isOn
         
         // Save setting
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingAppIconChangedWithTheme)
+        UserDefaultManager.set(value: sender.isOn, forKey: .AppIconChangedWithTheme)
         
         if #available(iOS 10.3, *), sender.isOn {
             ApplicationManager.changeAppIcon(to: currentThemeIsDark() ? .Primary : .Navy)

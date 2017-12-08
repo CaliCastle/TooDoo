@@ -32,6 +32,17 @@ final class DispatchManager {
         registerNotifications()
     }
     
+    // MARK: - Application Entered Background
+    
+    open func applicationDidEnterBackground(_ application: UIApplication) {
+        // Check if user enabled privacy protection
+        
+        // Check if user enabled authentication
+        if UserDefaultManager.settingAuthenticationEnabled() {
+            
+        }
+    }
+    
     // MARK: - Configure application locale.
     
     fileprivate func configureLocale() {

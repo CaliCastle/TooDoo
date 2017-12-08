@@ -215,13 +215,13 @@ class ToDoOverviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard !userAuthenticated else { return }
+//        guard !userAuthenticated else { return }
         
-        if UserDefaultManager.settingAuthenticationEnabled() {
-            present(storyboard!.instantiateViewController(withIdentifier: HomeUnlockViewController.identifier), animated: false, completion: nil)
-        } else {
-            userAuthenticated = true
-        }
+//        if UserDefaultManager.settingAuthenticationEnabled() {
+//            present(storyboard!.instantiateViewController(withIdentifier: HomeUnlockViewController.identifier), animated: false, completion: nil)
+//        } else {
+//            userAuthenticated = true
+//        }
         
         setNeedsStatusBarAppearanceUpdate()
     }
@@ -296,6 +296,9 @@ class ToDoOverviewViewController: UIViewController {
         listen(for: .UserAuthenticated, then: #selector(userHasAuthenticated))
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
         listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
+//        listen(to: .UIApplicationWillEnterForeground) { (_) in
+//            
+//        }
     }
     
     /// Set up views properties.
@@ -559,7 +562,7 @@ class ToDoOverviewViewController: UIViewController {
     /// Set motion effects to views.
     
     private func setMotionEffects() {
-        if UserDefaultManager.bool(forKey: .SettingMotionEffects) {
+        if UserDefaultManager.bool(forKey: .MotionEffects) {
             backgroundGradientView.addMotionEffect(motionEffectForBackground)
             userAvatarContainerView.addMotionEffect(motionEffectForAvatar)
             greetingLabel.addMotionEffect(motionEffectForGreeting)

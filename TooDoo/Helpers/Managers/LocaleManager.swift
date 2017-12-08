@@ -52,7 +52,7 @@ final class LocaleManager {
         // Change current language
         currentLanguage = toLanguage
         // Save localization to user defaults
-        UserDefaultManager.set(value: locale, forKey: .SettingLanguage)
+        UserDefaultManager.set(value: locale, forKey: .Language)
         // Send notification
         NotificationManager.send(notification: .SettingLocaleChanged)
     }
@@ -81,7 +81,7 @@ final class LocaleManager {
     /// Set current language.
     
     private func setCurrentLanguage() {
-        if let language = UserDefaultManager.string(forKey: .SettingLanguage) {
+        if let language = UserDefaultManager.string(forKey: .Language) {
             if let currentLanguage = Language(rawValue: language) {
                 self.currentLanguage = currentLanguage
             }

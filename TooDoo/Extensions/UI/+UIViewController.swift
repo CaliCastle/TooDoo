@@ -40,6 +40,12 @@ extension UIViewController {
         NotificationManager.listen(self, do: `do`, notification: notification, object: object)
     }
     
+    /// Quickly add self to notification center with Apple API Notifications.
+    
+    internal func listen(to notification: NSNotification.Name, then do: @escaping (Notification) -> Void, object: Any? = nil) {
+        NotificationManager.center.addObserver(forName: notification, object: nil, queue: OperationQueue.main, using: `do`)
+    }
+    
     /// Get status bar style based on appearnce.
     
     open func themeStatusBarStyle() -> UIStatusBarStyle {

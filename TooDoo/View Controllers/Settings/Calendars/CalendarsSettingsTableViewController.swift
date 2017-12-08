@@ -81,8 +81,8 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
     /// Configure switches.
     
     fileprivate func configureSwitches() {
-        calendarSwitch.setOn(UserDefaultManager.bool(forKey: .SettingCalendarsSync), animated: true)
-        reminderSwitch.setOn(UserDefaultManager.bool(forKey: .SettingRemindersSync), animated: true)
+        calendarSwitch.setOn(UserDefaultManager.bool(forKey: .CalendarsSync), animated: true)
+        reminderSwitch.setOn(UserDefaultManager.bool(forKey: .RemindersSync), animated: true)
     }
     
     /// Check permissions.
@@ -126,7 +126,7 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
         guard sender.isEnabled else { return }
         
         // Set user defaults
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingCalendarsSync)
+        UserDefaultManager.set(value: sender.isOn, forKey: .CalendarsSync)
     }
     
     /// Reminders sync changed.
@@ -135,7 +135,7 @@ class CalendarsSettingsTableViewController: SettingTableViewController {
         guard sender.isEnabled else { return }
         
         // Set user defaults
-        UserDefaultManager.set(value: sender.isOn, forKey: .SettingRemindersSync)
+        UserDefaultManager.set(value: sender.isOn, forKey: .RemindersSync)
     }
     
     /// Footer titles.
