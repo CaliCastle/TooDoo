@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SideMenuAnimationCollectionViewCell: UICollectionViewCell {
+final class SideMenuAnimationCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     

@@ -11,7 +11,7 @@ import Haptica
 import ViewAnimator
 import BulletinBoard
 
-class MenuTableViewController: UITableViewController, LocalizableInterface {
+final class MenuTableViewController: UITableViewController, LocalizableInterface {
     
     /// Storyboard segues.
     
@@ -83,6 +83,10 @@ class MenuTableViewController: UITableViewController, LocalizableInterface {
         super.viewWillAppear(animated)
         
         tableView.animateViews(animations: [AnimationType.from(direction: .left, offset: 12)], duration: 0.2, animationInterval: 0.056)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
         if let menuHeaderView = tableView.headerView(forSection: 0) as? MenuTableHeaderView {
             menuHeaderView.setupViews()

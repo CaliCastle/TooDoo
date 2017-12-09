@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppIconCollectionViewCell: UICollectionViewCell {
+final class AppIconCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     

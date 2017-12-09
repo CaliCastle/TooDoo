@@ -11,7 +11,7 @@ import Haptica
 import SideMenu
 import LocalAuthentication
 
-class SettingsTableViewController: SettingTableViewController {
+final class SettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     

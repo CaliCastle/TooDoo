@@ -116,6 +116,21 @@ extension UIView {
         }
     }
     
+    /// Add shadow
+    
+    func addShadow(with color: UIColor) {
+        layer.shadowColor = color.cgColor
+        layer.shadowRadius = 8
+        layer.shadowOpacity = 0.7
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+    }
+    
+    /// Remove shadow.
+    
+    func removeShadow() {
+        layer.shadowOpacity = 0
+    }
+    
     /// Quickly add self to notification center.
     
     internal func listen(for notification: NotificationManager.Notifications, then do: Selector, object: Any? = nil) {

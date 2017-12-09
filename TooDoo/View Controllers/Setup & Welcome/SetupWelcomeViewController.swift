@@ -12,7 +12,7 @@ import CoreData
 import BulletinBoard
 import ChameleonFramework
 
-class SetupWelcomeViewController: UIViewController {
+final class SetupWelcomeViewController: UIViewController {
 
     /// Storyboard identifier
     

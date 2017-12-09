@@ -13,7 +13,7 @@ import CoreData
 import SideMenu
 import ViewAnimator
 
-class ToDoOverviewViewController: UIViewController {
+final class ToDoOverviewViewController: UIViewController {
 
     /// Storyboard identifier
     
@@ -124,7 +124,7 @@ class ToDoOverviewViewController: UIViewController {
     
     lazy var longPressForReorderCategoryGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(categoryLongPressed))
-        recognizer.minimumPressDuration = 0.3
+        recognizer.minimumPressDuration = 0.55
         
         todosCollectionView.addGestureRecognizer(recognizer)
         

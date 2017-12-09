@@ -10,7 +10,7 @@ import UIKit
 import Haptica
 import ViewAnimator
 
-class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
+final class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
     
     // MARK: - Interface Builder Outlets.
     
@@ -274,12 +274,20 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
         }
     }
     
+    /// Should select an item.
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if let cell = collectionView.cellForItem(at: indexPath) as? AppIconCollectionViewCell {
+            return !cell.isSelected
+        }
+        
+        return false
+    }
+    
     /// Select an app icon.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? AppIconCollectionViewCell {
-            guard !cell.isSelected else { return }
-            
             setCellSelected(true, for: cell, animated: true)
             Haptic.notification(.success).generate()
         }

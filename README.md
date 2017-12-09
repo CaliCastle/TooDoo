@@ -1,4 +1,10 @@
 # TooDoo - Todo List Made Simple
+
+<p align="center">
+    <a href="https://swift.org"><img src="https://img.shields.io/badge/swift-4-orange.svg"></a>
+    <a href="https://apple.com/ios"><img src="https://img.shields.io/badge/support-iOS%2010%2B-blue.svg"></a>
+    <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiK85uFhP7XAhVGImMKHfgaCtAQFggpMAA&url=https%3A%2F%2Fwww.apache.org%2Flicenses%2FLICENSE-2.0&usg=AOvVaw0oAoArQLfDyX9tvE1z2_Ix"><img src="https://img.shields.io/badge/license-Apache%202.0-red.svg"></a>
+</p>
 <p align="center">
     <img src="https://github.com/CaliCastle/TooDoo/raw/master/Images/TooDoo%20App%20Icon%20Colors.png" />
 </p>

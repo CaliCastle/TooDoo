@@ -18,7 +18,7 @@ protocol MenuTableHeaderViewDelegate {
     
 }
 
-class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, LocalizableInterface {
+final class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, LocalizableInterface {
 
     /// Nib file name.
     
@@ -41,13 +41,13 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, Local
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.localizeInterface()
+        localizeInterface()
+        
+        userNameTextView.delegate = self
         
         DispatchQueue.main.async {
             self.setupViews()
         }
-        
-        userNameTextView.delegate = self
         
         NotificationManager.listen(self, do: #selector(updateAvatar), notification: .UserAvatarChanged, object: nil)
         NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
@@ -64,6 +64,7 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, Local
     /// Set up views.
     
     public func setupViews() {
+        configureColors()
         // Configure content view
         contentView.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
         // Configure avatar
@@ -71,10 +72,8 @@ class MenuTableHeaderView: RecolorableTableHeaderView, UITextViewDelegate, Local
         userAvatarImageView.layer.masksToBounds = true
         userAvatarImageView.image = UserDefaultManager.userAvatar()
         // Configure name
-        userNameTextView.centerVertically()
         userNameTextView.text = UserDefaultManager.string(forKey: .UserName)
-        
-        configureColors()
+        userNameTextView.centerVertically()
     }
     
     /// Configure colors.

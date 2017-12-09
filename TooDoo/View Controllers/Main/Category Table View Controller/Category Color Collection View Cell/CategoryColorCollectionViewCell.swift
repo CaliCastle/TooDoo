@@ -9,7 +9,7 @@
 import UIKit
 import ViewAnimator
 
-class CategoryColorCollectionViewCell: UICollectionViewCell {
+final class CategoryColorCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     

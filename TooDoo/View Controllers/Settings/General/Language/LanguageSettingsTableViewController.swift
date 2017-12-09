@@ -9,7 +9,7 @@
 import UIKit
 import Haptica
 
-class LanguageSettingsTableViewController: UITableViewController {
+final class LanguageSettingsTableViewController: UITableViewController {
 
     /// Languages available.
     

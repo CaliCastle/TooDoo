@@ -10,7 +10,7 @@ import UIKit
 import Haptica
 import LocalAuthentication
 
-class HomeUnlockViewController: UIViewController {
+final class HomeUnlockViewController: UIViewController {
 
     /// Storyboard identifier.
     

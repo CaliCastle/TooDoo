@@ -10,7 +10,7 @@ import UIKit
 import ViewAnimator
 import BulletinBoard
 
-class NotificationSettingsTableViewController: SettingTableViewController {
+final class NotificationSettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     

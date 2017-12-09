@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
+final class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
     
     /// Reuse identifier.
     

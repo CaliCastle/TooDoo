@@ -9,7 +9,7 @@
 import UIKit
 import Haptica
 
-class GeneralSettingsTableViewController: SettingTableViewController {
+final class GeneralSettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     

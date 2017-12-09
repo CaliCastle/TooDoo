@@ -9,7 +9,7 @@
 import UIKit
 import BulletinBoard
 
-class CalendarsSettingsTableViewController: SettingTableViewController {
+final class CalendarsSettingsTableViewController: SettingTableViewController {
 
     // MARK: - Interface Builder Outlets.
     

@@ -26,7 +26,7 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
     
 }
 
-class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
+final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
 
     /// Reuse identifier.
     
@@ -125,6 +125,15 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
         return swipeGestureRecognizer
     }()
     
+    /// Long press gesture for adding a detailed to-do.
+    
+    lazy var longPressGestureRecognizerForAddTodo: UILongPressGestureRecognizer = {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressedAddTodo))
+        longPressGestureRecognizer.minimumPressDuration = 0.35
+        
+        return longPressGestureRecognizer
+    }()
+    
     /// Keyboard manager.
     
     let keyboard = Typist()
@@ -142,6 +151,12 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
     @objc private func draggedWhileAddingTodo(_ gesture: UISwipeGestureRecognizer) {
         NotificationManager.send(notification: .DraggedWhileAddingTodo)
     }
+    
+    /// Called when the
+    
+    @objc private func longPressedAddTodo() {
+        showAddNewTodo(goal: .empty)
+    }
 
     /// Additional initialization.
     
@@ -156,6 +171,8 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
         // Configure tap recognizers
         categoryNameLabel.addGestureRecognizer(tapGestureForName)
         categoryIconImageView.addGestureRecognizer(tapGestureForIcon)
+        // Configure long press recognizer
+        addTodoButton.addGestureRecognizer(longPressGestureRecognizerForAddTodo)
         
         setShadowOpacity()
         

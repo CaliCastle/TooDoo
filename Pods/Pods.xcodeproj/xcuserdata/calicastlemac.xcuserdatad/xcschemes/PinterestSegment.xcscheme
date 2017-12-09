@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C7764D9B746594EA7AC8F5B759F6AE2"
-               BuildableName = "Typist.framework"
-               BlueprintName = "Typist"
+               BlueprintIdentifier = "FECEE591A990DD0D724958FD9AFEF5C4"
+               BuildableName = "PinterestSegment.framework"
+               BlueprintName = "PinterestSegment"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9C7764D9B746594EA7AC8F5B759F6AE2"
-            BuildableName = "Typist.framework"
-            BlueprintName = "Typist"
+            BlueprintIdentifier = "FECEE591A990DD0D724958FD9AFEF5C4"
+            BuildableName = "PinterestSegment.framework"
+            BlueprintName = "PinterestSegment"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

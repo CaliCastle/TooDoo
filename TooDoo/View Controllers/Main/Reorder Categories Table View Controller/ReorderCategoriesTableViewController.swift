@@ -16,7 +16,7 @@ protocol ReorderCategoriesTableViewControllerDelegate {
     func categoriesDoneOrganizing()
 }
 
-class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
+final class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
     
     /// Fetched Results Controller.
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LanguageSettingsTableViewCell: RecolorableTableViewCell {
+final class LanguageSettingsTableViewCell: RecolorableTableViewCell {
 
     /// Reuse identifier.
     

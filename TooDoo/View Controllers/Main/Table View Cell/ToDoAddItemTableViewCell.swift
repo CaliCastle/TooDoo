@@ -24,7 +24,7 @@ protocol ToDoAddItemTableViewCellDelegate {
     
 }
 
-class ToDoAddItemTableViewCell: UITableViewCell {
+final class ToDoAddItemTableViewCell: UITableViewCell {
     
     /// Reuse identifier.
     

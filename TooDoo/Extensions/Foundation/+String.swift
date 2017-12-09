@@ -10,6 +10,10 @@ import Foundation
 
 extension String {
     
+    /// Empty string.
+    
+    static let empty: String = ""
+    
     /// Localized shortcut.
     
     var localized: String {

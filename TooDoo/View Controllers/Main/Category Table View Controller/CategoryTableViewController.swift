@@ -12,7 +12,7 @@ import CoreData
 import ViewAnimator
 import DeckTransition
 
-class CategoryTableViewController: UITableViewController, LocalizableInterface, CALayerDelegate {
+final class CategoryTableViewController: UITableViewController, LocalizableInterface, CALayerDelegate {
 
     /// Category collection type.
     ///

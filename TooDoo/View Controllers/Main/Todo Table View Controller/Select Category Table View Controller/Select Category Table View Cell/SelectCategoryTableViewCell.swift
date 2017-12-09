@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectCategoryTableViewCell: UITableViewCell {
+final class SelectCategoryTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     

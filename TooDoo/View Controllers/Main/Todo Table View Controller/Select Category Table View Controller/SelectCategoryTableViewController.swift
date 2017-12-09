@@ -13,7 +13,7 @@ protocol SelectCategoryTableViewControllerDelegate {
     func categorySelected(_ category: Category)
 }
 
-class SelectCategoryTableViewController: UITableViewController {
+final class SelectCategoryTableViewController: UITableViewController {
  
     /// Selected category.
     

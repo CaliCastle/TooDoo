@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReorderCategoryTableViewCell: UITableViewCell {
+final class ReorderCategoryTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     

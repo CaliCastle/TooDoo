@@ -14,7 +14,7 @@ import BulletinBoard
 import DateTimePicker
 import DeckTransition
 
-class ToDoTableViewController: UITableViewController, LocalizableInterface {
+final class ToDoTableViewController: UITableViewController, LocalizableInterface {
 
     /// Segue enum.
     ///
@@ -87,6 +87,7 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var remindMeLabel: UILabel!
     @IBOutlet var repeatCellLabel: UILabel!
+    @IBOutlet var dueImageView: UIImageView!
     
     /// Default date format.
     
@@ -138,7 +139,6 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
         super.viewDidLoad()
 
         localizeInterface()
-        modalPresentationCapturesStatusBarAppearance = true
         
         configureColors()
         setupViews()
@@ -275,6 +275,9 @@ class ToDoTableViewController: UITableViewController, LocalizableInterface {
     
     fileprivate func configureDueDate() {
         dueSwitch.isOn = hasDue
+        
+        dueImageView.image = dueImageView.image?.withRenderingMode(.alwaysTemplate)
+        dueImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         
         if let todo = todo {
             dueDate = todo.due

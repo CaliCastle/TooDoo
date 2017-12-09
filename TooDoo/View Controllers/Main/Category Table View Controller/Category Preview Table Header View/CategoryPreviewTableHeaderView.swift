@@ -9,7 +9,7 @@
 import UIKit
 import ViewAnimator
 
-class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
+final class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
 
     /// Nib file name.
     

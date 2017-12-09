@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryIconHeaderView: UICollectionReusableView {
+final class CategoryIconHeaderView: UICollectionReusableView {
     
     /// Reusable identifier.
     

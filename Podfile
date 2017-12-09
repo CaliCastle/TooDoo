@@ -23,7 +23,7 @@ target 'TooDoo' do
   pod 'NotificationBannerSwift'
   pod 'DateTimePicker'
   pod 'SideMenu'
+  pod 'PinterestSegment'
 #  pod 'BTNavigationDropdownMenu', :git => 'https://github.com/zkrige/BTNavigationDropdownMenu.git'
-#  pod 'TwicketSegmentedControl'
 
 end

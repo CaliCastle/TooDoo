@@ -11,7 +11,7 @@ import Haptica
 import SideMenu
 import ViewAnimator
 
-class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerDelegate {
+final class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerDelegate {
 
     // MARK: - Interface Builder Outlets.
     
@@ -186,12 +186,20 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
         }
     }
     
+    /// Should select an item.
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if let cell = collectionView.cellForItem(at: indexPath) as? SideMenuAnimationCollectionViewCell {
+            return !cell.isSelected
+        }
+        
+        return false
+    }
+    
     /// Select an item.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? SideMenuAnimationCollectionViewCell {
-            guard !cell.isSelected else { return }
-            
             setCellSelected(true, for: cell, animated: true)
             Haptic.notification(.success).generate()
             
