@@ -52,6 +52,8 @@
 "notification.no-selected-category" = "You must select a category first";
 "notification.name-exists" = "Name already exists";
 
+"notification.side-menu.animation-changed" = "Side menu animation updated";
+
 /*
  Setup Welcome View Controller.
  */
@@ -172,6 +174,7 @@
 "settings.titles.notifications" = "Notifications";
 "settings.titles.calendars" = "Calendars";
 "settings.titles.app-icon" = "App Icon";
+"settings.titles.behaviors" = "Behaviors";
 
 // Setting headers
 "settings.headers.general" = "General";
@@ -194,6 +197,9 @@
 
 // Setting App Icon
 "settings.app-icon.change-with-theme" = "Change with theme";
+
+// Setting Behaviors
+"settings.behaviors.side-menu-animation" = "Side menu animation";
 
 /*
  Category icons categories

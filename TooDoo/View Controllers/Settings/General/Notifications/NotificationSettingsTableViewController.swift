@@ -20,6 +20,8 @@ class NotificationSettingsTableViewController: SettingTableViewController {
     @IBOutlet var notificationWidgetView: UIView!
     @IBOutlet var notificationWidgetMessageLabel: UILabel!
     
+    @IBOutlet var appIconImageView: UIImageView!
+    
     // MARK: - Localizable Outlets.
     
     @IBOutlet var enableLabel: UILabel!
@@ -65,6 +67,7 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         super.viewDidLoad()
 
         notificationWidgetView.backgroundColor = currentThemeIsDark() ? UIColor.white.withAlphaComponent(0.8) : UIColor.white.withAlphaComponent(0.9)
+        configureAppIconImage()
         configureTextField()
         animateViews()
         
@@ -91,6 +94,15 @@ class NotificationSettingsTableViewController: SettingTableViewController {
         notificationMessageLabel.text = "dUh-Si-LBV.text".localized
         messageTextField.placeholder = "PSE-Nm-hRW.placeholder".localized
         justNowLabel.text = "bWR-5i-ucd.text".localized
+    }
+    
+    /// Configure app icon to be cornered.
+    
+    fileprivate func configureAppIconImage() {
+        if #available(iOS 10.3, *) {
+            let iconName = ApplicationManager.currentAlternateIcon()
+            appIconImageView.image = UIImage(named: iconName.imageName())
+        }
     }
     
     /// Configure text field.

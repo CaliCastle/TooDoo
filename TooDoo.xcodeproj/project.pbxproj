@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3CB54E0EF5F8FF069BCA2FD2 /* Pods_TooDoo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 956F67EA935055512DB22579 /* Pods_TooDoo.framework */; };
+		8D030E081FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E071FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift */; };
+		8D030E0B1FDBCCF500FA5ED5 /* +UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */; };
+		8D030E0E1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */; };
+		8D030E161FDBD52300FA5ED5 /* Side_Menu_Slide_Out.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8D030E121FDBD52300FA5ED5 /* Side_Menu_Slide_Out.gif */; };
+		8D030E171FDBD52300FA5ED5 /* Side_Menu_Slide_In.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8D030E131FDBD52300FA5ED5 /* Side_Menu_Slide_In.gif */; };
+		8D030E181FDBD52300FA5ED5 /* Side_Menu_Fade.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8D030E141FDBD52300FA5ED5 /* Side_Menu_Fade.gif */; };
+		8D030E191FDBD52300FA5ED5 /* Side_Menu_Slide_In_Out.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8D030E151FDBD52300FA5ED5 /* Side_Menu_Slide_In_Out.gif */; };
 		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* +UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
@@ -131,6 +138,13 @@
 
 /* Begin PBXFileReference section */
 		0A0CD7DA27E89FF9555CD299 /* Pods-TooDoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.release.xcconfig"; sourceTree = "<group>"; };
+		8D030E071FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorsSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIImage.swift"; sourceTree = "<group>"; };
+		8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D030E121FDBD52300FA5ED5 /* Side_Menu_Slide_Out.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_Out.gif; sourceTree = "<group>"; };
+		8D030E131FDBD52300FA5ED5 /* Side_Menu_Slide_In.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_In.gif; sourceTree = "<group>"; };
+		8D030E141FDBD52300FA5ED5 /* Side_Menu_Fade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Fade.gif; sourceTree = "<group>"; };
+		8D030E151FDBD52300FA5ED5 /* Side_Menu_Slide_In_Out.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_In_Out.gif; sourceTree = "<group>"; };
 		8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUnlockViewController.swift; sourceTree = "<group>"; };
 		8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIMotionEffect.swift"; sourceTree = "<group>"; };
 		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
@@ -292,6 +306,66 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8D030E031FDB546900FA5ED5 /* Look & Feel */ = {
+			isa = PBXGroup;
+			children = (
+				8DCFF0F51FD8757D009532A2 /* App Icon */,
+				8D030E061FDB54C600FA5ED5 /* Behaviors */,
+			);
+			path = "Look & Feel";
+			sourceTree = "<group>";
+		};
+		8D030E041FDB54AF00FA5ED5 /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Privacy;
+			sourceTree = "<group>";
+		};
+		8D030E061FDB54C600FA5ED5 /* Behaviors */ = {
+			isa = PBXGroup;
+			children = (
+				8D030E0C1FDBCFD000FA5ED5 /* Collection View Cell */,
+				8D030E071FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift */,
+			);
+			path = Behaviors;
+			sourceTree = "<group>";
+		};
+		8D030E0C1FDBCFD000FA5ED5 /* Collection View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */,
+			);
+			path = "Collection View Cell";
+			sourceTree = "<group>";
+		};
+		8D030E0F1FDBD50700FA5ED5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				8D030E111FDBD51600FA5ED5 /* Animations */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		8D030E101FDBD50E00FA5ED5 /* Side Menu */ = {
+			isa = PBXGroup;
+			children = (
+				8D030E141FDBD52300FA5ED5 /* Side_Menu_Fade.gif */,
+				8D030E151FDBD52300FA5ED5 /* Side_Menu_Slide_In_Out.gif */,
+				8D030E131FDBD52300FA5ED5 /* Side_Menu_Slide_In.gif */,
+				8D030E121FDBD52300FA5ED5 /* Side_Menu_Slide_Out.gif */,
+			);
+			path = "Side Menu";
+			sourceTree = "<group>";
+		};
+		8D030E111FDBD51600FA5ED5 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				8D030E101FDBD50E00FA5ED5 /* Side Menu */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		8D1642D41FB4F28D004F306F /* Collection View Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +473,7 @@
 		8D4784DD1F9077B30067E0FE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8D030E0F1FDBD50700FA5ED5 /* Images */,
 				8DABC25D1FD7E3B200933ED0 /* App Icons */,
 				8D589F6F1FC19DCE00039610 /* i18n */,
 				8DCBEA561FB2A5DA00AD34D9 /* Sounds */,
@@ -611,6 +686,7 @@
 				8DBA55911FC430F80012B941 /* +UITextView.swift */,
 				8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */,
 				8DCC7EF81FCBA09B000E99BA /* +UITableViewCell.swift */,
+				8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -901,6 +977,8 @@
 			isa = PBXGroup;
 			children = (
 				8DD7CAEE1FCEC66100EFA73A /* Language */,
+				8DF55B2A1FCAED1C00A1DA95 /* Notifications */,
+				8D2075C11FCFFEA500FBE622 /* Calendars */,
 				8DCC7EFA1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift */,
 			);
 			path = General;
@@ -910,9 +988,8 @@
 			isa = PBXGroup;
 			children = (
 				8DF55B2B1FCAED2100A1DA95 /* General */,
-				8DF55B2A1FCAED1C00A1DA95 /* Notifications */,
-				8D2075C11FCFFEA500FBE622 /* Calendars */,
-				8DCFF0F51FD8757D009532A2 /* App Icon */,
+				8D030E031FDB546900FA5ED5 /* Look & Feel */,
+				8D030E041FDB54AF00FA5ED5 /* Privacy */,
 				8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */,
 			);
 			path = Settings;
@@ -1012,6 +1089,7 @@
 				8DCFF11B1FD92FC8009532A2 /* icon-ebony@3x.png in Resources */,
 				8DABC2621FD7E3CE00933ED0 /* icon-navy@3x.png in Resources */,
 				8D3E977E1FD9DF4A00AAEE31 /* icon-unicorn@2x.png in Resources */,
+				8D030E161FDBD52300FA5ED5 /* Side_Menu_Slide_Out.gif in Resources */,
 				8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */,
 				8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */,
 				8DB49E591FB8D859003240E1 /* checkmark-round.png in Resources */,
@@ -1019,11 +1097,13 @@
 				8DCFF11A1FD92FC8009532A2 /* icon-ebony@2x.png in Resources */,
 				8DCFF10B1FD92EF4009532A2 /* icon-mocha@2x.png in Resources */,
 				8DABC26F1FD7EA2500933ED0 /* icon-primary@2x.png in Resources */,
+				8D030E191FDBD52300FA5ED5 /* Side_Menu_Slide_In_Out.gif in Resources */,
 				8DCFF1121FD92F5F009532A2 /* icon-flamingo@3x.png in Resources */,
 				8D1599051FAAE7220004846F /* Setup.storyboard in Resources */,
 				8D4784D41F9077820067E0FE /* LaunchScreen.storyboard in Resources */,
 				8DCFF10F1FD92F20009532A2 /* icon-indigo@3x.png in Resources */,
 				8D4784D11F9077820067E0FE /* Assets.xcassets in Resources */,
+				8D030E171FDBD52300FA5ED5 /* Side_Menu_Slide_In.gif in Resources */,
 				8DCFF1161FD92F93009532A2 /* icon-emerald@3x.png in Resources */,
 				8D589F741FC1A19500039610 /* Localizable.strings in Resources */,
 				8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */,
@@ -1035,6 +1115,7 @@
 				8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */,
 				8DCFF1021FD92E9B009532A2 /* icon-rose@2x.png in Resources */,
 				8DABC2661FD7E45000933ED0 /* icon-bumblebee@2x.png in Resources */,
+				8D030E181FDBD52300FA5ED5 /* Side_Menu_Fade.gif in Resources */,
 				8DCFF10E1FD92F20009532A2 /* icon-indigo@2x.png in Resources */,
 				8DB49E561FB8D859003240E1 /* alert-round.png in Resources */,
 				8DABC26C1FD7E60200933ED0 /* icon-navy-alt@2x.png in Resources */,
@@ -1176,6 +1257,7 @@
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */,
+				8D030E0B1FDBCCF500FA5ED5 /* +UIImage.swift in Sources */,
 				8DCFF0F71FD8759E009532A2 /* AppIconSettingsTableViewController.swift in Sources */,
 				8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */,
 				8DCBEA611FB2E69D00AD34D9 /* +UINavigationController.swift in Sources */,
@@ -1192,6 +1274,7 @@
 				8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */,
 				8DCFF1231FD93AD1009532A2 /* AppIconCollectionViewCell.swift in Sources */,
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
+				8D030E081FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift in Sources */,
 				8DD7CAF31FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift in Sources */,
 				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
@@ -1208,6 +1291,7 @@
 				8DB49E631FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift in Sources */,
 				8DCC7EFE1FCBBB1A000E99BA /* SettingTableViewController.swift in Sources */,
 				8D2075BA1FCF9E6600FBE622 /* +DateFormatter.swift in Sources */,
+				8D030E0E1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift in Sources */,
 				8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */,
 				8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */,
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,

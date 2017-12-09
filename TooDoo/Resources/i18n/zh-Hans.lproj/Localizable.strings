@@ -52,6 +52,8 @@
 "notification.no-selected-category" = "必须选择一个分类";
 "notification.name-exists" = "名字已存在";
 
+"notification.side-menu.animation-changed" = "侧边栏动画已更新";
+
 /*
  Setup Welcome View Controller.
  */
@@ -171,6 +173,7 @@
 "settings.titles.notifications" = "通知提醒";
 "settings.titles.calendars" = "日历";
 "settings.titles.app-icon" = "App图标";
+"settings.titles.behaviors" = "行为样式";
 
 // Setting headers
 "settings.headers.general" = "通用";
@@ -193,6 +196,10 @@
 
 // Setting App Icon
 "settings.app-icon.change-with-theme" = "与主题同步";
+
+
+// Setting Behaviors
+"settings.behaviors.side-menu-animation" = "侧边栏菜单动画";
 
 /*
  Category icons categories

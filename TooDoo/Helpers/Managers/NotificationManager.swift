@@ -46,22 +46,35 @@ final class NotificationManager {
     /// - SettingLocaleChanged: When the user changed language.
     
     public enum Notifications: String, NotificationName {
+        /*
+         Events
+         */
         case UserHasSetup = "user-has-setup"
         case UserNameChanged = "user-name-changed"
         case UserAvatarChanged = "user-avatar-changed"
         case UserAuthenticated = "user-authenticated"
         case UserAuthenticationRedirect = "user-authentication-redirect"
         
+        /*
+         Show page
+         */
         case ShowAddCategory = "show-add-category"
         case ShowAddToDo = "show-add-todo"
         case ShowSettings = "show-settings"
         
+        /*
+         Status change
+         */
         case DraggedWhileAddingTodo = "dragged-while-adding-todo"
         case UpdateStatusBar = "update-status-bar"
         
+        /*
+         Settings
+         */
         case SettingMotionEffectsChanged = "setting-motion-effects-changed"
         case SettingThemeChanged = "setting-theme-changed"
         case SettingLocaleChanged = "setting-locale-changed"
+        case SettingAppIconChanged = "setting-app-icon-changed"
     }
     
     /// Local Notifications.

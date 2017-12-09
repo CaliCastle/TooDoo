@@ -148,6 +148,11 @@ class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableI
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // Check for smaller device
+        if UIScreen.main.bounds.height <= 600 {
+            cardContainerView.cornerRadius = 18
+        }
+        
         // Configure tap recognizers
         categoryNameLabel.addGestureRecognizer(tapGestureForName)
         categoryIconImageView.addGestureRecognizer(tapGestureForIcon)

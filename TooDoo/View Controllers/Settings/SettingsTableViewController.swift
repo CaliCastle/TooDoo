@@ -8,6 +8,7 @@
 
 import UIKit
 import Haptica
+import SideMenu
 import LocalAuthentication
 
 class SettingsTableViewController: SettingTableViewController {
@@ -33,6 +34,7 @@ class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var appIconLabel: UILabel!
     @IBOutlet var soundsLabel: UILabel!
     @IBOutlet var motionEffectsLabel: UILabel!
+    @IBOutlet var behaviorsLabel: UILabel!
     
     /// Switch types.
     
@@ -50,6 +52,12 @@ class SettingsTableViewController: SettingTableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureAppIconImage()
+    }
+    
     /// Localize interface.
     
     override func localizeInterface() {
@@ -62,6 +70,7 @@ class SettingsTableViewController: SettingTableViewController {
         appIconLabel.text = "settings.titles.app-icon".localized
         soundsLabel.text = "settings.sounds".localized
         motionEffectsLabel.text = "settings.motion-effects".localized
+        behaviorsLabel.text = "settings.titles.behaviors".localized
         setVersionText()
         setupAuthenticationProperties()
         configureIconImages()
@@ -114,7 +123,6 @@ class SettingsTableViewController: SettingTableViewController {
     internal override func setupTableView() {
         super.setupTableView()
         
-        configureAppIconImage()
         configureIconImages()
         configureSwitches()
     }

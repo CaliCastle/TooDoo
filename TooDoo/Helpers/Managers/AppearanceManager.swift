@@ -35,6 +35,33 @@ final class AppearanceManager {
         case Light = "light"
     }
     
+    // Side menu animation behavior
+    enum SideMenuAnimation: String {
+        case SlideIn = "Side_Menu_Slide_In"
+        case SlideInOut = "Side_Menu_Slide_In_Out"
+        case SlideOut = "Side_Menu_Slide_Out"
+        case Fade = "Side_Menu_Fade"
+        
+        /// Get present mode.
+        func presentMode() -> SideMenuManager.MenuPresentMode {
+            switch self {
+            case .Fade:
+                return .menuDissolveIn
+            case .SlideIn:
+                return .menuSlideIn
+            case .SlideOut:
+                return .viewSlideOut
+            default:
+                return .viewSlideInOut
+            }
+        }
+        
+        /// Get image.
+        func image() -> UIImage? {
+            return UIImage.gifImageWithName(rawValue)
+        }
+    }
+    
     /// Singleton standard instance.
     
     public static let `default` = AppearanceManager()
@@ -87,9 +114,24 @@ final class AppearanceManager {
     
     internal func changeSideMenuAppearance() {
         SideMenuManager.default.menuFadeStatusBar = false
-        SideMenuManager.default.menuPresentMode = .viewSlideInOut
-        SideMenuManager.default.menuShadowOpacity = 0.15
+        SideMenuManager.default.menuShadowOpacity = 0.2
         SideMenuManager.default.menuWidth = 300
+        
+        // Load from user settings
+        if let animationType = SideMenuAnimation(rawValue: UserDefaultManager.string(forKey: .SideMenuAnimation, SideMenuAnimation.SlideInOut.rawValue)!) {
+            SideMenuManager.default.menuPresentMode = animationType.presentMode()
+        }
+    }
+    
+    /// Get side menu animations.
+    
+    open func sideMenuAnimations() -> [SideMenuAnimation] {
+        return [
+            .SlideInOut,
+            .SlideIn,
+            .SlideOut,
+            .Fade
+        ]
     }
     
     // MARK: - Switch Controls.

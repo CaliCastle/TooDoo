@@ -103,7 +103,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi, %name%!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3V-9A-d9Q">
-                                <rect key="frame" x="40" y="84" width="315" height="33"/>
+                                <rect key="frame" x="40" y="78" width="325" height="33"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -113,13 +113,13 @@
                                 </connections>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9p-kw-NAc" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="40" y="128" width="305" height="25"/>
+                                <rect key="frame" x="40" y="119" width="305" height="25"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no todos today." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzt-6i-3oP" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="40" y="164" width="305" height="18"/>
+                                <rect key="frame" x="40" y="155" width="305" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="ZKz-Xd-07U"/>
                                 </constraints>
@@ -131,7 +131,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no todos today." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsW-xc-lcL" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="40" y="184" width="327" height="20"/>
+                                <rect key="frame" x="40" y="175" width="327" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="ICS-az-G0c"/>
                                 </constraints>
@@ -143,7 +143,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ogu-d4-Yvt">
-                                <rect key="frame" x="0.0" y="224" width="375" height="578"/>
+                                <rect key="frame" x="0.0" y="215" width="375" height="587"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wh7-y6-AUF" customClass="CenterCellCollectionViewFlowLayout" customModule="TooDoo" customModuleProvider="target">
                                     <size key="itemSize" width="320" height="400"/>
@@ -153,7 +153,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToDoCategoryOverviewCell" id="ZdY-Vh-DQU" customClass="ToDoCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="89" width="320" height="400"/>
+                                        <rect key="frame" x="0.0" y="93.666666666666671" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -407,7 +407,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="20"/>
+                                                            <real key="value" value="24"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -445,7 +445,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddCategoryOverviewCell" id="5fz-jR-nQi" customClass="AddCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="330" y="89" width="320" height="400"/>
+                                        <rect key="frame" x="330" y="93.666666666666671" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
@@ -520,7 +520,7 @@
                             <constraint firstItem="ogu-d4-Yvt" firstAttribute="top" secondItem="DsW-xc-lcL" secondAttribute="bottom" constant="20" id="Afo-cb-DS3"/>
                             <constraint firstItem="ZUy-L5-o8r" firstAttribute="top" secondItem="meb-ds-NIi" secondAttribute="top" constant="-10" id="CKc-s3-EZz"/>
                             <constraint firstItem="DsW-xc-lcL" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="HFM-wA-S2p"/>
-                            <constraint firstItem="e3V-9A-d9Q" firstAttribute="top" secondItem="ukM-SL-0bF" secondAttribute="bottom" constant="20" id="HQM-Yy-8PU"/>
+                            <constraint firstItem="e3V-9A-d9Q" firstAttribute="top" secondItem="ukM-SL-0bF" secondAttribute="bottom" constant="14" id="HQM-Yy-8PU"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="l9p-kw-NAc" secondAttribute="trailing" constant="30" id="JVc-yL-yNA"/>
                             <constraint firstItem="e3V-9A-d9Q" firstAttribute="leading" secondItem="aS1-Gl-qfS" secondAttribute="leading" constant="40" id="Nwj-Ge-Mff"/>
                             <constraint firstAttribute="trailing" secondItem="ZUy-L5-o8r" secondAttribute="trailing" constant="-10" id="Oob-cu-qAg"/>
@@ -528,8 +528,8 @@
                             <constraint firstItem="DsW-xc-lcL" firstAttribute="top" secondItem="fzt-6i-3oP" secondAttribute="bottom" constant="2" id="YCC-WY-D2z"/>
                             <constraint firstAttribute="bottom" secondItem="ZUy-L5-o8r" secondAttribute="bottom" constant="-10" id="Z5B-hm-BGY"/>
                             <constraint firstItem="ZUy-L5-o8r" firstAttribute="leading" secondItem="meb-ds-NIi" secondAttribute="leading" constant="-10" id="aMj-GB-tIg"/>
-                            <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="e3V-9A-d9Q" secondAttribute="trailing" constant="20" id="cfZ-Fj-WUB"/>
-                            <constraint firstItem="l9p-kw-NAc" firstAttribute="top" secondItem="e3V-9A-d9Q" secondAttribute="bottom" constant="11" id="cm7-yP-GBl"/>
+                            <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="e3V-9A-d9Q" secondAttribute="trailing" constant="10" id="cfZ-Fj-WUB"/>
+                            <constraint firstItem="l9p-kw-NAc" firstAttribute="top" secondItem="e3V-9A-d9Q" secondAttribute="bottom" constant="8" id="cm7-yP-GBl"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="trailing" secondItem="DsW-xc-lcL" secondAttribute="trailing" constant="8" id="eZl-Yf-E0N"/>
                             <constraint firstItem="aS1-Gl-qfS" firstAttribute="bottom" secondItem="ogu-d4-Yvt" secondAttribute="bottom" constant="10" id="fOB-Og-9Un"/>
                             <constraint firstItem="ukM-SL-0bF" firstAttribute="top" secondItem="aS1-Gl-qfS" secondAttribute="top" constant="20" id="kOO-0t-MG3"/>

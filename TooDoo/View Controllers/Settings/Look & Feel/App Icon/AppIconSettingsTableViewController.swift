@@ -102,6 +102,8 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
         return NSNull()
     }
 
+    /// Configure switches.
+    
     fileprivate func configureSwitches() {
         changedWithTheme = UserDefaultManager.bool(forKey: .AppIconChangedWithTheme)
         iconChangeWithThemeSwitch.setOn(changedWithTheme, animated: false)
@@ -223,7 +225,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
             cell.iconImageView.layer.masksToBounds = true
             cell.iconImageView.image = UIImage(named: icon.imageName())
             
-            setCellSelected(icon == ApplicationManager.currentAlternateIcon(), for: cell)
+            setCellSelected(cell.isSelected, for: cell)
         }
     }
     

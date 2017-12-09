@@ -43,6 +43,8 @@ final class UserDefaultManager {
         case ThemeMode = "theme-mode"
         /// - The motion effect animation
         case MotionEffects = "motion-effects"
+        /// - The present animation for side menu
+        case SideMenuAnimation = "side-menu-animation"
         
         /*
          Notification settings
@@ -81,8 +83,14 @@ final class UserDefaultManager {
     /// - Parameter key: The User Default Key
     /// - Returns: String result
     
-    class func string(forKey key: Key) -> String? {
-        return userDefaults.string(forKey: key.rawValue)
+    class func string(forKey key: Key, _ default: String? = nil) -> String? {
+        let value = userDefaults.string(forKey: key.rawValue)
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return value
     }
     
     /// Get a string for user settings key
@@ -90,8 +98,14 @@ final class UserDefaultManager {
     /// - Parameter key: The User Setting Key
     /// - Returns: String result
     
-    class func string(forKey key: SettingKey) -> String? {
-        return userDefaults.string(forKey: key.string())
+    class func string(forKey key: SettingKey, _ default: String? = nil) -> String? {
+        let value = userDefaults.string(forKey: key.string())
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return value
     }
     
     /// Get an image for a user defaults key
