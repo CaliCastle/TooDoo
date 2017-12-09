@@ -215,14 +215,6 @@ class ToDoOverviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        guard !userAuthenticated else { return }
-        
-//        if UserDefaultManager.settingAuthenticationEnabled() {
-//            present(storyboard!.instantiateViewController(withIdentifier: HomeUnlockViewController.identifier), animated: false, completion: nil)
-//        } else {
-//            userAuthenticated = true
-//        }
-        
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -296,9 +288,10 @@ class ToDoOverviewViewController: UIViewController {
         listen(for: .UserAuthenticated, then: #selector(userHasAuthenticated))
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
         listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
-//        listen(to: .UIApplicationWillEnterForeground) { (_) in
-//            
-//        }
+        /// Reset time label when is about to enter foreground
+        listenTo(.UIApplicationWillEnterForeground, { (_) in
+            self.setupTimeLabel()
+        })
     }
     
     /// Set up views properties.

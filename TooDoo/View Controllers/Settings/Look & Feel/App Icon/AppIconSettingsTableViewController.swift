@@ -128,11 +128,17 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
         if #available(iOS 10.3, *) {
             appIconsCollectionView.layer.mask = gradientMaskForIcons
             appIconsCollectionView.contentOffset = CGPoint(x: -10, y: 0)
+            // Add bouncy layout
+            let layout = BouncyLayoutCollectionViewLayout(style: .prominent)
+            layout.scrollDirection = .horizontal
+            
+            appIconsCollectionView.collectionViewLayout = layout
+            appIconsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 70)
             
             let currentIconName = ApplicationManager.currentAlternateIcon()
             if let index = appIcons.index(of: currentIconName) {
                 appIconsCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-                appIconsCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 20)], duration: 0.35, animationInterval: 0.09)
+                appIconsCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: false)
             }
         }
     }
@@ -191,10 +197,16 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
 
 extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    /// Edge insets for section.
+    /// Item size.
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 70)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 78, height: 98)
+    }
+    
+    /// Item spacing.
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
     }
     
     /// How many items.
@@ -221,13 +233,15 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
         if #available(iOS 10.3, *) {
             let icon = appIcons[indexPath.item]
             
-            cell.iconNameLabel.text = icon.displayName()
-            cell.iconNameLabel.textColor = currentThemeIsDark() ? .white : .flatBlack()
-            cell.iconImageView.cornerRadius = 12
-            cell.iconImageView.layer.masksToBounds = true
-            cell.iconImageView.image = UIImage(named: icon.imageName())
-            
-            setCellSelected(cell.isSelected, for: cell)
+            DispatchQueue.main.async {
+                cell.iconNameLabel.text = icon.displayName()
+                cell.iconNameLabel.textColor = self.currentThemeIsDark() ? .white : .flatBlack()
+                cell.iconImageView.cornerRadius = 12
+                cell.iconImageView.layer.masksToBounds = true
+                cell.iconImageView.image = UIImage(named: icon.imageName())
+                
+                self.setCellSelected(cell.isSelected, for: cell)
+            }
         }
     }
     
@@ -264,6 +278,8 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? AppIconCollectionViewCell {
+            guard !cell.isSelected else { return }
+            
             setCellSelected(true, for: cell, animated: true)
             Haptic.notification(.success).generate()
         }

@@ -56,10 +56,10 @@ final class AppearanceManager {
             }
         }
         
-        /// Get image.
-        func image() -> UIImage? {
-            return UIImage.gifImageWithName(rawValue)
-        }
+//        /// Get image.
+//        func image() -> UIImage? {
+//            return UIImage.gifImageWithName(rawValue)
+//        }
     }
     
     /// Singleton standard instance.

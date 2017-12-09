@@ -61,8 +61,10 @@ class LanguageSettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Generate haptic feedback
         Haptic.notification(.success).generate()
-        
+        // Change locale
         LocaleManager.default.changeLocale(to: languages[indexPath.row])
+        // Show notification
+        NotificationManager.showBanner(title: "notification.language-changed".localized, type: .success)
         
         let _ = navigationController?.popViewController(animated: true)
     }

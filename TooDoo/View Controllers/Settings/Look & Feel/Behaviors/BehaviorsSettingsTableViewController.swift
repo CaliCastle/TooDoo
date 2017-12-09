@@ -31,7 +31,7 @@ class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerD
     private lazy var gradientMaskForSideMenuAnimations: CAGradientLayer = {
         let gradientMask = CAGradientLayer()
         gradientMask.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradientMask.locations = [0.75, 1]
+        gradientMask.locations = [0.6, 1]
         gradientMask.startPoint = CGPoint(x: 0, y: 0.5)
         gradientMask.endPoint = CGPoint(x: 1, y: 0.5)
         gradientMask.delegate = self
@@ -61,7 +61,6 @@ class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerD
             if let index = sideMenuAnimations.index(of: animationType) {
                 sideMenuAnimationCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
                 sideMenuAnimationCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: false)
-                sideMenuAnimationCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 50)], duration: 0.38, animationInterval: 0.15)
             }
         }
     }
@@ -85,6 +84,11 @@ class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerD
     
     fileprivate func configureSideMenuAnimationCollectionView() {
         sideMenuAnimationCollectionView.layer.mask = gradientMaskForSideMenuAnimations
+        
+        let layout = BouncyLayoutCollectionViewLayout(style: .prominent)
+        layout.scrollDirection = .horizontal
+        
+        sideMenuAnimationCollectionView.collectionViewLayout = layout
     }
     
     /// Update gradient frame when scrolling.
@@ -110,6 +114,18 @@ class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerD
 }
 
 extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    /// Item size.
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 190, height: 370)
+    }
+    
+    /// Item spacing.
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
+    }
     
     /// How many sections.
     
@@ -137,7 +153,7 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
     
     fileprivate func configure(_ cell: SideMenuAnimationCollectionViewCell, at indexPath: IndexPath) {
         cell.layer.masksToBounds = true
-        cell.animationImageView.image = sideMenuAnimations[indexPath.item].image()
+        cell.animationImageView.loadGif(name: sideMenuAnimations[indexPath.item].rawValue)
         
         setCellSelected(cell.isSelected, for: cell)
     }
@@ -174,6 +190,8 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? SideMenuAnimationCollectionViewCell {
+            guard !cell.isSelected else { return }
+            
             setCellSelected(true, for: cell, animated: true)
             Haptic.notification(.success).generate()
             

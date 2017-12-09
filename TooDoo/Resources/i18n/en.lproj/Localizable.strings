@@ -51,7 +51,7 @@
 "notification.goal-limit-maxed" = "Goal cannot be longer than %d characters";
 "notification.no-selected-category" = "You must select a category first";
 "notification.name-exists" = "Name already exists";
-
+"notification.language-changed" = "Language changed";
 "notification.side-menu.animation-changed" = "Side menu animation updated";
 
 /*

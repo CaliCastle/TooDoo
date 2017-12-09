@@ -51,7 +51,7 @@
 "notification.goal-limit-maxed" = "待办事项不能超过%d个字符";
 "notification.no-selected-category" = "必须选择一个分类";
 "notification.name-exists" = "名字已存在";
-
+"notification.language-changed" = "语言已更改";
 "notification.side-menu.animation-changed" = "侧边栏动画已更新";
 
 /*
