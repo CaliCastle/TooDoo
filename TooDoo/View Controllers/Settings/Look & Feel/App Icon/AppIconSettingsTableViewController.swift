@@ -8,6 +8,7 @@
 
 import UIKit
 import Haptica
+import ViewAnimator
 
 class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
     
@@ -131,6 +132,7 @@ class AppIconSettingsTableViewController: SettingTableViewController, CALayerDel
             let currentIconName = ApplicationManager.currentAlternateIcon()
             if let index = appIcons.index(of: currentIconName) {
                 appIconsCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+                appIconsCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 20)], duration: 0.35, animationInterval: 0.09)
             }
         }
     }

@@ -9,6 +9,7 @@
 import UIKit
 import Haptica
 import SideMenu
+import ViewAnimator
 
 class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerDelegate {
 
@@ -60,6 +61,7 @@ class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerD
             if let index = sideMenuAnimations.index(of: animationType) {
                 sideMenuAnimationCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
                 sideMenuAnimationCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: false)
+                sideMenuAnimationCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 50)], duration: 0.38, animationInterval: 0.15)
             }
         }
     }
