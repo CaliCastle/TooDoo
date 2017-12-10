@@ -69,6 +69,7 @@ class RecolorableToolBar: UIToolbar, RecolorableView {
             }
         }, completion: nil)
         
+        isTranslucent = !solidBackground
         setShadowImage(UIImage(), forToolbarPosition: .any)
     }
     

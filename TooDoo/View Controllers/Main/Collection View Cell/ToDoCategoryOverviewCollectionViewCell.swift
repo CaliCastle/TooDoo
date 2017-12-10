@@ -128,7 +128,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     /// Long press gesture for adding a detailed to-do.
     
     lazy var longPressGestureRecognizerForAddTodo: UILongPressGestureRecognizer = {
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressedAddTodo))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressedAddTodo(_:)))
         longPressGestureRecognizer.minimumPressDuration = 0.35
         
         return longPressGestureRecognizer
@@ -154,7 +154,9 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     /// Called when the
     
-    @objc private func longPressedAddTodo() {
+    @objc private func longPressedAddTodo(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        
         showAddNewTodo(goal: .empty)
     }
 

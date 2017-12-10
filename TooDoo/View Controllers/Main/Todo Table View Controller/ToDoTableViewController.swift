@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Typist
 import Haptica
 import CoreData
 import ViewAnimator
@@ -22,6 +23,17 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     private enum Segue: String {
         case SelectCategory = "SelectCategory"
+    }
+    
+    /// Reminder presets.
+
+    private enum ReminderPreset: Int {
+        case Clear = 0
+        case Before1Day = 1
+        case Before1Hour = 2
+        case Before30Min = 3
+        case Before10Min = 4
+        case Before5Min = 5
     }
     
     /// Determine if it should be adding a new todo.
@@ -72,13 +84,16 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     @IBOutlet var categoryGradientBackgroundView: GradientView!
     @IBOutlet var categoryIconImageView: UIImageView!
     @IBOutlet var categoryNameLabel: UILabel!
-    @IBOutlet var dueTimeLabel: UILabel!
-    @IBOutlet var reminderLabel: UILabel!
+    @IBOutlet var dueTimeButton: UIButton!
+    @IBOutlet var reminderTimeButton: UIButton!
     @IBOutlet var repeatLabel: UILabel!
     @IBOutlet var cellLabels: [UILabel]!
     
     @IBOutlet var dueSwitch: UISwitch!
     @IBOutlet var reminderSwitch: UISwitch!
+    @IBOutlet var dueImageView: UIImageView!
+    @IBOutlet var reminderPresetStackView: UIStackView!
+    @IBOutlet var reminderPresetButtons: [UIButton]!
     
     // MARK: - Localizable Outlets.
     
@@ -87,7 +102,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var remindMeLabel: UILabel!
     @IBOutlet var repeatCellLabel: UILabel!
-    @IBOutlet var dueImageView: UIImageView!
     
     /// Default date format.
     
@@ -101,16 +115,22 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     let selectRemindTimeIndexPath = IndexPath(row: 1, section: 2)
     
+    /// Keyboard manager.
+    
+    let keyboard = Typist()
+    
     /// Stored due date property.
     
     var dueDate: Date? {
         didSet {
-            guard let dueDate = dueDate else { dueTimeLabel.text = "todo-table.select-due-time".localized; return }
+            updateReminderPresetButtons()
+            
+            guard let dueDate = dueDate else { dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal); return }
             
             let dateFormatter = DateFormatter.localized()
             dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
             
-            dueTimeLabel.text = dateFormatter.string(from: dueDate)
+            dueTimeButton.setTitle(dateFormatter.string(from: dueDate), for: .normal)
         }
     }
     
@@ -118,12 +138,12 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     var remindDate: Date? {
         didSet {
-            guard let remindDate = remindDate else { reminderLabel.text = "todo-table.select-reminder".localized; return }
+            guard let remindDate = remindDate else { reminderTimeButton.setTitle("todo-table.select-reminder".localized, for: .normal); return }
             
             let dateFormatter = DateFormatter.localized()
             dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
             
-            reminderLabel.text = dateFormatter.string(from: remindDate)
+            reminderTimeButton.setTitle(dateFormatter.string(from: remindDate), for: .normal)
         }
     }
     
@@ -142,8 +162,20 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         
         configureColors()
         setupViews()
+        registerKeyboardEvents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         animateNavigationBar()
         animateViews()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        keyboard.clear()
     }
     
     /// Localize interface.
@@ -155,10 +187,14 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         todoGoalLabel.text = "todo-table.todo-goal".localized
         categoryLabel.text = "todo-table.category".localized
         dueDateLabel.text = "todo-table.due-date".localized
-        dueTimeLabel.text = "todo-table.select-due-time".localized
+        dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal)
         remindMeLabel.text = "todo-table.remind-me".localized
-        reminderLabel.text = "todo-table.select-reminder".localized
+        reminderTimeButton.setTitle("todo-table.select-reminder".localized, for: .normal)
         repeatCellLabel.text = "todo-table.repeat".localized
+        
+        reminderPresetButtons.forEach {
+            $0.setTitle("todo-table.reminder.presets.\($0.tag)".localized, for: .normal)
+        }
         
         if let rightBarButton = navigationItem.rightBarButtonItem {
             rightBarButton.title = "Done".localized
@@ -168,9 +204,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     /// Setup views.
     
     fileprivate func setupViews() {
-        // Remove redundant white lines
-        tableView.tableFooterView = UIView()
-        
         // Remove delete button when creating new todo
         if isAdding, let items = toolbarItems {
             setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
@@ -218,8 +251,12 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         for label in cellLabels {
             label.textColor = color.lighten(byPercentage: 0.17)
         }
-        dueTimeLabel.textColor = color
-        reminderLabel.textColor = color
+        
+        let lighterBackground = (currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite())?.lighten(byPercentage: 0.038)
+        dueTimeButton.setTitleColor(color, for: .normal)
+        dueTimeButton.backgroundColor = lighterBackground
+        reminderTimeButton.setTitleColor(color, for: .normal)
+        reminderTimeButton.backgroundColor = lighterBackground
         
         categoryGradientBackgroundView.startColor = currentThemeIsDark() ? .gray : .white
         categoryGradientBackgroundView.endColor = currentThemeIsDark() ? .gray : .white
@@ -236,9 +273,48 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
             goalTextField.text = goal
         }
         
+        configureInputAccessoryView()
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(700)) {
             self.goalTextField.becomeFirstResponder()
         }
+    }
+    
+    // MARK: - Configure input accessory view.
+    
+    fileprivate func configureInputAccessoryView() {
+        // Set up recolorable toolbar
+        let inputToolbar = RecolorableToolBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (navigationController?.toolbar.bounds.height)!))
+        // Done bar button
+        let doneBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "checkmark-filled-circle-icon"), style: .done, target: self, action: #selector(doneDidTap(_:)))
+        doneBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        // All toolbar items
+        var toolbarItems: [UIBarButtonItem] = []
+        // Add keyboard dismissal button
+        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(endEditing)))
+        // If not adding, append delete button
+        if !isAdding {
+            let deleteBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash-alt-icon"), style: .done, target: self, action: #selector(deleteDidTap(_:)))
+            deleteBarButton.tintColor = UIColor.flatRed().lighten(byPercentage: 0.2)
+            
+            toolbarItems.append(deleteBarButton)
+        }
+        
+        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+        toolbarItems.append(doneBarButton)
+        
+        inputToolbar.items = toolbarItems
+        
+        goalTextField.inputAccessoryView = inputToolbar
+    }
+    
+    /// Keyboard dismissal.
+    
+    @objc fileprivate func endEditing() {
+        Haptic.impact(.light).generate()
+        SoundManager.play(soundEffect: .Click)
+        
+        tableView.endEditing(true)
     }
     
     /// Configure category related views.
@@ -281,6 +357,8 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         
         if let todo = todo {
             dueDate = todo.due
+        } else {
+            dueDate = nil
         }
     }
     
@@ -292,6 +370,38 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         if let todo = todo {
             remindDate = todo.remindAt
         }
+        
+        reminderPresetButtons.forEach {
+            $0.backgroundColor = (self.currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.025)
+            
+            let buttonColor: UIColor = (self.currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
+            $0.setTitleColor(buttonColor, for: .normal)
+        }
+    }
+    
+    /// Update reminder preset buttons.
+    
+    fileprivate func updateReminderPresetButtons() {
+        let _ = reminderPresetButtons.map {
+            if $0.tag != ReminderPreset.Clear.rawValue {
+                $0.isEnabled = dueDate != nil
+                $0.alpha = dueDate != nil ? 1 : 0.5
+            }
+        }
+    }
+    
+    /// Register keyboard events.
+    
+    fileprivate func registerKeyboardEvents() {
+        keyboard.on(event: .willShow) {
+            guard $0.belongsToCurrentApp else { return }
+
+            self.navigationController?.setToolbarHidden(true, animated: true)
+        }.on(event: .didHide) {
+            guard $0.belongsToCurrentApp else { return }
+
+            self.navigationController?.setToolbarHidden(false, animated: true)
+        }.start()
     }
     
     /// Animate views.
@@ -420,9 +530,9 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         
         // Perform table view sync
         if hasDue {
-            tableView.insertRows(at: [selectDueTimeIndexPath], with: .automatic)
+            tableView.insertRows(at: [selectDueTimeIndexPath], with: .fade)
         } else {
-            tableView.deleteRows(at: [selectDueTimeIndexPath], with: .automatic)
+            tableView.deleteRows(at: [selectDueTimeIndexPath], with: .fade)
         }
     }
     
@@ -442,9 +552,9 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         
         // Perform table view sync
         if hasReminder {
-            tableView.insertRows(at: [selectRemindTimeIndexPath], with: .automatic)
+            tableView.insertRows(at: [selectRemindTimeIndexPath], with: .fade)
         } else {
-            tableView.deleteRows(at: [selectRemindTimeIndexPath], with: .automatic)
+            tableView.deleteRows(at: [selectRemindTimeIndexPath], with: .fade)
         }
     }
     
@@ -484,6 +594,24 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         dateTimePicker.dateFormat = dateFormat
         dateTimePicker.completionHandler = {
             self.remindDate = $0
+        }
+    }
+    
+    @IBAction func reminderPresetButtonDidTap(_ sender: UIButton) {
+        switch sender.tag {
+        case ReminderPreset.Clear.rawValue:
+            // Clear reminder
+            remindDate = nil
+        case ReminderPreset.Before1Day.rawValue:
+            break
+        case ReminderPreset.Before1Hour.rawValue:
+            break
+        case ReminderPreset.Before30Min.rawValue:
+            break
+        case ReminderPreset.Before10Min.rawValue:
+            break
+        default:
+            break
         }
     }
     

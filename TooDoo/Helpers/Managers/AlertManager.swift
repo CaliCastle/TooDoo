@@ -46,7 +46,7 @@ final class AlertManager {
     
     /// Get action sheet.
     
-    open class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatLime(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: .white), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
+    open class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatYellow(), cancelButtonColor: UIColor(hexString: "3C3C3C"), fontColor: UIColor.flatBlack().withAlphaComponent(0.8)), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
         // Show action sheet
         let actionSheet = Hokusai(headline: headline)
         
@@ -54,7 +54,7 @@ final class AlertManager {
         
         // Set colors accordingly to category color
         if let category = category {
-            actionSheet.colors = HOKColors(backGroundColor: .flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "444444"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
+            actionSheet.colors = HOKColors(backGroundColor: .flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "3C3C3C"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
         } else {
             actionSheet.colors = colors
         }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Typist
 import Haptica
 import CoreData
 import ViewAnimator
@@ -49,6 +50,10 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     /// Default category icons.
     
     let categoryIcons: [String: [UIImage]] = CategoryIcon.default()
+    
+    /// Keyboard manager.
+    
+    let keyboard = Typist()
     
     /// Selected color index.
     
@@ -120,9 +125,15 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
         
         setupViews()
         configureColors()
+        registerHeaderView()
+        registerKeyboardEvents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         animateNavigationBar()
         animateViews()
-        registerHeaderView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -225,10 +236,48 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
             // If editing category, fill out text field
             categoryNameTextField.text = category.name
         }
+        configureInputAccessoryView()
         // Show keyboard after half a second
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
             self.categoryNameTextField.becomeFirstResponder()
         }
+    }
+    
+    // MARK: - Configure input accessory view.
+    
+    fileprivate func configureInputAccessoryView() {
+        // Set up recolorable toolbar
+        let inputToolbar = RecolorableToolBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (navigationController?.toolbar.bounds.height)!))
+        // Done bar button
+        let doneBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "checkmark-filled-circle-icon"), style: .done, target: self, action: #selector(doneDidTap(_:)))
+        doneBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
+        // All toolbar items
+        var toolbarItems: [UIBarButtonItem] = []
+        // Add keyboard dismissal button
+        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(endEditing)))
+        // If not adding, append delete button
+        if !isAdding {
+            let deleteBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash-alt-icon"), style: .done, target: self, action: #selector(deleteDidTap(_:)))
+            deleteBarButton.tintColor = UIColor.flatRed().lighten(byPercentage: 0.2)
+            
+            toolbarItems.append(deleteBarButton)
+        }
+        
+        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+        toolbarItems.append(doneBarButton)
+        
+        inputToolbar.items = toolbarItems
+        
+        categoryNameTextField.inputAccessoryView = inputToolbar
+    }
+    
+    /// Keyboard dismissal.
+    
+    @objc fileprivate func endEditing() {
+        Haptic.impact(.light).generate()
+        SoundManager.play(soundEffect: .Click)
+        
+        tableView.endEditing(true)
     }
     
     /// Select default color in category color collection view.
@@ -277,6 +326,20 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     fileprivate func registerHeaderView() {
         categoryIconCollectionView.register(UINib(nibName: CategoryIconHeaderView.nibName, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CategoryIconHeaderView.identifier)
         categoryIconCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+    }
+    
+    /// Register keyboard events.
+    
+    fileprivate func registerKeyboardEvents() {
+        keyboard.on(event: .willShow) {
+            guard $0.belongsToCurrentApp else { return }
+            
+            self.navigationController?.setToolbarHidden(true, animated: true)
+            }.on(event: .didHide) {
+                guard $0.belongsToCurrentApp else { return }
+                
+                self.navigationController?.setToolbarHidden(false, animated: true)
+            }.start()
     }
     
     /// Change icon color accordingly.
@@ -360,6 +423,7 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     /// User tapped delete button.
     
     @IBAction func deleteDidTap(_ sender: Any) {
+        tableView.endEditing(true)
         // Generate haptic feedback and play sound
         Haptic.notification(.warning).generate()
         SoundManager.play(soundEffect: .Click)

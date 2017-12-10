@@ -95,6 +95,12 @@
 "todo-table.add-todo" = "添加待办";
 "todo-table.edit-todo" = "编辑待办";
 "todo-table.select-category" = "选择所属分类";
+"todo-table.reminder.presets.0" = "重置";
+"todo-table.reminder.presets.1" = "提前1天";
+"todo-table.reminder.presets.2" = "提前1小时";
+"todo-table.reminder.presets.3" = "提前30分钟";
+"todo-table.reminder.presets.4" = "提前10分钟";
+"todo-table.reminder.presets.5" = "提前5分钟";
 
 // Select category Table View Controller.
 "select-category.title" = "选择分类";

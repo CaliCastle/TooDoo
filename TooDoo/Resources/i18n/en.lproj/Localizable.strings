@@ -95,6 +95,12 @@
 "todo-table.add-todo" = "Add To-do";
 "todo-table.edit-todo" = "Edit To-do";
 "todo-table.select-category" = "Select a category";
+"todo-table.reminder.presets.0" = "Clear";
+"todo-table.reminder.presets.1" = "1 day before";
+"todo-table.reminder.presets.2" = "1 hour before";
+"todo-table.reminder.presets.3" = "30 min before";
+"todo-table.reminder.presets.4" = "10 min before";
+"todo-table.reminder.presets.5" = "5 min before";
 
 // Select category Table View Controller.
 "select-category.title" = "Select Category";
