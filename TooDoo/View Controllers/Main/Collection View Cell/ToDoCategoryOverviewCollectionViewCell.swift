@@ -333,7 +333,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
                     self.animateCardDown(options: $0)
                 }.start()
         } else {
-            keyboard.stop()
+            keyboard.clear()
         }
     }
     
@@ -477,6 +477,12 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             case .move:
                 if let indexPath = indexPath, let newIndexPath = newIndexPath {
                     guard !isAdding else { return }
+                    
+                    // Prevent core data objects with table rows async crash
+                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
+                    let controllerRows = (controller.fetchedObjects?.count)!
+                    // If inequal, exit (moving doesn't insert of delete)
+                    guard tableRows == controllerRows else { return }
                     
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({

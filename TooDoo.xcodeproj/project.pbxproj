@@ -381,6 +381,7 @@
 		8D1642D41FB4F28D004F306F /* Collection View Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8DB49E5D1FB97304003240E1 /* Table View Cell */,
 				8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */,
 				8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */,
 			);
@@ -613,11 +614,7 @@
 		8D6A13A11F93EBA2004238D8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				8DE287E31FC2DDF3008EFE91 /* Menu Table View Controller */,
-				8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */,
-				8DE7F1E41FBC134E0026E65B /* Reorder Categories Table View Controller */,
-				8D1F6A851FB679A6004709E3 /* Category Table View Controller */,
-				8DB49E5D1FB97304003240E1 /* Table View Cell */,
+				8DD4AA301FDE7FEC00C5B7B1 /* View Controllers */,
 				8D1642D41FB4F28D004F306F /* Collection View Cell */,
 				8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */,
 				8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */,
@@ -945,6 +942,17 @@
 				8D3AA1511FC7BDB100862C4C /* CategoryIconHeaderView.xib */,
 			);
 			path = "Category Icon Collection View Cell";
+			sourceTree = "<group>";
+		};
+		8DD4AA301FDE7FEC00C5B7B1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8DE287E31FC2DDF3008EFE91 /* Menu Table View Controller */,
+				8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */,
+				8DE7F1E41FBC134E0026E65B /* Reorder Categories Table View Controller */,
+				8D1F6A851FB679A6004709E3 /* Category Table View Controller */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		8DD7CAEE1FCEC66100EFA73A /* Language */ = {

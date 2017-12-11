@@ -356,6 +356,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         if isAdding {
             category.order = newCategoryOrder
             category.createdAt = Date()
+            category.created()
         }
         
         // Generate haptic feedback and play sound
