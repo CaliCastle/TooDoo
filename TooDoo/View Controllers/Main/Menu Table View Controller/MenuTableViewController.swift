@@ -194,7 +194,8 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
     
     @IBAction func themeButtonDidTap(_ sender: UIBarButtonItem) {
         // Generate haptic feedback
-        Haptic.impact(.medium).generate()
+        Haptic.impact(.heavy).generate()
+        SoundManager.play(soundEffect: .Drip)
         // Change theme
         DispatchQueue.main.async {
             AppearanceManager.default.changeTheme()

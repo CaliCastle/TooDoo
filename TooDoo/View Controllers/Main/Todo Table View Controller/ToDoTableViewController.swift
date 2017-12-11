@@ -7,15 +7,12 @@
 //
 
 import UIKit
-import Typist
 import Haptica
 import CoreData
-import ViewAnimator
 import BulletinBoard
 import DateTimePicker
-import DeckTransition
 
-final class ToDoTableViewController: UITableViewController, LocalizableInterface {
+final class ToDoTableViewController: DeckEditorTableViewController {
 
     /// Segue enum.
     ///
@@ -35,10 +32,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         case Before10Min = 4
         case Before5Min = 5
     }
-    
-    /// Determine if it should be adding a new todo.
-    
-    var isAdding = true
     
     /// Stored todo property.
     
@@ -115,10 +108,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     let selectRemindTimeIndexPath = IndexPath(row: 1, section: 2)
     
-    /// Keyboard manager.
-    
-    let keyboard = Typist()
-    
     /// Stored due date property.
     
     var dueDate: Date? {
@@ -158,29 +147,14 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        localizeInterface()
         
-        configureColors()
-        setupViews()
-        registerKeyboardEvents()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        animateNavigationBar()
-        animateViews()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        keyboard.clear()
     }
     
     /// Localize interface.
     
-    internal func localizeInterface() {
+    override func localizeInterface() {
+        super.localizeInterface()
+        
         title = isAdding ? "todo-table.add-todo".localized : "todo-table.edit-todo".localized
         
         goalTextField.placeholder = "todo-table-goal-placeholder".localized
@@ -195,19 +169,12 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         reminderPresetButtons.forEach {
             $0.setTitle("todo-table.reminder.presets.\($0.tag)".localized, for: .normal)
         }
-        
-        if let rightBarButton = navigationItem.rightBarButtonItem {
-            rightBarButton.title = "Done".localized
-        }
     }
     
     /// Setup views.
     
-    fileprivate func setupViews() {
-        // Remove delete button when creating new todo
-        if isAdding, let items = toolbarItems {
-            setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
-        }
+    override func setupViews() {
+        super.setupViews()
         
         configureGoalTextField()
         configureCategoryViews()
@@ -215,28 +182,16 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         configureReminder()
     }
     
+    /// Get cell labels.
+    
+    override func getCellLabels() -> [UILabel] {
+        return cellLabels
+    }
+    
     /// Configure colors.
     
-    fileprivate func configureColors() {
-        // Configure bar buttons
-        if let item = navigationItem.leftBarButtonItem {
-            item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
-        }
-        // Set done navigation bar button color
-        if let item = navigationItem.rightBarButtonItem {
-            item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-        }
-        // Set done toolbar button color
-        if let items = toolbarItems {
-            if let item = items.first(where: {
-                return $0.tag == 1
-            }) {
-                item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-            }
-        }
-        
-        // Set black or white scroll indicator
-        tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
+    override func configureColors() {
+        super.configureColors()
         
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
         // Configure text field colors
@@ -248,18 +203,12 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         
         // Configure label colors
         categoryNameLabel.textColor = color
-        for label in cellLabels {
-            label.textColor = color.lighten(byPercentage: 0.17)
-        }
         
         let lighterBackground = (currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite())?.lighten(byPercentage: 0.038)
         dueTimeButton.setTitleColor(color, for: .normal)
         dueTimeButton.backgroundColor = lighterBackground
         reminderTimeButton.setTitleColor(color, for: .normal)
         reminderTimeButton.backgroundColor = lighterBackground
-        
-        categoryGradientBackgroundView.startColor = currentThemeIsDark() ? .gray : .white
-        categoryGradientBackgroundView.endColor = currentThemeIsDark() ? .gray : .white
     }
     
     /// Configure goal text field properties.
@@ -273,48 +222,11 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
             goalTextField.text = goal
         }
         
-        configureInputAccessoryView()
+        goalTextField.inputAccessoryView = super.configureInputAccessoryView()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(700)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(600)) {
             self.goalTextField.becomeFirstResponder()
         }
-    }
-    
-    // MARK: - Configure input accessory view.
-    
-    fileprivate func configureInputAccessoryView() {
-        // Set up recolorable toolbar
-        let inputToolbar = RecolorableToolBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (navigationController?.toolbar.bounds.height)!))
-        // Done bar button
-        let doneBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "checkmark-filled-circle-icon"), style: .done, target: self, action: #selector(doneDidTap(_:)))
-        doneBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-        // All toolbar items
-        var toolbarItems: [UIBarButtonItem] = []
-        // Add keyboard dismissal button
-        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(endEditing)))
-        // If not adding, append delete button
-        if !isAdding {
-            let deleteBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash-alt-icon"), style: .done, target: self, action: #selector(deleteDidTap(_:)))
-            deleteBarButton.tintColor = UIColor.flatRed().lighten(byPercentage: 0.2)
-            
-            toolbarItems.append(deleteBarButton)
-        }
-        
-        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
-        toolbarItems.append(doneBarButton)
-        
-        inputToolbar.items = toolbarItems
-        
-        goalTextField.inputAccessoryView = inputToolbar
-    }
-    
-    /// Keyboard dismissal.
-    
-    @objc fileprivate func endEditing() {
-        Haptic.impact(.light).generate()
-        SoundManager.play(soundEffect: .Click)
-        
-        tableView.endEditing(true)
     }
     
     /// Configure category related views.
@@ -390,38 +302,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         }
     }
     
-    /// Register keyboard events.
-    
-    fileprivate func registerKeyboardEvents() {
-        keyboard.on(event: .willShow) {
-            guard $0.belongsToCurrentApp else { return }
-
-            self.navigationController?.setToolbarHidden(true, animated: true)
-        }.on(event: .didHide) {
-            guard $0.belongsToCurrentApp else { return }
-
-            self.navigationController?.setToolbarHidden(false, animated: true)
-        }.start()
-    }
-    
-    /// Animate views.
-    
-    fileprivate func animateViews() {
-        // Fade in and move from bottom animation to table cells
-        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 60)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.13)
-    }
-
-    /// When user taps cancel.
-    
-    @IBAction func cancelDidTap(_ sender: Any) {
-        // Generate haptic feedback
-        Haptic.impact(.light).generate()
-        // End editing
-        tableView.endEditing(true)
-        
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
     /// Entered goal and click return key on keyboard.
     
     @IBAction func goalEntered(_ sender: UITextField) {
@@ -430,7 +310,7 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     /// When user taps done, save todo.
     
-    @IBAction func doneDidTap(_ sender: Any) {
+    @objc override func doneDidTap(_ sender: Any) {
         // If empty string entered, reset state
         guard validateUserInput(text: goalTextField.text!) else { return }
         // If longer than length limit
@@ -438,11 +318,9 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         // If no category selected, show alert
         guard validateCategory() else { return }
         
-        tableView.endEditing(true)
-        
         saveTodo()
         
-        navigationController?.dismiss(animated: true, completion: nil)
+        super.doneDidTap(sender)
     }
     
     /// Save todo.
@@ -617,12 +495,9 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
     
     /// When user taps delete.
     
-    @IBAction func deleteDidTap(_ sender: Any) {
-        // End editing
-        tableView.endEditing(true)
-        navigationController?.dismiss(animated: true, completion: nil)
-        // Generate haptic feedback
-        Haptic.notification(.success).generate()
+    override func deleteDidTap(_ sender: Any) {
+        super.deleteDidTap(sender)
+        
         // Move todo to trash
         guard let todo = todo else { return }
         
@@ -679,46 +554,6 @@ final class ToDoTableViewController: UITableViewController, LocalizableInterface
         default:
             return 1
         }
-    }
-    
-    /// Adjust scroll behavior for dismissal.
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.isEqual(tableView) else { return }
-        
-        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            if scrollView.contentOffset.y > 0 {
-                // Normal behavior if the `scrollView` isn't scrolled to the top
-                delegate.isDismissEnabled = false
-            } else {
-                if scrollView.isDecelerating {
-                    // If the `scrollView` is scrolled to the top but is decelerating
-                    // that means a swipe has been performed. The view and
-                    // scrollview's subviews are both translated in response to this.
-                    view.transform = .init(translationX: 0, y: -scrollView.contentOffset.y)
-                    scrollView.subviews.forEach({
-                        $0.transform = .init(translationX: 0, y: scrollView.contentOffset.y)
-                    })
-                } else {
-                    // If the user has panned to the top, the scrollview doesnʼt bounce and
-                    // the dismiss gesture is enabled.
-                    delegate.isDismissEnabled = true
-                }
-            }
-        }
-    }
-
-    /// Light status bar.
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    /// Auto hide home indicator
-    
-    @available(iOS 11, *)
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
     }
 
 }

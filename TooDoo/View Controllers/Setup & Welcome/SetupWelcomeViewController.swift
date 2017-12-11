@@ -559,7 +559,7 @@ extension SetupWelcomeViewController {
             self.step2CustomizeButton.transform = .init(scaleX: 1, y: 1)
         }, completion: nil)
         // Fade in and move down skip button
-        UIView.animate(withDuration: 0.5, delay: 2, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 1.5, options: .curveEaseInOut, animations: {
             self.step2SkipButton.alpha = 1
             self.step2SkipButton.transform = .init(translationX: 0, y: 0)
         }, completion: nil)

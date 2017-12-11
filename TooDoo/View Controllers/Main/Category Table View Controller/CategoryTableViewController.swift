@@ -13,7 +13,7 @@ import CoreData
 import ViewAnimator
 import DeckTransition
 
-final class CategoryTableViewController: UITableViewController, LocalizableInterface, CALayerDelegate {
+final class CategoryTableViewController: DeckEditorTableViewController, CALayerDelegate {
 
     /// Category collection type.
     ///
@@ -26,10 +26,6 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     }
     
     // MARK: - Properties
-    
-    /// Determine if it should be adding a new category.
-    
-    var isAdding = true
     
     /// Stored category property.
     
@@ -50,10 +46,6 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     /// Default category icons.
     
     let categoryIcons: [String: [UIImage]] = CategoryIcon.default()
-    
-    /// Keyboard manager.
-    
-    let keyboard = Typist()
     
     /// Selected color index.
     
@@ -121,19 +113,7 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        localizeInterface()
-        
-        setupViews()
-        configureColors()
         registerHeaderView()
-        registerKeyboardEvents()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        animateNavigationBar()
-        animateViews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -160,29 +140,21 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     
     /// Localize interface.
     
-    internal func localizeInterface() {
+    override func localizeInterface() {
+        super.localizeInterface()
+        
         title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
         
         categoryNameTextField.placeholder = "category-table.name.placeholder".localized
         nameLabel.text = "category-table.name".localized
         chooseColorLabel.text = "category-table.choose-color".localized
         chooseIconLabel.text = "category-table.choose-icon".localized
-        
-        if let rightBarButton = navigationItem.rightBarButtonItem {
-            rightBarButton.title = "Done".localized
-        }
     }
     
     /// Additional views setup.
     
-    fileprivate func setupViews() {
-        // Remove redundant white lines
-        tableView.tableFooterView = UIView()
-        
-        // Remove delete button when creating new category
-        if isAdding, let items = toolbarItems {
-            setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
-        }
+    override func setupViews() {
+        super.setupViews()
         
         // Configure name text field
         configureNameTextField()
@@ -193,24 +165,8 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     
     /// Configure colors.
     
-    fileprivate func configureColors() {
-        // Configure bar buttons
-        if let item = navigationItem.leftBarButtonItem {
-            item.tintColor = currentThemeIsDark() ? UIColor.flatWhiteColorDark().withAlphaComponent(0.8) : UIColor.flatBlack().withAlphaComponent(0.6)
-        }
-        if let item = navigationItem.rightBarButtonItem {
-            item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-        }
-        if let items = toolbarItems {
-            if let item = items.first(where: {
-                return $0.tag == 1
-            }) {
-                item.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-            }
-        }
-        
-        // Set black or white scroll indicator
-        tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
+    override func configureColors() {
+        super.configureColors()
         
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
         // Configure text field colors
@@ -220,13 +176,12 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
         // Change placeholder color to grayish
         categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
         
-        // Configure label colors
-        for label in cellLabels {
-            label.textColor = color.lighten(byPercentage: 0.17)
-        }
-        
         categoryColorCollectionView.shadowOpacity = currentThemeIsDark() ? 0.25 : 0.07
         categoryIconCollectionView.shadowOpacity = currentThemeIsDark() ? 0.5 : 0.1
+    }
+    
+    override func getCellLabels() -> [UILabel] {
+        return cellLabels
     }
     
     /// Configure name text field properties.
@@ -236,48 +191,11 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
             // If editing category, fill out text field
             categoryNameTextField.text = category.name
         }
-        configureInputAccessoryView()
+        categoryNameTextField.inputAccessoryView = super.configureInputAccessoryView()
         // Show keyboard after half a second
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(400)) {
             self.categoryNameTextField.becomeFirstResponder()
         }
-    }
-    
-    // MARK: - Configure input accessory view.
-    
-    fileprivate func configureInputAccessoryView() {
-        // Set up recolorable toolbar
-        let inputToolbar = RecolorableToolBar(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (navigationController?.toolbar.bounds.height)!))
-        // Done bar button
-        let doneBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "checkmark-filled-circle-icon"), style: .done, target: self, action: #selector(doneDidTap(_:)))
-        doneBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
-        // All toolbar items
-        var toolbarItems: [UIBarButtonItem] = []
-        // Add keyboard dismissal button
-        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(endEditing)))
-        // If not adding, append delete button
-        if !isAdding {
-            let deleteBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "trash-alt-icon"), style: .done, target: self, action: #selector(deleteDidTap(_:)))
-            deleteBarButton.tintColor = UIColor.flatRed().lighten(byPercentage: 0.2)
-            
-            toolbarItems.append(deleteBarButton)
-        }
-        
-        toolbarItems.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
-        toolbarItems.append(doneBarButton)
-        
-        inputToolbar.items = toolbarItems
-        
-        categoryNameTextField.inputAccessoryView = inputToolbar
-    }
-    
-    /// Keyboard dismissal.
-    
-    @objc fileprivate func endEditing() {
-        Haptic.impact(.light).generate()
-        SoundManager.play(soundEffect: .Click)
-        
-        tableView.endEditing(true)
     }
     
     /// Select default color in category color collection view.
@@ -309,11 +227,8 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     
     /// Animate views.
     
-    fileprivate func animateViews() {
-        // Set table view to initially hidden
-        tableView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
-        // Fade in and move from bottom animation to table cells
-        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 50)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.12)
+    override func animateViews() {
+        super.animateViews()
         
         // Set color collection view to initially hidden
         categoryColorCollectionView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
@@ -326,20 +241,6 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     fileprivate func registerHeaderView() {
         categoryIconCollectionView.register(UINib(nibName: CategoryIconHeaderView.nibName, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CategoryIconHeaderView.identifier)
         categoryIconCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-    }
-    
-    /// Register keyboard events.
-    
-    fileprivate func registerKeyboardEvents() {
-        keyboard.on(event: .willShow) {
-            guard $0.belongsToCurrentApp else { return }
-            
-            self.navigationController?.setToolbarHidden(true, animated: true)
-            }.on(event: .didHide) {
-                guard $0.belongsToCurrentApp else { return }
-                
-                self.navigationController?.setToolbarHidden(false, animated: true)
-            }.start()
     }
     
     /// Change icon color accordingly.
@@ -377,17 +278,6 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
         return (categoryIcons.first?.value.first)!
     }
     
-    /// User tapped cancel button.
-    
-    @IBAction func cancelDidTap(_ sender: Any) {
-        // Generate haptic feedback
-        Haptic.impact(.light).generate()
-        
-        tableView.endEditing(true)
-        
-        navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
     /// Keyboard dismissal on exit.
     
     @IBAction func nameEndOnExit(_ sender: UITextField) {
@@ -404,7 +294,7 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     
     /// User tapped done button.
     
-    @IBAction func doneDidTap(_ sender: Any) {
+    override func doneDidTap(_ sender: Any) {
         // Validates first
         guard validateUserInput() else {
             // Generate haptic feedback
@@ -418,15 +308,14 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
         }
         
         saveCategory()
+        
+        super.doneDidTap(sender)
     }
     
     /// User tapped delete button.
     
-    @IBAction func deleteDidTap(_ sender: Any) {
-        tableView.endEditing(true)
-        // Generate haptic feedback and play sound
-        Haptic.notification(.warning).generate()
-        SoundManager.play(soundEffect: .Click)
+    override func deleteDidTap(_ sender: Any) {
+        super.deleteDidTap(sender)
         
         deleteCategory()
     }
@@ -489,25 +378,7 @@ final class CategoryTableViewController: UITableViewController, LocalizableInter
     fileprivate func showValidationError() {
         NotificationManager.showBanner(title: "notification.name-exists".localized, type: .danger)
     }
-    
-    /// Light status bar.
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    /// Status bar animation.
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .fade
-    }
-    
-    /// Auto hide home indicator
-    
-    @available(iOS 11, *)
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
-        return true
-    }
+
 }
 
 // MARK: - Handle Table View Delegate
@@ -521,28 +392,7 @@ extension CategoryTableViewController {
             updateGradientFrame()
         }
         
-        guard scrollView.isEqual(tableView) else { return }
-        
-        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            if scrollView.contentOffset.y > 0 {
-                // Normal behavior if the `scrollView` isn't scrolled to the top
-                delegate.isDismissEnabled = false
-            } else {
-                if scrollView.isDecelerating {
-                    // If the `scrollView` is scrolled to the top but is decelerating
-                    // that means a swipe has been performed. The view and
-                    // scrollview's subviews are both translated in response to this.
-                    view.transform = .init(translationX: 0, y: -scrollView.contentOffset.y)
-                    scrollView.subviews.forEach({
-                        $0.transform = .init(translationX: 0, y: scrollView.contentOffset.y)
-                    })
-                } else {
-                    // If the user has panned to the top, the scrollview doesnʼt bounce and
-                    // the dismiss gesture is enabled.
-                    delegate.isDismissEnabled = true
-                }
-            }
-        }
+        super.scrollViewDidScroll(scrollView)
     }
     
     /// Set preview header height.

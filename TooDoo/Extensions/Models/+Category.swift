@@ -20,19 +20,22 @@ extension Category {
         
         personalCategory.name = "setup.default-category".localized
         personalCategory.color = CategoryColor.defaultColorsString.first!
-        personalCategory.icon = "personal"
+        personalCategory.icon = "progress"
         personalCategory.createdAt = Date()
+        personalCategory.created()
         
         let getStartedTodo = ToDo(context: context)
         getStartedTodo.goal = "Get started".localized
         getStartedTodo.category = personalCategory
         getStartedTodo.createdAt = Date()
+        getStartedTodo.created()
         
         let workCategory = self.init(context: context)
         workCategory.name = "setup.default-category-alt".localized
         workCategory.color = CategoryColor.defaultColorsString[1]
         workCategory.icon = "briefcase"
         workCategory.createdAt = Date()
+        workCategory.created()
     }
     
     /// Get default category.
@@ -58,6 +61,13 @@ extension Category {
     
     class func ordered() -> NSSortDescriptor {
         return NSSortDescriptor(key: #keyPath(Category.order), ascending: true)
+    }
+    
+    // MARK: - Configurations after creation.
+    
+    func created() {
+        // Assign UUID
+        uuid = UUID().uuidString
     }
     
     /// Get category color.

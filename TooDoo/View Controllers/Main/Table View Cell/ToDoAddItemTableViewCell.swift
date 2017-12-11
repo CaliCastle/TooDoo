@@ -114,6 +114,8 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         todo.goal = goal
         todo.createdAt = Date()
         todo.updatedAt = Date()
+        // Set default due date
+        todo.setDefaultDueDate()
         
         // Set its category
         if let category = category {

@@ -19,9 +19,27 @@ extension ToDo {
         return 70
     }
     
-    /// Created to-do.
+    /// Set default due date.
+    
+    func setDefaultDueDate() {
+        let calendar = Calendar.current
+        
+        // Get components from calendar
+        var components = calendar.dateComponents([.day, .month, .year, .hour, .minute], from: Date())
+        // Set to midnight
+        components.hour = 23
+        components.minute = 59
+        
+        let midnight = calendar.date(from: components)
+        
+        due = midnight
+    }
+    
+    // MARK: - Configurations after creation.
     
     func created() {
+        // Assign UUID
+        uuid = UUID().uuidString
         // Create events if enabled
         createToEvents()
         // Create reminders if enabled
@@ -39,7 +57,7 @@ extension ToDo {
         if let calendar = eventStore.defaultCalendarForNewEvents {
             event.calendar = calendar
             event.title = goal!
-            event.notes = note
+            event.notes = notes
             
             if let due = due {
                 event.startDate = due
@@ -73,7 +91,7 @@ extension ToDo {
             reminder.calendar = calendar
             reminder.title = goal!
             reminder.isCompleted = false
-            reminder.notes = note
+            reminder.notes = notes
             
             if let due = due {
                 reminder.dueDateComponents = Calendar.current.dateComponents(in: .current, from: due)

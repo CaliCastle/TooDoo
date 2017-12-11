@@ -31,7 +31,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>You decided to start using TooDoo today 🎉</string>
+			<string>Thanks for deciding to start using TooDoo today 🎉</string>
 			<key>one</key>
 			<string>You started using TooDoo yesterday 🙌🏻</string>
 			<key>other</key>

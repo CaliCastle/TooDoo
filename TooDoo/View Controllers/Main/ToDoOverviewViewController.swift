@@ -186,10 +186,6 @@ final class ToDoOverviewViewController: UIViewController {
         return .twoAxesShift(strength: 28)
     }()
     
-    /// Check if user has authenticated.
-    
-    var userAuthenticated = false
-    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -285,7 +281,6 @@ final class ToDoOverviewViewController: UIViewController {
         listen(for: .UpdateStatusBar, then: #selector(updateStatusBar))
         listen(for: .SettingThemeChanged, then: #selector(themeChanged))
         listen(for: .UserAvatarChanged, then: #selector(updateAvatar(_:)))
-        listen(for: .UserAuthenticated, then: #selector(userHasAuthenticated))
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
         listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
         /// Reset time label when is about to enter foreground
@@ -531,12 +526,6 @@ final class ToDoOverviewViewController: UIViewController {
         UserDefaultManager.set(value: newName, forKey: .UserName)
     }
     
-    /// User has authenticated.
-    
-    @objc fileprivate func userHasAuthenticated() {
-        userAuthenticated = true
-    }
-    
     /// User has changed motion effect setting.
     
     @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
@@ -619,15 +608,6 @@ final class ToDoOverviewViewController: UIViewController {
         default:
             break
         }
-    }
-    
-    /// Perform segues.
-    
-    override func performSegue(withIdentifier identifier: String, sender: Any?) {
-        // Check for redirection
-        if UserDefaultManager.settingAuthenticationEnabled() && !userAuthenticated { NotificationManager.send(notification: .UserAuthenticationRedirect, object: identifier); return }
-        
-        super.performSegue(withIdentifier: identifier, sender: sender)
     }
     
 }
