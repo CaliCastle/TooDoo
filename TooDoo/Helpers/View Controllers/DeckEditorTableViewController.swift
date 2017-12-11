@@ -33,7 +33,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         localizeInterface()
         setupViews()
         configureColors()
-        registerKeyboardEvents()
     }
 
     override open func viewWillAppear(_ animated: Bool) {
@@ -43,6 +42,8 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
             animateNavigationBar()
             animateViews()
         }
+        
+        registerKeyboardEvents()
         
         // Fix the issue when pushed a new view controller and the tool bar gets hidden
         if let navigationController = navigationController, navigationController.isToolbarHidden && !tableView.isEditing {
@@ -101,7 +102,7 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
         // Configure label colors
         getCellLabels().forEach {
-            $0.textColor = color.lighten(byPercentage: 0.17)
+            $0.textColor = color.withAlphaComponent(0.7)
         }
     }
     

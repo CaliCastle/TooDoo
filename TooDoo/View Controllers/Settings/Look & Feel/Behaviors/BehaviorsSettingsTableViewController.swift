@@ -123,8 +123,24 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
     
     /// Item spacing.
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 60
+    }
+    
+    /// Will display cell.
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
+        
+        cell.animationImageView.startAnimatingGIF()
+    }
+    
+    /// End display cell.
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
+        
+        cell.animationImageView.stopAnimatingGIF()
     }
     
     /// How many sections.
@@ -152,8 +168,7 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
     /// Configure a cell.
     
     fileprivate func configure(_ cell: SideMenuAnimationCollectionViewCell, at indexPath: IndexPath) {
-        cell.layer.masksToBounds = true
-        cell.animationImageView.loadGif(name: sideMenuAnimations[indexPath.item].rawValue)
+        cell.animationImageView.prepareForAnimation(withGIFNamed: sideMenuAnimations[indexPath.item].rawValue)
         
         setCellSelected(cell.isSelected, for: cell)
     }

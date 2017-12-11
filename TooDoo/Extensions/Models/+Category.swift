@@ -11,6 +11,31 @@ import CoreData
 
 extension Category {
     
+    /// Find all categories.
+    
+    class func findAll(in managedObjectContext: NSManagedObjectContext, with sortDescriptors: [NSSortDescriptor]? = nil) -> [Category] {
+        // Create Fetch Request
+        let request: NSFetchRequest<Category> = fetchRequest()
+        
+        if let descriptors = sortDescriptors {
+            request.sortDescriptors = descriptors
+        }
+        
+        return (try? managedObjectContext.fetch(request)) ?? []
+    }
+    
+    /// Get sort descriptor by order.
+    
+    class func sortByOrder(ascending: Bool = true) -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(Category.order), ascending: ascending)
+    }
+    
+    /// Get sort descriptor by createdAt.
+    
+    class func sortByCreatedAt(ascending: Bool = true) -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: ascending)
+    }
+
     /// Create default `personal` and `work` category.
     ///
     /// - Parameter context: Managed object context

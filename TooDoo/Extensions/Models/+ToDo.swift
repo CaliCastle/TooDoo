@@ -8,6 +8,7 @@
 
 import UIKit
 import EventKit
+import CoreData
 
 extension ToDo {
     
@@ -17,6 +18,15 @@ extension ToDo {
     
     open class func goalMaxLimit() -> Int {
         return 70
+    }
+    
+    /// Find all to-dos.
+    
+    class func findAll(in managedObjectContext: NSManagedObjectContext) -> [ToDo] {
+        // Create Fetch Request
+        let request: NSFetchRequest<ToDo> = fetchRequest()
+        
+        return (try? managedObjectContext.fetch(request)) ?? []
     }
     
     /// Set default due date.

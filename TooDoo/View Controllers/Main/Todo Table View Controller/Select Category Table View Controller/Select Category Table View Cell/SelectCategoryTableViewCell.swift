@@ -24,12 +24,12 @@ final class SelectCategoryTableViewCell: UITableViewCell {
             backgroundColor = primaryColor
             // Configure icon
             categoryIconImageView.image = category.categoryIcon()
-            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
             categoryNameLabel.text = category.name
-            categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
             // Set tint color
-            tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         }
     }
     

@@ -21,18 +21,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     
     /// Fetched results controller.
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "categories")
-        
-        return fetchedResultsController
-    }()
+    private var categories: [Category] = []
     
     var delegate: SelectCategoryTableViewControllerDelegate?
     
@@ -50,25 +39,17 @@ final class SelectCategoryTableViewController: UITableViewController {
     /// Fetch categories.
     
     private func fetchCategories() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-category".localized, type: .danger)
-        }
+        categories = Category.findAll(in: managedObjectContext, with: [Category.sortByOrder(), Category.sortByCreatedAt()])
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
-        
-        return sections.count
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
-        
-        return sections[section].numberOfObjects
+        return categories.count
     }
     
     /// Dequeue cells.
@@ -86,7 +67,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     
     private func configureCell(_ cell: UITableViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? SelectCategoryTableViewCell else { return }
-        let currentCategory = fetchedResultsController.object(at: indexPath)
+        let currentCategory = categories[indexPath.row]
         
         cell.category = currentCategory
         
@@ -100,7 +81,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate = delegate else { return }
         
-        delegate.categorySelected(fetchedResultsController.object(at: indexPath))
+        delegate.categorySelected(categories[indexPath.row])
         // Pop view controller
         let _ = navigationController?.popViewController(animated: true)
     }

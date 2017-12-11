@@ -206,7 +206,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     /// Item spacing.
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 5
     }
     
     /// How many items.
@@ -219,7 +219,9 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppIconCollectionViewCell.identifier, for: indexPath) as? AppIconCollectionViewCell {
-            configureIconCell(cell, at: indexPath)
+            DispatchQueue.main.async(execute: {
+                self.configureIconCell(cell, at: indexPath)
+            })
             
             return cell
         }
@@ -233,15 +235,16 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
         if #available(iOS 10.3, *) {
             let icon = appIcons[indexPath.item]
             
+            cell.iconNameLabel.text = icon.displayName()
+            cell.iconNameLabel.textColor = self.currentThemeIsDark() ? .white : .flatBlack()
+            cell.iconImageView.cornerRadius = 12
+            cell.iconImageView.layer.masksToBounds = true
+            
             DispatchQueue.main.async {
-                cell.iconNameLabel.text = icon.displayName()
-                cell.iconNameLabel.textColor = self.currentThemeIsDark() ? .white : .flatBlack()
-                cell.iconImageView.cornerRadius = 12
-                cell.iconImageView.layer.masksToBounds = true
                 cell.iconImageView.image = UIImage(named: icon.imageName())
-                
-                self.setCellSelected(cell.isSelected, for: cell)
             }
+            
+            setCellSelected(cell.isSelected, for: cell)
         }
     }
     

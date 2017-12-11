@@ -32,4 +32,16 @@ final class SideMenuAnimationCollectionViewCell: UICollectionViewCell {
         checkmark.tintColor = .white
         checkmark.transform = .init(scaleX: 0, y: 0)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        overlay.alpha = 0
+        checkmark.alpha = 0
+        checkmark.tintColor = .white
+        checkmark.transform = .init(scaleX: 0, y: 0)
+        
+        animationImageView.prepareForReuse()
+    }
+
 }

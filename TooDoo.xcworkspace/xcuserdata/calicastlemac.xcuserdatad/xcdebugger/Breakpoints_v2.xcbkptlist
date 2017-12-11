@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TooDoo/View Controllers/Main/Collection View Cell/ToDoCategoryOverviewCollectionViewCell.swift"
-            timestampString = "534662721.662633"
+            timestampString = "534674289.933317"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "482"
@@ -26,12 +26,12 @@
                   moduleName = "TooDoo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/calicastle1/Desktop/Projects/Swift/TooDoo/TooDoo/View%20Controllers/Main/Collection%20View%20Cell/ToDoCategoryOverviewCollectionViewCell.swift"
-                  timestampString = "534662721.671156"
+                  timestampString = "534674290.114851"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "482"
                   endingLineNumber = "482"
-                  offsetFromSymbolStart = "6406">
+                  offsetFromSymbolStart = "4900">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -41,12 +41,12 @@
                   moduleName = "TooDoo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/calicastle1/Desktop/Projects/Swift/TooDoo/TooDoo/View%20Controllers/Main/Collection%20View%20Cell/ToDoCategoryOverviewCollectionViewCell.swift"
-                  timestampString = "534662721.674499"
+                  timestampString = "534674290.117256"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "483"
                   endingLineNumber = "483"
-                  offsetFromSymbolStart = "59">
+                  offsetFromSymbolStart = "56">
                </Location>
             </Locations>
          </BreakpointContent>

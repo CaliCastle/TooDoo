@@ -280,7 +280,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     fileprivate func configureAddTodoButton(_ primaryColor: UIColor, _ contrastColor: UIColor?) {
         // Set add todo button colors
         addTodoButton.backgroundColor = .clear
-        addTodoButton.tintColor = contrastColor
+        addTodoButton.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         addTodoButton.setTitleColor(contrastColor, for: .normal)
         
         // Set add todo button background gradient

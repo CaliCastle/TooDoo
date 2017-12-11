@@ -5,8 +5,11 @@
 inhibit_all_warnings!
 
 target 'TooDoo' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
+
+  # Reveal Debugger
+  
+  pod 'Reveal-SDK', :configurations => ['Debug']
 
   # Pods for TooDoo
   pod 'M13Checkbox'
@@ -24,6 +27,7 @@ target 'TooDoo' do
   pod 'DateTimePicker'
   pod 'SideMenu'
   pod 'PinterestSegment'
+  pod 'Gifu'
 #  pod 'BTNavigationDropdownMenu', :git => 'https://github.com/zkrige/BTNavigationDropdownMenu.git'
 
 end

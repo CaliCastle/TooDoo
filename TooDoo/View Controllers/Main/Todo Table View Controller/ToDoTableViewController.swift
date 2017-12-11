@@ -248,15 +248,17 @@ final class ToDoTableViewController: DeckEditorTableViewController {
        
         let category = self.category!
         let categoryColor = category.categoryColor()
-        // Set gradient colors
-        categoryGradientBackgroundView.startColor = categoryColor.lighten(byPercentage: 0.1)
-        categoryGradientBackgroundView.endColor = categoryColor
-        // Set icon
-        categoryIconImageView.image = category.categoryIcon()
-        categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
-        // Set label
-        categoryNameLabel.text = category.name
-        categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
+        DispatchQueue.main.async {
+            // Set gradient colors
+            self.categoryGradientBackgroundView.startColor = categoryColor.lighten(byPercentage: 0.1)
+            self.categoryGradientBackgroundView.endColor = categoryColor
+            // Set icon
+            self.categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
+            self.categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: false)
+            // Set label
+            self.categoryNameLabel.text = category.name
+            self.categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
+        }
     }
     
     /// Configure due date.
