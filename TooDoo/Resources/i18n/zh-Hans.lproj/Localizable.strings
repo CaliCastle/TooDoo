@@ -28,8 +28,8 @@
 "Face ID" = "面容 ID";
 "Passcode" = "密码";
 
-"EEEE, MMM d" = "MM月d日 EEEE";
-"MMM dd, EEE hh:mm aa" = "MM月dd日, EEE HH:mm";
+"EEEE, MMM d" = "MM月d日 EEE";
+"MMM dd, EEE - HH:mm" = "MM月dd日(EEE): HH:mm";
 
 /*
  Shortcut Items.
@@ -95,6 +95,7 @@
 "todo-table.add-todo" = "添加待办";
 "todo-table.edit-todo" = "编辑待办";
 "todo-table.select-category" = "选择所属分类";
+"todo-table.reminder.presents-tips" = "常见提醒: (相对于截止时间)";
 "todo-table.reminder.presets.0" = "重置";
 "todo-table.reminder.presets.1" = "提前1天";
 "todo-table.reminder.presets.2" = "提前1小时";

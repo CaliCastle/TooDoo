@@ -33,6 +33,17 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         case Before5Min = 5
     }
     
+    /// Due presets.
+    
+    private enum DuePreset: Int {
+        case Clear = 0
+        case Today = 1
+        case Add1Hour = 2
+        case Add1Day = 3
+        case Add1Week = 4
+        case Add1Month = 5
+    }
+    
     /// Stored todo property.
     
     var todo: ToDo? {
@@ -94,11 +105,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     @IBOutlet var categoryLabel: UILabel!
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var remindMeLabel: UILabel!
+    @IBOutlet var reminderPresetTipsLabel: UILabel!
     @IBOutlet var repeatCellLabel: UILabel!
     
     /// Default date format.
     
-    let dateFormat = "MMM dd, EEE hh:mm aa".localized
+    let dateFormat = "MMM dd, EEE - HH:mm".localized
     
     /// Select due time index path.
     
@@ -117,7 +129,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             guard let dueDate = dueDate else { dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal); return }
             
             let dateFormatter = DateFormatter.localized()
-            dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
+            dateFormatter.dateFormat = dateFormat
             
             dueTimeButton.setTitle(dateFormatter.string(from: dueDate), for: .normal)
         }
@@ -130,7 +142,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             guard let remindDate = remindDate else { reminderTimeButton.setTitle("todo-table.select-reminder".localized, for: .normal); return }
             
             let dateFormatter = DateFormatter.localized()
-            dateFormatter.setLocalizedDateFormatFromTemplate(dateFormat)
+            dateFormatter.dateFormat = dateFormat
             
             reminderTimeButton.setTitle(dateFormatter.string(from: remindDate), for: .normal)
         }
@@ -164,6 +176,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal)
         remindMeLabel.text = "todo-table.remind-me".localized
         reminderTimeButton.setTitle("todo-table.select-reminder".localized, for: .normal)
+        reminderPresetTipsLabel.text = "todo-table.reminder.presents-tips".localized
         repeatCellLabel.text = "todo-table.repeat".localized
         
         reminderPresetButtons.forEach {
@@ -411,6 +424,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         // Perform table view sync
         if hasDue {
             tableView.insertRows(at: [selectDueTimeIndexPath], with: .fade)
+            tableView.scrollToRow(at: selectDueTimeIndexPath, at: .top, animated: true)
         } else {
             tableView.deleteRows(at: [selectDueTimeIndexPath], with: .fade)
         }
@@ -433,6 +447,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         // Perform table view sync
         if hasReminder {
             tableView.insertRows(at: [selectRemindTimeIndexPath], with: .fade)
+            tableView.scrollToRow(at: selectRemindTimeIndexPath, at: .top, animated: true)
         } else {
             tableView.deleteRows(at: [selectRemindTimeIndexPath], with: .fade)
         }
@@ -446,7 +461,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
         dateTimePicker.todayButtonTitle = "Today".localized
-        dateTimePicker.dateFormat = dateFormat
+        dateTimePicker.dateFormat = "EEEE, MMM d".localized
         dateTimePicker.completionHandler = {
             self.dueDate = $0
         }
@@ -471,31 +486,61 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
         dateTimePicker.todayButtonTitle = "Today".localized
-        dateTimePicker.dateFormat = dateFormat
+        dateTimePicker.dateFormat = "EEEE, MMM d".localized
         dateTimePicker.completionHandler = {
             self.remindDate = $0
         }
     }
     
+    @IBAction func duePresetButtonDidTap(_ sender: UIButton) {
+        // Play haptic and sound
+        Haptic.selection.generate()
+        SoundManager.play(soundEffect: .Click)
+        
+        guard sender.tag != DuePreset.Clear.rawValue else { dueDate = nil ; return }
+    }
+    
+    /// When user tapped one of the preset button for reminder.
+    
     @IBAction func reminderPresetButtonDidTap(_ sender: UIButton) {
-        switch sender.tag {
-        case ReminderPreset.Clear.rawValue:
-            // Clear reminder
-            remindDate = nil
-        case ReminderPreset.Before1Day.rawValue:
-            break
-        case ReminderPreset.Before1Hour.rawValue:
-            break
-        case ReminderPreset.Before30Min.rawValue:
-            break
-        case ReminderPreset.Before10Min.rawValue:
-            break
-        default:
-            break
+        // Play haptic and sound
+        Haptic.selection.generate()
+        SoundManager.play(soundEffect: .Click)
+        
+        guard sender.tag != ReminderPreset.Clear.rawValue else { remindDate = nil ; return }
+        
+        if let due = dueDate {
+            let rightNow = Date()
+            let calendar = Calendar.current
+            
+            switch sender.tag {
+            case ReminderPreset.Before1Day.rawValue:
+                guard let oneDayBefore = calendar.date(byAdding: .day, value: -1, to: due), oneDayBefore > rightNow else { return }
+                // Set remind date
+                remindDate = oneDayBefore
+            case ReminderPreset.Before1Hour.rawValue:
+                guard let oneHourBefore = calendar.date(byAdding: .hour, value: -1, to: due), oneHourBefore > rightNow else { return }
+                // Set remind date
+                remindDate = oneHourBefore
+            case ReminderPreset.Before30Min.rawValue:
+                guard let thirtyMinBefore = calendar.date(byAdding: .minute, value: -30, to: due), thirtyMinBefore > rightNow else { return }
+                // Set remind date
+                remindDate = thirtyMinBefore
+            case ReminderPreset.Before10Min.rawValue:
+                guard let tenMinBefore = calendar.date(byAdding: .minute, value: -10, to: due), tenMinBefore > rightNow else { return }
+                // Set remind date
+                remindDate = tenMinBefore
+            case ReminderPreset.Before5Min.rawValue:
+                guard let fiveMinBefore = calendar.date(byAdding: .minute, value: -5, to: due), fiveMinBefore > rightNow else { return }
+                // Set remind date
+                remindDate = fiveMinBefore
+            default:
+                break
+            }
         }
     }
     
-    /// When user taps delete.
+    /// When user tapped delete.
     
     override func deleteDidTap(_ sender: Any) {
         super.deleteDidTap(sender)

@@ -23,13 +23,13 @@ final class ReorderCategoryTableViewCell: UITableViewCell {
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = category.categoryIcon()
-            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
+            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
             categoryNameLabel.text = category.name
             categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
             // Configure tint color
-            tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         }
     }
     

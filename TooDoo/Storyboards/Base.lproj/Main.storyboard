@@ -1326,11 +1326,11 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="239" id="aHX-tG-kmu" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="492" width="375" height="239"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="265" id="aHX-tG-kmu" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="492" width="375" height="265"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aHX-tG-kmu" id="c3y-m0-oVV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="239"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="265"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-notification-access" translatesAutoresizingMaskIntoConstraints="NO" id="KbQ-iF-4hK">
@@ -1345,13 +1345,13 @@
                                                     </connections>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OAa-Zb-y9H">
-                                                    <rect key="frame" x="0.0" y="133" width="375" height="106"/>
+                                                    <rect key="frame" x="0.0" y="155" width="375" height="110"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HRt-f5-O8s">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSb-Ub-RTy">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="Clear">
@@ -1362,7 +1362,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shi-cf-vIz">
-                                                                    <rect key="frame" x="125" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="125" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="1 day before">
@@ -1373,7 +1373,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2BQ-Eg-iqq">
-                                                                    <rect key="frame" x="250" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="250" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="1 hour before">
@@ -1395,10 +1395,10 @@
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nkA-xR-9sZ">
-                                                            <rect key="frame" x="0.0" y="53" width="375" height="53"/>
+                                                            <rect key="frame" x="0.0" y="55" width="375" height="55"/>
                                                             <subviews>
                                                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJp-rI-lJf">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="30 min before">
@@ -1409,7 +1409,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH4-bC-wWK">
-                                                                    <rect key="frame" x="125" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="125" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="10 min before">
@@ -1420,7 +1420,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9l-cK-GWI">
-                                                                    <rect key="frame" x="250" y="0.0" width="125" height="53"/>
+                                                                    <rect key="frame" x="250" y="0.0" width="125" height="55"/>
                                                                     <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                                                     <state key="normal" title="5 min before">
@@ -1464,16 +1464,25 @@
                                                         <action selector="reminderDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="9P2-LE-YVL"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Common reminders: (based on due date)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuY-bx-xLa">
+                                                    <rect key="frame" x="16" y="129" width="335" height="18"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wuY-bx-xLa" secondAttribute="trailing" constant="8" id="2m2-bA-ePK"/>
                                                 <constraint firstItem="KbQ-iF-4hK" firstAttribute="top" secondItem="c3y-m0-oVV" secondAttribute="topMargin" constant="8" id="67U-VD-d2q"/>
                                                 <constraint firstAttribute="bottom" secondItem="OAa-Zb-y9H" secondAttribute="bottom" id="7fe-gq-hxc"/>
                                                 <constraint firstItem="OAa-Zb-y9H" firstAttribute="leading" secondItem="c3y-m0-oVV" secondAttribute="leading" id="9eS-GT-39S"/>
+                                                <constraint firstItem="wuY-bx-xLa" firstAttribute="top" secondItem="8kn-pP-KhZ" secondAttribute="bottom" constant="12" id="MES-dk-zUm"/>
                                                 <constraint firstAttribute="trailing" secondItem="OAa-Zb-y9H" secondAttribute="trailing" id="OYk-rs-TsH"/>
                                                 <constraint firstItem="8kn-pP-KhZ" firstAttribute="top" secondItem="KbQ-iF-4hK" secondAttribute="bottom" constant="8" id="Wsh-HF-ueb"/>
+                                                <constraint firstItem="OAa-Zb-y9H" firstAttribute="top" secondItem="wuY-bx-xLa" secondAttribute="bottom" constant="8" id="akE-fZ-auu"/>
                                                 <constraint firstItem="KbQ-iF-4hK" firstAttribute="centerX" secondItem="c3y-m0-oVV" secondAttribute="centerX" id="nNe-Cu-S0I"/>
-                                                <constraint firstItem="OAa-Zb-y9H" firstAttribute="top" secondItem="8kn-pP-KhZ" secondAttribute="bottom" constant="16" id="nZK-X4-MNO"/>
                                                 <constraint firstItem="8kn-pP-KhZ" firstAttribute="centerX" secondItem="c3y-m0-oVV" secondAttribute="centerX" id="p3s-cf-iNn"/>
+                                                <constraint firstItem="wuY-bx-xLa" firstAttribute="leading" secondItem="c3y-m0-oVV" secondAttribute="leadingMargin" id="uER-Ez-dlK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1487,7 +1496,7 @@
                             <tableViewSection footerTitle="" id="a8s-y2-nGr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CXM-rx-Ykz" detailTextLabel="9I4-z1-x06" rowHeight="50" style="IBUITableViewCellStyleValue1" id="edF-ps-9eR" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="767" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="793" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
@@ -1551,6 +1560,7 @@
                         <outlet property="goalTextField" destination="AqI-GN-X2o" id="lTQ-Xu-j3j"/>
                         <outlet property="remindMeLabel" destination="Gqy-Md-3Pb" id="Pm6-Hc-zrE"/>
                         <outlet property="reminderPresetStackView" destination="OAa-Zb-y9H" id="TeR-NA-pkr"/>
+                        <outlet property="reminderPresetTipsLabel" destination="wuY-bx-xLa" id="hcL-LG-fjm"/>
                         <outlet property="reminderSwitch" destination="Wgd-3n-PTC" id="h92-W1-ZNk"/>
                         <outlet property="reminderTimeButton" destination="8kn-pP-KhZ" id="CoU-UZ-5DQ"/>
                         <outlet property="repeatCellLabel" destination="CXM-rx-Ykz" id="8EF-yD-qXU"/>
@@ -1567,6 +1577,7 @@
                         <outletCollection property="reminderPresetButtons" destination="MJp-rI-lJf" collectionClass="NSMutableArray" id="wF4-nW-7DT"/>
                         <outletCollection property="reminderPresetButtons" destination="rH4-bC-wWK" collectionClass="NSMutableArray" id="7td-0b-Zkr"/>
                         <outletCollection property="reminderPresetButtons" destination="g9l-cK-GWI" collectionClass="NSMutableArray" id="C0Y-cA-zM0"/>
+                        <outletCollection property="cellLabels" destination="wuY-bx-xLa" collectionClass="NSMutableArray" id="5Dk-LW-fMX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPM-NY-Tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>

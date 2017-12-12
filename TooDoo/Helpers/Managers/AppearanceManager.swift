@@ -56,10 +56,6 @@ final class AppearanceManager {
             }
         }
         
-//        /// Get image.
-//        func image() -> UIImage? {
-//            return UIImage.gifImageWithName(rawValue)
-//        }
     }
     
     /// Singleton standard instance.
@@ -116,6 +112,7 @@ final class AppearanceManager {
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuShadowOpacity = 0.2
         SideMenuManager.default.menuWidth = 300
+        SideMenuManager.default.menuShadowRadius = 15
         
         // Load from user settings
         if let animationType = SideMenuAnimation(rawValue: UserDefaultManager.string(forKey: .SideMenuAnimation, SideMenuAnimation.SlideInOut.rawValue)!) {
