@@ -19,6 +19,8 @@
 "Not now" = "残忍拒绝";
 "Todos" = "个待办事项";
 "Today" = "今天";
+"Tomorrow" = "明天";
+"Now" = "现在";
 
 "version" = "版本号";
 "Beta" = "内测";
@@ -30,6 +32,28 @@
 
 "EEEE, MMM d" = "MM月d日 EEE";
 "MMM dd, EEE - HH:mm" = "MM月dd日(EEE): HH:mm";
+
+"%d years ago" = "%d年前";
+"1 year ago" = "1年前";
+"Last year" = "去年";
+"%d months ago" = "%d个月前";
+"1 month ago" = "1个月前";
+"Last month" = "上个月";
+"%d weeks ago" = "%d个星期前";
+"1 week ago" = "1个星期前";
+"Last week" = "上个星期";
+"%d days ago" = "%d天前";
+"1 day ago" = "1天前";
+"Yesterday" = "昨天";
+"%d hours ago" = "%d小时前";
+"1 hour ago" = "1小时前";
+"An hour ago" = "一个小时前";
+"%d minutes ago" = "%d分钟前";
+"1 minute ago" = "1分钟前";
+"A minute ago" = "一分钟前";
+"%d seconds ago" = "%d秒前";
+"1 second ago" = "1秒前";
+"Just now" = "刚刚";
 
 /*
  Shortcut Items.
@@ -95,6 +119,14 @@
 "todo-table.add-todo" = "添加待办";
 "todo-table.edit-todo" = "编辑待办";
 "todo-table.select-category" = "选择所属分类";
+"todo-table.due.presets.0" = "重置";
+"todo-table.due.presets.1" = "今天";
+"todo-table.due.presets.2" = "+1小时";
+"todo-table.due.presets.3" = "+1天";
+"todo-table.due.presets.4" = "+1个星期";
+"todo-table.due.presets.5" = "+1个月";
+"todo-table.due.presets.6" = "准点";
+"todo-table.due.presets.7" = "半小时";
 "todo-table.reminder.presents-tips" = "常见提醒: (相对于截止时间)";
 "todo-table.reminder.presets.0" = "重置";
 "todo-table.reminder.presets.1" = "提前1天";
@@ -102,9 +134,9 @@
 "todo-table.reminder.presets.3" = "提前30分钟";
 "todo-table.reminder.presets.4" = "提前10分钟";
 "todo-table.reminder.presets.5" = "提前5分钟";
-"todo-table.reminder.presets.6" = "早上";
-"todo-table.reminder.presets.7" = "中午";
-"todo-table.reminder.presets.8" = "晚上";
+"todo-table.reminder.presets.6" = "早晨";
+"todo-table.reminder.presets.7" = "正午";
+"todo-table.reminder.presets.8" = "傍晚";
 
 // Select category Table View Controller.
 "select-category.title" = "选择分类";

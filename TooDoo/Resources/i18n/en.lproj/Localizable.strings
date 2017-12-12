@@ -19,6 +19,8 @@
 "Not now" = "Not now";
 "Todos" = "Todos";
 "Today" = "Today";
+"Tomorrow" = "Tomorrow";
+"Now" = "Now";
 
 "version" = "version";
 "Beta" = "Beta";
@@ -30,6 +32,28 @@
 
 "EEEE, MMM d" = "EEEE, MMM d";
 "MMM dd, EEE - HH:mm" = "MMM dd, EEE - HH:mm";
+
+"%d years ago" = "%d years ago";
+"1 year ago" = "1 year ago";
+"Last year" = "Last year";
+"%d months ago" = "%d months ago";
+"1 month ago" = "1 month ago";
+"Last month" = "Last month";
+"%d weeks ago" = "%d weeks ago";
+"1 week ago" = "1 week ago";
+"Last week" = "Last week";
+"%d days ago" = "%d days ago";
+"1 day ago" = "1 day ago";
+"Yesterday" = "Yesterday";
+"%d hours ago" = "%d hours ago";
+"1 hour ago" = "1 hour ago";
+"An hour ago" = "An hour ago";
+"%d minutes ago" = "%d minutes ago";
+"1 minute ago" = "1 minute ago";
+"A minute ago" = "A minute ago";
+"%d seconds ago" = "%d seconds ago";
+"1 second ago" = "1 second ago";
+"Just now" = "Just now";
 
 /*
  Shortcut Items.
@@ -95,6 +119,14 @@
 "todo-table.add-todo" = "Add To-do";
 "todo-table.edit-todo" = "Edit To-do";
 "todo-table.select-category" = "Select a category";
+"todo-table.due.presets.0" = "Clear";
+"todo-table.due.presets.1" = "Today";
+"todo-table.due.presets.2" = "+1 hour";
+"todo-table.due.presets.3" = "+1 day";
+"todo-table.due.presets.4" = "+1 week";
+"todo-table.due.presets.5" = "+1 month";
+"todo-table.due.presets.6" = "Exact hour";
+"todo-table.due.presets.7" = "Half hour";
 "todo-table.reminder.presents-tips" = "Common reminders: (based on due date)";
 "todo-table.reminder.presets.0" = "Clear";
 "todo-table.reminder.presets.1" = "1 day before";

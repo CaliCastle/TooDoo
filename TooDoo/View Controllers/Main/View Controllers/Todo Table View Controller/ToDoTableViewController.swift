@@ -31,6 +31,8 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         case Add1Day = 3
         case Add1Week = 4
         case Add1Month = 5
+        case OClock = 6
+        case HalfOClock = 7
     }
     
     /// Reminder presets.
@@ -131,6 +133,28 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             updateReminderPresetButtons()
             
             guard let dueDate = dueDate else { dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal); return }
+            // If right now
+            guard Int(dueDate.timeIntervalSinceNow) != 0 else { dueTimeButton.setTitle("Now".localized, for: .normal); return }
+            // If yesterday
+            guard !Calendar.current.isDateInYesterday(dueDate) else {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                dueTimeButton.setTitle("\("Yesterday".localized) \(dateFormatter.string(from: dueDate))", for: .normal)
+                
+                return
+            }
+            
+            // If today or tomorrow
+            let calendar = Calendar.current
+            guard !calendar.isDateInToday(dueDate) && !calendar.isDateInTomorrow(dueDate) else {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                dueTimeButton.setTitle("\(calendar.isDateInToday(dueDate) ? "Today".localized : "Tomorrow".localized) \(dateFormatter.string(from: dueDate))", for: .normal)
+                
+                return
+            }
             
             let dateFormatter = DateFormatter.localized()
             dateFormatter.dateFormat = dateFormat
@@ -144,6 +168,26 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     var remindDate: Date? {
         didSet {
             guard let remindDate = remindDate else { reminderTimeButton.setTitle("todo-table.select-reminder".localized, for: .normal); return }
+            
+            // If yesterday
+            guard !Calendar.current.isDateInYesterday(remindDate) else {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                dueTimeButton.setTitle("\("Yesterday".localized) \(dateFormatter.string(from: remindDate))", for: .normal)
+                
+                return
+            }
+            // If today or tomorrow
+            let calendar = Calendar.current
+            guard !calendar.isDateInToday(remindDate) && !calendar.isDateInTomorrow(remindDate) else {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                reminderTimeButton.setTitle("\(calendar.isDateInToday(remindDate) ? "Today".localized : "Tomorrow".localized) \(dateFormatter.string(from: remindDate))", for: .normal)
+                
+                return
+            }
             
             let dateFormatter = DateFormatter.localized()
             dateFormatter.dateFormat = dateFormat
@@ -183,6 +227,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         reminderPresetTipsLabel.text = "todo-table.reminder.presents-tips".localized
         repeatCellLabel.text = "todo-table.repeat".localized
         
+        duePresetButtons.forEach {
+            $0.setTitle("todo-table.due.presets.\($0.tag)".localized, for: .normal)
+        }
         reminderPresetButtons.forEach {
             $0.setTitle("todo-table.reminder.presets.\($0.tag)".localized, for: .normal)
         }
@@ -291,6 +338,19 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         } else {
             dueDate = nil
         }
+        
+        duePresetButtons.forEach {
+            $0.backgroundColor = (self.currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.025)
+            
+            if $0.tag == DuePreset.Clear.rawValue {
+                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.15), for: .normal)
+                
+                return
+            }
+            
+            let buttonColor: UIColor = (self.currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
+            $0.setTitleColor(buttonColor, for: .normal)
+        }
     }
     
     /// Configure reminder.
@@ -304,6 +364,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         
         reminderPresetButtons.forEach {
             $0.backgroundColor = (self.currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.025)
+            
+            if $0.tag == ReminderPreset.Clear.rawValue {
+                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.15), for: .normal)
+                
+                return
+            }
             
             let buttonColor: UIColor = (self.currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
             $0.setTitleColor(buttonColor, for: .normal)
@@ -418,10 +484,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     @IBAction func dueSwitchChanged(_ sender: UISwitch) {
         tableView.endEditing(true)
     
-        // If set due time
-        if !sender.isOn {
-            dueDate = nil
-        }
+        dueDate = sender.isOn ? Date() : nil
         
         hasDue = sender.isOn
         
@@ -442,6 +505,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         if sender.isOn {
             // Check notification authorization
             checkNotificationPermission()
+            remindDate = Date()
         } else {
             remindDate = nil
         }
@@ -502,6 +566,41 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         SoundManager.play(soundEffect: .Click)
         
         guard sender.tag != DuePreset.Clear.rawValue else { dueDate = nil ; return }
+        guard sender.tag != DuePreset.Today.rawValue else { dueDate = Date(); return }
+        
+        if let due = dueDate {
+            switch sender.tag {
+            case DuePreset.Add1Hour.rawValue:
+                guard let addOneHour = Calendar.current.date(byAdding: .hour, value: 1, to: due) else { return }
+                
+                dueDate = addOneHour
+            case DuePreset.Add1Day.rawValue:
+                guard let addOneDay = Calendar.current.date(byAdding: .day, value: 1, to: due) else { return }
+                
+                dueDate = addOneDay
+            case DuePreset.Add1Week.rawValue:
+                guard let addOneWeek = Calendar.current.date(byAdding: .day, value: 7, to: due) else { return }
+                
+                dueDate = addOneWeek
+            case DuePreset.Add1Month.rawValue:
+                guard let addOneMonth = Calendar.current.date(byAdding: .month, value: 1, to: due) else { return }
+                
+                dueDate = addOneMonth
+            case DuePreset.OClock.rawValue, DuePreset.HalfOClock.rawValue:
+                var components = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute], from: due)
+                
+                switch sender.tag {
+                case DuePreset.OClock.rawValue:
+                    components.minute = 0
+                default:
+                    components.minute = 30
+                }
+                
+                dueDate = Calendar.current.date(from: components)
+            default:
+                break
+            }
+        }
     }
     
     /// When user tapped one of the preset button for reminder.
@@ -553,7 +652,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
                 
                 let remindTime = calendar.date(from: components)!
                 
-                if remindTime > rightNow {
+                if remindTime > rightNow && remindTime < due {
                     // Set remind date
                     remindDate = remindTime
                 }

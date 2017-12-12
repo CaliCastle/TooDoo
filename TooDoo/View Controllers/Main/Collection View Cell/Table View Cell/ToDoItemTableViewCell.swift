@@ -131,6 +131,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "hh:mm a"
                 
+                dueImageView.image = dueImageView.image?.withRenderingMode(.alwaysTemplate)
                 dueImageView.tintColor = textColor.withAlphaComponent(0.4)
                 dueLabel.textColor = textColor.withAlphaComponent(0.4)
                 dueLabel.text = dateFormatter.string(from: due)

@@ -1236,11 +1236,11 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="115" id="9PM-1D-W2u" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="301" width="375" height="115"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="250" id="9PM-1D-W2u" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="301" width="375" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9PM-1D-W2u" id="aaI-RJ-BU1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="due-icon" translatesAutoresizingMaskIntoConstraints="NO" id="DqH-bO-R67">
@@ -1274,10 +1274,148 @@
                                                         <action selector="dueTimeDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="bYm-3Z-qTv"/>
                                                     </connections>
                                                 </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="MV3-Pt-HCY">
+                                                    <rect key="frame" x="0.0" y="111.66666666666667" width="375" height="138.33333333333331"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3mh-0L-VaZ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCV-ha-J7r">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="46"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="Clear">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="SN9-7S-y2G"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRs-36-kxy">
+                                                                    <rect key="frame" x="125" y="0.0" width="125" height="46"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="Today">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="bjj-gR-QtM"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hub-tR-hX8">
+                                                                    <rect key="frame" x="250" y="0.0" width="125" height="46"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="+1 hour">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="SXp-Ap-rb2"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="yRs-36-kxy" secondAttribute="bottom" id="2uF-1H-nRe"/>
+                                                                <constraint firstItem="hub-tR-hX8" firstAttribute="top" secondItem="3mh-0L-VaZ" secondAttribute="top" id="5Tv-gz-fZw"/>
+                                                                <constraint firstAttribute="bottom" secondItem="hub-tR-hX8" secondAttribute="bottom" id="J6h-89-4db"/>
+                                                                <constraint firstItem="yRs-36-kxy" firstAttribute="top" secondItem="3mh-0L-VaZ" secondAttribute="top" id="VxM-07-n3R"/>
+                                                                <constraint firstItem="yCV-ha-J7r" firstAttribute="top" secondItem="3mh-0L-VaZ" secondAttribute="top" id="csd-aT-ogS"/>
+                                                                <constraint firstAttribute="bottom" secondItem="yCV-ha-J7r" secondAttribute="bottom" id="hbB-YW-fST"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2cs-H7-eRB">
+                                                            <rect key="frame" x="0.0" y="45.999999999999986" width="375" height="46.333333333333329"/>
+                                                            <subviews>
+                                                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhF-I6-znd">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="46.333333333333336"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="+1 day">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="IDW-I3-Lf9"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VK9-DO-RBe">
+                                                                    <rect key="frame" x="125" y="0.0" width="125" height="46.333333333333336"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="+1 Week">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="c11-MQ-HdS"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyK-D6-nHG">
+                                                                    <rect key="frame" x="250" y="0.0" width="125" height="46.333333333333336"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="+1 Month">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="bcw-BG-vXs"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="HhF-I6-znd" secondAttribute="bottom" id="GnL-Tb-XEb"/>
+                                                                <constraint firstItem="xyK-D6-nHG" firstAttribute="top" secondItem="2cs-H7-eRB" secondAttribute="top" id="OMK-WU-zzD"/>
+                                                                <constraint firstAttribute="bottom" secondItem="xyK-D6-nHG" secondAttribute="bottom" id="PeE-xh-iHh"/>
+                                                                <constraint firstItem="HhF-I6-znd" firstAttribute="top" secondItem="2cs-H7-eRB" secondAttribute="top" id="Qlv-Y7-KHL"/>
+                                                                <constraint firstItem="VK9-DO-RBe" firstAttribute="top" secondItem="2cs-H7-eRB" secondAttribute="top" id="Wre-qE-cjL"/>
+                                                                <constraint firstAttribute="bottom" secondItem="VK9-DO-RBe" secondAttribute="bottom" id="haf-Qn-s1k"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HxF-ME-aQ5">
+                                                            <rect key="frame" x="0.0" y="92.333333333333329" width="375" height="45.999999999999986"/>
+                                                            <subviews>
+                                                                <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvX-9I-DQd">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="46"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="Exact hour">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="qzk-0G-to9"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9h-eW-UDf">
+                                                                    <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="46"/>
+                                                                    <color key="backgroundColor" white="0.19" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
+                                                                    <state key="normal" title="Half hour">
+                                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="duePresetButtonDidTap:" destination="VJ3-YR-ah3" eventType="touchUpInside" id="Ubq-6B-IwT"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="n9h-eW-UDf" secondAttribute="bottom" id="5CD-wr-Fxo"/>
+                                                                <constraint firstItem="n9h-eW-UDf" firstAttribute="top" secondItem="HxF-ME-aQ5" secondAttribute="top" id="KvG-1m-GUg"/>
+                                                                <constraint firstItem="JvX-9I-DQd" firstAttribute="top" secondItem="HxF-ME-aQ5" secondAttribute="top" id="hv8-Ne-rfi"/>
+                                                                <constraint firstAttribute="bottom" secondItem="JvX-9I-DQd" secondAttribute="bottom" id="kwL-7b-ui9"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="MV3-Pt-HCY" secondAttribute="trailing" id="8wC-mO-cl5"/>
                                                 <constraint firstItem="DqH-bO-R67" firstAttribute="centerX" secondItem="aaI-RJ-BU1" secondAttribute="centerX" id="It9-ip-0ib"/>
+                                                <constraint firstItem="MV3-Pt-HCY" firstAttribute="leading" secondItem="aaI-RJ-BU1" secondAttribute="leading" id="N2H-g3-MlG"/>
                                                 <constraint firstItem="dha-j8-t3g" firstAttribute="top" secondItem="DqH-bO-R67" secondAttribute="bottom" constant="8" id="QzF-8d-gZ6"/>
+                                                <constraint firstItem="MV3-Pt-HCY" firstAttribute="top" secondItem="dha-j8-t3g" secondAttribute="bottom" constant="12" id="kuH-zy-Mx5"/>
+                                                <constraint firstAttribute="bottom" secondItem="MV3-Pt-HCY" secondAttribute="bottom" id="mDr-VB-wGd"/>
                                                 <constraint firstItem="dha-j8-t3g" firstAttribute="centerX" secondItem="aaI-RJ-BU1" secondAttribute="centerX" id="q94-jQ-F2i"/>
                                                 <constraint firstItem="DqH-bO-R67" firstAttribute="top" secondItem="aaI-RJ-BU1" secondAttribute="top" constant="2" id="wX0-g5-Oc0"/>
                                             </constraints>
@@ -1293,7 +1431,7 @@
                             <tableViewSection footerTitle="" id="DNv-hl-27a">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="40" id="Jiq-d7-VoP" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="452" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="587" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jiq-d7-VoP" id="7FL-kz-1Jj">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -1327,7 +1465,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="310" id="aHX-tG-kmu" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="492" width="375" height="310"/>
+                                        <rect key="frame" x="0.0" y="627" width="375" height="310"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aHX-tG-kmu" id="c3y-m0-oVV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="310"/>
@@ -1543,14 +1681,14 @@
                             <tableViewSection footerTitle="" id="a8s-y2-nGr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CXM-rx-Ykz" detailTextLabel="9I4-z1-x06" rowHeight="50" style="IBUITableViewCellStyleValue1" id="edF-ps-9eR" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="838" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="973" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
-                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <rect key="frame" x="14.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1628,6 +1766,14 @@
                         <outletCollection property="reminderPresetButtons" destination="DNV-jV-fag" collectionClass="NSMutableArray" id="8PY-Bw-DiK"/>
                         <outletCollection property="reminderPresetButtons" destination="pPE-lM-5k8" collectionClass="NSMutableArray" id="ZTm-tl-L3K"/>
                         <outletCollection property="reminderPresetButtons" destination="52S-gx-6eP" collectionClass="NSMutableArray" id="6w6-kr-wAR"/>
+                        <outletCollection property="duePresetButtons" destination="yCV-ha-J7r" collectionClass="NSMutableArray" id="mjT-aC-r91"/>
+                        <outletCollection property="duePresetButtons" destination="yRs-36-kxy" collectionClass="NSMutableArray" id="u8Z-XX-WKC"/>
+                        <outletCollection property="duePresetButtons" destination="hub-tR-hX8" collectionClass="NSMutableArray" id="gg3-6t-30Z"/>
+                        <outletCollection property="duePresetButtons" destination="HhF-I6-znd" collectionClass="NSMutableArray" id="v8f-BD-2Wk"/>
+                        <outletCollection property="duePresetButtons" destination="VK9-DO-RBe" collectionClass="NSMutableArray" id="Kw7-LF-ztU"/>
+                        <outletCollection property="duePresetButtons" destination="xyK-D6-nHG" collectionClass="NSMutableArray" id="Dpx-lP-BTg"/>
+                        <outletCollection property="duePresetButtons" destination="JvX-9I-DQd" collectionClass="NSMutableArray" id="EAq-fg-WIc"/>
+                        <outletCollection property="duePresetButtons" destination="n9h-eW-UDf" collectionClass="NSMutableArray" id="wJt-bh-8I8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VPM-NY-Tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>

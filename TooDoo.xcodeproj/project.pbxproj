@@ -80,6 +80,7 @@
 		8DABC26C1FD7E60200933ED0 /* icon-navy-alt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DABC26A1FD7E60200933ED0 /* icon-navy-alt@2x.png */; };
 		8DABC26F1FD7EA2500933ED0 /* icon-primary@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DABC26D1FD7EA2400933ED0 /* icon-primary@2x.png */; };
 		8DABC2701FD7EA2500933ED0 /* icon-primary@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DABC26E1FD7EA2400933ED0 /* icon-primary@3x.png */; };
+		8DAC06391FDFCBCA00B28B34 /* +Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC06381FDFCBCA00B28B34 /* +Date.swift */; };
 		8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC56291FC0A6E600F6956F /* SelectCategoryTableViewController.swift */; };
 		8DAC562D1FC0C61900F6956F /* SelectCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC562C1FC0C61900F6956F /* SelectCategoryTableViewCell.swift */; };
 		8DAC8F841FB0414B006207F6 /* +UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAC8F831FB0414B006207F6 /* +UIView.swift */; };
@@ -229,6 +230,7 @@
 		8DABC26A1FD7E60200933ED0 /* icon-navy-alt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-navy-alt@2x.png"; sourceTree = "<group>"; };
 		8DABC26D1FD7EA2400933ED0 /* icon-primary@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-primary@2x.png"; sourceTree = "<group>"; };
 		8DABC26E1FD7EA2400933ED0 /* icon-primary@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-primary@3x.png"; sourceTree = "<group>"; };
+		8DAC06381FDFCBCA00B28B34 /* +Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Date.swift"; sourceTree = "<group>"; };
 		8DAC56291FC0A6E600F6956F /* SelectCategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryTableViewController.swift; sourceTree = "<group>"; };
 		8DAC562C1FC0C61900F6956F /* SelectCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		8DAC8F831FB0414B006207F6 /* +UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIView.swift"; sourceTree = "<group>"; };
@@ -727,6 +729,7 @@
 				8D4E2BC81FC6AB3700195D5C /* +IndexPath.swift */,
 				8D26DA8C1FCD40A200F61FE7 /* +Bundle.swift */,
 				8D2075B91FCF9E6600FBE622 /* +DateFormatter.swift */,
+				8DAC06381FDFCBCA00B28B34 /* +Date.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1323,6 +1326,7 @@
 				8D1F6A871FB679C8004709E3 /* CategoryTableViewController.swift in Sources */,
 				8DD7CAED1FCEB4BB00EFA73A /* LocaleManager.swift in Sources */,
 				8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */,
+				8DAC06391FDFCBCA00B28B34 /* +Date.swift in Sources */,
 				8DCC7EFB1FCBA19F000E99BA /* GeneralSettingsTableViewController.swift in Sources */,
 				8DE287E51FC2DE16008EFE91 /* MenuTableViewController.swift in Sources */,
 				8DCFF1231FD93AD1009532A2 /* AppIconCollectionViewCell.swift in Sources */,
