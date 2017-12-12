@@ -22,17 +22,6 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         case SelectCategory = "SelectCategory"
     }
     
-    /// Reminder presets.
-
-    private enum ReminderPreset: Int {
-        case Clear = 0
-        case Before1Day = 1
-        case Before1Hour = 2
-        case Before30Min = 3
-        case Before10Min = 4
-        case Before5Min = 5
-    }
-    
     /// Due presets.
     
     private enum DuePreset: Int {
@@ -42,6 +31,20 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         case Add1Day = 3
         case Add1Week = 4
         case Add1Month = 5
+    }
+    
+    /// Reminder presets.
+
+    private enum ReminderPreset: Int {
+        case Clear = 0
+        case Before1Day = 1
+        case Before1Hour = 2
+        case Before30Min = 3
+        case Before10Min = 4
+        case Before5Min = 5
+        case Morning = 6
+        case Noon = 7
+        case Evening = 8
     }
     
     /// Stored todo property.
@@ -96,6 +99,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     @IBOutlet var dueSwitch: UISwitch!
     @IBOutlet var reminderSwitch: UISwitch!
     @IBOutlet var dueImageView: UIImageView!
+    @IBOutlet var duePresetButtons: [UIButton]!
     @IBOutlet var reminderPresetStackView: UIStackView!
     @IBOutlet var reminderPresetButtons: [UIButton]!
     
@@ -534,6 +538,25 @@ final class ToDoTableViewController: DeckEditorTableViewController {
                 guard let fiveMinBefore = calendar.date(byAdding: .minute, value: -5, to: due), fiveMinBefore > rightNow else { return }
                 // Set remind date
                 remindDate = fiveMinBefore
+            case ReminderPreset.Morning.rawValue, ReminderPreset.Noon.rawValue, ReminderPreset.Evening.rawValue:
+                var components = Calendar.current.dateComponents([.hour, .minute, .month, .year, .day], from: due)
+                
+                switch sender.tag {
+                case ReminderPreset.Morning.rawValue:
+                    components.hour = 8
+                case ReminderPreset.Noon.rawValue:
+                    components.hour = 12
+                default:
+                    components.hour = 18
+                }
+                components.minute = 0
+                
+                let remindTime = calendar.date(from: components)!
+                
+                if remindTime > rightNow {
+                    // Set remind date
+                    remindDate = remindTime
+                }
             default:
                 break
             }

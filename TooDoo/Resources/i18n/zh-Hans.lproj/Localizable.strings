@@ -102,6 +102,9 @@
 "todo-table.reminder.presets.3" = "提前30分钟";
 "todo-table.reminder.presets.4" = "提前10分钟";
 "todo-table.reminder.presets.5" = "提前5分钟";
+"todo-table.reminder.presets.6" = "早上";
+"todo-table.reminder.presets.7" = "中午";
+"todo-table.reminder.presets.8" = "晚上";
 
 // Select category Table View Controller.
 "select-category.title" = "选择分类";

@@ -102,6 +102,9 @@
 "todo-table.reminder.presets.3" = "30 min before";
 "todo-table.reminder.presets.4" = "10 min before";
 "todo-table.reminder.presets.5" = "5 min before";
+"todo-table.reminder.presets.6" = "Morning";
+"todo-table.reminder.presets.7" = "Noon";
+"todo-table.reminder.presets.8" = "Evening";
 
 // Select category Table View Controller.
 "select-category.title" = "Select Category";
