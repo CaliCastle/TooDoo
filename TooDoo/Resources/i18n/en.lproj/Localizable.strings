@@ -141,6 +141,17 @@
 // Select category Table View Controller.
 "select-category.title" = "Select Category";
 
+// Repeat todo Table View Controller.
+"repeat-todo.types.0" = "Don't repeat";
+"repeat-todo.types.1" = "Every day";
+"repeat-todo.types.2" = "Every week";
+"repeat-todo.types.3" = "Every month";
+"repeat-todo.types.4" = "Every year";
+"repeat-todo.types.5" = "Every ...";
+"repeat-todo.types.6" = "Repeat after completion";
+"repeat-todo.types.header" = "Repeating types";
+"repeat-todo.custom.footer" = "Next recurring date:";
+
 /*
  Category Table View Controller.
  */

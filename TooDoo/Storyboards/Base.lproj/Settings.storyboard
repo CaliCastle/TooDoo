@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -59,7 +60,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="dPE-bA-kV2" kind="show" id="pha-Wf-9wd"/>
+                                            <segue destination="dPE-bA-kV2" kind="show" id="pha-Wf-9wd">
+                                                <segue key="commit" inheritsFrom="parent" id="auc-nH-n3v"/>
+                                                <segue key="preview" inheritsFrom="commit" id="UNz-jQ-VB4"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="fP6-97-YYa" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
@@ -94,7 +98,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="HxS-qp-ppf" kind="show" id="R2b-rI-hh1"/>
+                                            <segue destination="HxS-qp-ppf" kind="show" id="R2b-rI-hh1">
+                                                <segue key="commit" inheritsFrom="parent" id="1e5-Mz-V8f"/>
+                                                <segue key="preview" inheritsFrom="commit" id="qQG-Go-EgW"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="Usq-QV-DZm" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
@@ -129,7 +136,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="BMP-PP-oxR" kind="show" id="15K-HG-kPm"/>
+                                            <segue destination="BMP-PP-oxR" kind="show" id="15K-HG-kPm">
+                                                <segue key="commit" inheritsFrom="parent" id="sdl-hk-jig"/>
+                                                <segue key="preview" inheritsFrom="commit" id="wlA-Yd-jDh"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -168,7 +178,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="scd-AG-3Bx" kind="show" id="8Rp-xc-cHd"/>
+                                            <segue destination="scd-AG-3Bx" kind="show" id="8Rp-xc-cHd">
+                                                <segue key="commit" inheritsFrom="parent" id="UYM-D5-SOZ"/>
+                                                <segue key="preview" inheritsFrom="commit" id="UFx-f3-hsd"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="53" id="zDq-WL-fed" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
@@ -287,7 +300,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="BMj-Uk-ywq" kind="show" id="AIM-PG-gb3"/>
+                                            <segue destination="BMj-Uk-ywq" kind="show" id="AIM-PG-gb3">
+                                                <segue key="commit" inheritsFrom="parent" id="PDT-vt-nVk"/>
+                                                <segue key="preview" inheritsFrom="commit" id="BM7-AU-Nbl"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -454,7 +470,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <segue destination="PZO-02-9In" kind="show" id="BTF-CM-wki"/>
+                                            <segue destination="PZO-02-9In" kind="show" id="BTF-CM-wki">
+                                                <segue key="commit" inheritsFrom="parent" id="rGU-4S-RNx"/>
+                                                <segue key="preview" inheritsFrom="commit" id="ZSh-A1-dhP"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1220,4 +1239,12 @@
         <image name="toodoo-icon" width="50" height="50"/>
         <image name="touch-id-icon" width="33" height="33"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AIM-PG-gb3"/>
+        <segue reference="8Rp-xc-cHd"/>
+        <segue reference="15K-HG-kPm"/>
+        <segue reference="R2b-rI-hh1"/>
+        <segue reference="BTF-CM-wki"/>
+        <segue reference="pha-Wf-9wd"/>
+    </inferredMetricsTieBreakers>
 </document>

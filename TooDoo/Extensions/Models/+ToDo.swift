@@ -248,3 +248,62 @@ extension ToDo {
     }
     
 }
+
+extension ToDo {
+    
+    /// Repeat types.
+    
+    public enum RepeatType: String, Codable {
+        case None = "none"
+        case Daily = "daily"
+        case Weekly = "weekly"
+        case Monthly = "monthly"
+        case Annually = "annually"
+        case Regularly = "regularly"
+        case AfterCompletion = "after-completion"
+    }
+    
+    /// Repeat regularly unit.
+    
+    public enum RepeatUnit: String, Codable {
+        case Day = "day"
+        case Week = "week"
+        case Month = "month"
+        case Year = "year"
+    }
+    
+    /// Repeat structure.
+    
+    struct Repeat: Codable {
+        var type: RepeatType = .None
+        
+        var frequence: Int = 0
+        var unit: RepeatUnit = .Day
+    }
+    
+    /// Repeat types.
+    
+    static let repeatTypes: [RepeatType] = [
+        .None, .Daily, .Weekly, .Monthly, .Annually, .Regularly, .AfterCompletion
+    ]
+    
+    /// Retrieve repeat info.
+    
+    func getRepeatInfo() -> ToDo.Repeat? {
+        if let data = repeatInfo {
+            return try? JSONDecoder().decode(ToDo.Repeat.self, from: data)
+        }
+        
+        return nil
+    }
+    
+    /// Set repeat info to data.
+    
+    func setRepeatInfo(info: ToDo.Repeat?) {
+        if let info = info {
+            if let data = try? JSONEncoder().encode(info) {
+                repeatInfo = data
+            }
+        }
+    }
+}

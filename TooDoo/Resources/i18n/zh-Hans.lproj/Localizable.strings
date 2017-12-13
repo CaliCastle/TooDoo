@@ -141,6 +141,17 @@
 // Select category Table View Controller.
 "select-category.title" = "选择分类";
 
+// Repeat todo Table View Controller.
+"repeat-todo.types.0" = "不重复";
+"repeat-todo.types.1" = "每天";
+"repeat-todo.types.2" = "每周";
+"repeat-todo.types.3" = "每月";
+"repeat-todo.types.4" = "每年";
+"repeat-todo.types.5" = "每...";
+"repeat-todo.types.6" = "完成事项后重复";
+"repeat-todo.types.header" = "重复类型";
+"repeat-todo.custom.footer" = "下一次重复时间:";
+
 /*
  Category Table View Controller.
  */

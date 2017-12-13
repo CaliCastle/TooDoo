@@ -118,6 +118,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
 
     /// Hide home indicator.
     
+    @available(iOS 11, *)
     open override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }

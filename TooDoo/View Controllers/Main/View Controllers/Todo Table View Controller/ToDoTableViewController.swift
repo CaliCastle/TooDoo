@@ -17,9 +17,11 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     /// Segue enum.
     ///
     /// - SelectCategory: Show select a category
+    /// - SelectRepeat: Show select repeat type
     
     private enum Segue: String {
         case SelectCategory = "SelectCategory"
+        case SelectRepeat = "SelectRepeat"
     }
     
     /// Due presets.
@@ -196,6 +198,21 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
     }
     
+    /// Repeat info.
+    
+    var repeatInfo: ToDo.Repeat? {
+        didSet {
+            guard let info = repeatInfo else { return }
+            guard info.type != .Regularly && info.type != .AfterCompletion else {
+                
+                
+                return
+            }
+            
+            repeatLabel.text = "repeat-todo.types.\(ToDo.repeatTypes.index(of: info.type)!)".localized
+        }
+    }
+    
     /// Bulletin manager.
     
     lazy var bulletinManager: BulletinManager = {
@@ -244,6 +261,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         configureCategoryViews()
         configureDueDate()
         configureReminder()
+        configureRepeatInfo()
     }
     
     /// Get cell labels.
@@ -377,6 +395,16 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
     }
     
+    /// Configure repeat info.
+    
+    fileprivate func configureRepeatInfo() {
+        if let todo = todo {
+            repeatInfo = todo.getRepeatInfo()
+        } else {
+            repeatInfo = ToDo.Repeat(type: .None, frequence: 0, unit: .Day)
+        }
+    }
+    
     /// Update reminder preset buttons.
     
     fileprivate func updateReminderPresetButtons() {
@@ -433,6 +461,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
         // Set reminder
         todo.setReminder(remindDate)
+        // Set repeat info
+        todo.setRepeatInfo(info: repeatInfo)
+        // After creation
         todo.created()
         
         // Generate haptic feedback and play sound
@@ -706,6 +737,10 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             destination.selectedCategory = category
 
             destination.delegate = self
+        case Segue.SelectRepeat.rawValue:
+            guard let destination = segue.destination as? RepeatTodoTableViewController else { return }
+            destination.repeatInfo = repeatInfo
+            destination.delegate = self
         default:
             break
         }
@@ -736,6 +771,16 @@ extension ToDoTableViewController: SelectCategoryTableViewControllerDelegate {
         self.category = category
         // Reconfigure views
         configureCategoryViews()
+    }
+    
+}
+
+extension ToDoTableViewController: RepeatTodoTableViewControllerDelegate {
+    
+    /// Repeat selected.
+    
+    func selectedRepeat(with info: ToDo.Repeat?) {
+        repeatInfo = info
     }
     
 }

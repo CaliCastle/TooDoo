@@ -54,4 +54,26 @@ final class GeneralSettingsTableViewController: SettingTableViewController {
         // Generate haptic feedback
         Haptic.selection.generate()
     }
+    
+    /// Select highlight cell.
+    
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            let darkTheme = currentThemeIsDark()
+            
+            cell.backgroundColor = darkTheme ? UIColor.flatBlack().lighten(byPercentage: 0.08) : UIColor.flatWhite().darken(byPercentage: 0.08)
+        }
+    }
+    
+    /// Select unhightlight cell.
+    
+    override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            let darkTheme = currentThemeIsDark()
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                cell.backgroundColor = darkTheme ? .flatBlack() : .flatWhite()
+            })
+        }
+    }
 }
