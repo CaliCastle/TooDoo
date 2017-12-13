@@ -159,7 +159,11 @@ final class ToDoItemTableViewCell: UITableViewCell {
     
     private func toggleCheckbox() {
         // Generate haptic feedback
-        Haptic.impact(checkBox.checkState == .unchecked ? .light : .heavy).generate()
+        if checkBox.checkState == .checked {
+            Haptic.notification(.success).generate()
+        } else {
+            Haptic.impact(.light).generate()
+        }
         // Produce sound if checked
         if checkBox.checkState == .checked {
             SoundManager.play(soundEffect: .Drip)

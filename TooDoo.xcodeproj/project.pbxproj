@@ -64,6 +64,7 @@
 		8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD41FC21AE3008DF629 /* InfoPlist.strings */; };
 		8D809BDA1FC2513F008DF629 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD91FC2513F008DF629 /* README.md */; };
 		8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C3151F949A40003C767C /* AppearanceManager.swift */; };
+		8D8C7E741FE12214007F3C7A /* RepeatTodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8C7E731FE12214007F3C7A /* RepeatTodoTableViewController.swift */; };
 		8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDC1FD7467600208896 /* chord.m4a */; };
 		8D8D1EE21FD74A7100208896 /* click.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDE1FD7467700208896 /* click.m4a */; };
 		8D8D1EE31FD74A7100208896 /* drip.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDD1FD7467700208896 /* drip.m4a */; };
@@ -214,6 +215,7 @@
 		8D809BD61FC21B26008DF629 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D809BD91FC2513F008DF629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		8D88C3151F949A40003C767C /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		8D8C7E731FE12214007F3C7A /* RepeatTodoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTodoTableViewController.swift; sourceTree = "<group>"; };
 		8D8D1EDC1FD7467600208896 /* chord.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.m4a; sourceTree = "<group>"; };
 		8D8D1EDD1FD7467700208896 /* drip.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = drip.m4a; sourceTree = "<group>"; };
 		8D8D1EDE1FD7467700208896 /* click.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.m4a; sourceTree = "<group>"; };
@@ -624,6 +626,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		8D8C7E721FE121F9007F3C7A /* Repeat Table View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8D8C7E731FE12214007F3C7A /* RepeatTodoTableViewController.swift */,
+			);
+			path = "Repeat Table View Controller";
+			sourceTree = "<group>";
+		};
 		8D9BCBBE1F92F15D00721980 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,6 +1014,7 @@
 		8DF35D661FBEE0A7001877F4 /* Todo Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8D8C7E721FE121F9007F3C7A /* Repeat Table View Controller */,
 				8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */,
 				8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */,
 			);
@@ -1305,6 +1316,7 @@
 				8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */,
 				8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */,
 				8D1F6A891FB67CA7004709E3 /* +UIViewController.swift in Sources */,
+				8D8C7E741FE12214007F3C7A /* RepeatTodoTableViewController.swift in Sources */,
 				8D2075C01FCFF2F100FBE622 /* PermissionManager.swift in Sources */,
 				8DAC8F841FB0414B006207F6 /* +UIView.swift in Sources */,
 				8D3DFDEE1FDC676F0021D9AC /* +UIImageView.swift in Sources */,
