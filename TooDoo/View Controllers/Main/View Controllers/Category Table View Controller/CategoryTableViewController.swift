@@ -72,6 +72,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     // MARK: - Interface Builder Outlets
     
     @IBOutlet var categoryNameTextField: UITextField!
+    @IBOutlet var categoryRandomColorButton: UIButton!
     @IBOutlet var categoryColorCollectionView: UICollectionView!
     @IBOutlet var categoryIconSwitch: UISwitch!
     @IBOutlet var categoryIconCollectionView: UICollectionView!
@@ -185,6 +186,8 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         // Change placeholder color to grayish
         categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
         
+        categoryRandomColorButton.setImage(#imageLiteral(resourceName: "refresh-icon").withRenderingMode(.alwaysTemplate), for: .normal)
+        categoryRandomColorButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         categoryColorCollectionView.shadowOpacity = currentThemeIsDark() ? 0.25 : 0.07
         categoryIconCollectionView.shadowOpacity = currentThemeIsDark() ? 0.5 : 0.1
     }
@@ -301,6 +304,21 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         
         if selectedIconIndex == .zero {
             categoryIconCollectionView.selectItem(at: .zero, animated: true, scrollPosition: .left)
+        }
+    }
+    
+    /// Random color did tap.
+    
+    @IBAction func randomColorDidTap(_ sender: UIButton) {
+        if let newColor = categoryColors.randomElement() {
+            // Play click sound and haptic feedback
+            SoundManager.play(soundEffect: .Click)
+            Haptic.selection.generate()
+            
+            var newIndexPath = selectedColorIndex
+            newIndexPath.item = categoryColors.index(of: newColor)!
+            categoryColorCollectionView.selectItem(at: newIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+            selectedColorIndex = newIndexPath
         }
     }
     

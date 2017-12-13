@@ -332,15 +332,15 @@ final class ToDoOverviewViewController: UIViewController {
         case 4..<12:
             // Morning
             greetingWithTimeLabel.text = "\("overview.greeting.time.morning".localized) ☀️"
-            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.8862745098, green: 0.8431372549, blue: 0.1098039216, alpha: 1)
+            greetingWithTimeLabel.textColor = currentThemeIsDark() ? #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1) : #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         case 12..<18:
             // Afternoon
             greetingWithTimeLabel.text = "\("overview.greeting.time.afternoon".localized) ☕️"
-            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.9607843137, green: 0.5785923148, blue: 0.251636308, alpha: 1)
+            greetingWithTimeLabel.textColor = currentThemeIsDark() ? #colorLiteral(red: 0.9607843137, green: 0.5785923148, blue: 0.251636308, alpha: 1) : #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
         default:
             // Evening
             greetingWithTimeLabel.text = "\("overview.greeting.time.evening".localized) 🌙"
-            greetingWithTimeLabel.textColor = #colorLiteral(red: 0.9098039216, green: 0.6352941176, blue: 0.4705882353, alpha: 1)
+            greetingWithTimeLabel.textColor = currentThemeIsDark() ? #colorLiteral(red: 0.9098039216, green: 0.6352941176, blue: 0.4705882353, alpha: 1) : #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         }
     }
     
@@ -561,6 +561,7 @@ final class ToDoOverviewViewController: UIViewController {
     
     @objc fileprivate func themeChanged() {
         configureColors()
+        setupTimeLabel()
     }
     
     /// Additional preparation for storyboard segue.

@@ -286,6 +286,8 @@ final class SetupWelcomeViewController: UIViewController {
         userAvatarType = .Boy
         animateStep2ViewsOut()
         
+        // Generate haptic
+        Haptic.impact(.light).generate()
         // Play click sound
         SoundManager.play(soundEffect: .Click)
     }
@@ -296,6 +298,8 @@ final class SetupWelcomeViewController: UIViewController {
         userAvatarType = .Girl
         animateStep2ViewsOut()
         
+        // Generate haptic
+        Haptic.impact(.light).generate()
         // Play click sound
         SoundManager.play(soundEffect: .Click)
     }

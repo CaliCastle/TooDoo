@@ -758,13 +758,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a color:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEL-2z-JMy">
-                                                    <rect key="frame" x="24" y="19" width="315" height="25"/>
+                                                    <rect key="frame" x="24" y="19" width="294" height="25"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2bh-Lf-iJH">
-                                                    <rect key="frame" x="0.0" y="52" width="375" height="64"/>
+                                                    <rect key="frame" x="0.0" y="54" width="375" height="62"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="14" minimumInteritemSpacing="10" id="dl3-nn-bK3">
                                                         <size key="itemSize" width="26" height="26"/>
@@ -822,15 +822,28 @@
                                                         <outlet property="delegate" destination="w4P-w9-vgK" id="cbT-nt-piE"/>
                                                     </connections>
                                                 </collectionView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFe-X7-vv4">
+                                                    <rect key="frame" x="326" y="17" width="28" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="28" id="T9y-Qx-NN2"/>
+                                                        <constraint firstAttribute="height" constant="28" id="t53-mG-kUv"/>
+                                                    </constraints>
+                                                    <state key="normal" image="refresh-icon"/>
+                                                    <connections>
+                                                        <action selector="randomColorDidTap:" destination="w4P-w9-vgK" eventType="touchUpInside" id="NQi-Ts-keP"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HFe-X7-vv4" secondAttribute="trailing" constant="5" id="93G-Os-ogF"/>
                                                 <constraint firstItem="AEL-2z-JMy" firstAttribute="leading" secondItem="IlV-tC-e2v" secondAttribute="leadingMargin" constant="8" id="Fz3-Z4-VBo"/>
+                                                <constraint firstItem="HFe-X7-vv4" firstAttribute="leading" secondItem="AEL-2z-JMy" secondAttribute="trailing" constant="8" id="KGs-uq-4zb"/>
                                                 <constraint firstAttribute="trailing" secondItem="2bh-Lf-iJH" secondAttribute="trailing" id="Odo-ae-ub5"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="2bh-Lf-iJH" secondAttribute="bottom" constant="8" id="dGY-zd-FFG"/>
+                                                <constraint firstItem="HFe-X7-vv4" firstAttribute="top" secondItem="IlV-tC-e2v" secondAttribute="topMargin" constant="6" id="fg5-Dq-RSX"/>
                                                 <constraint firstItem="AEL-2z-JMy" firstAttribute="top" secondItem="IlV-tC-e2v" secondAttribute="topMargin" constant="8" id="h4b-De-8X5"/>
                                                 <constraint firstItem="2bh-Lf-iJH" firstAttribute="leading" secondItem="IlV-tC-e2v" secondAttribute="leading" id="iv1-3R-O0X"/>
-                                                <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="AEL-2z-JMy" secondAttribute="trailing" constant="20" id="nWc-5T-wYa"/>
-                                                <constraint firstItem="2bh-Lf-iJH" firstAttribute="top" secondItem="AEL-2z-JMy" secondAttribute="bottom" constant="8" id="v0j-9E-nPD"/>
+                                                <constraint firstItem="2bh-Lf-iJH" firstAttribute="top" secondItem="AEL-2z-JMy" secondAttribute="bottom" constant="10" id="v0j-9E-nPD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -965,6 +978,7 @@
                         <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
                         <outlet property="categoryIconSwitch" destination="gnT-M0-KBa" id="zQC-uY-aZ0"/>
                         <outlet property="categoryNameTextField" destination="XYe-b2-iVD" id="IEM-ey-qcF"/>
+                        <outlet property="categoryRandomColorButton" destination="HFe-X7-vv4" id="xdl-WC-ndF"/>
                         <outlet property="chooseColorLabel" destination="AEL-2z-JMy" id="CgN-cy-pyI"/>
                         <outlet property="chooseIconLabel" destination="Dti-RI-Fq8" id="gXy-pg-Axe"/>
                         <outlet property="nameLabel" destination="Ymz-fk-4yv" id="kW9-iQ-Jmm"/>
@@ -1082,8 +1096,8 @@
         <scene sceneID="c7B-8a-N6C">
             <objects>
                 <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1697,11 +1711,11 @@
                                         <rect key="frame" x="0.0" y="973" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="edF-ps-9eR" id="afc-8B-jTm">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXM-rx-Ykz">
-                                                    <rect key="frame" x="15.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
+                                                    <rect key="frame" x="14.999999999999996" y="13.999999999999998" width="55.666666666666664" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1991,6 +2005,7 @@
         <image name="no-notification-access" width="128" height="128"/>
         <image name="pencil-icon" width="25" height="25"/>
         <image name="plus-button" width="25" height="25"/>
+        <image name="refresh-icon" width="33" height="33"/>
         <image name="search-button" width="25" height="25"/>
         <image name="trash-alt-icon" width="33" height="33"/>
         <image name="trash-icon" width="25" height="25"/>
