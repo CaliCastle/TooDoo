@@ -147,7 +147,7 @@
 "category-table.name" = "名称:";
 "category-table.name.placeholder" = "✎ 类别名称";
 "category-table.choose-color" = "选择颜色:";
-"category-table.choose-icon" = "选择图标:(可选)";
+"category-table.choose-icon" = "选择图标:";
 
 /*
  Reorder Categories Table View Controller.

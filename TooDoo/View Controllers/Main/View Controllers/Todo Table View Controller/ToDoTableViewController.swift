@@ -273,6 +273,33 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         dueTimeButton.backgroundColor = lighterBackground
         reminderTimeButton.setTitleColor(color, for: .normal)
         reminderTimeButton.backgroundColor = lighterBackground
+        
+        let buttonsBackground: UIColor = (currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.02)
+        let buttonsTitleColor: UIColor = (currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
+        
+        duePresetButtons.forEach {
+            $0.backgroundColor = buttonsBackground
+            
+            if $0.tag == DuePreset.Clear.rawValue {
+                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.18), for: .normal)
+                
+                return
+            }
+            
+            $0.setTitleColor(buttonsTitleColor, for: .normal)
+        }
+        
+        reminderPresetButtons.forEach {
+            $0.backgroundColor = buttonsBackground
+            
+            if $0.tag == ReminderPreset.Clear.rawValue {
+                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.15), for: .normal)
+                
+                return
+            }
+            
+            $0.setTitleColor(buttonsTitleColor, for: .normal)
+        }
     }
     
     /// Configure goal text field properties.
@@ -338,19 +365,6 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         } else {
             dueDate = nil
         }
-        
-        duePresetButtons.forEach {
-            $0.backgroundColor = (self.currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.025)
-            
-            if $0.tag == DuePreset.Clear.rawValue {
-                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.15), for: .normal)
-                
-                return
-            }
-            
-            let buttonColor: UIColor = (self.currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
-            $0.setTitleColor(buttonColor, for: .normal)
-        }
     }
     
     /// Configure reminder.
@@ -360,19 +374,6 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         
         if let todo = todo {
             remindDate = todo.remindAt
-        }
-        
-        reminderPresetButtons.forEach {
-            $0.backgroundColor = (self.currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite()).lighten(byPercentage: 0.025)
-            
-            if $0.tag == ReminderPreset.Clear.rawValue {
-                $0.setTitleColor(UIColor.flatRed().lighten(byPercentage: 0.15), for: .normal)
-                
-                return
-            }
-            
-            let buttonColor: UIColor = (self.currentThemeIsDark() ? UIColor.flatWhite() : UIColor.flatBlack()).withAlphaComponent(0.8)
-            $0.setTitleColor(buttonColor, for: .normal)
         }
     }
     

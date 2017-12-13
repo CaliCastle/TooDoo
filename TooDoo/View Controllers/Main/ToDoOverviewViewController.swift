@@ -96,7 +96,7 @@ final class ToDoOverviewViewController: UIViewController {
         let dateTo = calendar.date(from: components)! // eg. 2016-10-11 00:00:00
         
         // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "(%@ <= due) AND (due < %@) AND (completed == NO)", argumentArray: [dateFrom, dateTo])
+        fetchRequest.predicate = NSPredicate(format: "(%@ <= due) AND (due < %@) AND (completed == NO) AND (movedToTrashAt = nil)", argumentArray: [dateFrom, dateTo])
         
         // Configure fetch request sort
         fetchRequest.sortDescriptors = []
@@ -805,6 +805,10 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     /// When the content did change with delete, insert, move and update type.
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if anObject is ToDo {
+            setupMessageLabel()
+        }
+        
         switch type {
         case .delete:
             // Item has been deleted
@@ -816,9 +820,6 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.deleteItems(at: [indexPath])
                 })
-            }
-            if anObject is ToDo {
-                setupMessageLabel()
             }
         case .insert:
             // Item has been inserted
@@ -835,9 +836,6 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                         self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                     }
                 })
-            }
-            if anObject is ToDo {
-                setupMessageLabel()
             }
         case .update:
             // Item has been updated

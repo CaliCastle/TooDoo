@@ -73,6 +73,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     @IBOutlet var categoryNameTextField: UITextField!
     @IBOutlet var categoryColorCollectionView: UICollectionView!
+    @IBOutlet var categoryIconSwitch: UISwitch!
     @IBOutlet var categoryIconCollectionView: UICollectionView!
     @IBOutlet var cellLabels: [UILabel]!
     
@@ -131,7 +132,9 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
                 selectedColorIndex = IndexPath(item: index, section: selectedColorIndex.section)
             }
             
-            selectedIconIndex = CategoryIcon.getIconIndex(for: category.categoryIcon())
+            if let _ = category.icon {
+                selectedIconIndex = CategoryIcon.getIconIndex(for: category.categoryIcon())
+            }
         }
         
         selectDefaultColor()
@@ -158,6 +161,12 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         
         // Configure name text field
         configureNameTextField()
+        // Configure icon switch
+        if let category = category {
+            toggleCategoryIcon(enable: category.icon != nil)
+            categoryIconSwitch.setOn(category.icon != nil, animated: false)
+        }
+        
         // Configure gradient masks
         categoryColorCollectionView.layer.mask = gradientMaskForColors
         categoryIconCollectionView.layer.mask = gradientMaskForIcons
@@ -179,6 +188,8 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         categoryColorCollectionView.shadowOpacity = currentThemeIsDark() ? 0.25 : 0.07
         categoryIconCollectionView.shadowOpacity = currentThemeIsDark() ? 0.5 : 0.1
     }
+    
+    /// Get cell labels.
     
     override func getCellLabels() -> [UILabel] {
         return cellLabels
@@ -208,7 +219,9 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     fileprivate func selectDefaultIcon() {
         if let _ = category {
-            categoryIconCollectionView.selectItem(at: selectedIconIndex, animated: true, scrollPosition: .centeredHorizontally)
+            if let indexPath = selectedIconIndex {
+                categoryIconCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            }
         }
     }
     
@@ -270,12 +283,31 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     ///
     /// - Returns: The current icon image
     
-    fileprivate func getCurrentIcon() -> UIImage {
-        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex!.section]] {
-            return icons[selectedIconIndex!.item]
+    fileprivate func getCurrentIcon() -> UIImage? {
+        guard let selectedIconIndex = selectedIconIndex else { return nil }
+        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex.section]] {
+            return icons[selectedIconIndex.item]
         }
         
-        return (categoryIcons.first?.value.first)!
+        return categoryIcons.first?.value.first
+    }
+    
+    /// Toggle category icon.
+    
+    fileprivate func toggleCategoryIcon(enable: Bool = true) {
+        categoryIconCollectionView.isUserInteractionEnabled = enable
+        categoryIconCollectionView.alpha = enable ? 1 : 0.5
+        selectedIconIndex = enable ? .zero : nil
+        
+        if selectedIconIndex == .zero {
+            categoryIconCollectionView.selectItem(at: .zero, animated: true, scrollPosition: .left)
+        }
+    }
+    
+    /// Icon switch did change.
+    
+    @IBAction func iconSwitchDidChange(_ sender: UISwitch) {
+        toggleCategoryIcon(enable: sender.isOn)
     }
     
     /// Keyboard dismissal on exit.
@@ -349,7 +381,9 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         category.color(categoryColors[selectedColorIndex.item])
         
         if let _ = selectedIconIndex {
-            category.icon = CategoryIcon.getIconName(for: getCurrentIcon())
+            category.icon = CategoryIcon.getIconName(for: getCurrentIcon()!)
+        } else {
+            category.icon = nil
         }
         
         // Add new order, created date

@@ -147,7 +147,7 @@
 "category-table.name" = "Name:";
 "category-table.name.placeholder" = "✎ Category name";
 "category-table.choose-color" = "Choose a color:";
-"category-table.choose-icon" = "Choose an icon:(optional)";
+"category-table.choose-icon" = "Choose an icon:";
 
 
 /*

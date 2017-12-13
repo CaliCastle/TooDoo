@@ -842,7 +842,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose an icon:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dti-RI-Fq8">
-                                                    <rect key="frame" x="24" y="19" width="315" height="25"/>
+                                                    <rect key="frame" x="24" y="19" width="284" height="25"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -907,15 +907,23 @@
                                                         <outlet property="delegate" destination="w4P-w9-vgK" id="zOY-LB-sea"/>
                                                     </connections>
                                                 </collectionView>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnT-M0-KBa">
+                                                    <rect key="frame" x="310" y="16" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="iconSwitchDidChange:" destination="w4P-w9-vgK" eventType="valueChanged" id="efH-72-Xxx"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="gnT-M0-KBa" firstAttribute="top" secondItem="tU3-4H-ff8" secondAttribute="topMargin" constant="5" id="6oQ-sX-LTq"/>
                                                 <constraint firstItem="Dti-RI-Fq8" firstAttribute="top" secondItem="tU3-4H-ff8" secondAttribute="topMargin" constant="8" id="8bn-IA-4gH"/>
                                                 <constraint firstItem="GcC-Fk-PNE" firstAttribute="leading" secondItem="tU3-4H-ff8" secondAttribute="leading" id="9er-MU-exS"/>
                                                 <constraint firstAttribute="trailing" secondItem="GcC-Fk-PNE" secondAttribute="trailing" id="Afe-1I-cIb"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="GcC-Fk-PNE" secondAttribute="bottom" constant="8" id="Awy-LZ-Rkc"/>
                                                 <constraint firstItem="GcC-Fk-PNE" firstAttribute="top" secondItem="Dti-RI-Fq8" secondAttribute="bottom" constant="8" id="Vd8-Dh-FgQ"/>
-                                                <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="Dti-RI-Fq8" secondAttribute="trailing" constant="20" id="ZOW-K0-V8G"/>
                                                 <constraint firstItem="Dti-RI-Fq8" firstAttribute="leading" secondItem="tU3-4H-ff8" secondAttribute="leadingMargin" constant="8" id="o8d-nC-qoc"/>
+                                                <constraint firstItem="gnT-M0-KBa" firstAttribute="leading" secondItem="Dti-RI-Fq8" secondAttribute="trailing" constant="2" id="r9q-cU-tLb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gnT-M0-KBa" secondAttribute="trailing" id="zQw-By-30E"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -954,6 +962,7 @@
                     <connections>
                         <outlet property="categoryColorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
                         <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
+                        <outlet property="categoryIconSwitch" destination="gnT-M0-KBa" id="zQC-uY-aZ0"/>
                         <outlet property="categoryNameTextField" destination="XYe-b2-iVD" id="IEM-ey-qcF"/>
                         <outlet property="chooseColorLabel" destination="AEL-2z-JMy" id="CgN-cy-pyI"/>
                         <outlet property="chooseIconLabel" destination="Dti-RI-Fq8" id="gXy-pg-Axe"/>
@@ -1072,8 +1081,8 @@
         <scene sceneID="c7B-8a-N6C">
             <objects>
                 <tableViewController id="VJ3-YR-ah3" customClass="ToDoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5nw-6z-Use" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1650,7 +1659,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Common reminders: (based on due date)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuY-bx-xLa">
-                                                    <rect key="frame" x="16" y="129" width="335" height="18"/>
+                                                    <rect key="frame" x="8" y="129" width="351" height="18"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>

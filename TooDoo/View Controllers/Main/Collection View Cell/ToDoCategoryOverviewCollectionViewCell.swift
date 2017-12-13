@@ -313,7 +313,6 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         configureKeyboard()
         // Set adding state
         isAdding = true
-
         // Insert add todo cell
         todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
         // Scroll to top for entering goal
@@ -430,16 +429,31 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // A todo item is changed
         if anObject is ToDo {
+            // Check if category is still valid
+            guard let todo = anObject as? ToDo, let _ = todo.category else { return }
+            
+            if isAdding {
+                /// FIXME: Add option to turn off continuously adding or not, false means no continuously adding
+                isAdding = false
+            }
+            
+            let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
+            let controllerRows = (controller.fetchedObjects?.count)!
+            
+            // Prevent core data objects with table rows async crash
+            switch type {
+            case .insert, .delete:
+                // If equal, exit
+                guard tableRows != controllerRows else { return }
+            case .update, .move:
+                // If inequal, exit (moving doesn't insert of delete)
+                guard tableRows == controllerRows else { return }
+            }
+            
             switch type {
             case .delete:
                 // Moved a todo to trash
-                if let indexPath = indexPath, todoItemsTableView.numberOfRows(inSection: 0) > 0 {
-                    // Prevent core data objects with table rows async crash
-                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
-                    let controllerRows = (controller.fetchedObjects?.count)!
-                    // If equal, exit
-                    guard tableRows != controllerRows else { return }
-                    
+                if let indexPath = indexPath {
                     // Delete from table row
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
@@ -453,21 +467,10 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             case .insert:
                 if let indexPath = newIndexPath {
                     // A new todo has been inserted
-                    guard isAdding else { return }
-                    // Just added a new one
-                    // Reset adding state
-                    isAdding = false
-                    
-                    // Prevent core data objects with table rows async crash
-                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
-                    let controllerRows = (controller.fetchedObjects?.count)!
-                    // If equal, exit
-                    guard tableRows != controllerRows else { return }
-                    
                     // Reload the inserted row
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                            todoItemsTableView.insertRows(at: [indexPath], with: .automatic)
                         })
                     } else {
                         // Fallback on earlier versions
@@ -477,12 +480,6 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             case .move:
                 if let indexPath = indexPath, let newIndexPath = newIndexPath {
                     guard !isAdding else { return }
-                    
-                    // Prevent core data objects with table rows async crash
-                    let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
-                    let controllerRows = (controller.fetchedObjects?.count)!
-                    // If inequal, exit (moving doesn't insert of delete)
-                    guard tableRows == controllerRows else { return }
                     
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
