@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 import DeckTransition
 
 protocol RepeatTodoTableViewControllerDelegate {
@@ -20,6 +21,10 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var cellLabels: [UILabel]!
+    @IBOutlet var repeatTypePickerView: UIPickerView!
+    @IBOutlet var repeatNextDateLabel: UILabel!
+    @IBOutlet var endDatePicker: UIDatePicker!
+    @IBOutlet var endDateSwitch: UISwitch!
     
     // MARK: - Localizable Outlets.
     
@@ -36,16 +41,83 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
                 if oldValue.type == info.type { return }
             }
             
-            guard info.type == .Regularly || info.type == .AfterCompletion else {
-                if tableView.numberOfSections != 1 {
-                    tableView.deleteSections([1], with: .middle)
-                }
-                
-                return
-            }
+            guard info.type == .Regularly || info.type == .AfterCompletion else { return }
             
             if tableView.numberOfSections == 1 {
-                tableView.insertSections([1], with: .middle)
+                tableView.insertSections([1, 2], with: .middle)
+            }
+        }
+    }
+    
+    /// Date formatter.
+    
+    lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter.localized()
+        dateFormatter.dateFormat = "yyyy MMM dd, EEE".localized
+        
+        return dateFormatter
+    }()
+    
+    /// Due date for todo.
+    
+    var dueDate: Date?
+    
+    /// Repeat frequencies.
+    
+    let repeatFrequencies = 800
+    
+    /// Selected frequency.
+    
+    var selectedFrequency: Int? {
+        didSet {
+            if var info = repeatInfo {
+                if let frequency = selectedFrequency {
+                    info.frequency = frequency
+                } else {
+                    info.frequency = 0
+                }
+                
+                repeatInfo = info
+            }
+        }
+    }
+    
+    /// Selected unit.
+    
+    var selectedUnit: ToDo.RepeatUnit? {
+        didSet {
+            if var info = repeatInfo {
+                if let unit = selectedUnit {
+                    info.unit = unit
+                } else {
+                    info.unit = .Day
+                }
+                
+                repeatInfo = info
+                
+            }
+        }
+    }
+    
+    /// Has end date.
+    
+    var hasEndDate: Bool = false {
+        didSet {
+            guard hasEndDate != oldValue else { return }
+            
+            if var info = repeatInfo, info.type == .Regularly || info.type == .AfterCompletion {
+                let indexPaths = [IndexPath(row: 1, section: 2)]
+                
+                if hasEndDate {
+                    tableView.insertRows(at: indexPaths, with: .middle)
+                    tableView.scrollToRow(at: indexPaths.first!, at: .top, animated: true)
+                } else {
+                    tableView.deleteRows(at: indexPaths, with: .middle)
+                    
+                    info.endDate = nil
+                    repeatInfo = info
+                }
+                endDatePicker.isEnabled = hasEndDate
             }
         }
     }
@@ -61,11 +133,23 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         configureColors()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let _ = updateNextDateLabel()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         if let delegate = delegate {
-            delegate.selectedRepeat(with: repeatInfo)
+            if var info = repeatInfo {
+                if hasEndDate {
+                    info.endDate = endDatePicker.date
+                }
+                
+                delegate.selectedRepeat(with: info)
+            }
         }
     }
     
@@ -77,14 +161,30 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         cellLabels.forEach {
             $0.text = "repeat-todo.types.\($0.tag)".localized
         }
+        
+        endDatePicker.locale = Locale(identifier: LocaleManager.default.currentLanguage.string())
+        endDatePicker.calendar = Calendar.current
     }
     
     /// Setup views.
     
     fileprivate func setupViews() {
-        if let info = repeatInfo, let index = ToDo.repeatTypes.index(of: info.type) {
-            tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
+        if let info = repeatInfo {
+            if let index = ToDo.repeatTypes.index(of: info.type) {
+                tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
+            }
+            
+            if let endDate = info.endDate {
+                hasEndDate = true
+                endDatePicker.date = endDate
+            }
+            
+            endDateSwitch.setOn(hasEndDate, animated: false)
+            
+            repeatTypePickerView.selectRow(info.frequency > 0 ? info.frequency - 1 : 0, inComponent: 0, animated: false)
+            repeatTypePickerView.selectRow(ToDo.repeatUnits.index(of: info.unit)!, inComponent: 1, animated: false)
         }
+        endDatePicker.minimumDate = Date()
     }
     
     /// Configure colors.
@@ -95,33 +195,54 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         cellLabels.forEach {
             $0.textColor = color
         }
+        
+        repeatTypePickerView.setValue(color, forKey: "textColor")
+        endDatePicker.setValue(color, forKey: "textColor")
+        repeatNextDateLabel.textColor = color.withAlphaComponent(0.6)
     }
 
     /// Adjust scroll behavior for dismissal.
     
     override open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.isEqual(tableView) else { return }
-        
         if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            if scrollView.contentOffset.y > 0 {
-                // Normal behavior if the `scrollView` isn't scrolled to the top
-                delegate.isDismissEnabled = false
-            } else {
-                if scrollView.isDecelerating {
-                    // If the `scrollView` is scrolled to the top but is decelerating
-                    // that means a swipe has been performed. The view and
-                    // scrollview's subviews are both translated in response to this.
-                    view.transform = .init(translationX: 0, y: -scrollView.contentOffset.y)
-                    scrollView.subviews.forEach({
-                        $0.transform = .init(translationX: 0, y: scrollView.contentOffset.y)
-                    })
-                } else {
-                    // If the user has panned to the top, the scrollview doesnʼt bounce and
-                    // the dismiss gesture is enabled.
-                    delegate.isDismissEnabled = true
-                }
-            }
+            delegate.isDismissEnabled = false
         }
+    }
+    
+    /// Update next date label.
+    
+    fileprivate func updateNextDateLabel() -> Date? {
+        if let info = repeatInfo {
+            var component: Calendar.Component = .day
+            var amount: Int = info.frequency
+            
+            switch info.unit {
+            case .Day:
+                component = .day
+            case .Month:
+                component = .month
+            case .Week:
+                component = .day
+                amount = amount * 7
+            case .Year:
+                component = .year
+            }
+            
+            if info.type == .AfterCompletion { repeatNextDateLabel.text = "repeat-todo.after-completion-next-date".localized; return nil }
+            
+            let nextDate = Calendar.current.date(byAdding: component, value: amount, to: dueDate ?? Date())
+            repeatNextDateLabel.text = "\("repeat-todo.custom.footer".localized)\n\(dateFormatter.string(from: nextDate!))"
+            
+            return nextDate
+        }
+        
+        return nil
+    }
+    
+    /// Update next recurring date.
+    
+    fileprivate func updateNextDate() {
+        endDatePicker.date = updateNextDateLabel() ?? Date()
     }
     
     /// Light status bar.
@@ -137,6 +258,13 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         return true
     }
     
+    /// End date switch did change.
+    
+    @IBAction func endDateSwitchDidChange(_ sender: UISwitch) {
+        hasEndDate = sender.isOn
+        updateNextDate()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -144,7 +272,7 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         
         switch info.type {
         case .Regularly, .AfterCompletion:
-            return 2
+            return 3
         default:
             return 1
         }
@@ -153,9 +281,14 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     /// Number of rows.
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return ToDo.repeatTypes.count }
-        
-        return 1
+        switch section {
+        case 1:
+            return 1
+        case 2:
+            return hasEndDate ? 2 : 1
+        default:
+            return ToDo.repeatTypes.count
+        }
     }
     
     /// About to display cell.
@@ -171,6 +304,9 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         
         switch indexPath.section {
         case 0:
+            // Generate haptic feedback
+            Haptic.selection.generate()
+            
             switch indexPath.row {
             case 1:
                 info.type = .Daily
@@ -188,20 +324,32 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
                 info.type = .None
             }
             
-            repeatInfo = info
-            tableView.reloadSections([0], with: .none)
+            if info.type == .Regularly || info.type == .AfterCompletion {
+                repeatInfo = info
+                tableView.reloadSections([0], with: .none)
+            } else {
+                info.endDate = nil
+                info.frequency = 1
+                info.unit = .Day
+                
+                repeatInfo = info
+            }
         default:
             return
         }
         
         if info.type != .Regularly && info.type != .AfterCompletion {
             let _ = navigationController?.popViewController(animated: true)
+        } else {
+            pickerView(repeatTypePickerView, didSelectRow: 0, inComponent: 0)
         }
     }
     
     /// Select highlight cell.
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        guard indexPath.section == 0 else { return }
+        
         if let cell = tableView.cellForRow(at: indexPath) {
             let darkTheme = currentThemeIsDark()
             
@@ -212,6 +360,8 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     /// Select unhightlight cell.
     
     override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        guard indexPath.section == 0 else { return }
+        
         if let cell = tableView.cellForRow(at: indexPath) {
             let darkTheme = currentThemeIsDark()
             
@@ -227,19 +377,61 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         switch section {
         case 0:
             return "repeat-todo.types.header".localized
+        case 1:
+            return "repeat-todo.frequency.header".localized
         default:
             return nil
         }
     }
+
+}
+
+// MARK: - Picker Delegate and Data Source Mthods.
+
+extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
-    /// Footer titles.
+    /// Number of components.
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        switch section {
-        case 1:
-            return "repeat-todo.custom.footer".localized
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    /// Number of rows.
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return repeatFrequencies
         default:
-            return nil
+            return ToDo.repeatUnits.count
         }
+    }
+    
+    /// Selected row.
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            selectedFrequency = row + 1
+        default:
+            selectedUnit = ToDo.repeatUnits[row]
+        }
+        
+        let _ = updateNextDateLabel()
+    }
+    
+    /// Attributed string for each component.
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var text = ""
+        
+        switch component {
+        case 0:
+            text = "Every \(row + 1)"
+        default:
+            text = ToDo.repeatUnits[row].rawValue
+        }
+        
+        return NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.white, .font: AppearanceManager.font(size: 17, weight: .DemiBold)])
     }
 }

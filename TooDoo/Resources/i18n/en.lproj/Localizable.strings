@@ -32,6 +32,7 @@
 
 "EEEE, MMM d" = "EEEE, MMM d";
 "MMM dd, EEE - HH:mm" = "MMM dd, EEE - HH:mm";
+"yyyy MMM dd, EEE" = "EEEE, MMM d, yyyy";
 
 "%d years ago" = "%d years ago";
 "1 year ago" = "1 year ago";
@@ -149,8 +150,11 @@
 "repeat-todo.types.4" = "Every year";
 "repeat-todo.types.5" = "Every ...";
 "repeat-todo.types.6" = "Repeat after completion";
+"repeat-todo.types.7" = "End date";
 "repeat-todo.types.header" = "Repeating types";
+"repeat-todo.frequency.header" = "Select repeat frequency";
 "repeat-todo.custom.footer" = "Next recurring date:";
+"repeat-todo.after-completion-next-date" = "Item will repeat when it's completed";
 
 /*
  Category Table View Controller.

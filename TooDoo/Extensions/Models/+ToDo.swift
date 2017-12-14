@@ -276,15 +276,21 @@ extension ToDo {
     
     struct Repeat: Codable {
         var type: RepeatType = .None
-        
-        var frequence: Int = 0
+        var frequency: Int = 1
         var unit: RepeatUnit = .Day
+        var endDate: Date?
     }
     
     /// Repeat types.
     
     static let repeatTypes: [RepeatType] = [
         .None, .Daily, .Weekly, .Monthly, .Annually, .Regularly, .AfterCompletion
+    ]
+    
+    /// Repeat units.
+    
+    static let repeatUnits: [RepeatUnit] = [
+        .Day, .Week, .Month, .Year
     ]
     
     /// Retrieve repeat info.

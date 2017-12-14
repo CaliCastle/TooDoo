@@ -32,6 +32,7 @@
 
 "EEEE, MMM d" = "MM月d日 EEE";
 "MMM dd, EEE - HH:mm" = "MM月dd日(EEE): HH:mm";
+"yyyy MMM dd, EEE" = "yyyy年MM月dd日(EEE)";
 
 "%d years ago" = "%d年前";
 "1 year ago" = "1年前";
@@ -149,8 +150,11 @@
 "repeat-todo.types.4" = "每年";
 "repeat-todo.types.5" = "每...";
 "repeat-todo.types.6" = "完成事项后重复";
+"repeat-todo.types.7" = "结束日期";
 "repeat-todo.types.header" = "重复类型";
+"repeat-todo.frequency.header" = "选择重复周期";
 "repeat-todo.custom.footer" = "下一次重复时间:";
+"repeat-todo.after-completion-next-date" = "将在该事项完成后重复";
 
 /*
  Category Table View Controller.

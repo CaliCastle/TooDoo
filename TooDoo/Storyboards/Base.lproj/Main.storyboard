@@ -1883,9 +1883,9 @@
         <!--Repeat-->
         <scene sceneID="AnE-Y7-exj">
             <objects>
-                <tableViewController title="Repeat" id="dGg-zC-hOp" customClass="RepeatTodoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Repeat" hidesBottomBarWhenPushed="YES" id="dGg-zC-hOp" customClass="RepeatTodoTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="gmb-TJ-hn2" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.23413519969999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
@@ -2021,28 +2021,99 @@
                             </tableViewSection>
                             <tableViewSection id="0fD-xe-zAP">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="eFa-Iy-Qte" rowHeight="52" style="IBUITableViewCellStyleDefault" id="f6N-ck-m4M" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="407" width="375" height="52"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="255" id="f6N-ck-m4M" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="407" width="375" height="255"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f6N-ck-m4M" id="DnE-ng-bHe">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="255"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="No repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eFa-Iy-Qte">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="52"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFp-VC-ND9">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="dGg-zC-hOp" id="05N-kR-A3f"/>
+                                                        <outlet property="delegate" destination="dGg-zC-hOp" id="tD4-QF-DMa"/>
+                                                    </connections>
+                                                </pickerView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N20-90-mMQ">
+                                                    <rect key="frame" x="16" y="216" width="343" height="19.333333333333343"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="DFp-VC-ND9" secondAttribute="trailing" id="2LP-1M-pMJ"/>
+                                                <constraint firstItem="N20-90-mMQ" firstAttribute="top" secondItem="DFp-VC-ND9" secondAttribute="bottom" id="2OE-8o-wHW"/>
+                                                <constraint firstItem="DFp-VC-ND9" firstAttribute="top" secondItem="DnE-ng-bHe" secondAttribute="top" id="OmV-7m-Bqi"/>
+                                                <constraint firstItem="N20-90-mMQ" firstAttribute="leading" secondItem="DnE-ng-bHe" secondAttribute="leadingMargin" id="acP-yT-9ez"/>
+                                                <constraint firstItem="DFp-VC-ND9" firstAttribute="centerX" secondItem="DnE-ng-bHe" secondAttribute="centerX" id="agA-hd-KVb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="N20-90-mMQ" secondAttribute="trailing" id="dEM-i6-6cG"/>
+                                                <constraint firstItem="DFp-VC-ND9" firstAttribute="leading" secondItem="DnE-ng-bHe" secondAttribute="leading" id="pJ4-Bn-7k0"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="hox-Rq-ES4">
-                                <cells/>
+                            <tableViewSection id="Wbz-fF-tGN">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="52" id="j5K-vu-M8b" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="698" width="375" height="52"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j5K-vu-M8b" id="0r9-2K-1Z6">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="7" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ef4-ZU-exL">
+                                                    <rect key="frame" x="16" y="14.999999999999998" width="284" height="23.333333333333329"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GCm-Zc-hHX">
+                                                    <rect key="frame" x="308" y="11" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="endDateSwitchDidChange:" destination="dGg-zC-hOp" eventType="valueChanged" id="lu1-bd-MZW"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="GCm-Zc-hHX" firstAttribute="leading" secondItem="ef4-ZU-exL" secondAttribute="trailing" constant="8" id="Hqa-3X-gB5"/>
+                                                <constraint firstItem="GCm-Zc-hHX" firstAttribute="centerY" secondItem="0r9-2K-1Z6" secondAttribute="centerY" id="LJf-FH-rFz"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GCm-Zc-hHX" secondAttribute="trailing" constant="2" id="M9Y-1t-fhe"/>
+                                                <constraint firstItem="ef4-ZU-exL" firstAttribute="leading" secondItem="0r9-2K-1Z6" secondAttribute="leadingMargin" id="f05-OB-6Kk"/>
+                                                <constraint firstItem="ef4-ZU-exL" firstAttribute="centerY" secondItem="0r9-2K-1Z6" secondAttribute="centerY" id="fwm-pv-smk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="180" id="zJB-L0-dRO" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="750" width="375" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zJB-L0-dRO" id="hc7-lg-qQr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="BMr-RI-sAB">
+                                                    <rect key="frame" x="0.0" y="-18" width="375" height="216"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="534902481.22744298">
+                                                        <!--2017-12-14 00:01:21 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BMr-RI-sAB" firstAttribute="centerY" secondItem="hc7-lg-qQr" secondAttribute="centerY" id="1uB-hZ-IgC"/>
+                                                <constraint firstItem="BMr-RI-sAB" firstAttribute="centerX" secondItem="hc7-lg-qQr" secondAttribute="centerX" id="AKm-ep-RqU"/>
+                                                <constraint firstAttribute="trailing" secondItem="BMr-RI-sAB" secondAttribute="trailing" id="FqU-NF-yyf"/>
+                                                <constraint firstItem="BMr-RI-sAB" firstAttribute="leading" secondItem="hc7-lg-qQr" secondAttribute="leading" id="gub-VP-ppA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </cells>
                             </tableViewSection>
                         </sections>
                         <userDefinedRuntimeAttributes>
@@ -2055,6 +2126,10 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Repeat" largeTitleDisplayMode="never" id="XxD-Fb-znM"/>
                     <connections>
+                        <outlet property="endDatePicker" destination="BMr-RI-sAB" id="iEW-S9-V2q"/>
+                        <outlet property="endDateSwitch" destination="GCm-Zc-hHX" id="cbq-Re-5lH"/>
+                        <outlet property="repeatNextDateLabel" destination="N20-90-mMQ" id="Dmr-bY-FYp"/>
+                        <outlet property="repeatTypePickerView" destination="DFp-VC-ND9" id="D24-gL-fiw"/>
                         <outletCollection property="cellLabels" destination="8kn-yT-MJj" collectionClass="NSMutableArray" id="qiv-Xl-kbv"/>
                         <outletCollection property="cellLabels" destination="h0R-hv-xfX" collectionClass="NSMutableArray" id="sFW-65-sxX"/>
                         <outletCollection property="cellLabels" destination="JLK-qI-xqZ" collectionClass="NSMutableArray" id="rBb-Rz-xlp"/>
@@ -2062,6 +2137,7 @@
                         <outletCollection property="cellLabels" destination="Pwv-OJ-vfi" collectionClass="NSMutableArray" id="X5x-Gy-QZj"/>
                         <outletCollection property="cellLabels" destination="U2e-XG-iGW" collectionClass="NSMutableArray" id="eLl-oM-zHv"/>
                         <outletCollection property="cellLabels" destination="Llc-5S-eQd" collectionClass="NSMutableArray" id="fg6-0c-4x0"/>
+                        <outletCollection property="cellLabels" destination="ef4-ZU-exL" collectionClass="NSMutableArray" id="T1j-E6-Sn6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3DL-Wx-I1J" userLabel="First Responder" sceneMemberID="firstResponder"/>

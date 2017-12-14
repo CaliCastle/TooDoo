@@ -401,7 +401,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         if let todo = todo {
             repeatInfo = todo.getRepeatInfo()
         } else {
-            repeatInfo = ToDo.Repeat(type: .None, frequence: 0, unit: .Day)
+            repeatInfo = ToDo.Repeat(type: .None, frequency: 0, unit: .Day, endDate: nil)
         }
     }
     
@@ -735,11 +735,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         case Segue.SelectCategory.rawValue:
             guard let destination = segue.destination as? SelectCategoryTableViewController else { return }
             destination.selectedCategory = category
-
             destination.delegate = self
         case Segue.SelectRepeat.rawValue:
             guard let destination = segue.destination as? RepeatTodoTableViewController else { return }
             destination.repeatInfo = repeatInfo
+            destination.dueDate = dueDate
+            
             destination.delegate = self
         default:
             break
