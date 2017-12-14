@@ -21,6 +21,10 @@
 "Today" = "今天";
 "Tomorrow" = "明天";
 "Now" = "现在";
+"day" = "天";
+"week" = "周";
+"month" = "月";
+"year" = "年";
 
 "version" = "版本号";
 "Beta" = "内测";
@@ -155,6 +159,7 @@
 "repeat-todo.frequency.header" = "选择重复周期";
 "repeat-todo.custom.footer" = "下一次重复时间:";
 "repeat-todo.after-completion-next-date" = "将在该事项完成后重复";
+"repeat-todo.every-frequency" = "每%d";
 
 /*
  Category Table View Controller.

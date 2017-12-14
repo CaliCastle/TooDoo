@@ -268,7 +268,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
             cell.checkmark.transform = .init(scaleX: 1, y: 1)
             cell.checkmark.alpha = 1
             cell.selectedOverlay.alpha = 1
-            cell.selectedOverlay.backgroundColor = currentThemeIsDark() ? UIColor.black.withAlphaComponent(0.5) : UIColor.white.withAlphaComponent(0.75)
+            cell.selectedOverlay.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         } else {
             cell.checkmark.transform = .init(scaleX: 0.05, y: 0.05)
             cell.checkmark.alpha = 0

@@ -427,11 +427,11 @@ extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataS
         
         switch component {
         case 0:
-            text = "Every \(row + 1)"
+            text = String(format: "repeat-todo.every-frequency".localized, row + 1)
         default:
-            text = ToDo.repeatUnits[row].rawValue
+            text = ToDo.repeatUnits[row].rawValue.localized
         }
         
-        return NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.white, .font: AppearanceManager.font(size: 17, weight: .DemiBold)])
+        return NSAttributedString(string: text, attributes: [.foregroundColor: currentThemeIsDark() ? UIColor.white : .flatBlack(), .font: AppearanceManager.font(size: 17, weight: .DemiBold)])
     }
 }

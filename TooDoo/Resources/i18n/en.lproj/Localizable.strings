@@ -21,6 +21,10 @@
 "Today" = "Today";
 "Tomorrow" = "Tomorrow";
 "Now" = "Now";
+"day" = "day(s)";
+"week" = "week(s)";
+"month" = "month(s)";
+"year" = "year(s)";
 
 "version" = "version";
 "Beta" = "Beta";
@@ -155,6 +159,7 @@
 "repeat-todo.frequency.header" = "Select repeat frequency";
 "repeat-todo.custom.footer" = "Next recurring date:";
 "repeat-todo.after-completion-next-date" = "Item will repeat when it's completed";
+"repeat-todo.every-frequency" = "Every %d";
 
 /*
  Category Table View Controller.
