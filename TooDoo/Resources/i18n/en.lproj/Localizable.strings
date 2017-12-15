@@ -160,6 +160,7 @@
 "repeat-todo.custom.footer" = "Next recurring date:";
 "repeat-todo.after-completion-next-date" = "Item will repeat when it's completed";
 "repeat-todo.every-frequency" = "Every %d";
+"repeat-todo-after-completion" = "%@ after completion";
 
 /*
  Category Table View Controller.

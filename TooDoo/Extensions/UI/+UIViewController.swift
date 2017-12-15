@@ -11,17 +11,17 @@ import CoreData
 
 extension UIViewController: NavigationBarAnimatable {
     
-    open func animateNavigationBar() {
+    open func animateNavigationBar(delay: Double = 0.3) {
         guard let navigationController = navigationController else { return }
         
         // Move down animation to `navigation bar`
         navigationController.navigationBar.alpha = 0
         navigationController.navigationBar.transform = .init(translationX: 0, y: -80)
         
-        UIView.animate(withDuration: 0.7, delay: 0.3, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
+        UIView.animate(withDuration: 0.7, delay: delay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
             navigationController.navigationBar.alpha = 1
             navigationController.navigationBar.transform = .init(translationX: 0, y: 0)
-        }, completion: nil)
+        })
     }
 
 }

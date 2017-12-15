@@ -56,5 +56,69 @@
 			<string>%d todos due today</string>
 		</dict>
 	</dict>
+	<key>Every %d day(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@days@</string>
+		<key>days</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every day</string>
+			<key>other</key>
+			<string>Every %d days</string>
+		</dict>
+	</dict>
+	<key>Every %d week(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@weeks@</string>
+		<key>weeks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every week</string>
+			<key>other</key>
+			<string>Every %d weeks</string>
+		</dict>
+	</dict>
+	<key>Every %d month(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@months@</string>
+		<key>months</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every month</string>
+			<key>other</key>
+			<string>Every %d months</string>
+		</dict>
+	</dict>
+	<key>Every %d year(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@years@</string>
+		<key>years</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every year</string>
+			<key>other</key>
+			<string>Every %d years</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -204,7 +204,11 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         didSet {
             guard let info = repeatInfo else { return }
             guard info.type != .Regularly && info.type != .AfterCompletion else {
+                repeatLabel.text = "Every %d \(info.unit.rawValue)(s)".localizedPlural(info.frequency)
                 
+                if info.type == .AfterCompletion {
+                    repeatLabel.text = "repeat-todo-after-completion".localized.replacingOccurrences(of: "%@", with: repeatLabel.text!)
+                }
                 
                 return
             }

@@ -128,18 +128,78 @@ extension ToDo {
             // Handle notifications
             DispatchQueue.main.async {
                 if self.completed {
+                    // Renew itself if it is repeated
+                    self.renewIfRepeated()
+                    // Remove notifications
                     NotificationManager.removeTodoReminderNotification(for: self)
                     // Remove from events
                     self.removeFromEvents()
-                    // Set completed to reminders
-                    self.setCompletedToReminders(completed: completed)
                 } else {
+                    // Restore notifications
                     NotificationManager.registerTodoReminderNotification(for: self)
                     // Restore to events
                     self.createToEvents()
-                    // Set completed to reminders
-                    self.setCompletedToReminders(completed: completed)
                 }
+                // Set completed to reminders
+                self.setCompletedToReminders(completed: completed)
+            }
+        }
+    }
+    
+    /// Renew to-do if it is repeated.
+    
+    internal func renewIfRepeated() {
+        if let data = repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: data) {
+            // Get next recurring date
+            var component: Calendar.Component = .day
+            var amount: Int = info.frequency
+            
+            switch info.type {
+            case .None:
+                return
+            case .Daily:
+                component = .day
+                amount = 1
+            case .Weekly:
+                component = .day
+                amount = 7
+            case .Monthly:
+                component = .month
+                amount = 1
+            case .Annually:
+                component = .year
+                amount = 1
+            case .Regularly, .AfterCompletion:
+                switch info.unit {
+                case .Month:
+                    component = .month
+                case .Week:
+                    amount = amount * 7
+                case .Year:
+                    component = .year
+                default:
+                    break
+                }
+            }
+            
+            let baseDate: Date = info.type == .AfterCompletion ? Date() : (due ?? Date())
+            let nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
+            
+            // Renew for remind notification
+            if let remindAt = remindAt {
+                self.remindAt = Calendar.current.date(byAdding: component, value: amount, to: remindAt)
+            }
+            
+            // Check if passed end repeating date
+            if let endDate = info.endDate, nextDate > endDate {
+                return
+            }
+            
+            // Renew self
+            due = nextDate
+            
+            if completed {
+                complete(completed: !completed)
             }
         }
     }
@@ -165,7 +225,7 @@ extension ToDo {
     /// Complete to reminders.
     
     func setCompletedToReminders(completed: Bool) {
-        guard UserDefaultManager.bool(forKey: .CalendarsSync), let identifier = reminderIdentifier else { return }
+        guard UserDefaultManager.bool(forKey: .RemindersSync), let identifier = reminderIdentifier else { return }
         
         let eventStore = EKEventStore()
         let reminder = eventStore.calendarItem(withIdentifier: identifier)

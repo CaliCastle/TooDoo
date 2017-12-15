@@ -163,10 +163,10 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLK-Jl-fkn">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="400"/>
                                                     <subviews>
-                                                        <label opaque="NO" contentMode="left" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-9c-1G8">
-                                                            <rect key="frame" x="17" y="17" width="234" height="33"/>
+                                                        <label opaque="NO" contentMode="left" verticalHuggingPriority="251" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-9c-1G8">
+                                                            <rect key="frame" x="17" y="17" width="234" height="31.666666666666671"/>
                                                             <gestureRecognizers/>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="23"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="category-icon-personal" translatesAutoresizingMaskIntoConstraints="NO" id="wau-5q-WVn">
@@ -183,7 +183,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Todos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zk-Dj-DM1" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                                            <rect key="frame" x="17" y="52" width="87" height="16.666666666666671"/>
+                                                            <rect key="frame" x="17" y="50.666666666666664" width="87" height="16.666666666666664"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
                                                             <color key="textColor" red="0.61176470588235299" green="0.61176470588235299" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -195,7 +195,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="35" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="943-gG-flz">
-                                                            <rect key="frame" x="8" y="70.666666666666686" width="288" height="279"/>
+                                                            <rect key="frame" x="8" y="69.333333333333343" width="288" height="280.33333333333326"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <prototypes>
                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" showsReorderControl="YES" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ToDoItemTableCell" rowHeight="35" id="F0s-WT-Tl5" customClass="ToDoItemTableViewCell" customModule="TooDoo" customModuleProvider="target">
