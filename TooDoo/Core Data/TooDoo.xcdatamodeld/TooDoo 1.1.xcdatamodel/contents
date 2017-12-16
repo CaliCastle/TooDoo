@@ -7,8 +7,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="remindAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="repeated" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="repeatInterval" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="repeatInfo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="uuid" attributeType="String" syncable="YES"/>
         <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ToDo" inverseName="category" inverseEntity="ToDo" syncable="YES"/>
     </entity>
@@ -39,7 +38,7 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="todos" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="0" positionY="72" width="128" height="195"/>
+        <element name="Category" positionX="0" positionY="72" width="128" height="180"/>
         <element name="Tag" positionX="-18" positionY="153" width="128" height="105"/>
         <element name="ToDo" positionX="-36" positionY="9" width="128" height="315"/>
     </elements>

@@ -8,6 +8,7 @@
 
 import UIKit
 import Haptica
+import ViewAnimator
 import DeckTransition
 
 open class SettingTableViewController: UITableViewController, LocalizableInterface {
@@ -18,8 +19,6 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         super.viewDidLoad()
         
         localizeInterface()
-        
-        modalPresentationCapturesStatusBarAppearance = true
         
         configureRightNavigationButton()
         setupTableView()

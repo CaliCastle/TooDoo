@@ -291,7 +291,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     /// Configure todo items table view.
     
     fileprivate func configureTodoItemsTableView() {
-        
+        todoItemsTableView.rowHeight = UITableViewAutomaticDimension
     }
     
     /// Configure todo items.
@@ -490,7 +490,10 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                         todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
                     }
                     
-                    // Reconfigure cell
+                    // Reconfigure cells
+                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
+                        cell.todo = fetchedResultsController.object(at: indexPath)
+                    }
                     if let cell = todoItemsTableView.cellForRow(at: newIndexPath) as? ToDoItemTableViewCell {
                         cell.todo = fetchedResultsController.object(at: newIndexPath)
                     }
@@ -506,6 +509,11 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     } else {
                         // Fallback on earlier versions
                         todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                    
+                    // Reconfigure cell
+                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
+                        cell.todo = fetchedResultsController.object(at: indexPath)
                     }
                 }
             }

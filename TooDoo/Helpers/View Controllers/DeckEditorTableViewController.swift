@@ -39,11 +39,12 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         super.viewWillAppear(animated)
         
         if !animated {
+            animateViews()
+            
             navigationController?.navigationBar.alpha = 0
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(220), execute: {
                 self.animateNavigationBar(delay: 0)
             })
-            animateViews()
         }
         
         registerKeyboardEvents()

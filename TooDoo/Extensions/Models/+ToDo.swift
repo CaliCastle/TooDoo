@@ -17,7 +17,7 @@ extension ToDo {
     /// - Returns: The max characters limit in integer
     
     open class func goalMaxLimit() -> Int {
-        return 70
+        return 150
     }
     
     /// Find all to-dos.
@@ -122,12 +122,12 @@ extension ToDo {
     
     func complete(completed: Bool) {
         if self.completed != completed {
-            self.completed = completed
-            completedAt = completed ? Date() : nil
-            
             // Handle notifications
             DispatchQueue.main.async {
-                if self.completed {
+                self.completed = completed
+                self.completedAt = completed ? Date() : nil
+                
+                if completed {
                     // Renew itself if it is repeated
                     self.renewIfRepeated()
                     // Remove notifications
@@ -171,6 +171,10 @@ extension ToDo {
                 amount = 1
             case .Regularly, .AfterCompletion:
                 switch info.unit {
+                case .Minute:
+                    component = .minute
+                case .Hour:
+                    component = .hour
                 case .Month:
                     component = .month
                 case .Week:
@@ -187,7 +191,7 @@ extension ToDo {
             
             // Renew for remind notification
             if let remindAt = remindAt {
-                self.remindAt = Calendar.current.date(byAdding: component, value: amount, to: remindAt)
+                self.remindAt = Calendar.current.date(byAdding: component, value: amount, to: info.type == .AfterCompletion ? Date() : remindAt)
             }
             
             // Check if passed end repeating date
@@ -198,8 +202,8 @@ extension ToDo {
             // Renew self
             due = nextDate
             
-            if completed {
-                complete(completed: !completed)
+            if self.completed {
+                self.complete(completed: false)
             }
         }
     }
@@ -318,7 +322,7 @@ extension ToDo {
         case Daily = "daily"
         case Weekly = "weekly"
         case Monthly = "monthly"
-        case Annually = "annually"
+        case Annually = "yearly"
         case Regularly = "regularly"
         case AfterCompletion = "after-completion"
     }
@@ -326,6 +330,8 @@ extension ToDo {
     /// Repeat regularly unit.
     
     public enum RepeatUnit: String, Codable {
+        case Minute = "minute"
+        case Hour = "hour"
         case Day = "day"
         case Week = "week"
         case Month = "month"
@@ -350,7 +356,7 @@ extension ToDo {
     /// Repeat units.
     
     static let repeatUnits: [RepeatUnit] = [
-        .Day, .Week, .Month, .Year
+        .Minute, .Hour, .Day, .Week, .Month, .Year
     ]
     
     /// Retrieve repeat info.

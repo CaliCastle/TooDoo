@@ -95,6 +95,15 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
+			<key>Things Blue</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-things-blue</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
 			<key>Olive</key>
 			<dict>
 				<key>CFBundleIconFiles</key>

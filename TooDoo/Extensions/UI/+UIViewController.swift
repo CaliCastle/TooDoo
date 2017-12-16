@@ -11,7 +11,7 @@ import CoreData
 
 extension UIViewController: NavigationBarAnimatable {
     
-    open func animateNavigationBar(delay: Double = 0.3) {
+    open func animateNavigationBar(delay: Double = 0.3, _ completion: ((Bool) -> Void)? = nil) {
         guard let navigationController = navigationController else { return }
         
         // Move down animation to `navigation bar`
@@ -21,6 +21,10 @@ extension UIViewController: NavigationBarAnimatable {
         UIView.animate(withDuration: 0.7, delay: delay, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.5, options: [], animations: {
             navigationController.navigationBar.alpha = 1
             navigationController.navigationBar.transform = .init(translationX: 0, y: 0)
+        }, completion: {
+            if let handler = completion {
+                handler($0)
+            }
         })
     }
 
@@ -56,6 +60,17 @@ extension UIViewController {
     
     open func currentThemeIsDark() -> Bool {
         return AppearanceManager.default.theme == .Dark
+    }
+    
+    /// Update the status bar.
+    
+    @objc public func updateStatusBar() {
+        // Delay update status bar style
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+                self.setNeedsStatusBarAppearanceUpdate()
+            })
+        }
     }
     
 }

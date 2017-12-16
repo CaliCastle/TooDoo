@@ -56,6 +56,38 @@
 			<string>%d todos due today</string>
 		</dict>
 	</dict>
+	<key>Every %d minute(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@minutes@</string>
+		<key>minutes</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every minute</string>
+			<key>other</key>
+			<string>Every %d minutes</string>
+		</dict>
+	</dict>
+	<key>Every %d hour(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@hours@</string>
+		<key>hours</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Every hour</string>
+			<key>other</key>
+			<string>Every %d hours</string>
+		</dict>
+	</dict>
 	<key>Every %d day(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

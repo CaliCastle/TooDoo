@@ -460,9 +460,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             category.addToTodos(todo)
         }
         // Set due date
-        if let due = dueDate {
-            todo.due = due
-        }
+        todo.due = dueDate
         // Set reminder
         todo.setReminder(remindDate)
         // Set repeat info

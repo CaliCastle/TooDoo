@@ -9,6 +9,6 @@
 public protocol NavigationBarAnimatable {
     
     /// Animate navigation bar.
-    func animateNavigationBar(delay: Double)
+    func animateNavigationBar(delay: Double, _ completion: ((Bool) -> Void)?)
     
 }

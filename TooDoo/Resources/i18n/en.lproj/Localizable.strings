@@ -18,9 +18,12 @@
 "Give access" = "Give access";
 "Not now" = "Not now";
 "Todos" = "Todos";
+"Yesterday" = "Yesterday";
 "Today" = "Today";
 "Tomorrow" = "Tomorrow";
 "Now" = "Now";
+"minute" = "minute(s)";
+"hour" = "hour(s)";
 "day" = "day(s)";
 "week" = "week(s)";
 "month" = "month(s)";
@@ -36,7 +39,15 @@
 
 "EEEE, MMM d" = "EEEE, MMM d";
 "MMM dd, EEE - HH:mm" = "MMM dd, EEE - HH:mm";
-"yyyy MMM dd, EEE" = "EEEE, MMM d, yyyy";
+"yyyy MMM dd, EEE" = "EEEE, MMM d, yyyy - hh:mm a";
+"MMM d yyyy" = "MMM d, yyyy";
+
+"dates.short.d" = "d";
+"dates.short.w" = "w";
+"dates.short.m" = "mo";
+"dates.short.min" = "min";
+"dates.short.hour" = "h";
+"dates.short.y" = "y";
 
 "%d years ago" = "%d years ago";
 "1 year ago" = "1 year ago";

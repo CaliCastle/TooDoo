@@ -18,9 +18,12 @@
 "Give access" = "去设置";
 "Not now" = "残忍拒绝";
 "Todos" = "个待办事项";
+"Yesterday" = "昨天";
 "Today" = "今天";
 "Tomorrow" = "明天";
 "Now" = "现在";
+"minute" = "分钟";
+"hour" = "小时";
 "day" = "天";
 "week" = "周";
 "month" = "月";
@@ -36,7 +39,15 @@
 
 "EEEE, MMM d" = "MM月d日 EEE";
 "MMM dd, EEE - HH:mm" = "MM月dd日(EEE): HH:mm";
-"yyyy MMM dd, EEE" = "yyyy年MM月dd日(EEE)";
+"yyyy MMM dd, EEE" = "yyyy年MM月dd日(EEE) hh:mm a";
+"MMM d yyyy" = "MM月d日, yyyy";
+
+"dates.short.d" = "天";
+"dates.short.w" = "周";
+"dates.short.m" = "月";
+"dates.short.min" = "分钟";
+"dates.short.hour" = "小时";
+"dates.short.y" = "年";
 
 "%d years ago" = "%d年前";
 "1 year ago" = "1年前";

@@ -58,6 +58,7 @@ final class ApplicationManager {
     /// - Bumblebee: Primary alt icon
     /// - Navy: Blue icon
     /// - NavyAlt: Blue alt icon
+    /// - ThingsBlue: Blue like Things
     /// - Unicorn: Colorful icon
     
     public enum IconName: String {
@@ -73,6 +74,7 @@ final class ApplicationManager {
         case Bumblebee = "bumblebee"
         case Navy = "navy"
         case NavyAlt = "navy-alt"
+        case ThingsBlue = "things-blue"
         case Unicorn = "unicorn"
         
         func imageName() -> String {
@@ -156,6 +158,7 @@ final class ApplicationManager {
             IconName.Mocha,
             IconName.Rose,
             IconName.Flamingo,
+            IconName.ThingsBlue,
             IconName.Indigo,
             IconName.Blush,
             IconName.Unicorn,

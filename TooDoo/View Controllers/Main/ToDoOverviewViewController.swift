@@ -340,7 +340,7 @@ final class ToDoOverviewViewController: UIViewController {
         default:
             // Evening
             greetingWithTimeLabel.text = "\("overview.greeting.time.evening".localized) 🌙"
-            greetingWithTimeLabel.textColor = currentThemeIsDark() ? #colorLiteral(red: 0.9098039216, green: 0.6352941176, blue: 0.4705882353, alpha: 1) : #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+            greetingWithTimeLabel.textColor = currentThemeIsDark() ? #colorLiteral(red: 0.9098039216, green: 0.6352941176, blue: 0.4705882353, alpha: 1) : #colorLiteral(red: 0, green: 0.4509803922, blue: 0.9137254902, alpha: 1)
         }
     }
     
@@ -422,6 +422,12 @@ final class ToDoOverviewViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return themeStatusBarStyle()
+    }
+    
+    /// Status bar animation.
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
     
     /// Auto hide home indicator
@@ -530,15 +536,6 @@ final class ToDoOverviewViewController: UIViewController {
     
     @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
         setMotionEffects()
-    }
-    
-    /// Update the status bar
-    
-    @objc fileprivate func updateStatusBar() {
-        // Delay update status bar style
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
     }
     
     /// Set motion effects to views.

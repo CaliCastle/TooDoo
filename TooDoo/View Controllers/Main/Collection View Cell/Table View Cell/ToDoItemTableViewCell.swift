@@ -40,8 +40,8 @@ final class ToDoItemTableViewCell: UITableViewCell {
             // Set background color
             backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.15)
             // Goal label set up
-            todoItemGoalLabel.textColor = textColor
-            todoItemGoalLabel.text = todo.goal
+            todoItemGoalTextView.textColor = textColor
+            todoItemGoalTextView.text = todo.goal
             // Check box set up
             checkBox.tintColor = categoryColor
             checkBox.secondaryCheckmarkTintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true)
@@ -51,6 +51,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
             completed = todo.completed
             // Configure views
             configureViews()
+            configureStackViewConstraints()
         }
     }
     
@@ -63,48 +64,205 @@ final class ToDoItemTableViewCell: UITableViewCell {
             todo.complete(completed: completed)
         }
     }
-    
-    /// Double tap for editing, deleting todo.
-    
-    private lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapped(_:)))
-        doubleTapGesture.numberOfTapsRequired = 2
-        
-        addGestureRecognizer(doubleTapGesture)
-        
-        return doubleTapGesture
-    }()
 
     var delegate: ToDoItemTableViewCellDelegate?
     
+    /// Tap gesture recognizer for checkbox.
+    
+    private lazy var tapGestureRecognizerForCheckbox: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(toggleItemComplete))
+        
+        return recognizer
+    }()
+    
     // MARK: - Interface Builder Outlets
     
+    @IBOutlet var checkBoxContainerView: UIView!
     @IBOutlet var checkBox: M13Checkbox!
-    @IBOutlet var todoItemGoalLabel: UILabel!
+    @IBOutlet var todoItemGoalTextView: UITextView!
     @IBOutlet var moveToTrashButton: UIButton!
+    
+    @IBOutlet var infoStackView: UIStackView!
     
     @IBOutlet var dueContainerView: UIView!
     @IBOutlet var dueImageView: UIImageView!
     @IBOutlet var dueLabel: UILabel!
+    
+    @IBOutlet var reminderContainerView: UIView!
+    @IBOutlet var reminderImageView: UIImageView!
+    @IBOutlet var reminderLabel: UILabel!
+    
+    @IBOutlet var repeatContainerView: UIView!
+    @IBOutlet var repeatImageView: UIImageView!
+    @IBOutlet var repeatLabel: UILabel!
+    
+    /// Font for goal text.
+    
+    let goalFont = AppearanceManager.font(size: 13, weight: .Medium)
     
     /// Additional setup.
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        todoItemGoalLabel.text = ""
+        todoItemGoalTextView.text = ""
+        
         dueContainerView.alpha = 0
         dueLabel.text = ""
+        reminderContainerView.alpha = 0
+        reminderLabel.text = ""
+        repeatContainerView.alpha = 0
+        repeatLabel.text = ""
+        
         backgroundColor = .clear
-        // Configure double tap gesture
-        doubleTapGestureRecognizer.isEnabled = true
+        // Configure tap gesture for completing item
+        checkBoxContainerView.addGestureRecognizer(tapGestureRecognizerForCheckbox)
+        // Configure notifications
+        listen(for: .SettingLocaleChanged, then: #selector(configureViews))
+    }
+    
+    deinit {
+        NotificationManager.remove(self)
+    }
+    
+    /// Configure stack view constraints.
+    
+    public func configureStackViewConstraints() {
+        if let todo = todo, todo.due == nil && todo.remindAt == nil {
+            // Remove info stack view if no due, no reminder and no repeat
+            if todo.repeatInfo == nil {
+                removeInfoStackView()
+            }
+            if let repeatInfo = todo.repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: repeatInfo), info.type == .None {
+                removeInfoStackView()
+            }
+        }
+    }
+    
+    /// Remove info stack view from cell.
+    
+    fileprivate func removeInfoStackView() {
+        infoStackView.removeFromSuperview()
+        todoItemGoalTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
+    }
+    
+    /// Configure todo due text.
+    
+    fileprivate func configureTodoDue(_ todo: ToDo) {
+        // Has due date
+        if let due = todo.due {
+            // Set due time label
+            let dateFormatter = DateFormatter.localized()
+            dateFormatter.dateFormat = "MMM d yyyy".localized
+            
+            var dueText = dateFormatter.string(from: due)
+            let calendar = Calendar.current
+            
+            if calendar.isDateInToday(due) {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                dueText = dateFormatter.string(from: due)
+            }
+            
+            if calendar.isDateInTomorrow(due) {
+                dueText = "Tomorrow".localized
+            }
+            
+            if calendar.isDateInYesterday(due) {
+                dueText = "Yesterday".localized
+            }
+            
+            dueLabel.text = dueText
+            UIView.animate(withDuration: 0.25, animations: {
+                self.dueContainerView.alpha = 1
+            })
+        } else {
+            dueContainerView.removeFromSuperview()
+        }
+    }
+    
+    /// Configure reminder text for todo.
+    
+    fileprivate func configureTodoReminder(_ todo: ToDo) {
+        // Has remind time
+        if let remindAt = todo.remindAt {
+            // Set due time label
+            let dateFormatter = DateFormatter.localized()
+            dateFormatter.dateFormat = "MMM d yyyy".localized
+            
+            var remindText = dateFormatter.string(from: remindAt)
+            let calendar = Calendar.current
+            
+            if calendar.isDateInToday(remindAt) {
+                let dateFormatter = DateFormatter.localized()
+                dateFormatter.dateFormat = "hh:mm a"
+                
+                remindText = dateFormatter.string(from: remindAt)
+            }
+            
+            if calendar.isDateInTomorrow(remindAt) {
+                remindText = "Tomorrow".localized
+            }
+            
+            if calendar.isDateInYesterday(remindAt) {
+                remindText = "Yesterday".localized
+            }
+            
+            reminderLabel.text = remindText
+        
+            UIView.animate(withDuration: 0.25, animations: {
+                self.reminderContainerView.alpha = 1
+            })
+        } else {
+            reminderContainerView.removeFromSuperview()
+        }
+    }
+    
+    /// Configure repeat text for todo.
+    
+    fileprivate func configureTodoRepeat(_ todo: ToDo) {
+        // Has repeat info
+        if let repeatInfo = todo.repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: repeatInfo), info.type != .None {
+            var unit = ""
+            
+            switch info.type {
+            case .Daily, .Weekly, .Monthly, .Annually:
+                unit = "dates.short.\(String(describing: info.type.rawValue.first!))".localized
+            case .Regularly, .AfterCompletion:
+                switch info.unit {
+                case .Day:
+                    unit = "dates.short.d".localized
+                case .Minute:
+                    unit = "dates.short.min".localized
+                case .Hour:
+                    unit = "dates.short.hour".localized
+                case .Week:
+                    unit = "dates.short.w".localized
+                case .Month:
+                    unit = "dates.short.m".localized
+                case .Year:
+                    unit = "dates.short.y".localized
+                }
+            case .None:
+                return
+            }
+            
+            repeatLabel.text = String(format: "%d\(unit)", info.frequency)
+            UIView.animate(withDuration: 0.25, animations: {
+                self.repeatContainerView.alpha = 1
+            })
+        } else {
+            repeatContainerView.removeFromSuperview()
+        }
     }
     
     /// Configure views accordingly.
     
-    fileprivate func configureViews() {
+    @objc fileprivate func configureViews() {
         let textColor = getTextColor()
         
+        configureColors()
         // Set checkbox state accordingly
         checkBox.checkState = completed ? .checked : .unchecked
         
@@ -112,34 +270,34 @@ final class ToDoItemTableViewCell: UITableViewCell {
             // Set strike through and color
             let newColor = textColor.lighten(byPercentage: 0.35)!
             
-            todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: newColor, .strikethroughStyle: 1.5, .strikethroughColor: newColor.withAlphaComponent(0.75)])
-            // Show move to trash button
-            UIView.animate(withDuration: 0.25, animations: {
-                self.moveToTrashButton.alpha = 1
-                self.dueContainerView.alpha = 0
-            })
+            todoItemGoalTextView.attributedText = NSAttributedString(string: todoItemGoalTextView.text!, attributes: [.foregroundColor: newColor, .strikethroughStyle: 1.5, .strikethroughColor: newColor.withAlphaComponent(0.75), .font: goalFont])
         } else {
             // Set no strike through and color
-            todoItemGoalLabel.attributedText = NSAttributedString(string: todoItemGoalLabel.text!, attributes: [.foregroundColor: textColor, .strikethroughStyle: 0])
-            // Hide move to trash button
-            UIView.animate(withDuration: 0.25, animations: {
-                self.moveToTrashButton.alpha = 0
-            })
-            
-            if let due = todo?.due {
-                // Set due time label
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "hh:mm a"
-                
-                dueImageView.image = dueImageView.image?.withRenderingMode(.alwaysTemplate)
-                dueImageView.tintColor = textColor.withAlphaComponent(0.4)
-                dueLabel.textColor = textColor.withAlphaComponent(0.4)
-                dueLabel.text = dateFormatter.string(from: due)
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.dueContainerView.alpha = 1
-                })
-            }
+            todoItemGoalTextView.attributedText = NSAttributedString(string: todoItemGoalTextView.text!, attributes: [.foregroundColor: textColor, .strikethroughStyle: 0, .font: goalFont])
         }
+        
+        // Configure todo info
+        if let todo = todo {
+            configureTodoDue(todo)
+            configureTodoReminder(todo)
+            configureTodoRepeat(todo)
+        }
+    }
+    
+    /// Configure colors for views.
+    
+    fileprivate func configureColors() {
+        let color = completed ? getTextColor().withAlphaComponent(0.2) : getTextColor().withAlphaComponent(0.4)
+        
+        dueImageView.image = dueImageView.image?.withRenderingMode(.alwaysTemplate)
+        dueImageView.tintColor = color
+        dueLabel.textColor = color
+        reminderImageView.image = reminderImageView.image?.withRenderingMode(.alwaysTemplate)
+        reminderImageView.tintColor = color
+        reminderLabel.textColor = color
+        repeatImageView.image = repeatImageView.image?.withRenderingMode(.alwaysTemplate)
+        repeatImageView.tintColor = color
+        repeatLabel.textColor = color
     }
     
     /// Simulatedly touch checkbox.
@@ -147,6 +305,12 @@ final class ToDoItemTableViewCell: UITableViewCell {
     public func touchCheckbox() {
         checkBox.toggleCheckState(true)
         checkboxChanged(checkBox)
+    }
+    
+    /// User touched outside checkbox view.
+    
+    @objc fileprivate func toggleItemComplete(_ sender: Any) {
+        touchCheckbox()
     }
     
     /// Touched checkbox.
@@ -186,10 +350,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
         super.prepareForReuse()
         
         checkBox.checkState = .unchecked
-        todoItemGoalLabel.text = ""
-        moveToTrashButton.alpha = 0
-        dueContainerView.alpha = 0
-        dueLabel.text = ""
+        todoItemGoalTextView.text = ""
     }
     
     /// Todo double tapped.

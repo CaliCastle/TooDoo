@@ -15,6 +15,8 @@
 		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* +UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
+		8D14EE5C1FE45BE700980E69 /* icon-things-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D14EE5A1FE45BE700980E69 /* icon-things-blue@3x.png */; };
+		8D14EE5D1FE45BE700980E69 /* icon-things-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D14EE5B1FE45BE700980E69 /* icon-things-blue@2x.png */; };
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
 		8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */; };
@@ -157,6 +159,8 @@
 		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		8D0514551FC593B300AC45CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
 		8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D14EE5A1FE45BE700980E69 /* icon-things-blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-things-blue@3x.png"; sourceTree = "<group>"; };
+		8D14EE5B1FE45BE700980E69 /* icon-things-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-things-blue@2x.png"; sourceTree = "<group>"; };
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		8D1599071FAAEE310004846F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -384,6 +388,15 @@
 				8D030E101FDBD50E00FA5ED5 /* Side Menu */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		8D14EE591FE45BD700980E69 /* Things Blue */ = {
+			isa = PBXGroup;
+			children = (
+				8D14EE5B1FE45BE700980E69 /* icon-things-blue@2x.png */,
+				8D14EE5A1FE45BE700980E69 /* icon-things-blue@3x.png */,
+			);
+			path = "Things Blue";
 			sourceTree = "<group>";
 		};
 		8D1642D41FB4F28D004F306F /* Collection View Cell */ = {
@@ -671,6 +684,7 @@
 				8DCFF0F91FD92DD7009532A2 /* Ebony */,
 				8DCFF0FA1FD92DDA009532A2 /* Emerald */,
 				8DABC2631FD7E42800933ED0 /* Bumblebee */,
+				8D14EE591FE45BD700980E69 /* Things Blue */,
 				8DABC25E1FD7E3BF00933ED0 /* Navy */,
 				8DABC2681FD7E5E400933ED0 /* Navy Alt */,
 			);
@@ -1155,6 +1169,7 @@
 				8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */,
 				8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */,
 				8DB49E591FB8D859003240E1 /* checkmark-round.png in Resources */,
+				8D14EE5D1FE45BE700980E69 /* icon-things-blue@2x.png in Resources */,
 				8DCFF1031FD92E9B009532A2 /* icon-rose@3x.png in Resources */,
 				8DCFF11A1FD92FC8009532A2 /* icon-ebony@2x.png in Resources */,
 				8DCFF10B1FD92EF4009532A2 /* icon-mocha@2x.png in Resources */,
@@ -1181,6 +1196,7 @@
 				8DCFF10E1FD92F20009532A2 /* icon-indigo@2x.png in Resources */,
 				8DB49E561FB8D859003240E1 /* alert-round.png in Resources */,
 				8DABC26C1FD7E60200933ED0 /* icon-navy-alt@2x.png in Resources */,
+				8D14EE5C1FE45BE700980E69 /* icon-things-blue@3x.png in Resources */,
 				8DCFF1071FD92EC8009532A2 /* icon-olive@3x.png in Resources */,
 				8DCFF1061FD92EC8009532A2 /* icon-olive@2x.png in Resources */,
 			);

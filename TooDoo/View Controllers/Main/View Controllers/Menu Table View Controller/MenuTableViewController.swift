@@ -111,7 +111,9 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
     @objc fileprivate func themeChanged() {
         setupViews()
         
-        setNeedsStatusBarAppearanceUpdate()
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+        })
         
         imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
         imagePickerController.navigationBar.setBackgroundImage(currentThemeIsDark() ? #imageLiteral(resourceName: "black-background") : #imageLiteral(resourceName: "white-background"), for: .default)

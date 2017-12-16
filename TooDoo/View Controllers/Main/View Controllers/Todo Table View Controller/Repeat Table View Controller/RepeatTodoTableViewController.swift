@@ -144,7 +144,7 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         
         if let delegate = delegate {
             if var info = repeatInfo {
-                if hasEndDate {
+                if hasEndDate, let _ = info.endDate {
                     info.endDate = endDatePicker.date
                 }
                 
@@ -217,6 +217,10 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
             var amount: Int = info.frequency
             
             switch info.unit {
+            case .Minute:
+                component = .minute
+            case .Hour:
+                component = .hour
             case .Day:
                 component = .day
             case .Month:
@@ -263,6 +267,16 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     @IBAction func endDateSwitchDidChange(_ sender: UISwitch) {
         hasEndDate = sender.isOn
         updateNextDate()
+    }
+    
+    /// End date picker did change.
+    
+    @IBAction func endDatePickerDidChange(_ sender: UIDatePicker) {
+        guard var info = repeatInfo else { return }
+        
+        info.endDate = sender.date
+        
+        repeatInfo = info
     }
     
     // MARK: - Table view data source

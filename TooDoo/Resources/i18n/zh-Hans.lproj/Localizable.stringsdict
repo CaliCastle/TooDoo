@@ -56,6 +56,38 @@
 			<string>今天还有%d个未完成待办事项</string>
 		</dict>
 	</dict>
+	<key>Every %d minute(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@minutes@</string>
+		<key>minutes</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>每分钟</string>
+			<key>other</key>
+			<string>每%d分钟</string>
+		</dict>
+	</dict>
+	<key>Every %d hour(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@hours@</string>
+		<key>hours</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>每小时</string>
+			<key>other</key>
+			<string>每%d个小时</string>
+		</dict>
+	</dict>
 	<key>Every %d day(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
