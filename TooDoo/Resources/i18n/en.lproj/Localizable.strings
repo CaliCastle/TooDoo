@@ -25,6 +25,7 @@
 "minute" = "minute(s)";
 "hour" = "hour(s)";
 "day" = "day(s)";
+"weekday" = "weekday(s)";
 "week" = "week(s)";
 "month" = "month(s)";
 "year" = "year(s)";
@@ -43,6 +44,7 @@
 "MMM d yyyy" = "MMM d, yyyy";
 
 "dates.short.d" = "d";
+"dates.short.weekday" = "wkday";
 "dates.short.w" = "w";
 "dates.short.m" = "mo";
 "dates.short.min" = "min";
@@ -160,12 +162,13 @@
 // Repeat todo Table View Controller.
 "repeat-todo.types.0" = "Don't repeat";
 "repeat-todo.types.1" = "Every day";
-"repeat-todo.types.2" = "Every week";
-"repeat-todo.types.3" = "Every month";
-"repeat-todo.types.4" = "Every year";
-"repeat-todo.types.5" = "Every ...";
-"repeat-todo.types.6" = "Repeat after completion";
-"repeat-todo.types.7" = "End date";
+"repeat-todo.types.2" = "Every weekday";
+"repeat-todo.types.3" = "Every week";
+"repeat-todo.types.4" = "Every month";
+"repeat-todo.types.5" = "Every year";
+"repeat-todo.types.6" = "Every ...";
+"repeat-todo.types.7" = "Repeat after completion";
+"repeat-todo.types.8" = "End date";
 "repeat-todo.types.header" = "Repeating types";
 "repeat-todo.frequency.header" = "Select repeat frequency";
 "repeat-todo.custom.footer" = "Next recurring date:";

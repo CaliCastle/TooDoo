@@ -95,15 +95,6 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>Things Blue</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>icon-things-blue</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>Olive</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -118,6 +109,15 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>icon-rose</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>Things Blue</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon-things-blue</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -153,7 +153,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>35</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCalendarsUsageDescription</key>

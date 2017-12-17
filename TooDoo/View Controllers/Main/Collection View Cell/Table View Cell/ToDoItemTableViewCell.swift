@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Stellar
 import Haptica
 import M13Checkbox
 
@@ -133,7 +134,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
             if todo.repeatInfo == nil {
                 removeInfoStackView()
             }
-            if let repeatInfo = todo.repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: repeatInfo), info.type == .None {
+            if let info = todo.getRepeatInfo(), info.type == .None {
                 removeInfoStackView()
             }
         }
@@ -223,11 +224,11 @@ final class ToDoItemTableViewCell: UITableViewCell {
     
     fileprivate func configureTodoRepeat(_ todo: ToDo) {
         // Has repeat info
-        if let repeatInfo = todo.repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: repeatInfo), info.type != .None {
+        if let info = todo.getRepeatInfo(), info.type != .None {
             var unit = ""
             
             switch info.type {
-            case .Daily, .Weekly, .Monthly, .Annually:
+            case .Daily, .Weekday, .Weekly, .Monthly, .Annually:
                 unit = "dates.short.\(String(describing: info.type.rawValue.first!))".localized
             case .Regularly, .AfterCompletion:
                 switch info.unit {
@@ -237,6 +238,8 @@ final class ToDoItemTableViewCell: UITableViewCell {
                     unit = "dates.short.min".localized
                 case .Hour:
                     unit = "dates.short.hour".localized
+                case .Weekday:
+                    unit = "dates.short.weekday".localized
                 case .Week:
                     unit = "dates.short.w".localized
                 case .Month:
@@ -333,7 +336,13 @@ final class ToDoItemTableViewCell: UITableViewCell {
             SoundManager.play(soundEffect: .Drip)
         }
         
-        completed = checkBox.checkState == .checked
+        if checkBox.checkState == .checked {
+            performCompleteAnimation({
+                self.completed = true
+            })
+        } else {
+            completed = checkBox.checkState == .checked
+        }
     }
     
     /// Move to trash button tapped.
@@ -342,6 +351,18 @@ final class ToDoItemTableViewCell: UITableViewCell {
         guard let todo = todo, let delegate = delegate else { return }
         
         delegate.deleteTodo(for: todo)
+    }
+    
+    /// Perform complete animation.
+    
+    public func performCompleteAnimation(_ completion: (() -> Void)? = nil) {
+        DispatchQueue.main.async {
+            self.scaleXY(0.93, 0.93).duration(0.13).easing(.linear).reverses().completion {
+                if let completion = completion {
+                    completion()
+                }
+            }.animate()
+        }
     }
     
     /// Prepare for reuse.

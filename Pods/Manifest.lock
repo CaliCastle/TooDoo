@@ -22,6 +22,7 @@ PODS:
   - Reveal-SDK (11)
   - SideMenu (3.1.4)
   - SnapKit (4.0.0)
+  - Stellar (0.66)
   - Typist (1.1.0)
   - ViewAnimator (1.0.2)
 
@@ -41,8 +42,18 @@ DEPENDENCIES:
   - PinterestSegment
   - Reveal-SDK
   - SideMenu
+  - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
   - ViewAnimator
+
+EXTERNAL SOURCES:
+  Stellar:
+    :git: https://github.com/AugustRush/Stellar.git
+
+CHECKOUT OPTIONS:
+  Stellar:
+    :commit: 8b76462f614f8cada1f59e1c17bf85a7045b2009
+    :git: https://github.com/AugustRush/Stellar.git
 
 SPEC CHECKSUMS:
   BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
@@ -62,9 +73,10 @@ SPEC CHECKSUMS:
   Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
   SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Stellar: 0fef0b57654a5128a05664c3c2e42993dc59a88c
   Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
   ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
 
-PODFILE CHECKSUM: 09ffb63221d79b7621f03959b8988212d5c1607f
+PODFILE CHECKSUM: 26004a6f94a6d572b51dfde3b2f160193b4b26ce
 
 COCOAPODS: 1.3.1

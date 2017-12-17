@@ -28,6 +28,7 @@ target 'TooDoo' do
   pod 'SideMenu'
   pod 'PinterestSegment'
   pod 'Gifu'
+  pod 'Stellar', :git => 'https://github.com/AugustRush/Stellar.git'
 #  pod 'BTNavigationDropdownMenu', :git => 'https://github.com/zkrige/BTNavigationDropdownMenu.git'
 
 end

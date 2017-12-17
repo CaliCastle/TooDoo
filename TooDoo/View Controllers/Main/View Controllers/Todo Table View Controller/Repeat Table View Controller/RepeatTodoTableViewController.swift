@@ -223,6 +223,8 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
                 component = .hour
             case .Day:
                 component = .day
+            case .Weekday:
+                component = .weekday
             case .Month:
                 component = .month
             case .Week:
@@ -325,14 +327,16 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
             case 1:
                 info.type = .Daily
             case 2:
-                info.type = .Weekly
+                info.type = .Weekday
             case 3:
-                info.type = .Monthly
+                info.type = .Weekly
             case 4:
-                info.type = .Annually
+                info.type = .Monthly
             case 5:
-                info.type = .Regularly
+                info.type = .Annually
             case 6:
+                info.type = .Regularly
+            case 7:
                 info.type = .AfterCompletion
             default:
                 info.type = .None

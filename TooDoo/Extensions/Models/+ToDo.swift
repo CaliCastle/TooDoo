@@ -50,6 +50,10 @@ extension ToDo {
     func created() {
         // Assign UUID
         uuid = UUID().uuidString
+        // Set repeat info to none.
+        if repeatInfo == nil {
+            setRepeatInfo(info: ToDo.Repeat(type: .None, frequency: 1, unit: .Day, endDate: nil))
+        }
         // Create events if enabled
         createToEvents()
         // Create reminders if enabled
@@ -149,7 +153,7 @@ extension ToDo {
     /// Renew to-do if it is repeated.
     
     internal func renewIfRepeated() {
-        if let data = repeatInfo, let info = try? JSONDecoder().decode(ToDo.Repeat.self, from: data) {
+        if let info = getRepeatInfo() {
             // Get next recurring date
             var component: Calendar.Component = .day
             var amount: Int = info.frequency
@@ -159,6 +163,9 @@ extension ToDo {
                 return
             case .Daily:
                 component = .day
+                amount = 1
+            case .Weekday:
+                component = .weekday
                 amount = 1
             case .Weekly:
                 component = .day
@@ -177,6 +184,8 @@ extension ToDo {
                     component = .hour
                 case .Month:
                     component = .month
+                case .Weekday:
+                    component = .weekday
                 case .Week:
                     amount = amount * 7
                 case .Year:
@@ -187,6 +196,22 @@ extension ToDo {
             }
             
             let baseDate: Date = info.type == .AfterCompletion ? Date() : (due ?? Date())
+            
+            if component == .weekday {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "ccc"
+                
+                component = .day
+                
+                if dateFormatter.string(from: baseDate) == "Fri" {
+                    amount+=3
+                } else if dateFormatter.string(from: baseDate) == "Sat" {
+                    amount+=2
+                } else {
+                    amount+=1
+                }
+            }
+            
             let nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
             
             // Renew for remind notification
@@ -321,6 +346,7 @@ extension ToDo {
         case None = "none"
         case Daily = "daily"
         case Weekly = "weekly"
+        case Weekday = "weekday"
         case Monthly = "monthly"
         case Annually = "yearly"
         case Regularly = "regularly"
@@ -333,6 +359,7 @@ extension ToDo {
         case Minute = "minute"
         case Hour = "hour"
         case Day = "day"
+        case Weekday = "weekday"
         case Week = "week"
         case Month = "month"
         case Year = "year"
@@ -350,13 +377,13 @@ extension ToDo {
     /// Repeat types.
     
     static let repeatTypes: [RepeatType] = [
-        .None, .Daily, .Weekly, .Monthly, .Annually, .Regularly, .AfterCompletion
+        .None, .Daily, .Weekday, .Weekly, .Monthly, .Annually, .Regularly, .AfterCompletion
     ]
     
     /// Repeat units.
     
     static let repeatUnits: [RepeatUnit] = [
-        .Minute, .Hour, .Day, .Week, .Month, .Year
+        .Minute, .Hour, .Day, .Weekday, .Week, .Month, .Year
     ]
     
     /// Retrieve repeat info.

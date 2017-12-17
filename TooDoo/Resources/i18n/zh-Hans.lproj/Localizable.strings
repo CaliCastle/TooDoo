@@ -25,6 +25,7 @@
 "minute" = "分钟";
 "hour" = "小时";
 "day" = "天";
+"weekday" = "工作日";
 "week" = "周";
 "month" = "月";
 "year" = "年";
@@ -43,6 +44,7 @@
 "MMM d yyyy" = "MM月d日, yyyy";
 
 "dates.short.d" = "天";
+"dates.short.weekday" = "工作日";
 "dates.short.w" = "周";
 "dates.short.m" = "月";
 "dates.short.min" = "分钟";
@@ -160,12 +162,13 @@
 // Repeat todo Table View Controller.
 "repeat-todo.types.0" = "不重复";
 "repeat-todo.types.1" = "每天";
-"repeat-todo.types.2" = "每周";
-"repeat-todo.types.3" = "每月";
-"repeat-todo.types.4" = "每年";
-"repeat-todo.types.5" = "每...";
-"repeat-todo.types.6" = "完成事项后重复";
-"repeat-todo.types.7" = "结束日期";
+"repeat-todo.types.2" = "每个工作日";
+"repeat-todo.types.3" = "每周";
+"repeat-todo.types.4" = "每月";
+"repeat-todo.types.5" = "每年";
+"repeat-todo.types.6" = "每...";
+"repeat-todo.types.7" = "完成事项后重复";
+"repeat-todo.types.8" = "结束日期";
 "repeat-todo.types.header" = "重复类型";
 "repeat-todo.frequency.header" = "选择重复周期";
 "repeat-todo.custom.footer" = "下一次重复时间:";

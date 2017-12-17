@@ -213,7 +213,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
                 return
             }
             
-            repeatLabel.text = "repeat-todo.types.\(ToDo.repeatTypes.index(of: info.type)!)".localized
+            repeatLabel.text = "repeat-todo.types.\(ToDo.repeatTypes.index(of: info.type) ?? 0)".localized
         }
     }
     
@@ -405,7 +405,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         if let todo = todo {
             repeatInfo = todo.getRepeatInfo()
         } else {
-            repeatInfo = ToDo.Repeat(type: .None, frequency: 0, unit: .Day, endDate: nil)
+            repeatInfo = ToDo.Repeat(type: .None, frequency: 1, unit: .Day, endDate: nil)
         }
     }
     
