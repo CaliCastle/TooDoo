@@ -573,17 +573,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     
     @IBAction func reminderDidTap(_ sender: Any) {
         var selectedDate = dueDate ?? Date()
-        var maximumDate = dueDate
         
         if let remindDate = remindDate {
             selectedDate = remindDate
         }
         
-        if maximumDate != nil {
-            maximumDate = Calendar.current.date(byAdding: .hour, value: 1, to: maximumDate!)
-        }
-        
-        let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: Date(), maximumDate: maximumDate)
+        let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: Date())
         dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized

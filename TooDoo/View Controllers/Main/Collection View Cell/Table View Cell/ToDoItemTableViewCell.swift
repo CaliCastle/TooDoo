@@ -118,12 +118,28 @@ final class ToDoItemTableViewCell: UITableViewCell {
         backgroundColor = .clear
         // Configure tap gesture for completing item
         checkBoxContainerView.addGestureRecognizer(tapGestureRecognizerForCheckbox)
-        // Configure notifications
-        listen(for: .SettingLocaleChanged, then: #selector(configureViews))
+        handleNotifications()
     }
     
     deinit {
         NotificationManager.remove(self)
+    }
+    
+    /// Handle notifications.
+    
+    fileprivate func handleNotifications() {
+        // Configure notifications
+        listen(for: .SettingLocaleChanged, then: #selector(configureViews))
+        listenTo(.UIApplicationSignificantTimeChange, { (_) in
+            // Configure todo info
+            if let todo = self.todo {
+                DispatchQueue.main.async {
+                    self.configureTodoDue(todo)
+                    self.configureTodoReminder(todo)
+                    self.configureTodoRepeat(todo)
+                }
+            }
+        })
     }
     
     /// Configure stack view constraints.

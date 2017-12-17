@@ -27,4 +27,15 @@ extension DateFormatter {
         return dateFormatter
     }
     
+    /// Get English date formatter
+    ///
+    /// - Returns: The english formatter.
+    
+    open class func inEnglish() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        
+        return dateFormatter
+    }
+    
 }

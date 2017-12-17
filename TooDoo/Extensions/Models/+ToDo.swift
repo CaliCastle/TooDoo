@@ -196,23 +196,23 @@ extension ToDo {
             }
             
             let baseDate: Date = info.type == .AfterCompletion ? Date() : (due ?? Date())
+            var nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
             
             if component == .weekday {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "ccc"
+                let dateFormatter = DateFormatter.inEnglish()
+                dateFormatter.dateFormat = "EEE"
                 
-                component = .day
-                
-                if dateFormatter.string(from: baseDate) == "Fri" {
-                    amount+=3
-                } else if dateFormatter.string(from: baseDate) == "Sat" {
-                    amount+=2
-                } else {
-                    amount+=1
+                switch dateFormatter.string(from: nextDate) {
+                case "Sat":
+                    // Set date to next monday by adding two more days
+                    nextDate = Calendar.current.date(byAdding: .day, value: 2, to: nextDate)!
+                case "Sun":
+                    // Set date to next monday by adding one more day
+                    nextDate = Calendar.current.date(byAdding: .day, value: 2, to: nextDate)!
+                default:
+                    break
                 }
             }
-            
-            let nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
             
             // Renew for remind notification
             if let remindAt = remindAt {

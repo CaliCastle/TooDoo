@@ -56,7 +56,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     open var isAdding = false {
         didSet {
-            if todoItemsTableView.numberOfSections == 0 && isAdding {
+            if todoItemsTableView.numberOfRows(inSection: 0) == 0 && isAdding {
                 // Tapped add button with no other todos
                 todoItemsTableView.insertSections([0], with: .left)
             }
@@ -309,14 +309,18 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     /// Handle actions.
     
     @IBAction func addTodoDidTap(_ sender: Any) {
-        // Configure keyboard first
-        configureKeyboard()
-        // Set adding state
-        isAdding = true
-        // Insert add todo cell
-        todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
-        // Scroll to top for entering goal
-        todoItemsTableView.scrollToRow(at: .zero, at: .none, animated: false)
+        if !isAdding {
+            // Configure keyboard first
+            configureKeyboard()
+            // Set adding state
+            isAdding = true
+            DispatchQueue.main.async {
+                // Insert add todo cell
+                self.todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .top)
+                // Scroll to top for entering goal
+                self.todoItemsTableView.scrollToRow(at: .zero, at: .none, animated: false)
+            }
+        }
     }
     
     /// Configure keyboard events.
@@ -432,10 +436,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             // Check if category is still valid
             guard let todo = anObject as? ToDo, let _ = todo.category else { return }
             
-            if isAdding {
-                /// FIXME: Add option to turn off continuously adding or not, false means no continuously adding
-                isAdding = false
-            }
+            if isAdding { isAdding = false }
             
             let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
             let controllerRows = (controller.fetchedObjects?.count)!
@@ -470,17 +471,15 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                     // Reload the inserted row
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.insertRows(at: [indexPath], with: .automatic)
+                            todoItemsTableView.insertRows(at: [indexPath], with: .top)
                         })
                     } else {
                         // Fallback on earlier versions
-                        todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+                        todoItemsTableView.insertRows(at: [indexPath], with: .top)
                     }
                 }
             case .move:
                 if let indexPath = indexPath, let newIndexPath = newIndexPath {
-                    guard !isAdding else { return }
-                    
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
                             todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
@@ -500,8 +499,6 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
                 }
             default:
                 if let indexPath = indexPath {
-                    guard !isAdding else { return }
-                    
                     if #available(iOS 11, *) {
                         todoItemsTableView.performBatchUpdates({
                             todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
@@ -532,6 +529,8 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate 
     /// Delete todo.
 
     func deleteTodo(for todo: ToDo) {
+        guard !isAdding else { return }
+        
         todo.moveToTrash()
         // Generate haptic and play sound
         Haptic.notification(.success).generate()
@@ -541,6 +540,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate 
     /// Show menu for todo.
     
     func showTodoMenu(for todo: ToDo) {
+        guard !isAdding else { return }
         guard let delegate = delegate else { return }
         
         delegate.showTodoMenu(for: todo)
@@ -555,8 +555,6 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
     /// Began adding new todo.
     
     func newTodoBeganEditing() {
-        // Fix dragging while adding new todo
-        guard let delegate = delegate else { return }
         // Add swipe dismissal gesture
         swipeForDismissalGestureRecognizer.isEnabled = true
         // Disable category edit gesture
@@ -568,14 +566,15 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         Haptic.impact(.heavy).generate()
         SoundManager.play(soundEffect: .Click)
         
-        delegate.newTodoBeganEditing()
+        // Fix dragging while adding new todo
+        if let delegate = delegate { delegate.newTodoBeganEditing() }
     }
     
     /// Done adding new todo.
     
     func newTodoDoneEditing(todo: ToDo?) {
-        // Notify that the new todo is done editing
-        guard let delegate = delegate else { return }
+        todoItemsTableView.endEditing(true)
+        
         // Remove swipe dismissal gesture
         swipeForDismissalGestureRecognizer.isEnabled = false
         // Restore category edit gesture
@@ -585,16 +584,26 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         todoItemsTableView.isScrollEnabled = true
         // Generate haptic feedback
         Haptic.impact(.light).generate()
-        
-        delegate.newTodoDoneEditing()
-        
+
+        // Notify that the new todo is done editing
+        if let delegate = delegate { delegate.newTodoDoneEditing() }
+
         // Clear keyboard events
         configureKeyboard(register: false)
         
-        // Reset add todo cell to hidden
+        // Reset add todo cell to hidden if present
         guard todo == nil else { return }
-        isAdding = false
-        todoItemsTableView.reloadSections([0], with: .automatic)
+        if isAdding {
+            isAdding = false
+            
+            if #available(iOS 11, *) {
+                todoItemsTableView.performBatchUpdates({
+                    todoItemsTableView.deleteRows(at: [.zero], with: .top)
+                })
+            } else {
+                todoItemsTableView.deleteRows(at: [.zero], with: .top)
+            }
+        }
     }
     
     /// Show adding a new todo.

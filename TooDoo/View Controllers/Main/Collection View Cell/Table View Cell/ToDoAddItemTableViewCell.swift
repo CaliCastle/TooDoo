@@ -104,9 +104,6 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         
         creating = true
         
-        // Hide keyboard
-        sender.resignFirstResponder()
-        
         // Create new todo
         let todo = ToDo(context: managedObjectContext!)
         let goal = (sender.text?.trimmingCharacters(in: .whitespaces))!
@@ -152,7 +149,7 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         guard let delegate = delegate else { return }
 
         // Unregister dragged event
-        NotificationManager.remove(self, notification: .DraggedWhileAddingTodo, object: nil)
+        NotificationManager.remove(self)
         
         if goalTextField.text?.trimmingCharacters(in: .whitespaces) != "" {
             // If entered a goal, create todo
@@ -168,7 +165,6 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
     @IBAction func editButtonDidTap(_ sender: Any) {
         guard let delegate = delegate else { return }
         // Dismiss and show add new todo
-        goalTextField.resignFirstResponder()
         delegate.showAddNewTodo(goal: goalTextField.text!.trimmingCharacters(in: .whitespaces))
     }
     
@@ -177,7 +173,6 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
     @IBAction func cancelButtonDidTap(_ sender: Any) {
         guard let delegate = delegate else { return }
         // Dismiss and remove
-        goalTextField.resignFirstResponder()
         delegate.newTodoDoneEditing(todo: nil)
     }
 }
