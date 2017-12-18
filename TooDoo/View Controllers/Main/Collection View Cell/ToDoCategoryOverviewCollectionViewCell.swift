@@ -407,7 +407,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
         
         showTodoMenu(for: fetchedResultsController.object(at: indexPath))
     }
-
+    
 }
 
 extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {

@@ -134,6 +134,13 @@ final class DispatchManager {
     
     fileprivate func registerNotifications() {
         NotificationManager.listen(self, do: #selector(setRedirectTo(_:)), notification: .UserAuthenticationRedirect, object: nil)
+        NotificationManager.listen(self, do: #selector(localeHasChanged(_:)), notification: .SettingLocaleChanged, object: nil)
+    }
+    
+    /// When the locale has changed.
+    
+    @objc fileprivate func localeHasChanged(_ notification: Notification) {
+        ApplicationManager.createShortcutItems(for: UIApplication.shared, forces: true)
     }
     
     /// Open app's system settings.

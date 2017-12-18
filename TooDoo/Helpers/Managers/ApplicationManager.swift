@@ -88,8 +88,10 @@ final class ApplicationManager {
     
     /// Create shortcut items for 3D Touch.
     
-    class func createShortcutItems(for application: UIApplication) {
-        guard !hasShortcutItems(for: application) else { return }
+    class func createShortcutItems(for application: UIApplication, forces: Bool = false) {
+        if !forces {
+            guard !hasShortcutItems(for: application) else { return }
+        }
         
         let checkmarkIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddTodo.rawValue)
         let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "shortcut.items.add-todo".localized, localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)

@@ -283,9 +283,14 @@ final class ToDoOverviewViewController: UIViewController {
         listen(for: .UserAvatarChanged, then: #selector(updateAvatar(_:)))
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
         listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
-        /// Reset time label when is about to enter foreground
+        // Reset time label when is about to enter foreground
         listenTo(.UIApplicationWillEnterForeground, { (_) in
             self.setupTimeLabel()
+        })
+        // Reset message label when reached midnight
+        listenTo(.UIApplicationSignificantTimeChange, { (_) in
+            self.fetchTodos()
+            self.setupMessageLabel()
         })
     }
     
