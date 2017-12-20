@@ -21,9 +21,6 @@ final class SettingsTableViewController: SettingTableViewController {
     
     @IBOutlet var appIconImageView: UIImageView!
     
-    @IBOutlet var authenticationLabel: UILabel!
-    @IBOutlet var authenticationIconImageView: UIImageView!
-    
     @IBOutlet var appVersionLabel: UILabel!
     
     // MARK: - Localizable Outlets.
@@ -35,13 +32,13 @@ final class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var soundsLabel: UILabel!
     @IBOutlet var motionEffectsLabel: UILabel!
     @IBOutlet var behaviorsLabel: UILabel!
+    @IBOutlet var lockAppLabel: UILabel!
     
     /// Switch types.
     
     private enum Switch: Int {
         case Sounds = 0
         case MotionEffects = 1
-        case Authentication = 2
     }
     
     // MARK: - View Life Cycle.
@@ -71,8 +68,9 @@ final class SettingsTableViewController: SettingTableViewController {
         soundsLabel.text = "settings.sounds".localized
         motionEffectsLabel.text = "settings.motion-effects".localized
         behaviorsLabel.text = "settings.titles.behaviors".localized
+        lockAppLabel.text = "settings.titles.lock-app".localized
+        
         setVersionText()
-        setupAuthenticationProperties()
         configureIconImages()
     }
     
@@ -109,9 +107,6 @@ final class SettingsTableViewController: SettingTableViewController {
             case Switch.MotionEffects.rawValue:
                 // Motion switch
                 $0.setOn(UserDefaultManager.settingMotionEffectsEnabled(), animated: false)
-            case Switch.Authentication.rawValue:
-                // Authentication switch
-                $0.setOn(UserDefaultManager.settingAuthenticationEnabled(), animated: false)
             default:
                 break
             }
@@ -125,44 +120,6 @@ final class SettingsTableViewController: SettingTableViewController {
         
         configureIconImages()
         configureSwitches()
-    }
-    
-    /// Set up authentication properties.
-    
-    fileprivate func setupAuthenticationProperties() {
-        // Check for biometric types
-        let context = LAContext()
-        
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            if #available(iOS 11, *) {
-                switch context.biometryType {
-                case .faceID:
-                    // Supports Face ID
-                    authenticationIconImageView.image = #imageLiteral(resourceName: "face-id-icon")
-                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-                    authenticationLabel.text = "Face ID".localized
-                case .none:
-                    // No biometric type
-                    authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
-                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-                    authenticationLabel.text = "Passcode".localized
-                default:
-                    // Touch ID
-                    break
-                }
-            }
-        } else {
-            // No biometric type
-            authenticationIconImageView.image = #imageLiteral(resourceName: "passcode-icon")
-            authenticationLabel.text = "Passcode".localized
-            authenticationLabel.isEnabled = false
-            let _ = switches.map {
-                if $0.tag == Switch.Authentication.rawValue {
-                    $0.isEnabled = false
-                }
-            }
-        }
     }
     
     /// Set cell labels
@@ -203,7 +160,7 @@ final class SettingsTableViewController: SettingTableViewController {
                 if success {
                     // User authenticated successfully
                     DispatchQueue.main.async {
-                        UserDefaultManager.set(value: sender.isOn, forKey: .Authentication)
+                        UserDefaultManager.set(value: sender.isOn, forKey: .LockBiometric)
                     }
                 } else {
                     // User did not authenticate successfully

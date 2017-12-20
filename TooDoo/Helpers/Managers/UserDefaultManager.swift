@@ -21,6 +21,8 @@ final class UserDefaultManager {
         case UserAvatar = "user-avatar"
         // - Count how many days has the user been using this app
         case UserHasBeenUsingSince = "user-has-been-using-since"
+        // - Log time when app enters background
+        case BackgroundInactivitySince = "background-inactivity-since"
     }
     
     /// User Setting Keys
@@ -63,12 +65,18 @@ final class UserDefaultManager {
         /*
          Privacy settings
          */
-        /// - The authentication lock for opening the app
-        case Authentication = "authentication"
-        /// - Lock app when leaving immediately
-        case LockWhenLeaving = "lock-when-leaving"
+        /// - The authentication lock for unlocking the app
+        case LockEnabled = "lock-enabled"
         /// - Blur content to protect privacy
         case BlurContent = "blur-content"
+        /// - The passcode when locked
+        case LockPasscode = "lock-passcode"
+        /// - Lock app when exiting
+        case LockOnExit = "lock-on-exit"
+        /// - Lock app in a certain timeout
+        case LockTimeOut = "lock-timeout"
+        /// - Unlock using biometric methods
+        case LockBiometric = "lock-biometric"
         
         /// Get string.
         func string() -> String {
@@ -300,18 +308,6 @@ extension UserDefaultManager {
     
     class func settingSoundsEnabled() -> Bool {
         return userDefaults.value(forKey: SettingKey.Sounds.rawValue) == nil ? true : bool(forKey: .Sounds)
-    }
-    
-    /// See if authentication setting is enabled. (Lock on exit)
-    
-    class func settingAuthenticationEnabled() -> Bool {
-        return bool(forKey: .Authentication)
-    }
-    
-    /// See if lock on leaving setting is enabled.
-    
-    class func settingLockWhenLeaving() -> Bool {
-        return bool(forKey: .LockWhenLeaving)
     }
     
     /// See if motion effect is enabled.

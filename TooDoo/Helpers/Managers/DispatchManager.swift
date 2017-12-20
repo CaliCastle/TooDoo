@@ -38,9 +38,25 @@ final class DispatchManager {
         // Check if user enabled privacy protection
         
         // Check if user enabled authentication
-        if UserDefaultManager.settingAuthenticationEnabled() {
+        if UserDefaultManager.bool(forKey: .LockEnabled) {
             
         }
+        
+        // Check if user enabled inverval for automatic locking
+//        if UserDefaultManager.bool(forKey: )
+//        UserDefaultManager.set(value: Date(), forKey: .BackgroundInactivitySince)
+    }
+    
+    // MARK: - Application Will Enter Foreground
+    
+    open func applicationWillEnterForeground(_ application: UIApplication) {
+//        if let time = UserDefaultManager.get(forKey: .BackgroundInactivitySince) as? Date {
+//            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
+//                let unlockViewController = StoryboardManager.viewController(identifier: HomeUnlockViewController.identifier, in: .Main)
+//
+//                topViewController.present(unlockViewController, animated: false, completion: nil)
+//            }
+//        }
     }
     
     // MARK: - Configure application locale.

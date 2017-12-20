@@ -101,6 +101,7 @@
 		8DB49E641FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */; };
 		8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */; };
 		8DBA55921FC430F80012B941 /* +UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA55911FC430F80012B941 /* +UITextView.swift */; };
+		8DBE2D561FE8FC520011D326 /* LockAppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBE2D551FE8FC520011D326 /* LockAppSettingsTableViewController.swift */; };
 		8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */; };
 		8DCBEA611FB2E69D00AD34D9 /* +UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */; };
 		8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D0514511FC593AE00AC45CE /* Settings.storyboard */; };
@@ -257,6 +258,7 @@
 		8DB49E621FBA7708003240E1 /* CategoryPreviewTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryPreviewTableHeaderView.xib; sourceTree = "<group>"; };
 		8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableHeaderView.swift; sourceTree = "<group>"; };
 		8DBA55911FC430F80012B941 /* +UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITextView.swift"; sourceTree = "<group>"; };
+		8DBE2D551FE8FC520011D326 /* LockAppSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockAppSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UINavigationController.swift"; sourceTree = "<group>"; };
 		8DCC7EF81FCBA09B000E99BA /* +UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITableViewCell.swift"; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		8D030E041FDB54AF00FA5ED5 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
+				8DBE2D551FE8FC520011D326 /* LockAppSettingsTableViewController.swift */,
 			);
 			path = Privacy;
 			sourceTree = "<group>";
@@ -1339,6 +1342,7 @@
 				8D2075BE1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift in Sources */,
 				8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */,
 				8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */,
+				8DBE2D561FE8FC520011D326 /* LockAppSettingsTableViewController.swift in Sources */,
 				8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */,
 				8D1F6A891FB67CA7004709E3 /* +UIViewController.swift in Sources */,
 				8DD7E93B1FE1E5CD005A865F /* ToDoModels.swift in Sources */,

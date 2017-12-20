@@ -36,6 +36,7 @@
 
 /* Authentication */
 "Face ID" = "Face ID";
+"Touch ID" = "Touch ID";
 "Passcode" = "Passcode";
 
 "EEEE, MMM d" = "EEEE, MMM d";
@@ -252,6 +253,7 @@
 "settings.titles.calendars" = "Calendars";
 "settings.titles.app-icon" = "App Icon";
 "settings.titles.behaviors" = "Behaviors";
+"settings.titles.lock-app" = "Lock App";
 
 // Setting headers
 "settings.headers.general" = "General";
@@ -277,6 +279,13 @@
 
 // Setting Behaviors
 "settings.behaviors.side-menu-animation" = "Side menu animation";
+
+// Setting Lock App
+"settings.lock-app.enable" = "Enable lock";
+"settings.lock-app.blur" = "Blur when left";
+"settings.lock-app.change-passcode" = "Change passcode";
+"settings.lock-app.lock-on-exit" = "Lock on exit";
+"settings.lock-app.timeout" = "Timeout";
 
 /*
  Category icons categories

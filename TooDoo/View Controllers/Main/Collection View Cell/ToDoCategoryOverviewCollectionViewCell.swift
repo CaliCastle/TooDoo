@@ -56,9 +56,9 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     open var isAdding = false {
         didSet {
-            if todoItemsTableView.numberOfRows(inSection: 0) == 0 && isAdding {
+            if todoItemsTableView.numberOfSections == 0 && isAdding {
                 // Tapped add button with no other todos
-                todoItemsTableView.insertSections([0], with: .left)
+                todoItemsTableView.insertSections([0], with: .top)
             }
             
             addTodoButton.isEnabled = !isAdding
@@ -312,9 +312,9 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         if !isAdding {
             // Configure keyboard first
             configureKeyboard()
-            // Set adding state
-            isAdding = true
             DispatchQueue.main.async {
+                // Set adding state
+                self.isAdding = true
                 // Insert add todo cell
                 self.todoItemsTableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .top)
                 // Scroll to top for entering goal
@@ -349,7 +349,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let _ = category else { return 0 }
         guard let sections = fetchedResultsController.sections else { return 0 }
-        
+
         return sections.count
     }
     
