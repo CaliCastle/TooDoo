@@ -281,11 +281,11 @@
 "settings.behaviors.side-menu-animation" = "侧边栏菜单动画";
 
 // Setting Lock App
-"settings.lock-app.enable" = "开启应用锁";
-"settings.lock-app.blur" = "离开应用后模糊内容";
-"settings.lock-app.change-passcode" = "更改密码";
-"settings.lock-app.lock-on-exit" = "退出应用即锁";
-"settings.lock-app.timeout" = "锁定延迟";
+"settings.lock-app.0" = "开启应用锁";
+"settings.lock-app.1" = "离开应用后模糊内容";
+"settings.lock-app.2" = "更改密码";
+"settings.lock-app.3" = "关闭应用立即上锁";
+"settings.lock-app.4" = "锁定延迟";
 
 /*
  Category icons categories

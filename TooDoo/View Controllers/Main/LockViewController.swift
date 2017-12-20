@@ -1,5 +1,5 @@
 //
-//  HomeUnlockViewController.swift
+//  LockViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/21/17.
@@ -10,16 +10,21 @@ import UIKit
 import Haptica
 import LocalAuthentication
 
-final class HomeUnlockViewController: UIViewController {
+final class LockViewController: UIViewController {
 
     /// Storyboard identifier.
     
-    static let identifier = "HomeUnlock"
+    static let identifier = "Lock"
     
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var backgroundGradientView: GradientView!
     @IBOutlet var lockImageView: UIImageView!
+    
+    @IBOutlet var passcodeContainerView: UIView!
+    @IBOutlet var hidePasscodeImageView: UIImageView!
+    @IBOutlet var passcodeTextField: UITextField!
+    @IBOutlet var biometricButton: UIButton!
     
     // MARK: - View Life Cycle.
 
@@ -79,16 +84,14 @@ final class HomeUnlockViewController: UIViewController {
     /// Authentication failed.
     
     private func authenticationFailed() {
-        let alertController = UIAlertController(title: "alert.authentication-failed".localized, message: nil, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
-        
-        alertController.addAction(alertAction)
+//        "alert.authentication-failed".localized
         
         DispatchQueue.main.async {
             Haptic.notification(.error).generate()
         }
         
-        present(alertController, animated: true, completion: nil)
+        // Shake text field
+        // Add red border
     }
     
     /// Authentication passed.

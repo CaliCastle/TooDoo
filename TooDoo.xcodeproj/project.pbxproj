@@ -12,7 +12,7 @@
 		8D030E081FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E071FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift */; };
 		8D030E0B1FDBCCF500FA5ED5 /* +UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */; };
 		8D030E0E1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */; };
-		8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */; };
+		8D05144C1FC5637500AC45CE /* LockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* LockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* +UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */; };
 		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
 		8D14EE5C1FE45BE700980E69 /* icon-things-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D14EE5A1FE45BE700980E69 /* icon-things-blue@3x.png */; };
@@ -72,6 +72,7 @@
 		8D8D1EE31FD74A7100208896 /* drip.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDD1FD7467700208896 /* drip.m4a */; };
 		8D8D1EE41FD74A7100208896 /* notification.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EE01FD7467700208896 /* notification.m4a */; };
 		8D8D1EE51FD74A7100208896 /* success.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDF1FD7467700208896 /* success.m4a */; };
+		8D94C3A71FEB0E09001ED24D /* Lock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D94C3A61FEB0E09001ED24D /* Lock.storyboard */; };
 		8D9BCBC01F92F19100721980 /* DispatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBBF1F92F19100721980 /* DispatchManager.swift */; };
 		8D9BCBC21F92FC9800721980 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */; };
 		8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */; };
@@ -155,7 +156,7 @@
 		8D030E071FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIImage.swift"; sourceTree = "<group>"; };
 		8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
-		8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUnlockViewController.swift; sourceTree = "<group>"; };
+		8D05144B1FC5637500AC45CE /* LockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockViewController.swift; sourceTree = "<group>"; };
 		8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIMotionEffect.swift"; sourceTree = "<group>"; };
 		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		8D0514551FC593B300AC45CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 		8D8D1EDE1FD7467700208896 /* click.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.m4a; sourceTree = "<group>"; };
 		8D8D1EDF1FD7467700208896 /* success.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.m4a; sourceTree = "<group>"; };
 		8D8D1EE01FD7467700208896 /* notification.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = notification.m4a; sourceTree = "<group>"; };
+		8D94C3A61FEB0E09001ED24D /* Lock.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Lock.storyboard; sourceTree = "<group>"; };
 		8D9BCBBF1F92F19100721980 /* DispatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchManager.swift; sourceTree = "<group>"; };
 		8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8D9EE7961FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				8D1599031FAAE7220004846F /* Setup.storyboard */,
 				8DF7B0571FC5074D00162996 /* Menu.storyboard */,
 				8D0514511FC593AE00AC45CE /* Settings.storyboard */,
+				8D94C3A61FEB0E09001ED24D /* Lock.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -641,7 +644,7 @@
 				8DD4AA301FDE7FEC00C5B7B1 /* View Controllers */,
 				8D1642D41FB4F28D004F306F /* Collection View Cell */,
 				8D6A13A41F93ED23004238D8 /* ToDoOverviewViewController.swift */,
-				8D05144B1FC5637500AC45CE /* HomeUnlockViewController.swift */,
+				8D05144B1FC5637500AC45CE /* LockViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */,
 				8D8D1EE21FD74A7100208896 /* click.m4a in Resources */,
 				8DABC26B1FD7E60200933ED0 /* icon-navy-alt@3x.png in Resources */,
+				8D94C3A71FEB0E09001ED24D /* Lock.storyboard in Resources */,
 				8DCFF10A1FD92EF4009532A2 /* icon-mocha@3x.png in Resources */,
 				8D8D1EE31FD74A7100208896 /* drip.m4a in Resources */,
 				8D8D1EE41FD74A7100208896 /* notification.m4a in Resources */,
@@ -1375,7 +1379,7 @@
 				8DE7F1E91FBC18B70026E65B /* ReorderCategoryTableViewCell.swift in Sources */,
 				8D030E081FDB54E800FA5ED5 /* BehaviorsSettingsTableViewController.swift in Sources */,
 				8DD7CAF31FCEC69C00EFA73A /* LanguageSettingsTableViewCell.swift in Sources */,
-				8D05144C1FC5637500AC45CE /* HomeUnlockViewController.swift in Sources */,
+				8D05144C1FC5637500AC45CE /* LockViewController.swift in Sources */,
 				8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */,
 				8DB277FA1FD5DA4600EB774B /* LocalizableInterface.swift in Sources */,
 				8D4784C71F9077820067E0FE /* AppDelegate.swift in Sources */,

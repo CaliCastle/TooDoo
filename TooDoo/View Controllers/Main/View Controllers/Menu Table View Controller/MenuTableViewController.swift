@@ -102,8 +102,8 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
     /// Register notifications for handling.
     
     fileprivate func registerNotifications() {
-        NotificationManager.listen(self, do: #selector(themeChanged), notification: .SettingThemeChanged, object: nil)
-        NotificationManager.listen(self, do: #selector(localizeInterface), notification: .SettingLocaleChanged, object: nil)
+        listen(for: .SettingThemeChanged, then: #selector(themeChanged))
+        listen(for: .SettingLocaleChanged, then: #selector(localizeInterface))
     }
     
     /// When theme changed.

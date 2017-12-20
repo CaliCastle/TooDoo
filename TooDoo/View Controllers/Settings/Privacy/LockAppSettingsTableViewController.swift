@@ -40,53 +40,40 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     
     /// See if biometric is supported.
     
-    private lazy var hasBiometric: Bool = {
-        // Check for biometric types
-        let context = LAContext()
-        
-        var supports = false
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            if #available(iOS 11, *) {
-                switch context.biometryType {
-                case .faceID:
-                    // Supports Face ID
-                    biometricImageView.image = #imageLiteral(resourceName: "face-id-icon").withRenderingMode(.alwaysTemplate)
-                    //                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-                    biometricLabel.text = "Face ID".localized
-                    
-                    supports = true
-                case .touchID:
-                    // Touch ID
-                    biometricImageView.image = #imageLiteral(resourceName: "touch-id-icon").withRenderingMode(.alwaysTemplate)
-                    //                    authenticationIconImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-                    biometricLabel.text = "Touch ID".localized
-                    
-                    supports = true
-                default:
-                    // No biometric type
-                    self.tableView.deleteRows(at: [IndexPath(row: 2, section: 2)], with: .none)
-                }
+    private var hasBiometric: Bool = false {
+        didSet {
+            guard hasBiometric != oldValue, tableView.numberOfSections != 1 else { return }
+            
+            let biometricRow = IndexPath(row: 2, section: 2)
+            
+            if hasBiometric {
+                tableView.insertRows(at: [biometricRow], with: .none)
+            } else {
+                tableView.deleteRows(at: [biometricRow], with: .none)
             }
-        } else {
-            // No biometric type
-            self.tableView.deleteRows(at: [IndexPath(row: 2, section: 2)], with: .none)
         }
-        
-        return supports
-    }()
+    }
     
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        checkBiometrics()
     }
     
     /// Localize interface.
     
     override func localizeInterface() {
         super.localizeInterface()
+        
+        title = "settings.titles.lock-app".localized
+        
+        cellLabels.forEach {
+            if $0.tag <= 4 {
+                $0.text = "settings.lock-app.\($0.tag)".localized
+            }
+        }
     }
     
     /// Get cell labels.
@@ -98,6 +85,8 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     /// Set up table view.
     
     override func setupTableView() {
+        super.setupTableView()
+        
         configureColors()
         configureSwitches()
     }
@@ -111,7 +100,7 @@ class LockAppSettingsTableViewController: SettingTableViewController {
             $0.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         }
         
-        timeOutTimeLabel.textColor = currentThemeIsDark() ? UIColor.flatWhite().lighten(byPercentage: 0.25) : UIColor.flatBlack().lighten(byPercentage: 0.25)
+        timeOutTimeLabel.textColor = currentThemeIsDark() ? UIColor.flatWhite().darken(byPercentage: 0.3) : UIColor.flatBlack().lighten(byPercentage: 0.25)
     }
     
     /// Configure switches.
@@ -133,28 +122,70 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         }
     }
     
+    /// Check biometric authentication support.
+    
+    fileprivate func checkBiometrics() {
+        // Check for biometric types
+        let context = LAContext()
+        
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            if #available(iOS 11, *) {
+                switch context.biometryType {
+                case .faceID:
+                    // Supports Face ID
+                    biometricImageView.image = #imageLiteral(resourceName: "face-id-icon").withRenderingMode(.alwaysTemplate)
+                    biometricLabel.text = "Face ID".localized
+                    
+                    hasBiometric = true
+                case .touchID:
+                    // Touch ID
+                    biometricImageView.image = #imageLiteral(resourceName: "touch-id-icon").withRenderingMode(.alwaysTemplate)
+                    biometricLabel.text = "Touch ID".localized
+                    
+                    hasBiometric = true
+                default:
+                    // No biometric type
+                    break
+                }
+            }
+        }
+    }
+    
     /// Enable lock did change.
     
     @IBAction func enableLockDidChange(_ sender: UISwitch) {
         lockEnabled = sender.isOn
+        // Save to defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .LockEnabled)
         
         if sender.isOn {
             tableView.insertSections([1, 2], with: .fade)
+            checkBiometrics()
         } else {
             tableView.deleteSections([1, 2], with: .fade)
         }
     }
 
+    /// Blur did change.
+    
     @IBAction func blurDidChange(_ sender: UISwitch) {
-        
+        // Save to defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .BlurContent)
     }
+    
+    /// Lock on exit did change.
     
     @IBAction func lockOnExitDidChange(_ sender: UISwitch) {
-        
+        // Save to defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .LockOnExit)
     }
     
+    /// Biometric did change.
+    
     @IBAction func biometricDidChange(_ sender: UISwitch) {
-        
+        // Save to defaults
+        UserDefaultManager.set(value: sender.isOn, forKey: .LockBiometric)
     }
     
     // MARK: - Table view data source

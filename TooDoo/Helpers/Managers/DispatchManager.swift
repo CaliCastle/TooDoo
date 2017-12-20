@@ -21,6 +21,15 @@ final class DispatchManager {
     
     open var redirectSegueIdentifier: String?
     
+    /// The blur effect view for blurring out content as an overlay.
+    
+    private lazy var blurEffectView: UIVisualEffectView = {
+        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: AppearanceManager.default.currentTheme() == .Dark ? .dark : .light))
+        effectView.frame = UIScreen.main.bounds
+        
+        return effectView
+    }()
+    
     // MARK: - Application Entry Point
     
     open func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
@@ -35,11 +44,17 @@ final class DispatchManager {
     // MARK: - Application Entered Background
     
     open func applicationDidEnterBackground(_ application: UIApplication) {
-        // Check if user enabled privacy protection
-        
-        // Check if user enabled authentication
+        // Check if user enabled lock for privacy protection
         if UserDefaultManager.bool(forKey: .LockEnabled) {
             
+        }
+        // Check if user enabled blur content when left
+        if UserDefaultManager.bool(forKey: .BlurContent) {
+            if let window = application.keyWindow {
+                DispatchQueue.main.async {
+                    window.addSubview(self.blurEffectView)
+                }
+            }
         }
         
         // Check if user enabled inverval for automatic locking
@@ -50,6 +65,11 @@ final class DispatchManager {
     // MARK: - Application Will Enter Foreground
     
     open func applicationWillEnterForeground(_ application: UIApplication) {
+        // Check if user enabled blur content when left
+        if UserDefaultManager.bool(forKey: .BlurContent) {
+            blurEffectView.removeFromSuperview()
+        }
+        
 //        if let time = UserDefaultManager.get(forKey: .BackgroundInactivitySince) as? Date {
 //            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
 //                let unlockViewController = StoryboardManager.viewController(identifier: HomeUnlockViewController.identifier, in: .Main)

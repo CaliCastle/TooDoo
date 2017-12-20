@@ -281,11 +281,11 @@
 "settings.behaviors.side-menu-animation" = "Side menu animation";
 
 // Setting Lock App
-"settings.lock-app.enable" = "Enable lock";
-"settings.lock-app.blur" = "Blur when left";
-"settings.lock-app.change-passcode" = "Change passcode";
-"settings.lock-app.lock-on-exit" = "Lock on exit";
-"settings.lock-app.timeout" = "Timeout";
+"settings.lock-app.0" = "Enable lock";
+"settings.lock-app.1" = "Blur when left";
+"settings.lock-app.2" = "Change passcode";
+"settings.lock-app.3" = "Lock on exit";
+"settings.lock-app.4" = "Timeout";
 
 /*
  Category icons categories
