@@ -24,26 +24,33 @@ final class DispatchManager {
     /// The blur effect view for blurring out content as an overlay.
     
     private lazy var blurEffectView: UIVisualEffectView = {
+        return configureBlurEffectView()
+    }()
+    
+    /// Configure blur effect view.
+    
+    fileprivate func configureBlurEffectView() -> UIVisualEffectView {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: AppearanceManager.default.currentTheme() == .Dark ? .dark : .light))
         effectView.frame = UIScreen.main.bounds
         
         return effectView
-    }()
+    }
     
     // MARK: - Application Entry Point
     
-    open func applicationLaunched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    open func launched(application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         configureLocale()
         configureAppearance()
         configureRootViewController(for: application)
         configureShortcutItems(for: application, with: launchOptions)
         configureInstallationDateIfNone()
         registerNotifications()
+        displayLockControllerIfNeeded()
     }
     
     // MARK: - Application Entered Background
     
-    open func applicationDidEnterBackground(_ application: UIApplication) {
+    open func didEnterBackground(_ application: UIApplication) {
         // Check if user enabled lock for privacy protection
         if UserDefaultManager.bool(forKey: .LockEnabled) {
             
@@ -51,9 +58,8 @@ final class DispatchManager {
         // Check if user enabled blur content when left
         if UserDefaultManager.bool(forKey: .BlurContent) {
             if let window = application.keyWindow {
-                DispatchQueue.main.async {
-                    window.addSubview(self.blurEffectView)
-                }
+                blurEffectView = configureBlurEffectView()
+                window.addSubview(blurEffectView)
             }
         }
         
@@ -62,14 +68,25 @@ final class DispatchManager {
 //        UserDefaultManager.set(value: Date(), forKey: .BackgroundInactivitySince)
     }
     
+    // MARK: - Application Will Resign Active
+    
+    open func willResignActive(_ application: UIApplication) {
+        
+    }
+    
     // MARK: - Application Will Enter Foreground
     
-    open func applicationWillEnterForeground(_ application: UIApplication) {
+    open func willEnterForeground(_ application: UIApplication) {
         // Check if user enabled blur content when left
         if UserDefaultManager.bool(forKey: .BlurContent) {
-            blurEffectView.removeFromSuperview()
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.blurEffectView.alpha = 0
+            }, completion: {
+                if $0 {
+                    self.blurEffectView.removeFromSuperview()
+                }
+            })
         }
-        
 //        if let time = UserDefaultManager.get(forKey: .BackgroundInactivitySince) as? Date {
 //            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
 //                let unlockViewController = StoryboardManager.viewController(identifier: HomeUnlockViewController.identifier, in: .Main)
@@ -77,6 +94,21 @@ final class DispatchManager {
 //                topViewController.present(unlockViewController, animated: false, completion: nil)
 //            }
 //        }
+    }
+    
+    /// Display lock if needed. (Lock on exit enabled) or (time interval exceeds)
+    
+    fileprivate func displayLockControllerIfNeeded() {
+        // If lock on exit enabled
+        guard UserDefaultManager.bool(forKey: .LockEnabled) else { return }
+        
+        if UserDefaultManager.bool(forKey: .LockOnExit) {
+            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
+                DispatchQueue.main.async {
+                    topViewController.present(StoryboardManager.viewController(identifier: LockViewController.identifier, in: .Lock), animated: false)
+                }
+            }
+        }
     }
     
     // MARK: - Configure application locale.

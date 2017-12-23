@@ -33,43 +33,52 @@ public enum CascadeDirection {
     case bottomToTop
     case leftToRight
     case rightToLeft
-    case radial(center:CGPoint)
-    case inverseRadial(center:CGPoint)
+    case radial(center: CGPoint)
+    case inverseRadial(center: CGPoint)
   
     /// Based on the cascade direction a comparator is set.
     var comparator: (UIView, UIView) -> Bool {
         switch self {
         case .topToBottom:
-            return { return $0.frame.minY < $1.frame.minY }
+            return {
+                return $0.frame.minY < $1.frame.minY
+            }
     
         case .bottomToTop:
-            return { return $0.frame.maxY == $1.frame.maxY ? $0.frame.maxX > $1.frame.maxX : $0.frame.maxY > $1.frame.maxY }
+            return {
+                return $0.frame.maxY == $1.frame.maxY ? $0.frame.maxX > $1.frame.maxX : $0.frame.maxY > $1.frame.maxY
+            }
         
         case .leftToRight:
-            return { return $0.frame.minX < $1.frame.minX }
+            return {
+                return $0.frame.minX < $1.frame.minX
+            }
     
         case .rightToLeft:
-            return { return $0.frame.maxX > $1.frame.maxX }
+            return {
+                return $0.frame.maxX > $1.frame.maxX
+            }
     
         case .radial(let center):
-            return { return $0.center.distance(center) < $1.center.distance(center) }
+            return {
+                return $0.center.distance(center) < $1.center.distance(center)
+            }
     
         case .inverseRadial(let center):
-            return { return $0.center.distance(center) > $1.center.distance(center) }
+            return {
+                return $0.center.distance(center) > $1.center.distance(center)
+            }
         }
     }
 }
 
-class CascadePreprocessor: MotionPreprocessor {
-    /// A reference to a MotionContext.
-    weak var context: MotionContext!
-    
+class CascadePreprocessor: MotionCorePreprocessor {
     /**
      Processes the transitionary views.
      - Parameter fromViews: An Array of UIViews.
      - Parameter toViews: An Array of UIViews.
      */
-    func process(fromViews: [UIView], toViews: [UIView]) {
+    override func process(fromViews: [UIView], toViews: [UIView]) {
         process(views: fromViews)
         process(views: toViews)
     }
@@ -83,21 +92,26 @@ class CascadePreprocessor: MotionPreprocessor {
             guard let (deltaTime, direction, delayMatchedViews) = context[v]?.cascade else {
                 continue
             }
-
-            let parentView = v is UITableView ? v.subviews.get(0) ?? v : v
+            
+            var parentView = v
+            
+            if v is UITableView, let wrapperView = v.subviews.get(0) {
+                parentView = wrapperView
+            }
+            
             let sortedSubviews = parentView.subviews.sorted(by: direction.comparator)
-
+            
             let initialDelay = context[v]!.delay
             let finalDelay = TimeInterval(sortedSubviews.count) * deltaTime + initialDelay
-
+            
             for (i, subview) in sortedSubviews.enumerated() {
                 let delay = TimeInterval(i) * deltaTime + initialDelay
-
+                
                 func applyDelay(view: UIView) {
-                    if context.transitionPairedView(for: view) == nil {
+                    if nil == context.pairedView(for: view) {
                         context[view]?.delay = delay
-                    
-                    } else if delayMatchedViews, let paired = context.transitionPairedView(for: view) {
+                        
+                    } else if delayMatchedViews, let paired = context.pairedView(for: view) {
                         context[view]?.delay = finalDelay
                         context[paired]?.delay = finalDelay
                     }
@@ -106,7 +120,7 @@ class CascadePreprocessor: MotionPreprocessor {
                         applyDelay(view: subview)
                     }
                 }
-
+                
                 applyDelay(view: subview)
             }
         }

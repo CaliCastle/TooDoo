@@ -28,34 +28,17 @@
 
 import UIKit
 
-internal class MotionTransitionAnimator<T: MotionAnimatorViewContext>: MotionAnimator, MotionHasInsertOrder {
-    /// A reference to a MotionContext.
-    weak public var context: MotionContext!
-  
+internal class MotionCoreAnimator<T: MotionAnimatorViewContext>: MotionAnimator {
+    weak public var motion: MotionTransition!
+    
+    /// A reference to the MotionContext.
+    public var context: MotionContext! {
+        return motion.context
+    }
+    
     /// An index of views to their corresponding animator context.
     var viewToContexts = [UIView: T]()
-
-    var insertToViewFirst = false
-}
-
-extension MotionTransitionAnimator {
-    /**
-     Animates a given view.
-     - Parameter view: A UIView.
-     - Parameter isAppearing: A boolean that determines whether the
-     view is appearing.
-     */
-    fileprivate func animate(view: UIView, isAppearing: Bool) {
-        let s = context.snapshotView(for: view)
-        let v = T(animator: self, snapshot: s, targetState: context[view]!)
-        
-        viewToContexts[view] = v
-        
-        v.startAnimations(isAppearing: isAppearing)
-    }
-}
-
-extension MotionTransitionAnimator {
+    
     /// Cleans the contexts.
     func clean() {
         for v in viewToContexts.values {
@@ -63,7 +46,6 @@ extension MotionTransitionAnimator {
         }
         
         viewToContexts.removeAll()
-        insertToViewFirst = false
     }
     
     /**
@@ -87,57 +69,69 @@ extension MotionTransitionAnimator {
      - Returns: A TimeInterval.
      */
     func animate(fromViews: [UIView], toViews: [UIView]) -> TimeInterval {
-        var duration: TimeInterval = 0
+        var d: TimeInterval = 0
         
-        if insertToViewFirst {
-            for v in toViews {
-                animate(view: v, isAppearing: true)
-            }
-            
-            for v in fromViews {
-                animate(view: v, isAppearing: false)
-            }
-            
-        } else {
-            for v in fromViews {
-                animate(view: v, isAppearing: false)
-            }
-            
-            for v in toViews {
-                animate(view: v, isAppearing: true)
+        for v in fromViews {
+            createViewContext(view: v, isAppearing: false)
+        }
+        
+        for v in toViews {
+            createViewContext(view: v, isAppearing: true)
+        }
+        
+        for v in viewToContexts.values {
+            if let duration = v.targetState.duration, .infinity != duration {
+                v.duration = duration
+                d = max(d, duration)
+                
+            } else {
+                let duration = v.snapshot.optimizedDuration(targetState: v.targetState)
+                
+                if nil == v.targetState.duration {
+                    v.duration = duration
+                }
+                
+                d = max(d, duration)
             }
         }
         
         for v in viewToContexts.values {
-            duration = max(duration, v.duration)
+            if .infinity == v.targetState.duration {
+                v.duration = d
+            }
+            
+            d = max(d, v.startAnimations())
         }
         
-        return duration
+        return d
     }
     
     /**
      Moves the view's animation to the given elapsed time.
-     - Parameter to elapsedTime: A TimeInterval.
+     - Parameter to progress: A TimeInterval.
      */
-    func seek(to elapsedTime: TimeInterval) {
+    func seek(to progress: TimeInterval) {
         for v in viewToContexts.values {
-            v.seek(to: elapsedTime)
+            v.seek(to: progress)
         }
     }
     
     /**
      Resumes the animation with a given elapsed time and
      optional reversed boolean.
-     - Parameter at elapsedTime: A TimeInterval.
+     - Parameter at progress: A TimeInterval.
      - Parameter isReversed: A boolean to reverse the animation
      or not.
      */
-    func resume(at elapsedTime: TimeInterval, isReversed: Bool) -> TimeInterval {
+    func resume(at progress: TimeInterval, isReversed: Bool) -> TimeInterval {
         var duration: TimeInterval = 0
         
         for (_, v) in viewToContexts {
-            v.resume(at: elapsedTime, isReversed: isReversed)
-            duration = max(duration, v.duration)
+            if nil == v.targetState.duration {
+                v.duration = max(v.duration, v.snapshot.optimizedDuration(targetState: v.targetState) + progress)
+            }
+            
+            duration = max(duration, v.resume(at: progress, isReversed: isReversed))
         }
         
         return duration
@@ -145,10 +139,10 @@ extension MotionTransitionAnimator {
     
     /**
      Applies the given state to the given view.
-     - Parameter state: A MotionTransitionState.
+     - Parameter state: A MotionModifier.
      - Parameter to view: A UIView.
      */
-    func apply(state: MotionTransitionState, to view: UIView) {
+    func apply(state: MotionTargetState, to view: UIView) {
         guard let v = viewToContexts[view] else {
             return
         }
@@ -156,3 +150,17 @@ extension MotionTransitionAnimator {
         v.apply(state: state)
     }
 }
+
+fileprivate extension MotionCoreAnimator {
+    /**
+     Creates a view context for a given view.
+     - Parameter view: A UIView.
+     - Parameter isAppearing: A boolean that determines whether the
+     view is appearing.
+     */
+    func createViewContext(view: UIView, isAppearing: Bool) {
+        viewToContexts[view] = T(animator: self, snapshot: context.snapshotView(for: view), targetState: context[view]!, isAppearing: isAppearing)
+    }
+}
+
+

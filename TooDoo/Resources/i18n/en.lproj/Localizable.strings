@@ -10,10 +10,13 @@
 "Get started" = "Get started with TooDoo";
 "Edit" = "Edit";
 "Cancel" = "Cancel";
+"Back" = "Back";
+"Next" = "Next";
 "Done" = "Done";
 "OK" = "OK";
 "Delete" = "Delete";
 "Nope" = "Nope";
+"Never mind" = "Never mind";
 "Model.Category" = "Category";
 "Give access" = "Give access";
 "Not now" = "Not now";
@@ -286,6 +289,11 @@
 "settings.lock-app.2" = "Change passcode";
 "settings.lock-app.3" = "Lock on exit";
 "settings.lock-app.4" = "Timeout";
+
+"settings.lock-app.passcode.title" = "Enter Passcode";
+"settings.lock-app.passcode.description" = "This will be the passcode to unlock the app.";
+"settings.lock-app.passcode.confirm-title" = "Re-enter Passcode";
+"settings.lock-app.passcode.confirm-description" = "Enter the passcode one more time for confirmation and memorize it.";
 
 /*
  Category icons categories

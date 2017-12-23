@@ -18,7 +18,7 @@ target 'TooDoo' do
   pod 'LTMorphingLabel'
   pod 'Haptica'
   pod 'Motion'
-  pod 'BulletinBoard', '~> 1.3'
+  pod 'BulletinBoard', :git => 'https://github.com/CaliCastle/BulletinBoard.git'
   pod 'Peep'
   pod 'ViewAnimator'
   pod 'Hokusai'

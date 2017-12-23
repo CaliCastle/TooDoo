@@ -708,6 +708,11 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         cell.managedObjectContext = managedObjectContext
         cell.delegate = self
         cell.category = category
+        
+        // More rounded corners for iPhone X
+        if #available(iOS 11.0, *), screenHasRoundedCorners {
+            cell.cardContainerView.cornerRadius = 28
+        }
     }
     
     /// Detect if the index path corresponds to add category cell.

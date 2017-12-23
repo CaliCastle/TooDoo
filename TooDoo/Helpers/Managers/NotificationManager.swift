@@ -75,6 +75,7 @@ final class NotificationManager {
         case SettingThemeChanged = "setting-theme-changed"
         case SettingLocaleChanged = "setting-locale-changed"
         case SettingAppIconChanged = "setting-app-icon-changed"
+        case SettingPasscodeSetup = "setting-passcode-setup"
     }
     
     /// Local Notifications.

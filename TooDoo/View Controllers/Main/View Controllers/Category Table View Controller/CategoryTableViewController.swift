@@ -11,7 +11,6 @@ import Typist
 import Haptica
 import CoreData
 import ViewAnimator
-import DeckTransition
 
 final class CategoryTableViewController: DeckEditorTableViewController, CALayerDelegate {
 
@@ -444,8 +443,6 @@ extension CategoryTableViewController {
         if scrollView.isEqual(categoryColorCollectionView) || scrollView.isEqual(categoryIconCollectionView) {
             updateGradientFrame()
         }
-        
-        super.scrollViewDidScroll(scrollView)
     }
     
     /// Set preview header height.

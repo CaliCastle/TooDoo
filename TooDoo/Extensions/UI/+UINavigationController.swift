@@ -27,18 +27,23 @@ extension UINavigationController {
         super.viewDidLoad()
         
         view.backgroundColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        hidesNavigationBarHairline = true
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setNeedsStatusBarAppearanceUpdate()
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        setNeedsStatusBarAppearanceUpdate()
+        UIView.animate(withDuration: 0.5) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {

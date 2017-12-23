@@ -44,13 +44,13 @@ final class CalendarsSettingsTableViewController: SettingTableViewController {
     /// Calendars bulletin.
     
     lazy var bulletinManagerForCalendars: BulletinManager = {
-        return BulletinManager(rootItem: AlertManager.makeCalendarsAccessPage())
+        return BulletinManager.blurred(rootItem: AlertManager.makeCalendarsAccessPage())
     }()
     
     /// Reminders bulletin.
     
     lazy var bulletinManagerForReminders: BulletinManager = {
-        return BulletinManager(rootItem: AlertManager.makeRemindersAccessPage())
+        return BulletinManager.blurred(rootItem: AlertManager.makeRemindersAccessPage())
     }()
     
     // MARK: - View Life Cycle.
@@ -94,8 +94,7 @@ final class CalendarsSettingsTableViewController: SettingTableViewController {
                 self.hasCalendarsAccess = hasCalendarsAccess
                 
                 if !hasCalendarsAccess {
-                    self.bulletinManagerForCalendars.prepare()
-                    self.bulletinManagerForCalendars.presentBulletin(above: self)
+                    self.bulletinManagerForCalendars.prepareAndPresent(above: self)
                 }
             }
             
@@ -104,8 +103,7 @@ final class CalendarsSettingsTableViewController: SettingTableViewController {
                     self.hasRemindersAccess = hasRemindersAccess
                     
                     if !hasRemindersAccess {
-                        self.bulletinManagerForReminders.prepare()
-                        self.bulletinManagerForReminders.presentBulletin(above: self)
+                        self.bulletinManagerForReminders.prepareAndPresent(above: self)
                     }
                 }
             }

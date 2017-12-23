@@ -8,6 +8,7 @@
 
 import UIKit
 import Haptica
+import Stellar
 import LocalAuthentication
 
 final class LockViewController: UIViewController {
@@ -33,7 +34,32 @@ final class LockViewController: UIViewController {
 
         setupViews()
         
-        authenticateUser()
+        checkBiometrics()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Animate lock image
+        UIView.animate(withDuration: 0.35, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 18, options: .curveEaseIn, animations: {
+            self.lockImageView.alpha = 1
+            self.lockImageView.transform = .init(translationX: 0, y: 0)
+        })
+        // Animate passcode container
+        UIView.animate(withDuration: 0.5, delay: 0.35, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: .curveEaseIn, animations: {
+            self.passcodeContainerView.alpha = 1
+            self.passcodeContainerView.transform = .init(translationX: 0, y: 0)
+        })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserDefaultManager.bool(forKey: .LockBiometric) && !biometricButton.isHidden {
+            authenticateUsingBiometrics()
+        } else {
+            passcodeTextField.becomeFirstResponder()
+        }
     }
     
     /// Set up views.
@@ -44,13 +70,59 @@ final class LockViewController: UIViewController {
         backgroundGradientView.startColor = currentThemeIsDark() ? UIColor(hexString: "4F4F4F") : .white
         backgroundGradientView.endColor = currentThemeIsDark() ? UIColor(hexString: "2B2B2B") : UIColor.flatWhite().darken(byPercentage: 0.15)
         // Configure lock image view
-        lockImageView.alpha = 1
-        lockImageView.transform = .init(scaleX: 1, y: 1)
+        lockImageView.alpha = 0
+        lockImageView.transform = .init(translationX: 0, y: -50)
+        
+        // Configure passcode container view
+        passcodeContainerView.alpha = 0
+        passcodeContainerView.transform = .init(translationX: 0, y: 30)
+        passcodeContainerView.backgroundColor = currentThemeIsDark() ? UIColor(hexString: "525252"): UIColor.flatWhite().withAlphaComponent(0.8)
+        passcodeContainerView.cornerRadius = 20
+        // Configure hide passcode image view
+        hidePasscodeImageView.image = hidePasscodeImageView.image?.withRenderingMode(.alwaysTemplate)
+        hidePasscodeImageView.tintColor = .flatGray()
+        // Configure passcode text field
+        passcodeTextField.tintColor = currentThemeIsDark() ? .white : .flatBlack()
+        passcodeTextField.textColor = passcodeTextField.tintColor
+        passcodeTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
+        // Configure biometric button
+        biometricButton.setImage(biometricButton.image(for: .normal)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        biometricButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
+        biometricButton.backgroundColor = currentThemeIsDark() ? UIColor(hexString: "525252") : UIColor(hexString: "525252")
+        biometricButton.cornerRadius = 12
+        biometricButton.layer.masksToBounds = true
     }
     
-    /// Perform authentication.
+    /// Check biometrics support.
     
-    private func authenticateUser() {
+    private func checkBiometrics() {
+        // Check for biometric types
+        let context = LAContext()
+        
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            if #available(iOS 11, *) {
+                switch context.biometryType {
+                case .faceID:
+                    // Supports Face ID
+                    biometricButton.setImage(#imageLiteral(resourceName: "face-id-icon").withRenderingMode(.alwaysTemplate), for: .normal)
+                case .touchID:
+                    // Touch ID
+                    biometricButton.setImage(#imageLiteral(resourceName: "touch-id-icon").withRenderingMode(.alwaysTemplate), for: .normal)
+                default:
+                    // No biometric type
+                    biometricButton.isHidden = true
+                }
+            }
+        } else {
+            // No biometric type
+            biometricButton.isHidden = true
+        }
+    }
+    
+    /// Perform authentication with biometrics.
+    
+    private func authenticateUsingBiometrics() {
         let context = LAContext()
         let reason = "permission.authentication.reason".localized
         
@@ -72,26 +144,56 @@ final class LockViewController: UIViewController {
         }
     }
     
+    /// Toggle passcode visibility.
+    
+    @IBAction func togglePasscodeVisibility(_ sender: Any) {
+        // Generate haptic feedback
+        Haptic.impact(.medium).generate()
+        
+        passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
+        hidePasscodeImageView.image = (passcodeTextField.isSecureTextEntry ? #imageLiteral(resourceName: "visible-icon") : #imageLiteral(resourceName: "invisible-icon")).withRenderingMode(.alwaysTemplate)
+    }
+    
+    /// Passcode entered.
+    
+    @IBAction func passcodeEntered(_ sender: UITextField) {
+        // Validate passcode
+        guard sender.text == UserDefaultManager.string(forKey: .LockPasscode) else {
+            authenticationFailed()
+            
+            return
+        }
+        
+        authenticationPassed()
+    }
+    
     /// User taps unlock icon.
     
     @IBAction func unlockDidTap(_ sender: Any) {
         // Generate haptic feedback
         Haptic.impact(.medium).generate()
-        
-        authenticateUser()
+
+        passcodeTextField.becomeFirstResponder()
+    }
+    
+    /// User taps biometric.
+    
+    @IBAction func biometricDidTap(_ sender: UIButton) {
+        authenticateUsingBiometrics()
     }
     
     /// Authentication failed.
     
     private func authenticationFailed() {
-//        "alert.authentication-failed".localized
+        // Shake it off
+        passcodeContainerView.moveX(-35).duration(0.45).easing(.elasticIn).reverses().animate()
+        
+        // Show message
+        NotificationManager.showBanner(title: "alert.authentication-failed".localized, type: .danger)
         
         DispatchQueue.main.async {
             Haptic.notification(.error).generate()
         }
-        
-        // Shake text field
-        // Add red border
     }
     
     /// Authentication passed.

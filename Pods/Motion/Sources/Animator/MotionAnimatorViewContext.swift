@@ -35,12 +35,15 @@ internal class MotionAnimatorViewContext {
     /// A reference to the snapshot UIView.
     var snapshot: UIView
     
+    /// The animation target state.
+    var targetState: MotionTargetState
+    
+    /// A boolean indicating if the view is appearing.
+    var isAppearing: Bool
+
     /// Animation duration time.
     var duration: TimeInterval = 0
- 
-    /// The animation target state.
-    var targetState: MotionTransitionState
-
+    
     /// The computed current time of the snapshot layer.
     var currentTime: TimeInterval {
         return snapshot.layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -48,19 +51,21 @@ internal class MotionAnimatorViewContext {
     
     /// A container view for the transition.
     var container: UIView? {
-        return animator?.context.container
+        return animator?.motion.context.container
     }
 
     /**
      An initializer. 
      - Parameter animator: A MotionAnimator.
      - Parameter snapshot: A UIView.
-     - Parameter targetState: A MotionTransitionState.
+     - Parameter targetState: A MotionModifier.
+     - Parameter isAppearing: A Boolean.
      */
-    required init(animator: MotionAnimator, snapshot: UIView, targetState: MotionTransitionState) {
+    required init(animator: MotionAnimator, snapshot: UIView, targetState: MotionTargetState, isAppearing: Bool) {
         self.animator = animator
         self.snapshot = snapshot
         self.targetState = targetState
+        self.isAppearing = isAppearing
     }
 
     /// Cleans the context.
@@ -72,39 +77,46 @@ internal class MotionAnimatorViewContext {
      A class function that determines if a view can be animated
      to a given state.
      - Parameter view: A UIView.
-     - Parameter state: A MotionTransitionState.
+     - Parameter state: A MotionModifier.
      - Parameter isAppearing: A boolean that determines whether the
      view is appearing.
      */
-    class func canAnimate(view: UIView, state: MotionTransitionState, isAppearing: Bool) -> Bool {
+    class func canAnimate(view: UIView, state: MotionTargetState, isAppearing: Bool) -> Bool {
         return false
     }
 
     /**
      Resumes the animation with a given elapsed time and
      optional reversed boolean.
-     - Parameter at elapsedTime: A TimeInterval.
+     - Parameter at progress: A TimeInterval.
      - Parameter isReversed: A boolean to reverse the animation 
      or not.
+     - Returns: A TimeInterval.
      */
-    func resume(at elapsedTime: TimeInterval, isReversed: Bool) {}
+    @discardableResult
+    func resume(at progress: TimeInterval, isReversed: Bool) -> TimeInterval {
+        return 0
+    }
     
     /**
      Moves the animation to the given elapsed time.
-     - Parameter to elapsedTime: A TimeInterval.
+     - Parameter to progress: A TimeInterval.
      */
-    func seek(to elapsedTime: TimeInterval) {}
+    func seek(to progress: TimeInterval) {}
 
     /**
      Applies the given state to the target state.
-     - Parameter state: A MotionTransitionState.
+     - Parameter state: A MotionModifier.
      */
-    func apply(state: MotionTransitionState) {}
+    func apply(state: MotionTargetState) {}
     
     /**
      Starts the animations with an appearing boolean flag.
      - Parameter isAppearing: A boolean value whether the view
      is appearing or not.
      */
-    func startAnimations(isAppearing: Bool) {}
+    @discardableResult
+    func startAnimations() -> TimeInterval {
+        return 0
+    }
 }

@@ -10,7 +10,6 @@ import UIKit
 import Haptica
 import CoreData
 import ViewAnimator
-import DeckTransition
 
 protocol ReorderCategoriesTableViewControllerDelegate {
     func categoriesDoneOrganizing()
@@ -88,11 +87,6 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         }
         
         tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
-        
-        // Disable scroll gesture to dismiss controller
-        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            delegate.isDismissEnabled = false
-        }
     }
     
     private func fetchCategories() {

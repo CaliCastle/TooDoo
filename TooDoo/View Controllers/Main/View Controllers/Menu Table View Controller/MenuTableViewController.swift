@@ -115,6 +115,8 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
             self.setNeedsStatusBarAppearanceUpdate()
         })
         
+        bulletinManager = AlertManager.photoAccessBulletinManager()
+        
         imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
         imagePickerController.navigationBar.setBackgroundImage(currentThemeIsDark() ? #imageLiteral(resourceName: "black-background") : #imageLiteral(resourceName: "white-background"), for: .default)
     }
@@ -274,9 +276,7 @@ extension MenuTableViewController: MenuTableHeaderViewDelegate {
                         // Generate haptic feedback
                         Haptic.notification(.warning).generate()
                         // Present bulletin
-                        self.bulletinManager.backgroundViewStyle = .blurredDark
-                        self.bulletinManager.prepare()
-                        self.bulletinManager.presentBulletin(above: self.mainViewController!)
+                        self.bulletinManager.prepareAndPresent(above: self.mainViewController!)
                     }
                 })
                 

@@ -28,9 +28,7 @@
 
 import UIKit
 
-open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
-  weak public var context: MotionContext!
-
+class MotionPlugin: MotionCorePreprocessor, MotionAnimator {
   /**
     Determines whether or not to receive `seekTo` callback on every frame.
    
@@ -64,7 +62,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
        context[view, "transition1"] = ["parameter1", "parameter2"]
 
   */
-  open func process(fromViews: [UIView], toViews: [UIView]) {}
+  open override func process(fromViews: [UIView], toViews: [UIView]) {}
 
   /**
    - Returns: return true if the plugin can handle animating the view.
@@ -103,9 +101,9 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    This method is called when an interactive animation is in place
    The plugin should pause the animation, and seek to the given progress
    - Parameters:
-     - elapsedTime: time of the animation to seek to.
+     - progress: time of the animation to seek to.
    */
-  open func seek(to elapsedTime: TimeInterval) {}
+  open func seek(to progress: TimeInterval) {}
 
   /**
    For supporting interactive animation only.
@@ -113,10 +111,10 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    This method is called when an interactive animation is ended
    The plugin should resume the animation.
    - Parameters:
-   - elapsedTime: will be the same value since last `seekTo`
+   - progress: will be the same value since last `seekTo`
    - reverse: a boolean value indicating whether or not the animation should reverse
    */
-  open func resume(at elapsedTime: TimeInterval, isReversed: Bool) -> TimeInterval { return 0 }
+  open func resume(at progress: TimeInterval, isReversed: Bool) -> TimeInterval { return 0 }
 
   /**
    For supporting interactive animation only.
@@ -127,27 +125,32 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
        - state: the target state to override
        - view: the view to override
    */
-  open func apply(state: MotionTransitionState, to view: UIView) {}
+  open func apply(state: MotionTargetState, to view: UIView) {}
 }
 
 // methods for enable/disable the current plugin
 extension MotionPlugin {
-  public static var isEnabled: Bool {
-    get {
-      return Motion.isEnabled(plugin: self)
+    /// A boolean indicating whether plugins are available.
+    public static var isEnabled: Bool {
+        get {
+            return MotionTransition.isEnabled(plugin: self)
+        }
+        set(value) {
+            if value {
+                enable()
+            } else {
+                disable()
+            }
+        }
     }
-    set {
-      if newValue {
-        enable()
-      } else {
-        disable()
-      }
+
+    /// Enable plugins.
+    public static func enable() {
+        MotionTransition.enable(plugin: self)
     }
-  }
-  public static func enable() {
-    Motion.enable(plugin: self)
-  }
-  public static func disable() {
-    Motion.disable(plugin: self)
-  }
+
+    /// Disable plugins.
+    public static func disable() {
+        MotionTransition.disable(plugin: self)
+    }
 }

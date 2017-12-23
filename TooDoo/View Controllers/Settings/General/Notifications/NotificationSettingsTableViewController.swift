@@ -162,9 +162,7 @@ final class NotificationSettingsTableViewController: SettingTableViewController 
     private func noNotificationPermission() {
         DispatchQueue.main.async {
             // Ask for permission
-            self.bulletinManager.backgroundViewStyle = .blurredDark
-            self.bulletinManager.prepare()
-            self.bulletinManager.presentBulletin(above: self)
+            self.bulletinManager.prepareAndPresent(above: self)
             
             self.enableSwitch.setOn(false, animated: true)
             self.messageTextField.isEnabled = false

@@ -28,18 +28,15 @@
 
 import UIKit
 
-class IgnoreSubviewTransitionsPreprocessor: MotionPreprocessor {
-    /// A reference to a MotionContext.
-    weak var context: MotionContext!
-    
+class IgnoreSubviewTransitionsPreprocessor: MotionCorePreprocessor {
     /**
      Processes the transitionary views.
      - Parameter fromViews: An Array of UIViews.
      - Parameter toViews: An Array of UIViews.
      */
-    func process(fromViews: [UIView], toViews: [UIView]) {
-        process(views:fromViews)
-        process(views:toViews)
+    override func process(fromViews: [UIView], toViews: [UIView]) {
+        process(views: fromViews)
+        process(views: toViews)
     }
 
     /**
@@ -52,7 +49,11 @@ class IgnoreSubviewTransitionsPreprocessor: MotionPreprocessor {
                 continue
             }
             
-            let parentView = v is UITableView ? v.subviews.get(0) ?? v : v
+            var parentView = v
+            
+            if v is UITableView, let wrapperView = v.subviews.get(0) {
+                parentView = wrapperView
+            }
 
             guard recursive else {
                 for subview in parentView.subviews {
@@ -62,20 +63,20 @@ class IgnoreSubviewTransitionsPreprocessor: MotionPreprocessor {
                 continue
             }
             
-            cleanSubviewTransitions(for: parentView)
+            cleanSubviewModifiers(for: parentView)
         }
     }
 }
 
-extension IgnoreSubviewTransitionsPreprocessor {
+fileprivate extension IgnoreSubviewTransitionsPreprocessor {
     /**
-     Clears the transition for a given view's subviews.
+     Clears the modifiers for a given view's subviews.
      - Parameter for view: A UIView.
      */
-    fileprivate func cleanSubviewTransitions(for view: UIView) {
+    func cleanSubviewModifiers(for view: UIView) {
         for v in view.subviews {
             context[v] = nil
-            cleanSubviewTransitions(for: v)
+            cleanSubviewModifiers(for: v)
         }
     }
 }

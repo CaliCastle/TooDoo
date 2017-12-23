@@ -42,10 +42,13 @@ public class MotionContext {
     internal var viewToAlphas = [UIView: CGFloat]()
     
     /// A reference of view to transition target state.
-    internal var viewToTargetState = [UIView: MotionTransitionState]()
+    internal var viewToTargetState = [UIView: MotionTargetState]()
     
     /// A reference of the superview to the subviews snapshots.
     internal var superviewToNoSnapshotSubviewMap = [UIView: [(Int, UIView)]]()
+    
+    /// Inserts the toViews first.
+    internal var insertToViewFirst = false
     
     /// A reference to the default coordinate space for transitions.
     internal var defaultCoordinateSpace = MotionCoordinateSpace.local
@@ -77,8 +80,9 @@ internal extension MotionContext {
     func set(fromViews: [UIView], toViews: [UIView]) {
         self.fromViews = fromViews
         self.toViews = toViews
-        map(views: fromViews, identifierMap: &motionIdentifierToSourceView)
-        map(views: toViews, identifierMap: &motionIdentifierToDestinationView)
+        
+        process(views: fromViews, identifierMap: &motionIdentifierToSourceView)
+        process(views: toViews, identifierMap: &motionIdentifierToDestinationView)
     }
     
     /**
@@ -86,18 +90,25 @@ internal extension MotionContext {
      - Parameter views: An Array of UIViews.
      - Parameter identifierMap: A Dicionary of String to UIView pairs.
      */
-    func map(views: [UIView], identifierMap: inout [String: UIView]) {
+    func process(views: [UIView], identifierMap: inout [String: UIView]) {
         for v in views {
             v.layer.removeAllAnimations()
             
-            if container.convert(v.bounds, from: v).intersects(container.bounds) {
-                if let i = v.motionIdentifier {
-                    identifierMap[i] = v
+            let targetState: MotionTargetState?
+            
+            if let modifiers = v.motionModifiers {
+                targetState = MotionTargetState(modifiers: modifiers)
+            
+            } else {
+                targetState = nil
+            }
+            
+            if true == targetState?.forceAnimate || container.convert(v.bounds, from: v).intersects(container.bounds) {
+                if let motionIdentifier = v.motionIdentifier {
+                    identifierMap[motionIdentifier] = v
                 }
-                
-                if let i = v.motionTransitions {
-                    viewToTargetState[v] = MotionTransitionState(transitions: i)
-                }
+            
+                viewToTargetState[v] = targetState
             }
         }
     }
@@ -106,16 +117,16 @@ internal extension MotionContext {
 public extension MotionContext {
     /**
      A subscript that takes a given view and retrieves a
-     MotionTransitionState if one exists.
+     MotionModifier if one exists.
      - Parameter view: A UIView.
-     - Returns: An optional MotionTransitionState.
+     - Returns: An optional MotionTargetState.
      */
-    subscript(view: UIView) -> MotionTransitionState? {
+    subscript(view: UIView) -> MotionTargetState? {
         get {
             return viewToTargetState[view]
         }
-        set {
-            viewToTargetState[view] = newValue
+        set(value) {
+            viewToTargetState[view] = value
         }
     }
 }
@@ -144,13 +155,13 @@ public extension MotionContext {
      source and destination view controllers.
      - Returns: An optional UIView.
      */
-    func transitionPairedView(for view: UIView) -> UIView? {
-        if let i = view.motionIdentifier {
-            if view == sourceView(for: i) {
-                return destinationView(for: i)
+    func pairedView(for view: UIView) -> UIView? {
+        if let motionIdentifier = view.motionIdentifier {
+            if view == sourceView(for: motionIdentifier) {
+                return destinationView(for: motionIdentifier)
             
-            } else if view == destinationView(for: i) {
-                return sourceView(for: i)
+            } else if view == destinationView(for: motionIdentifier) {
+                return sourceView(for: motionIdentifier)
             }
         }
         
@@ -162,6 +173,7 @@ public extension MotionContext {
      - Parameter for view: A UIView.
      - Returns: A UIView.
      */
+    @discardableResult
     func snapshotView(for view: UIView) -> UIView {
         if let snapshot = viewToSnapshot[view] {
             return snapshot
@@ -174,7 +186,7 @@ public extension MotionContext {
         case .local:
             containerView = view
             
-            while containerView != container, viewToSnapshot[containerView] == nil, let superview = containerView.superview {
+            while containerView != container, nil == viewToSnapshot[containerView], let superview = containerView.superview {
                 containerView = superview
             }
             
@@ -185,6 +197,7 @@ public extension MotionContext {
             if let visualEffectView = containerView as? UIVisualEffectView {
                 containerView = visualEffectView.contentView
             }
+            
         case .global:
             break
         }
@@ -221,8 +234,8 @@ public extension MotionContext {
         case .optimized:
             #if os(tvOS)
                 snapshot = view.snapshotView(afterScreenUpdates: true)!
-            #else
                 
+            #else
                 if #available(iOS 9.0, *), let stackView = view as? UIStackView {
                     snapshot = stackView.slowSnapshotView()
                     
@@ -246,7 +259,6 @@ public extension MotionContext {
                     
                     // take a snapshot without the background
                     barView.layer.sublayers![0].opacity = 0
-                    
                     let realSnapshot = barView.snapshotView(afterScreenUpdates: true)!
                     barView.layer.sublayers![0].opacity = 1
                     
@@ -260,6 +272,7 @@ public extension MotionContext {
                 } else {
                     snapshot = view.snapshotView() ?? UIView()
                 }
+                
             #endif
         }
         
@@ -267,6 +280,7 @@ public extension MotionContext {
             if let imageView = view as? UIImageView, imageView.adjustsImageWhenAncestorFocused {
                 snapshot.frame = imageView.focusedFrameGuide.layoutFrame
             }
+            
         #endif
         
         view.layer.cornerRadius = oldCornerRadius
@@ -309,7 +323,7 @@ public extension MotionContext {
             hide(view: view)
         }
         
-        if let pairedView = transitionPairedView(for: view), let pairedSnapshot = viewToSnapshot[pairedView] {
+        if let pairedView = pairedView(for: view), let pairedSnapshot = viewToSnapshot[pairedView] {
             let siblingViews = pairedView.superview!.subviews
             let nextSiblings = siblingViews[siblingViews.index(of: pairedView)! + 1..<siblingViews.count]
             
@@ -323,6 +337,7 @@ public extension MotionContext {
             for sibling in nextSiblings {
                 insertGlobalViewTree(view: sibling)
             }
+            
         } else {
             containerView.addSubview(snapshot)
         }
@@ -350,8 +365,8 @@ public extension MotionContext {
     /// Restores the transition subview map with its superview.
     func clean() {
         for (superview, subviews) in superviewToNoSnapshotSubviewMap {
-            for (index, view) in subviews.reversed() {
-                superview.insertSubview(view, at: index)
+            for (k, v) in subviews.reversed() {
+                superview.insertSubview(v, at: k)
             }
         }
     }
@@ -363,7 +378,7 @@ internal extension MotionContext {
      - Parameter view: A UIView.
      */
     func hide(view: UIView) {
-        guard nil == viewToAlphas[view], .noSnapshot != self[view]?.snapshotType else {
+        guard nil == viewToAlphas[view] else {
             return
         }
         
@@ -372,7 +387,7 @@ internal extension MotionContext {
             viewToAlphas[view] = 1
         
         } else {
-            viewToAlphas[view] = view.isOpaque ? .infinity : view.alpha
+            viewToAlphas[view] = view.alpha
             view.alpha = 0
         }
     }
@@ -388,10 +403,6 @@ internal extension MotionContext {
         
         if view is UIVisualEffectView {
             view.isHidden = false
-        
-        } else if oldAlpha == .infinity {
-            view.alpha = 1
-            view.isOpaque = true
         
         } else {
             view.alpha = oldAlpha
@@ -423,9 +434,11 @@ internal extension MotionContext {
 
     /// Removes all snapshots that are not using .useNoSnapshot.
     func removeAllSnapshots() {
-        for (k, v) in viewToSnapshot {
-            if k != v {
-                v.removeFromSuperview()
+        for (view, snapshot) in viewToSnapshot {
+            if view != snapshot {
+                snapshot.removeFromSuperview()
+            } else {
+                view.layer.removeAllAnimations()
             }
         }
     }
@@ -435,8 +448,12 @@ internal extension MotionContext {
      - Parameter rootView: A UIVIew.
      */
     func removeSnapshots(rootView: UIView) {
-        if let v = viewToSnapshot[rootView], v != rootView {
-            v.removeFromSuperview()
+        if let snapshot = viewToSnapshot[rootView] {
+            if rootView != snapshot {
+                snapshot.removeFromSuperview()
+            } else {
+                rootView.layer.removeAllAnimations()
+            }
         }
         
         for v in rootView.subviews {

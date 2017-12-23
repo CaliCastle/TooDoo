@@ -32,6 +32,13 @@ extension UIViewController: NavigationBarAnimatable {
 
 extension UIViewController {
     
+    /// Detect if screen has rounded corners (iPhone X)
+    @available(iOS 11.0, *)
+    public var screenHasRoundedCorners: Bool {
+        let insets = view.safeAreaInsets
+        return (insets.bottom > 0) && (insets.top > 0)
+    }
+    
     /// Dependency Injection for Managed Object Context.
     
     open var managedObjectContext: NSManagedObjectContext {

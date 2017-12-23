@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BulletinBoard
 import LocalAuthentication
 
 class LockAppSettingsTableViewController: SettingTableViewController {
@@ -54,12 +55,26 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         }
     }
     
+    /// Bulletin manager for passcode.
+    
+    private lazy var bulletinManager: BulletinManager = {
+        return BulletinManager.standard(rootItem: AlertManager.makePasscodePage())
+    }()
+    
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         checkBiometrics()
+        
+        listen(for: .SettingPasscodeSetup, then: #selector(passcodeSetup(_:)))
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationManager.remove(self)
     }
     
     /// Localize interface.
@@ -80,6 +95,26 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     
     override func getCellLabels() -> [UILabel]? {
         return cellLabels
+    }
+    
+    /// Passcode setup from bulletin card.
+    
+    @objc fileprivate func passcodeSetup(_ notification: Notification) {
+        // Set enable state
+        lockEnabled = true
+        switches.filter { return $0.tag == SwitchType.LockEnabled.rawValue }.first!.setOn(true, animated: true)
+        
+        // Save to defaults
+        UserDefaultManager.set(value: true, forKey: .LockEnabled)
+        
+        if notification.object is String, let passcode = notification.object as? String {
+            UserDefaultManager.set(value: passcode, forKey: .LockPasscode)
+        }
+        
+        // Check biometrics
+        checkBiometrics()
+        // Insert sections
+        tableView.insertSections([1, 2], with: .fade)
     }
     
     /// Set up table view.
@@ -155,14 +190,29 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     /// Enable lock did change.
     
     @IBAction func enableLockDidChange(_ sender: UISwitch) {
-        lockEnabled = sender.isOn
-        // Save to defaults
-        UserDefaultManager.set(value: sender.isOn, forKey: .LockEnabled)
-        
         if sender.isOn {
-            tableView.insertSections([1, 2], with: .fade)
-            checkBiometrics()
+            bulletinManager.prepareAndPresent(above: self)
+            
+            bulletinManager.bulletinCardAppeared = {
+                if $0 is PasscodePageBulletinPage {
+                    guard let item = $0 as? PasscodePageBulletinPage else { return }
+                    
+                    DispatchQueue.main.async {
+                        item.passcodeTextField.becomeFirstResponder()
+                    }
+                }
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400), execute: {
+                sender.setOn(false, animated: true)
+            })
         } else {
+            // Set enable state
+            lockEnabled = sender.isOn
+            // Save to defaults
+            UserDefaultManager.set(value: sender.isOn, forKey: .LockEnabled)
+            UserDefaultManager.set(value: nil, forKey: .LockPasscode)
+            
             tableView.deleteSections([1, 2], with: .fade)
         }
     }

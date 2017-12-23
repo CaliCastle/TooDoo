@@ -72,8 +72,9 @@ final class AlertManager {
         rootItem.descriptionText = "permission.no-photo-access.description".localized
         rootItem.actionButtonTitle = "Give access".localized
         rootItem.alternativeButtonTitle = "Not now".localized
+        rootItem.setupFonts()
+        rootItem.setupColors()
         
-        rootItem.shouldCompactDescriptionText = true
         rootItem.isDismissable = true
         
         // Take user to the settings page
@@ -88,7 +89,13 @@ final class AlertManager {
             item.manager?.dismissBulletin()
         }
         
-        return BulletinManager(rootItem: rootItem)
+        rootItem.dismissalHandler = { _ in
+            NotificationManager.send(notification: .UpdateStatusBar)
+        }
+        
+        let manager = BulletinManager.standard(rootItem: rootItem)
+        
+        return manager
     }
     
     /// Configure notification access bulletin manager.
@@ -99,8 +106,9 @@ final class AlertManager {
         rootItem.descriptionText = "permission.no-notifications-access.description".localized
         rootItem.actionButtonTitle = "Give access".localized
         rootItem.alternativeButtonTitle = "Not now".localized
+        rootItem.setupFonts()
+        rootItem.setupColors()
         
-        rootItem.shouldCompactDescriptionText = true
         rootItem.isDismissable = true
         
         // Take user to the settings page
@@ -115,18 +123,13 @@ final class AlertManager {
             item.manager?.dismissBulletin()
         }
         
-        return BulletinManager(rootItem: rootItem)
-    }
-    
-    /// Get calendars and reminders access bulletin manager.
-    ///
-    /// - Returns: The bulletin manager to be displayed
-    
-    open class func calendarsAndRemindersAccessBulletinManager() -> BulletinManager {
-        let rootItem = makeCalendarsAccessPage()
-        rootItem.nextItem = makeRemindersAccessPage()
+        rootItem.dismissalHandler = { _ in
+            NotificationManager.send(notification: .UpdateStatusBar)
+        }
         
-        return BulletinManager(rootItem: rootItem)
+        let manager = BulletinManager.standard(rootItem: rootItem)
+        
+        return manager
     }
     
     /// Make calendars permission page.
@@ -139,8 +142,9 @@ final class AlertManager {
         item.descriptionText = "permission.no-calendars-access.description".localized
         item.actionButtonTitle = "Give access".localized
         item.alternativeButtonTitle = "Not now".localized
+        item.setupFonts()
+        item.setupColors()
         
-        item.shouldCompactDescriptionText = true
         item.isDismissable = true
         
         // Prompt calendars permission
@@ -153,6 +157,9 @@ final class AlertManager {
         // Dismiss bulletin
         item.alternativeHandler = { item in
             item.manager?.dismissBulletin()
+        }
+        item.dismissalHandler = { _ in
+            NotificationManager.send(notification: .UpdateStatusBar)
         }
         
         return item
@@ -168,8 +175,9 @@ final class AlertManager {
         item.descriptionText = "permission.no-reminders-access.description".localized
         item.actionButtonTitle = "Give access".localized
         item.alternativeButtonTitle = "Not now".localized
+        item.setupFonts()
+        item.setupColors()
         
-        item.shouldCompactDescriptionText = true
         item.isDismissable = true
         
         // Prompt reminders permission
@@ -183,7 +191,80 @@ final class AlertManager {
         item.alternativeHandler = { item in
             item.manager?.dismissBulletin()
         }
+        item.dismissalHandler = { _ in
+            NotificationManager.send(notification: .UpdateStatusBar)
+        }
         
         return item
     }
+    
+    /// Make passcode page.
+    ///
+    /// - Returns: The bulletin item
+    
+    open class func makePasscodePage() -> PasscodePageBulletinPage {
+        let page = PasscodePageBulletinPage(title: "settings.lock-app.passcode.title".localized)
+        page.isDismissable = false
+        page.descriptionText =  "settings.lock-app.passcode.description".localized
+        page.actionButtonTitle = "Next".localized
+        page.alternativeButtonTitle = "Never mind".localized
+        page.setupFonts()
+        page.setupColors()
+        
+        page.nextItem = makeConfirmationPasscodePage()
+        
+        page.textInputHandler = { (item, text) in
+            if let nextItem = item.nextItem as? PasscodePageBulletinPage {
+                nextItem.confirming = true
+                nextItem.passcode = text
+            }
+            
+            item.manager?.displayNextItem()
+        }
+        
+        return page
+    }
+    
+    /// Make confirmation passcode page.
+    ///
+    /// - Returns: The bulletin item
+    
+    open class func makeConfirmationPasscodePage() -> PasscodePageBulletinPage {
+        let page = PasscodePageBulletinPage(title: "settings.lock-app.passcode.confirm-title".localized)
+        page.isDismissable = false
+        page.descriptionText = "settings.lock-app.passcode.confirm-description".localized
+        page.actionButtonTitle = "Done".localized
+        page.alternativeButtonTitle = "Back".localized
+        page.setupFonts()
+        page.setupColors()
+        
+        page.textInputHandler = { (item, text) in
+            if let item = item as? PasscodePageBulletinPage {
+                guard text! == item.passcode! else {
+                    // Confirmation failed
+                    item.passcodeTextField.text = ""
+                    NotificationManager.showBanner(title: "Passcodes do not match", type: .danger)
+                
+                    DispatchQueue.main.async {
+                        item.passcodeTextField.becomeFirstResponder()
+                    }
+                    
+                    return
+                }
+                // Send notification
+                NotificationManager.send(notification: .SettingPasscodeSetup, object: text!)
+                
+                item.manager?.dismissBulletin()
+            }
+        }
+        
+        page.alternativeHandler = {
+            $0.nextItem = makePasscodePage()
+            $0.manager?.displayNextItem()
+        }
+        
+        return page
+        
+    }
+    
 }

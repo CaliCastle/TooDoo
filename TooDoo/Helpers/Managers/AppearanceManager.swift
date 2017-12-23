@@ -90,7 +90,7 @@ final class AppearanceManager {
     // MARK: - Navigation Bar
     
     internal func changeNavigationBarAppearance() {
-        UINavigationBar.appearance().shadowImage = UIImage()
+//        UINavigationBar.appearance().shadowImage = UIImage()
         UIBarButtonItem.appearance().setTitleTextAttributes([.font: AppearanceManager.font(size: 17, weight: .Medium)], for: .normal)
         
         // Set color contrast

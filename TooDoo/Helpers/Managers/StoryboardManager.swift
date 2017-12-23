@@ -24,6 +24,7 @@ final class StoryboardManager {
         case Setup = "Setup"
         case Menu = "Menu"
         case Settings = "Settings"
+        case Lock = "Lock"
     }
     
     /// Get storyboard file name in string

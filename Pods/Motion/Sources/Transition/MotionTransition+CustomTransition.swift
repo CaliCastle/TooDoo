@@ -26,7 +26,37 @@
  * THE SOFTWARE.
  */
 
-internal protocol MotionHasInsertOrder: class {
-    /// A boolean indicating whether to insert the toView first or not.
-    var insertToViewFirst: Bool { get set }
+import UIKit
+
+extension MotionTransition {
+    /**
+     A helper transition function.
+     - Parameter from: A UIViewController.
+     - Parameter to: A UIViewController.
+     - Parameter in view: A UIView.
+     - Parameter completion: An optional completion handler.
+     */
+    public func transition(from: UIViewController, to: UIViewController, in view: UIView, completion: ((Bool) -> Void)? = nil) {
+        guard !isTransitioning else {
+            return
+        }
+        
+        state = .notified
+        isPresenting = true
+        transitionContainer = view
+        fromViewController = from
+        toViewController = to
+        
+        completionCallback = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            completion?($0)
+            
+            self.state = .possible
+        }
+        
+        start()
+    }
 }

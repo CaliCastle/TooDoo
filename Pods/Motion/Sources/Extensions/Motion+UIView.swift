@@ -43,8 +43,8 @@ fileprivate struct AssociatedInstance {
     /// An optional reference to the motion animations.
     fileprivate var animations: [MotionAnimation]?
     
-    /// An optional reference to the motion transition animations.
-    fileprivate var transitions: [MotionTransition]?
+    /// An optional reference to the motion animation modifiers.
+    fileprivate var modifiers: [MotionModifier]?
     
     /// An alpha value.
     fileprivate var alpha: CGFloat?
@@ -55,7 +55,7 @@ fileprivate extension UIView {
     fileprivate var associatedInstance: AssociatedInstance {
         get {
             return AssociatedObject.get(base: self, key: &AssociatedInstanceKey) {
-                return AssociatedInstance(isEnabled: true, isEnabledForSubviews: true, identifier: nil, animations: nil, transitions: nil, alpha: 1)
+                return AssociatedInstance(isEnabled: true, isEnabledForSubviews: true, identifier: nil, animations: nil, modifiers: nil, alpha: 1)
             }
         }
         set(value) {
@@ -136,30 +136,30 @@ public extension UIView {
     }
     
     /**
-     A function that accepts a list of MotionTransition values.
-     - Parameter transitions: A list of MotionTransition values.
+     A function that accepts a list of MotionTargetState values.
+     - Parameter transitions: A list of MotionTargetState values.
      */
-    func transition(_ transitions: MotionTransition...) {
-        transition(transitions)
+    func transition(_ modifiers: MotionModifier...) {
+        transition(modifiers)
     }
     
     /**
-     A function that accepts an Array of MotionTransition values.
-     - Parameter transitions: An Array of MotionTransition values.
+     A function that accepts an Array of MotionTargetState values.
+     - Parameter transitions: An Array of MotionTargetState values.
      */
-    func transition(_ transitions: [MotionTransition]) {
-        motionTransitions = transitions
+    func transition(_ modifiers: [MotionModifier]) {
+        motionModifiers = modifiers
     }
 }
 
 internal extension UIView {
     /// The animations to run while in transition.
-    var motionTransitions: [MotionTransition]? {
+    var motionModifiers: [MotionModifier]? {
         get {
-            return associatedInstance.transitions
+            return associatedInstance.modifiers
         }
         set(value) {
-            associatedInstance.transitions = value
+            associatedInstance.modifiers = value
         }
     }
     
@@ -220,6 +220,7 @@ internal class SnapshotWrapperView: UIView {
     init(contentView: UIView) {
         self.contentView = contentView
         super.init(frame: contentView.frame)
+        contentView.frame = bounds
         addSubview(contentView)
     }
     
@@ -229,8 +230,7 @@ internal class SnapshotWrapperView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.bounds.size = bounds.size
-        contentView.center = bounds.center
+        contentView.frame = bounds
     }
 }
 
@@ -243,13 +243,17 @@ internal extension UIView {
         
         if #available(iOS 9.0, *), isHidden && (superview is UICollectionView || superview is UIStackView || self is UITableViewCell) {
             return []
+            
         } else if isHidden && (superview is UICollectionView || self is UITableViewCell) {
             return []
+        
         } else if isMotionEnabledForSubviews {
-            return [self] + subviews.flatMap { $0.flattenedViewHierarchy }
-        } else {
-            return [self]
+            return [self] + subviews.flatMap {
+                $0.flattenedViewHierarchy
+            }
         }
+        
+        return [self]
     }
     
     /**
@@ -260,23 +264,35 @@ internal extension UIView {
      - Parameter transform: An optional CATransform3D.
      - Returns: A TimeInterval.
      */
-    func optimizedDuration(fromPosition: CGPoint, toPosition: CGPoint?, size: CGSize?, transform: CATransform3D?) -> TimeInterval {
-        let toPos = toPosition ?? fromPosition
+    func optimizedDuration(position: CGPoint?, size: CGSize?, transform: CATransform3D?) -> TimeInterval {
+        let fromPos = (layer.presentation() ?? layer).position
+        let toPos = position ?? fromPos
         let fromSize = (layer.presentation() ?? layer).bounds.size
         let toSize = size ?? fromSize
         let fromTransform = (layer.presentation() ?? layer).transform
         let toTransform = transform ?? fromTransform
         
-        let realFromPos = CGPoint.zero.transform(fromTransform) + fromPosition
+        let realFromPos = CGPoint.zero.transform(fromTransform) + fromPos
         let realToPos = CGPoint.zero.transform(toTransform) + toPos
         
         let realFromSize = fromSize.transform(fromTransform)
         let realToSize = toSize.transform(toTransform)
         
-        let movePoints = realFromPos.distance(realToPos) + realFromSize.bottomRight.distance(realToSize.bottomRight)
+        let movePoints = (realFromPos.distance(realToPos) + realFromSize.bottomRight.distance(realToSize.bottomRight))
         
-        // Duration is 0.2 @ 0 to 0.375 @ 500
+        // duration is 0.2 @ 0 to 0.375 @ 500
         return 0.208 + Double(movePoints.clamp(0, 500)) / 3000
+    }
+    
+    /**
+     Calculates the optimized duration for a view.
+     - Parameter targetState: A MotionTargetState.
+     - Returns: A TimeInterval.
+     */
+    func optimizedDuration(targetState: MotionTargetState) -> TimeInterval {
+        return optimizedDuration(position: targetState.position,
+                                     size: targetState.size,
+                                transform: targetState.transform)
     }
     
     /**
@@ -285,7 +301,13 @@ internal extension UIView {
      */
     func slowSnapshotView() -> UIView {
         UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
-        layer.render(in: UIGraphicsGetCurrentContext()!)
+        
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return UIView()
+        }
+        
+        layer.render(in: currentContext)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

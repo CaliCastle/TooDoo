@@ -29,8 +29,8 @@
 import UIKit
 
 public protocol MotionAnimator: class {
-    /// A reference to a MotionContext.
-    weak var context: MotionContext! { get set }
+    /// A reference to Motion.
+    weak var motion: MotionTransition! { get set }
     
     /// Cleans the contexts.
     func clean()
@@ -53,23 +53,23 @@ public protocol MotionAnimator: class {
     
     /**
      Moves the view's animation to the given elapsed time.
-     - Parameter to elapsedTime: A TimeInterval.
+     - Parameter to progress: A TimeInterval.
      */
-    func seek(to elapsedTime: TimeInterval)
+    func seek(to progress: TimeInterval)
     
     /**
      Resumes the animation with a given elapsed time and
      optional reversed boolean.
-     - Parameter at elapsedTime: A TimeInterval.
+     - Parameter at progress: A TimeInterval.
      - Parameter isReversed: A boolean to reverse the animation
      or not.
      */
-    func resume(at elapsedTime: TimeInterval, isReversed: Bool) -> TimeInterval
+    func resume(at progress: TimeInterval, isReversed: Bool) -> TimeInterval
     
     /**
      Applies the given state to the given view.
-     - Parameter state: A MotionTransitionState.
+     - Parameter state: A MotionModifier.
      - Parameter to view: A UIView.
      */
-    func apply(state: MotionTransitionState, to view: UIView)
+    func apply(state: MotionTargetState, to view: UIView)
 }

@@ -10,10 +10,13 @@
 "Get started" = "开始使用 TooDoo";
 "Edit" = "编辑";
 "Cancel" = "取消";
+"Back" = "返回";
+"Next" = "下一项";
 "Done" = "完成";
 "OK" = "好吧";
 "Delete" = "删除";
 "Nope" = "算了";
+"Never mind" = "不了";
 "Model.Category" = "分类";
 "Give access" = "去设置";
 "Not now" = "残忍拒绝";
@@ -286,6 +289,11 @@
 "settings.lock-app.2" = "更改密码";
 "settings.lock-app.3" = "关闭应用立即上锁";
 "settings.lock-app.4" = "锁定延迟";
+
+"settings.lock-app.passcode.title" = "输入密码";
+"settings.lock-app.passcode.description" = "解锁应用将需要使用此密码";
+"settings.lock-app.passcode.confirm-title" = "确认密码";
+"settings.lock-app.passcode.confirm-description" = "确认密码后请牢记此密码";
 
 /*
  Category icons categories

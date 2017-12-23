@@ -28,7 +28,7 @@
 
 import UIKit
 
-public enum MotionTransitionType {
+public enum MotionTransitionAnimationType {
     public enum Direction {
         case left
         case right
@@ -50,19 +50,19 @@ public enum MotionTransitionType {
     case zoom
     case zoomOut
 
-    indirect case selectBy(presenting: MotionTransitionType, dismissing: MotionTransitionType)
+    indirect case selectBy(presenting: MotionTransitionAnimationType, dismissing: MotionTransitionAnimationType)
 
     /**
-     Sets the presenting and dismissing transitions.
-     - Parameter presenting: A MotionTransitionType.
-     - Returns: A MotionTransitionType.
+     Sets the presenting and dismissing modifiers.
+     - Parameter presenting: A MotionTransitionAnimationType.
+     - Returns: A MotionTransitionAnimationType.
     */
-    public static func autoReverse(presenting: MotionTransitionType) -> MotionTransitionType {
+    public static func autoReverse(presenting: MotionTransitionAnimationType) -> MotionTransitionAnimationType {
         return .selectBy(presenting: presenting, dismissing: presenting.reversed())
     }
 
     /// Returns a reversal transition.
-    func reversed() -> MotionTransitionType {
+    func reversed() -> MotionTransitionAnimationType {
         switch self {
         case .push(direction: .up):
             return .pull(direction: .down)
@@ -172,36 +172,22 @@ public enum MotionTransitionType {
     }
 }
 
-class TransitionPreprocessor: MotionPreprocessor {
-    /// A reference to a MotionContext.
-    weak var context: MotionContext!
-
-    /// A reference to a Motion.
-    weak var motion: Motion?
-
-    /**
-     An initializer that accepts a given Motion instance.
-     - Parameter motion: A Motion.
-     */
-    init(motion: Motion) {
-        self.motion = motion
-    }
-
+class TransitionPreprocessor: MotionCorePreprocessor {
     /**
      Processes the transitionary views.
      - Parameter fromViews: An Array of UIViews.
      - Parameter toViews: An Array of UIViews.
      */
-    func process(fromViews: [UIView], toViews: [UIView]) {
+    override func process(fromViews: [UIView], toViews: [UIView]) {
         guard let m = motion else {
+            return
+        }
+        
+        guard let tv = m.toView else {
             return
         }
 
         guard let fv = m.fromView else {
-            return
-        }
-
-        guard let tv = m.toView else {
             return
         }
 
@@ -218,7 +204,7 @@ class TransitionPreprocessor: MotionPreprocessor {
         if case .auto = defaultAnimation {
             if isNavigationController, let navAnim = toViewController?.navigationController?.motionNavigationTransitionType {
                 defaultAnimation = navAnim
-
+                
             } else if isTabBarController, let tabAnim = toViewController?.tabBarController?.motionTabBarTransitionType {
                 defaultAnimation = tabAnim
 
@@ -232,14 +218,16 @@ class TransitionPreprocessor: MotionPreprocessor {
         }
 
         if case .auto = defaultAnimation {
-            if animators.contains(where: { $0.canAnimate(view: tv, isAppearing: true) || $0.canAnimate(view: fv, isAppearing: false) }) {
+            if animators.contains(where: {
+                $0.canAnimate(view: tv, isAppearing: true) || $0.canAnimate(view: fv, isAppearing: false)
+            }) {
                 defaultAnimation = .none
 
             } else if isNavigationController {
-                defaultAnimation = isPresenting ? .push(direction:.left) : .pull(direction:.right)
+                defaultAnimation = isPresenting ? .push(direction: .left) : .pull(direction: .right)
 
             } else if isTabBarController {
-                defaultAnimation = isPresenting ? .slide(direction:.left) : .slide(direction:.right)
+                defaultAnimation = isPresenting ? .slide(direction: .left) : .slide(direction: .right)
 
             } else {
                 defaultAnimation = .fade
@@ -253,17 +241,19 @@ class TransitionPreprocessor: MotionPreprocessor {
         context[fv] = [.timingFunction(.standard), .duration(0.35)]
         context[tv] = [.timingFunction(.standard), .duration(0.35)]
 
-        let shadowState: [MotionTransition] = [.shadow(opacity: 0.5),
-                                               .shadow(color: .black),
-                                               .shadow(radius: 5),
-                                               .shadow(offset: .zero),
-                                               .masksToBounds(false)]
+        let shadowState: [MotionModifier] = [.shadow(opacity: 0.5),
+                                             .shadow(color: .black),
+                                             .shadow(radius: 5),
+                                             .shadow(offset: .zero),
+                                             .masksToBounds(false)]
 
         switch defaultAnimation {
         case .push(let direction):
+            context.insertToViewFirst = false
+            
             context[tv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: true)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState),
+                                             .beginWith(modifiers: shadowState),
                                              .timingFunction(.deceleration)])
 
             context[fv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: false) / 3),
@@ -271,11 +261,11 @@ class TransitionPreprocessor: MotionPreprocessor {
                                              .timingFunction(.deceleration)])
 
         case .pull(let direction):
-            m.insertToViewFirst = true
+            context.insertToViewFirst = true
 
             context[fv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: false)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState)])
+                                             .beginWith(modifiers: shadowState)])
 
             context[tv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: true) / 3),
                                              .overlay(color: .black, opacity: 0.1)])
@@ -291,27 +281,31 @@ class TransitionPreprocessor: MotionPreprocessor {
             context[tv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: true)), .scale(0.8)])
 
         case .cover(let direction):
+            context.insertToViewFirst = false
+            
             context[tv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: true)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState),
+                                             .beginWith(modifiers: shadowState),
                                              .timingFunction(.deceleration)])
 
             context[fv]!.append(contentsOf: [.overlay(color: .black, opacity: 0.1),
                                              .timingFunction(.deceleration)])
 
         case .uncover(let direction):
-            m.insertToViewFirst = true
+            context.insertToViewFirst = true
 
             context[fv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: false)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState)])
+                                             .beginWith(modifiers: shadowState)])
 
             context[tv]!.append(contentsOf: [.overlay(color: .black, opacity: 0.1)])
 
         case .pageIn(let direction):
+            context.insertToViewFirst = false
+            
             context[tv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: true)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState),
+                                             .beginWith(modifiers: shadowState),
                                              .timingFunction(.deceleration)])
 
             context[fv]!.append(contentsOf: [.scale(0.7),
@@ -319,11 +313,11 @@ class TransitionPreprocessor: MotionPreprocessor {
                                              .timingFunction(.deceleration)])
 
         case .pageOut(let direction):
-            m.insertToViewFirst = true
+            context.insertToViewFirst = true
 
             context[fv]!.append(contentsOf: [.translate(shift(direction: direction, isAppearing: false)),
                                              .shadow(opacity: 0),
-                                             .beginWith(transitions: shadowState)])
+                                             .beginWith(modifiers: shadowState)])
 
             context[tv]!.append(contentsOf: [.scale(0.7),
                                              .overlay(color: .black, opacity: 0.1)])
@@ -342,15 +336,18 @@ class TransitionPreprocessor: MotionPreprocessor {
                 }
             #endif
 
-            context[tv]!.append(.preferredDurationMatchesLongest)
-            context[fv]!.append(.preferredDurationMatchesLongest)
+            context[tv]!.append(.durationMatchLongest)
+            context[fv]!.append(.durationMatchLongest)
 
         case .zoom:
-            m.insertToViewFirst = true
+            context.insertToViewFirst = true
+            
             context[fv]!.append(contentsOf: [.scale(1.3), .fadeOut])
             context[tv]!.append(contentsOf: [.scale(0.7)])
 
         case .zoomOut:
+            context.insertToViewFirst = false
+            
             context[tv]!.append(contentsOf: [.scale(1.3), .fadeOut])
             context[fv]!.append(contentsOf: [.scale(0.7)])
 
@@ -361,7 +358,7 @@ class TransitionPreprocessor: MotionPreprocessor {
 
     /**
      Shifts the transition by a given size.
-     - Parameter direction: A MotionTransitionType.Direction.
+     - Parameter direction: A MotionTransitionAnimationType.Direction.
      - Parameter isAppearing: A boolean indicating whether it is appearing
      or not.
      - Parameter size: An optional CGSize.
@@ -369,7 +366,7 @@ class TransitionPreprocessor: MotionPreprocessor {
      and `y` point for `x`.
      - Returns: A CGPoint.
      */
-    func shift(direction: MotionTransitionType.Direction, isAppearing: Bool, size: CGSize? = nil, transpose: Bool = false) -> CGPoint {
+    func shift(direction: MotionTransitionAnimationType.Direction, isAppearing: Bool, size: CGSize? = nil, transpose: Bool = false) -> CGPoint {
         let size = size ?? context.container.bounds.size
         let point: CGPoint
 

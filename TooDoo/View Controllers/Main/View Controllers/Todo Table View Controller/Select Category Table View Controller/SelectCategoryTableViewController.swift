@@ -42,33 +42,6 @@ final class SelectCategoryTableViewController: UITableViewController {
     private func fetchCategories() {
         categories = Category.findAll(in: managedObjectContext, with: [Category.sortByOrder(), Category.sortByCreatedAt()])
     }
-    
-    /// Adjust scroll behavior for dismissal.
-    
-    override open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.isEqual(tableView) else { return }
-        
-        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            if scrollView.contentOffset.y > 0 {
-                // Normal behavior if the `scrollView` isn't scrolled to the top
-                delegate.isDismissEnabled = false
-            } else {
-                if scrollView.isDecelerating {
-                    // If the `scrollView` is scrolled to the top but is decelerating
-                    // that means a swipe has been performed. The view and
-                    // scrollview's subviews are both translated in response to this.
-                    view.transform = .init(translationX: 0, y: -scrollView.contentOffset.y)
-                    scrollView.subviews.forEach({
-                        $0.transform = .init(translationX: 0, y: scrollView.contentOffset.y)
-                    })
-                } else {
-                    // If the user has panned to the top, the scrollview doesnʼt bounce and
-                    // the dismiss gesture is enabled.
-                    delegate.isDismissEnabled = true
-                }
-            }
-        }
-    }
 
     // MARK: - Table view data source
 

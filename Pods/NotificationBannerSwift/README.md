@@ -39,6 +39,8 @@ NotificationBanner is an extremely customizable and lightweight library that mak
 NotificationBanner is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
+#### Swift 4
+
 ```ruby
 pod 'NotificationBannerSwift'
 ```
@@ -49,6 +51,7 @@ Then add `import NotificationBannerSwift` at the top of each file you use Notifi
 
 To use NotificationBanner via Carthage simply add this line to your `Cartfile`:
 
+#### Swift 4
 ```swift
 github "Daltron/NotificationBanner" "master"
 ```
@@ -94,7 +97,7 @@ banner.dismiss()
 To show a banner infinitely until it is manually dismissed, simply:
 
 ```swift
-banner.autoDimiss = false
+banner.autoDismiss = false
 ```
 
 NotificationBanner has five prebuilt styles that you can choose from:
@@ -147,7 +150,7 @@ By default, the `.info` style will be applied to the banner if no style is provi
 
 ### Banners with Side Views
 
-A notification banner can have a left acessory view, a right acessory view, or both:
+A notification banner can have a left accessory view, a right accessory view, or both:
 
 ```swift
 // Success Style Notification with Left View

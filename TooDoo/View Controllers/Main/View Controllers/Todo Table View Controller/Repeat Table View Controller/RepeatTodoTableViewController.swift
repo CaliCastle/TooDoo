@@ -200,14 +200,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
         endDatePicker.setValue(color, forKey: "textColor")
         repeatNextDateLabel.textColor = color.withAlphaComponent(0.6)
     }
-
-    /// Adjust scroll behavior for dismissal.
-    
-    override open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let delegate = navigationController?.transitioningDelegate as? DeckTransitioningDelegate {
-            delegate.isDismissEnabled = false
-        }
-    }
     
     /// Update next date label.
     

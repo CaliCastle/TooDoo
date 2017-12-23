@@ -4,17 +4,17 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - DateTimePicker (1.2)
-  - DeckTransition (1.4.0)
+  - DeckTransition (2.0.0)
   - Gifu (2.0.1)
   - Haptica (2.0.0)
   - Hokusai (0.4.0)
   - LTMorphingLabel (0.5.5)
   - M13Checkbox (3.2.1)
-  - MarqueeLabel/Swift (3.1.3)
-  - Motion (1.2.5):
-    - Motion/Core (= 1.2.5)
-  - Motion/Core (1.2.5)
-  - NotificationBannerSwift (1.5.1):
+  - MarqueeLabel/Swift (3.1.4)
+  - Motion (1.3.0):
+    - Motion/Core (= 1.3.0)
+  - Motion/Core (1.3.0)
+  - NotificationBannerSwift (1.5.3):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - Peep (2.0.0)
@@ -27,7 +27,7 @@ PODS:
   - ViewAnimator (1.0.2)
 
 DEPENDENCIES:
-  - BulletinBoard (~> 1.3)
+  - BulletinBoard (from `https://github.com/CaliCastle/BulletinBoard.git`)
   - ChameleonFramework/Swift
   - DateTimePicker
   - DeckTransition
@@ -47,27 +47,32 @@ DEPENDENCIES:
   - ViewAnimator
 
 EXTERNAL SOURCES:
+  BulletinBoard:
+    :git: https://github.com/CaliCastle/BulletinBoard.git
   Stellar:
     :git: https://github.com/AugustRush/Stellar.git
 
 CHECKOUT OPTIONS:
+  BulletinBoard:
+    :commit: c55de894853bc1fb4d2b9bb02be7594ff64e864a
+    :git: https://github.com/CaliCastle/BulletinBoard.git
   Stellar:
     :commit: 8b76462f614f8cada1f59e1c17bf85a7045b2009
     :git: https://github.com/AugustRush/Stellar.git
 
 SPEC CHECKSUMS:
-  BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
+  BulletinBoard: 3821a6d58d01be12d4ca2b9e5517d52848574b3c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   DateTimePicker: d3833535f731663cab99705326765a5ef18f66cc
-  DeckTransition: d678005a9b35c2745fe8b683c39c41f840ad69d7
+  DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
   Gifu: 90bd26ea4d65f8322c4cca8cbb0ca1418f5457ad
   Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
   Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
   LTMorphingLabel: 86464e41c3394dbf1ad098442ed4dcf8891ba975
   M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
-  MarqueeLabel: baa5753dcbd36dca080e1f5c589a665aa5c906f1
-  Motion: 88a8bee21926af792333f4b9e7170f710e9e48f3
-  NotificationBannerSwift: 666e6c392238561c17a52db4c50e6f00d9942e0d
+  MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
+  Motion: 1dcb3db74e157a4ba79ad99b5d437fe0222f1ddc
+  NotificationBannerSwift: 0a6f482ddbafb9555668e592245af0da7871178e
   Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
   Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
@@ -77,6 +82,6 @@ SPEC CHECKSUMS:
   Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
   ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
 
-PODFILE CHECKSUM: 26004a6f94a6d572b51dfde3b2f160193b4b26ce
+PODFILE CHECKSUM: 9ef25b7822f9a92eee4119cf41eb51e545f123dd
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0.rc.1

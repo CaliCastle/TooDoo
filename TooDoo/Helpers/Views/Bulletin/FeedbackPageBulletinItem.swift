@@ -41,4 +41,27 @@ class FeedbackPageBulletinItem: PageBulletinItem {
         
     }
     
+    /// Setup colors.
+    
+    open func setupColors() {
+        let darkTheme = AppearanceManager.default.theme == .Dark
+        
+        appearance.titleTextColor = darkTheme ? .flatGray() : .flatGrayColorDark()
+        appearance.descriptionTextColor = darkTheme ? .white : .flatBlackColorDark()
+        appearance.actionButtonColor = darkTheme ? .flatWhite() : .flatBlueColorDark()
+        appearance.actionButtonTitleColor = darkTheme ? .flatBlack() : .white
+        appearance.alternativeButtonColor = darkTheme ? .flatGray() : .flatBlueColorDark()
+        appearance.actionButtonCornerRadius = 18
+    }
+    
+    /// Setup fonts.
+    
+    open func setupFonts() {
+        appearance.titleFontDescriptor = AppearanceManager.font(size: 26, weight: .DemiBold).fontDescriptor
+        appearance.descriptionFontDescriptor = AppearanceManager.font(size: 15, weight: .Regular).fontDescriptor
+        appearance.buttonFontDescriptor = AppearanceManager.font(size: 18, weight: .DemiBold).fontDescriptor
+        
+        appearance.titleFontSize = 26
+        appearance.descriptionFontSize = 15
+    }
 }

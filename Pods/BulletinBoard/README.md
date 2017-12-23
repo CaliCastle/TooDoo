@@ -19,19 +19,25 @@ Here are some screenshots showing what you can build with BulletinBoard:
 
 ## Requirements
 
+- Xcode 9 and later
 - iOS 9 and later
 - Swift 3.2 and later
 
 ## Demo
 
-A demo application is included in the `BulletinBoard` workspace. It demonstrates how to: 
+A demo project is included in the `BulletinBoard` workspace. It demonstrates how to: 
 
 - integrate the library (setup, data flow)
 - create standard page cards
 - create custom page subclasses to add features
 - create custom cards from scratch
 
-Build and run the `Instanimal` scheme to use it.
+Two demo targets are available:
+
+- `BB-Swift` (demo written in Swift)
+- `BB-ObjC` (demo written in Objective-C)
+
+Build and run the scheme for your favorite language to open the demo app.
 
 Here's a video showing it in action:
 
@@ -56,6 +62,22 @@ To install BulletinBoard using [Carthage](https://github.com/Carthage/Carthage),
 ~~~
 github "alexaubry/BulletinBoard"
 ~~~
+
+## 🦕 Objective-C Integration
+
+BulletinBoard is fully compatible with Objective-C.
+
+To import it in your Objective-C app, just add this line at the top of your files:
+
+~~~objc
+@import BulletinBoard; 
+~~~
+
+### Limitations
+
+`PageBulletinItem`, `BulletinAppearance` and `BulletinInterfaceBuilder` subclasses must be written in Swift, as Swift classes cannot be overriden in Objective-C.
+
+You can use [Mix and Match](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-ID126) to write your subclass in Swift and import it into your Objective-C code, as demonstrated in the example project.
 
 ## Usage
 
@@ -126,37 +148,29 @@ If you omit an optional property, the page won't generate a view for it. For ins
 
 ### Customizing the Appearance
 
-#### Colors
+The `PageBulletinItem` class exposes a `appearance` property that allows you to fully customize the appearance of the generated interface.
 
-You can customize the colors on the page by using the `interfaceFactory` property.
+This property references a `BulletinAppearance`, which is used to generate the standard components (more on this later). You can subclass this class in Swift and further customize the appearance of the app.
 
-This property references a `BulletinInterfaceFactory`, which is responsible for generating the standard components (more on this later).
+You can customize both color and fonts. You need to change these before you present / push the item. Changing them after presentation will have no effect.
 
-There are two properties that you can change:
+There are several properties that you can change:
 
 - `tintColor` - the tint color of the buttons (defaults to iOS blue)
 - `actionButtonTitleColor` - the color of action button titles
 
-You need to set these before you present / push the item. Changing them after presentation will have no effect.
-
 **Example**
 
 ~~~swift
-page.interfaceFactory.tintColor = UIColor(red: 0.294, green: 0.85, blue: 0.392, alpha: 1) // green
-page.interfaceFactory.actionButtonTitleColor = .white
+let greenColor = UIColor(red: 0.294, green: 0.85, blue: 0.392, alpha: 1)
+page.appearance.actionButtonColor = greenColor
+page.appearance.alternativeButtonColor = greenColor
+page.appearance.actionButtonTitleColor = .white
 ~~~
 
 This produces a card with the following appearance:
 
 ![Demo Tint Color](https://raw.githubusercontent.com/alexaubry/BulletinBoard/master/.assets/demo_tint_color.png)
-
-#### Text Size
-
-If the description text is long, you can set the `shouldCompactDescriptionText` property to `true` to reduce the text size.
-
-![Text Size](https://raw.githubusercontent.com/alexaubry/BulletinBoard/master/.assets/demo_long_text.png)
-
-This property is `false` by default.
 
 ### Handling Button Taps
 
@@ -193,6 +207,7 @@ You can use it to interact with the presented bulletin. Call:
 - `manager?.popToRootItem()` to go back to the first item
 - `manager?.push(item:)` with a `BulletinItem` to present a new item
 - `manager?.dismissBulletin(animated:)` to dismiss the bulletin
+- `manager?.displayNextItem()` to display the next item (see below)
 
 You need to call these methods from the main thread. Never force unwrap `manager`, as this property will be unset as soon as the item is removed from the bulletin.
 
@@ -204,7 +219,7 @@ For instance, to present a new card when the user taps the action button:
 page.nextItem = makeLocationPage() // Creates a new PageBulletinItem
 
 page.actionHandler = { (item: PageBulletinItem) in
-    item.displayNextItem()
+    item.manager?.displayNextItem()
 }
 ~~~
 
@@ -283,10 +298,12 @@ In this method, clear all the resources allocated for the item (such as notifica
 
 Even though you are creating a custom card, you may still want to display some standard elements, such as title labels or action buttons.
 
-To generate standard elements, use the methods of `BulletinInterfaceFactory`:
+To generate standard elements `BulletinInterfaceBuilder`. Interface builders with appearance objects (`BulletinAppearance`) to create standard elements.
 
-- `makeTitleLabel(reading:)` to create a title label with the given title
-- `makeDescriptionLabel(isCompact:)` to create a description label
+Use these methods to generate standard components for your custom items:
+
+- `makeTitleLabel(text:)` to create a title label with the given title
+- `makeDescriptionLabel()` to create a description label
 - `makeActionButton(title:)` to create an action button
 - `makeAlternativeButton(title:)` to create an alternative button
 - `makeGroupStack(spacing:)` to create a vertical stack view with the given spacing
@@ -295,7 +312,7 @@ To generate standard elements, use the methods of `BulletinInterfaceFactory`:
 
 BulletinBoard uses stack views and Auto Layout to display and manage cards. It automatically adapts to changes in width and height. iPad and iPhone X are supported out of the box.
 
-If you are interested in learning how it works in more details, look at the implementation of `BulletinManager`, `BulletinViewController` and `BulletinInterfaceFactory`.
+If you are interested in learning how it works in more details, look at the implementation of `BulletinManager`, `BulletinViewController` and `BulletinInterfaceBuilder`.
 
 ## Contributing
 
@@ -309,6 +326,8 @@ Make sure to read these guides before getting started:
 ## Apps Using _BulletinBoard_
 
 Feel free to submit a PR if you’re using this library in your apps.
+
+- [SpdrVision mobile](https://itunes.apple.com/it/app/spdrvision-mobile/id1260166539?mt=8) - A simple way to watch Italian television on macOS and iOS by Gianpiero Spinelli
 
 ## Author
 

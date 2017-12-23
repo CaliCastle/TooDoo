@@ -28,18 +28,15 @@
 
 import UIKit
 
-class SourcePreprocessor: MotionPreprocessor {
-    /// A reference to a MotionContext.
-    weak var context: MotionContext!
-
+class SourcePreprocessor: MotionCorePreprocessor {
     /**
      Processes the transitionary views.
      - Parameter fromViews: An Array of UIViews.
      - Parameter toViews: An Array of UIViews.
      */
-    func process(fromViews: [UIView], toViews: [UIView]) {
+    override func process(fromViews: [UIView], toViews: [UIView]) {
         for fv in fromViews {
-            guard let i = context[fv]?.motionIdentifier, let tv = context.destinationView(for: i) else {
+            guard let motionIdentifier = context[fv]?.motionIdentifier, let tv = context.destinationView(for: motionIdentifier) else {
                 continue
             }
             
@@ -47,14 +44,16 @@ class SourcePreprocessor: MotionPreprocessor {
         }
         
         for tv in toViews {
-            guard let i = context[tv]?.motionIdentifier, let fv = context.sourceView(for: i) else {
+            guard let motionIdentifier = context[tv]?.motionIdentifier, let fv = context.sourceView(for: motionIdentifier) else {
                 continue
             }
             
             prepare(view: tv, for: fv)
         }
     }
+}
 
+fileprivate extension SourcePreprocessor {
     /**
      Prepares a given view for a target view.
      - Parameter view: A UIView.
@@ -62,6 +61,8 @@ class SourcePreprocessor: MotionPreprocessor {
      */
     func prepare(view: UIView, for targetView: UIView) {
         let targetPos = context.container.convert(targetView.layer.position, from: targetView.superview!)
+        let targetTransform = context.container.layer.flatTransformTo(layer: targetView.layer)
+        
         var state = context[view]!
 
         /**
@@ -69,23 +70,19 @@ class SourcePreprocessor: MotionPreprocessor {
          converted from the global container
          */
         state.coordinateSpace = .global
+        
+        state.position = targetPos
+        state.transform = targetTransform
 
         // Remove incompatible options.
-        state.position = targetPos
-        state.transform = nil
         state.size = nil
-        state.cornerRadius = nil
-
+        
         if view.bounds.size != targetView.bounds.size {
             state.size = targetView.bounds.size
         }
 
         if view.layer.cornerRadius != targetView.layer.cornerRadius {
             state.cornerRadius = targetView.layer.cornerRadius
-        }
-        
-        if view.layer.transform != targetView.layer.transform {
-            state.transform = targetView.layer.transform
         }
         
         if view.layer.shadowColor != targetView.layer.shadowColor {
@@ -115,7 +112,7 @@ class SourcePreprocessor: MotionPreprocessor {
         if view.layer.contentsScale != targetView.layer.contentsScale {
             state.contentsScale = targetView.layer.contentsScale
         }
-
+        
         context[view] = state
     }
 }

@@ -65,6 +65,9 @@
 		8D7EAE4C1FB3DDF90040AEAB /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7EAE4B1FB3DDF90040AEAB /* DesignableView.swift */; };
 		8D809BD21FC21AE3008DF629 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD41FC21AE3008DF629 /* InfoPlist.strings */; };
 		8D809BDA1FC2513F008DF629 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D809BD91FC2513F008DF629 /* README.md */; };
+		8D845EED1FEC68AA00DFDF16 /* PasscodePageBulletinPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D845EEC1FEC68AA00DFDF16 /* PasscodePageBulletinPage.swift */; };
+		8D845EEF1FEC70FB00DFDF16 /* +UITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D845EEE1FEC70FB00DFDF16 /* +UITableViewController.swift */; };
+		8D845EF41FECE80D00DFDF16 /* +BulletinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D845EF31FECE80D00DFDF16 /* +BulletinManager.swift */; };
 		8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D88C3151F949A40003C767C /* AppearanceManager.swift */; };
 		8D8C7E741FE12214007F3C7A /* RepeatTodoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8C7E731FE12214007F3C7A /* RepeatTodoTableViewController.swift */; };
 		8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8D8D1EDC1FD7467600208896 /* chord.m4a */; };
@@ -222,6 +225,9 @@
 		8D809BD51FC21AFD008DF629 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8D809BD61FC21B26008DF629 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D809BD91FC2513F008DF629 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		8D845EEC1FEC68AA00DFDF16 /* PasscodePageBulletinPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodePageBulletinPage.swift; sourceTree = "<group>"; };
+		8D845EEE1FEC70FB00DFDF16 /* +UITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITableViewController.swift"; sourceTree = "<group>"; };
+		8D845EF31FECE80D00DFDF16 /* +BulletinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+BulletinManager.swift"; sourceTree = "<group>"; };
 		8D88C3151F949A40003C767C /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		8D8C7E731FE12214007F3C7A /* RepeatTodoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTodoTableViewController.swift; sourceTree = "<group>"; };
 		8D8D1EDC1FD7467600208896 /* chord.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = chord.m4a; sourceTree = "<group>"; };
@@ -429,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				8D2075BD1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift */,
+				8D845EEC1FEC68AA00DFDF16 /* PasscodePageBulletinPage.swift */,
 			);
 			path = Bulletin;
 			sourceTree = "<group>";
@@ -554,6 +561,7 @@
 		8D4784DF1F9077C20067E0FE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8D845EF21FECE7FE00DFDF16 /* Libraries */,
 				8DB277F51FD5D4B000EB774B /* Foundation */,
 				8DB277F41FD5D49A00EB774B /* UI */,
 				8DD3D6D91FB79C7200BE4FEF /* Models */,
@@ -649,6 +657,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		8D845EF21FECE7FE00DFDF16 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8D845EF31FECE80D00DFDF16 /* +BulletinManager.swift */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
 		8D8C7E721FE121F9007F3C7A /* Repeat Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +676,7 @@
 		8D9BCBBE1F92F15D00721980 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8DE7F1EA1FBC44470026E65B /* AlertManager.swift */,
 				8D9BCBBF1F92F19100721980 /* DispatchManager.swift */,
 				8D9BCBC11F92FC9800721980 /* CoreDataManager.swift */,
 				8D6A139E1F93E2FC004238D8 /* UserDefaultManager.swift */,
@@ -668,7 +685,6 @@
 				8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */,
 				8D1F6A811FB64F6F004709E3 /* ApplicationManager.swift */,
 				8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */,
-				8DE7F1EA1FBC44470026E65B /* AlertManager.swift */,
 				8DD7CAEC1FCEB4BB00EFA73A /* LocaleManager.swift */,
 				8D2075BF1FCFF2F100FBE622 /* PermissionManager.swift */,
 			);
@@ -746,6 +762,7 @@
 			children = (
 				8DAC8F831FB0414B006207F6 /* +UIView.swift */,
 				8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */,
+				8D845EEE1FEC70FB00DFDF16 /* +UITableViewController.swift */,
 				8D1F6A881FB67CA7004709E3 /* +UIViewController.swift */,
 				8DBA55911FC430F80012B941 /* +UITextView.swift */,
 				8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */,
@@ -1358,6 +1375,7 @@
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */,
 				8D030E0B1FDBCCF500FA5ED5 /* +UIImage.swift in Sources */,
+				8D845EED1FEC68AA00DFDF16 /* PasscodePageBulletinPage.swift in Sources */,
 				8D3DFE191FDC9A160021D9AC /* TwicketSegmentedControl.swift in Sources */,
 				8D3DFE101FDC7AA20021D9AC /* StackingCardsCollectionViewLayout.swift in Sources */,
 				8DCFF0F71FD8759E009532A2 /* AppIconSettingsTableViewController.swift in Sources */,
@@ -1391,8 +1409,10 @@
 				8DD3D6DB1FB79C8B00BE4FEF /* +Category.swift in Sources */,
 				8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */,
 				8DF35D631FBE54FA001877F4 /* +ToDo.swift in Sources */,
+				8D845EF41FECE80D00DFDF16 /* +BulletinManager.swift in Sources */,
 				8D1F6A821FB64F6F004709E3 /* ApplicationManager.swift in Sources */,
 				8DB49E631FBA7708003240E1 /* CategoryPreviewTableHeaderView.swift in Sources */,
+				8D845EEF1FEC70FB00DFDF16 /* +UITableViewController.swift in Sources */,
 				8DCC7EFE1FCBBB1A000E99BA /* SettingTableViewController.swift in Sources */,
 				8D2075BA1FCF9E6600FBE622 /* +DateFormatter.swift in Sources */,
 				8D030E0E1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift in Sources */,
