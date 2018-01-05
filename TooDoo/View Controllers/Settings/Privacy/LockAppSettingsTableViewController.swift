@@ -39,6 +39,10 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         return UserDefaultManager.bool(forKey: .LockEnabled)
     }()
     
+    /// Lock timeout.
+    
+    private var timeout: Settings.TimeoutLock = .oneMinute
+    
     /// See if biometric is supported.
     
     private var hasBiometric: Bool = false {
@@ -69,6 +73,15 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         checkBiometrics()
         
         listen(for: .SettingPasscodeSetup, then: #selector(passcodeSetup(_:)))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Setup timeout text
+        if let type = UserDefaultManager.get(forKey: .LockTimeOut, Settings.TimeoutLock.all()[1].rawValue) as? String, let timeout = Settings.TimeoutLock(rawValue: type) {
+            timeOutTimeLabel.text = "settings.lock-app.timeout.\(timeout.rawValue)".localized
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {

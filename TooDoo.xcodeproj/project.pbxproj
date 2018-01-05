@@ -29,6 +29,8 @@
 		8D2075C01FCFF2F100FBE622 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075BF1FCFF2F100FBE622 /* PermissionManager.swift */; };
 		8D2075C31FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */; };
 		8D26DA8D1FCD40A200F61FE7 /* +Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D26DA8C1FCD40A200F61FE7 /* +Bundle.swift */; };
+		8D38562C20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38562B20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift */; };
+		8D38562E200025E2001F4C3B /* SettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38562D200025E2001F4C3B /* SettingModels.swift */; };
 		8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3924FA1FC8F29D0085186A /* RecolorableView.swift */; };
 		8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Category Icons.plist */; };
 		8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */; };
@@ -178,6 +180,8 @@
 		8D2075BF1FCFF2F100FBE622 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8D26DA8C1FCD40A200F61FE7 /* +Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Bundle.swift"; sourceTree = "<group>"; };
+		8D38562B20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutLockSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8D38562D200025E2001F4C3B /* SettingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModels.swift; sourceTree = "<group>"; };
 		8D3924FA1FC8F29D0085186A /* RecolorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableView.swift; sourceTree = "<group>"; };
 		8D3AA14A1FC76DE300862C4C /* Category Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Category Icons.plist"; sourceTree = "<group>"; };
 		8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
@@ -352,6 +356,7 @@
 		8D030E041FDB54AF00FA5ED5 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
+				8D38562A20002115001F4C3B /* Timeout */,
 				8DBE2D551FE8FC520011D326 /* LockAppSettingsTableViewController.swift */,
 			);
 			path = Privacy;
@@ -446,6 +451,14 @@
 				8D2075C21FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift */,
 			);
 			path = Calendars;
+			sourceTree = "<group>";
+		};
+		8D38562A20002115001F4C3B /* Timeout */ = {
+			isa = PBXGroup;
+			children = (
+				8D38562B20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift */,
+			);
+			path = Timeout;
 			sourceTree = "<group>";
 		};
 		8D3AA14C1FC7994300862C4C /* Collection View */ = {
@@ -968,6 +981,7 @@
 			children = (
 				8DD3D6D51FB797EE00BE4FEF /* CategoryModels.swift */,
 				8DD7E93A1FE1E5CD005A865F /* ToDoModels.swift */,
+				8D38562D200025E2001F4C3B /* SettingModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1364,6 +1378,7 @@
 				8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */,
 				8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */,
 				8DBE2D561FE8FC520011D326 /* LockAppSettingsTableViewController.swift in Sources */,
+				8D38562E200025E2001F4C3B /* SettingModels.swift in Sources */,
 				8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */,
 				8D1F6A891FB67CA7004709E3 /* +UIViewController.swift in Sources */,
 				8DD7E93B1FE1E5CD005A865F /* ToDoModels.swift in Sources */,
@@ -1425,6 +1440,7 @@
 				8DBA55921FC430F80012B941 /* +UITextView.swift in Sources */,
 				8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */,
 				8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */,
+				8D38562C20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

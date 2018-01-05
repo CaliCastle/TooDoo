@@ -295,6 +295,14 @@
 "settings.lock-app.passcode.confirm-title" = "Re-enter Passcode";
 "settings.lock-app.passcode.confirm-description" = "Enter the passcode one more time for confirmation and memorize it.";
 
+"settings.lock-app.timeout.thirty-secs" = "30 seconds";
+"settings.lock-app.timeout.one-minute" = "1 minute";
+"settings.lock-app.timeout.two-minutes" = "2 minutes";
+"settings.lock-app.timeout.three-minutes" = "3 minutes";
+"settings.lock-app.timeout.five-minutes" = "5 minutes";
+"settings.lock-app.timeout.ten-minutes" = "10 minutes";
+"settings.lock-app.timeout.thirty-minutes" = "30 minutes";
+
 /*
  Category icons categories
  */
