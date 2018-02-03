@@ -27,6 +27,10 @@ final class DispatchManager {
         return configureBlurEffectView()
     }()
     
+    /// Is the app locked.
+    
+    open private(set) var isAppLocked: Bool = false
+    
     /// Configure blur effect view.
     
     fileprivate func configureBlurEffectView() -> UIVisualEffectView {
@@ -53,7 +57,13 @@ final class DispatchManager {
     open func didEnterBackground(_ application: UIApplication) {
         // Check if user enabled lock for privacy protection
         if UserDefaultManager.bool(forKey: .LockEnabled) {
-            
+            if UserDefaultManager.bool(forKey: .LockOnExit) {
+                // Lock on exit
+                isAppLocked = true
+            } else {
+                // Lock using timeout
+                
+            }
         }
         // Check if user enabled blur content when left
         if UserDefaultManager.bool(forKey: .BlurContent) {

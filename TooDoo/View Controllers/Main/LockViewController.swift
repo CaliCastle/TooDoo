@@ -101,7 +101,7 @@ final class LockViewController: UIViewController {
         
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            if #available(iOS 11, *) {
+            if #available(iOS 11.0.1, *) {
                 switch context.biometryType {
                 case .faceID:
                     // Supports Face ID

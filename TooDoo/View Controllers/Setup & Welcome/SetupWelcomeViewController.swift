@@ -11,6 +11,7 @@ import Haptica
 import CoreData
 import BulletinBoard
 import ChameleonFramework
+import CropViewController
 
 final class SetupWelcomeViewController: UIViewController {
 
@@ -94,7 +95,6 @@ final class SetupWelcomeViewController: UIViewController {
         imagePickerController.navigationBar.shadowImage = UIImage()
         imagePickerController.modalPresentationStyle = .popover
         imagePickerController.sourceType = .photoLibrary
-        imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
         
         return imagePickerController
@@ -662,15 +662,32 @@ extension SetupWelcomeViewController: UIImagePickerControllerDelegate, UINavigat
     /// User selected a photo.
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         
-        userAvatarType = .Custom
-        userSelectedImage = image
+        let cropViewController = CropViewController(croppingStyle: .circular, image: image)
+        cropViewController.delegate = self
         
-        SoundManager.play(soundEffect: .Click)
-        
-        picker.dismiss(animated: true) {
-            self.animateStep2ViewsOut()
+        picker.present(cropViewController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Crop View Controller Delegate methods.
+
+extension SetupWelcomeViewController: CropViewControllerDelegate {
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: true) {
+            self.userAvatarType = .Custom
+            self.userSelectedImage = image
+            
+            SoundManager.play(soundEffect: .Click)
+            
+            DispatchQueue.main.async {
+                self.imagePickerController.dismiss(animated: true) {
+                    self.animateStep2ViewsOut()
+                }
+            }
         }
     }
+    
 }

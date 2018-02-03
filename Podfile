@@ -12,6 +12,7 @@ target 'TooDoo' do
   pod 'Reveal-SDK', :configurations => ['Debug']
 
   # Pods for TooDoo
+  pod 'Alamofire'
   pod 'M13Checkbox'
   pod 'ChameleonFramework/Swift'
   pod 'Typist'
@@ -21,6 +22,7 @@ target 'TooDoo' do
   pod 'BulletinBoard', :git => 'https://github.com/CaliCastle/BulletinBoard.git'
   pod 'Peep'
   pod 'ViewAnimator'
+  pod 'CropViewController'
   pod 'Hokusai'
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'

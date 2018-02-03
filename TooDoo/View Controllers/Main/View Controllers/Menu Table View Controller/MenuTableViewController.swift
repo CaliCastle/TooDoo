@@ -10,6 +10,7 @@ import UIKit
 import Haptica
 import ViewAnimator
 import BulletinBoard
+import CropViewController
 
 final class MenuTableViewController: UITableViewController, LocalizableInterface {
     
@@ -27,7 +28,7 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
     
     @IBOutlet var iconImageViews: [UIImageView]!
     @IBOutlet var changeThemeButton: UIBarButtonItem!
-    @IBOutlet var locationButton: UIBarButtonItem!
+//    @IBOutlet var locationButton: UIBarButtonItem!
     @IBOutlet var menuLabels: [UILabel]!
     
     @IBOutlet var appVersionLabel: UILabel!
@@ -51,9 +52,7 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
         imagePickerController.navigationController?.visibleViewController?.setStatusBarStyle(preferredStatusBarStyle)
         imagePickerController.navigationBar.setBackgroundImage(currentThemeIsDark() ? #imageLiteral(resourceName: "black-background") : #imageLiteral(resourceName: "white-background"), for: .default)
         imagePickerController.navigationBar.shadowImage = UIImage()
-        imagePickerController.modalPresentationStyle = .popover
         imagePickerController.sourceType = .photoLibrary
-        imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
         
         return imagePickerController
@@ -141,7 +140,7 @@ final class MenuTableViewController: UITableViewController, LocalizableInterface
         navigationController.toolbar.backgroundColor = .clear
         
         changeThemeButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-        locationButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
+//        locationButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
     }
     
     /// Set up change theme button image.
@@ -307,14 +306,28 @@ extension MenuTableViewController: UIImagePickerControllerDelegate, UINavigation
     /// User selected a photo.
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else { return }
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
         
-        NotificationManager.send(notification: .UserAvatarChanged, object: image)
+        let cropViewController = CropViewController(croppingStyle: .circular, image: image)
+        cropViewController.delegate = self
         
-        SoundManager.play(soundEffect: .Click)
-        
-        picker.dismiss(animated: true) {
-            NotificationManager.showBanner(title: "settings.avatar.changed".localized, type: .success)
+        picker.present(cropViewController, animated: true, completion: nil)
+    }
+    
+}
+
+extension MenuTableViewController: CropViewControllerDelegate {
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: true) {
+            NotificationManager.send(notification: .UserAvatarChanged, object: image)
+            SoundManager.play(soundEffect: .Click)
+            
+            DispatchQueue.main.async {
+                self.imagePickerController.dismiss(animated: true) {
+                    NotificationManager.showBanner(title: "settings.avatar.changed".localized, type: .success)
+                }
+            }
         }
     }
     
