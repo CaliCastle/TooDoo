@@ -12,12 +12,20 @@ import ViewAnimator
 
 open class SettingTableViewController: UITableViewController, LocalizableInterface {
     
+    internal func usesLargeTitle() -> Bool {
+        return false
+    }
+    
     // MARK: - View Life Cycle.
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         
         localizeInterface()
+        
+        if #available(iOS 11.0, *) {
+            navigationController?.navigationBar.prefersLargeTitles = usesLargeTitle()
+        }
         
         configureRightNavigationButton()
         setupTableView()

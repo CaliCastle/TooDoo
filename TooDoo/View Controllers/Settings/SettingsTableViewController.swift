@@ -22,6 +22,7 @@ final class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var appIconImageView: UIImageView!
     
     @IBOutlet var appVersionLabel: UILabel!
+    @IBOutlet var designedByLabel: UILabel!
     
     // MARK: - Localizable Outlets.
     
@@ -42,6 +43,10 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     // MARK: - View Life Cycle.
+    
+    override func usesLargeTitle() -> Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +76,7 @@ final class SettingsTableViewController: SettingTableViewController {
         lockAppLabel.text = "settings.titles.lock-app".localized
         
         setVersionText()
+        setDesignedByText()
         configureIconImages()
     }
     
@@ -132,6 +138,18 @@ final class SettingsTableViewController: SettingTableViewController {
     
     fileprivate func setVersionText() {
         appVersionLabel.text = Bundle.main.localizedVersionLabelString
+    }
+    
+    /// Set up designed and developed label.
+    
+    fileprivate func setDesignedByText() {
+        let text = "designed by".localized
+        let separatedText = text.components(separatedBy: "|")
+        
+        let attributedText = NSMutableAttributedString(string: separatedText.first!, attributes: [.font: AppearanceManager.font(size: 11, weight: .DemiBold), .foregroundColor: appVersionLabel.textColor])
+        attributedText.append(.init(string: separatedText.last!, attributes: [.font: AppearanceManager.font(size: 11, weight: .Bold), .foregroundColor: UIColor.white]))
+        
+        designedByLabel.attributedText = attributedText
     }
     
     /// Sounds switch value changed.

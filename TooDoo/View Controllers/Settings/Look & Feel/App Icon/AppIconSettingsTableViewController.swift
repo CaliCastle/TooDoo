@@ -126,6 +126,7 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
     
     fileprivate func configureAppIconsCollectionView() {
         if #available(iOS 10.3, *) {
+            appIconsCollectionView.isScrollEnabled = true
             appIconsCollectionView.layer.mask = gradientMaskForIcons
             appIconsCollectionView.contentOffset = CGPoint(x: -10, y: 0)
             // Add bouncy layout
@@ -191,6 +192,15 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
         }
     }
 
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        switch (indexPath.section, indexPath.row) {
+//        case (0, 1):
+//            return appIconsCollectionView.contentSize.height
+//        default:
+//            return UITableViewAutomaticDimension
+//        }
+//    }
+    
 }
 
 // MARK: - Collection View Delegate and Data Source.
@@ -206,7 +216,7 @@ extension AppIconSettingsTableViewController: UICollectionViewDelegate, UICollec
     /// Item spacing.
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return 2
     }
     
     /// How many items.

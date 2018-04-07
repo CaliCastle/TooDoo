@@ -36,6 +36,7 @@
 "version" = "version";
 "Beta" = "Beta";
 "Build" = "Build";
+"designed by" = "Designed & Developed by |Cali Castle";
 
 /* Authentication */
 "Face ID" = "Face ID";

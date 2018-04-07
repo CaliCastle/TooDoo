@@ -36,6 +36,7 @@
 "version" = "版本号";
 "Beta" = "内测";
 "Build" = "构建版本";
+"designed by" = "设计师 & 开发者： |Cali Castle (郭晓楠)";
 
 /* Authentication */
 "Face ID" = "面容 ID";
