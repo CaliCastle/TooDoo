@@ -2,7 +2,7 @@
     <img src="Images/logo.png" width="890" alt="Haptica" />
 </p>
 
-[![Language](https://img.shields.io/badge/Swift-3.1-orange.svg?style=flat)](https://swift.org)
+[![Language](https://img.shields.io/badge/Swift-4-orange.svg?style=flat)](https://swift.org)
 [![Version](https://img.shields.io/cocoapods/v/Haptica.svg?style=flat)](http://cocoapods.org/pods/Haptica)
 [![License](https://img.shields.io/cocoapods/l/Haptica.svg?style=flat)](http://cocoapods.org/pods/Haptica)
 [![Platform](https://img.shields.io/cocoapods/p/Haptica.svg?style=flat)](http://cocoapods.org/pods/Haptica)
@@ -20,7 +20,7 @@ $ pod try Haptica
 
 - iOS 9.0+
 - Xcode 8.0+
-- Swift 3.0+
+- Swift 4 (Haptica 2.x), Swift 3 (Haptica 1.x)
 
 ### Haptic Feedback Requirements:
 - A device with a supported Taptic Engine (iPhone 7 and iPhone 7 Plus).

@@ -1,10 +1,8 @@
 # ![Logo](https://github.com/kaishin/Gifu/raw/master/header.gif)
 
-[![GitHub release](https://img.shields.io/github/release/kaishin/Gifu.svg)](https://github.com/kaishin/Gifu/releases/latest) ![Bitrise](https://www.bitrise.io/app/a0eae2c9b6aa754c.svg?token=dDlRyPi2aOlZnvbl4kL8Kw&branch=master) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Join the chat at https://gitter.im/kaishin/gifu](https://badges.gitter.im/kaishin/gifu.svg)](https://gitter.im/kaishin/gifu) ![Swift 3.0.x](https://img.shields.io/badge/Swift-3.0.x-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS-lightgrey.svg)
+[![GitHub release](https://img.shields.io/github/release/kaishin/Gifu.svg)](https://github.com/kaishin/Gifu/releases/latest) ![Bitrise](https://www.bitrise.io/app/a0eae2c9b6aa754c.svg?token=dDlRyPi2aOlZnvbl4kL8Kw&branch=master) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS-lightgrey.svg)
 
 Gifu adds protocol-based, performance-aware animated GIF support to UIKit. (It's also a [prefecture in Japan](https://goo.gl/maps/CCeAc)).
-
-⚠ **Swift 2.3** support is on the [swift2.3](https://github.com/kaishin/Gifu/tree/swift2.3) branch which will not be getting any future updates.
 
 ## Install
 
@@ -32,7 +30,7 @@ The `Animator` has a `FrameStore` that only keeps a limited number of frames in-
 The figure below summarizes how this works in practice. Given an image
 containing 10 frames, Gifu will load the current frame (red), buffer the next two frames in this example (orange), and empty up all the other frames to free up memory (gray):
 
-<img src="https://db.tt/ZLfx23hg" width="300" />
+<img src="https://github.com/kaishin/Gifu/raw/master/gifu-figure.gif" width="300" />
 
 ## Usage
 
@@ -119,7 +117,9 @@ The simplest way to get started is initializing a `GIFAnimatable` class in code 
 
 ~~~swift
 let imageView = GIFImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
-imageView.animate(withGIFNamed: "mugen")
+imageView.animate(withGIFNamed: "mugen") {
+  print("It's animating!")
+}
 ~~~
 
 You can also prepare for the animation when the view loads and only start animating after a user interaction.
@@ -129,7 +129,9 @@ You can also prepare for the animation when the view loads and only start animat
 
 override func viewDidLoad() {
   super.viewDidLoad()
-  imageView.prepareForAnimation(withGIFNamed: "mugen")
+  imageView.prepareForAnimation(withGIFNamed: "mugen") {
+    print("Ready to animate!")
+  }
 }
 
 @IBAction func toggleAnimation(_ sender: AnyObject) {
@@ -161,8 +163,8 @@ See the [full API documentation](http://kaishin.github.io/Gifu/).
 ## Compatibility
 
 - iOS 9.0+
-- Swift 3.0
-- Xcode 8.0
+- Swift 4.0
+- Xcode 9.0
 
 ## License
 

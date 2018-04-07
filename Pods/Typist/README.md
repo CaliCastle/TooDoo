@@ -1,6 +1,6 @@
 # Typist
 
-![Swift Version](https://img.shields.io/badge/swift-3.0-orange.svg?style=flat)
+![Swift Version](https://img.shields.io/badge/swift-4.0-orange.svg?style=flat)
 [![Platform](https://img.shields.io/cocoapods/p/Typist.svg?style=flat)](http://cocoapods.org/pods/Typist)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Typist.svg)](https://img.shields.io/cocoapods/v/Typist.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/totocaster/Typist)
@@ -35,6 +35,32 @@ func configureKeyboard() {
 You _must_ call `start()` for callbacks to be triggered. Calling `stop()` on instance will stop callbacks from triggering, but callbacks themselves won't be dismissed, thus you can resume event callbacks by calling `start()` again.
 
 To remove all event callbacks, call `clear()`.
+
+#### Interactivity and `inputAccessoryView`
+
+You can dismiss keyboard interactively when using Typist with `UIScrollView` instances.
+
+```swift
+let keyboard = Typist()
+
+func configureKeyboard() {
+
+    keyboard
+        .toolbar(scrollView: tableView) // Enables interactive dismissal
+        .on(event: .willChangeFrame) { (options) in
+            // You are responsible animating inputAccessoryView
+        }
+        .on(event: .willHide)  { (options) in
+            // Triggered when keyboard is dismissed non-interactively.
+        }
+        .start()
+
+}
+```
+
+`.on(event: .willChangeFrame, do: {...})` will update as frequently as keyboard frame changes due to UIScrollView scrolling. It is good practice to implement `.willHide` portion as well since keyboard might be dismissed non-interactively, for example, using `resignFirstResponder()`.
+
+Example from above is [implemented in demo app](Typist/ViewController.swift).
 
 #### On Singleton Usage
 

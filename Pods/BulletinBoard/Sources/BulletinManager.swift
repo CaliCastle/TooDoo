@@ -215,6 +215,22 @@ extension BulletinManager {
     }
 
     /**
+     * Presents a view controller above the bulletin.
+     *
+     * This method must only be called if a bulletin is currently presented.
+     *
+     * - parameter viewController: The view controller to present. For example, an alert or a Safari View
+     * Controller.
+     * - parameter animated: Whether presentation should be animated.
+     * - parameter completion: An optional block to call after presentation completes.
+     */
+
+    @objc(presentViewControllerAboveBulletin:animated:completion:)
+    public func presentAboveBulletin(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        self.viewController.present(viewController, animated: animated, completion: completion)
+    }
+
+    /**
      * Hides the contents of the stack and displays an activity indicator view.
      *
      * Use this method if you need to perform a long task or fetch some data before changing the item.
@@ -426,7 +442,7 @@ extension BulletinManager {
 
     /// Refreshes the interface for the current item.
     fileprivate func refreshCurrentItemInterface() {
-        
+
         viewController.swipeInteractionController?.cancelIfNeeded()
 
         viewController.isDismissable = false
@@ -517,6 +533,7 @@ extension BulletinManager {
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, newArrangedSubviews.first)
 
             self.viewController.bulletinAppeared()
+
         }
 
         transitionAnimationChain.add(hideSubviewsAnimationPhase)
@@ -524,7 +541,7 @@ extension BulletinManager {
         transitionAnimationChain.add(finalAnimationPhase)
 
         transitionAnimationChain.start()
-        
+
     }
 
     /// Tears down every item on the stack starting from the specified item.

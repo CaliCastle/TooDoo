@@ -104,7 +104,7 @@ open class SideMenuTransition: UIPercentDrivenInteractiveTransition {
         handlePresentMenuPan(edge)
     }
     
-    @objc internal func handlePresentMenuRightScreenEdge(_ edge: UIScreenEdgePanGestureRecognizer) {
+    @objc open func handlePresentMenuRightScreenEdge(_ edge: UIScreenEdgePanGestureRecognizer) {
         presentDirection = .right
         handlePresentMenuPan(edge)
     }

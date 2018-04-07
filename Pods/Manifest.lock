@@ -1,34 +1,31 @@
 PODS:
-  - Alamofire (4.6.0)
+  - Alamofire (4.7.1)
   - BulletinBoard (1.3.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - CropViewController (2.3.5):
-    - TOCropViewController
-  - DateTimePicker (1.2)
+  - CropViewController (2.3.6)
+  - DateTimePicker (1.2.1)
   - DeckTransition (2.0.0)
-  - Gifu (2.0.1)
-  - Haptica (2.0.0)
+  - Gifu (3.0.0)
+  - Haptica (2.0.1)
   - Hokusai (0.4.0)
-  - LTMorphingLabel (0.5.5)
-  - M13Checkbox (3.2.1)
+  - LTMorphingLabel (0.5.6)
+  - M13Checkbox (3.2.2)
   - MarqueeLabel/Swift (3.1.4)
-  - Motion (1.3.0):
-    - Motion/Core (= 1.3.0)
-  - Motion/Core (1.3.0)
-  - NotificationBannerSwift (1.5.3):
+  - Motion (1.3.5):
+    - Motion/Core (= 1.3.5)
+  - Motion/Core (1.3.5)
+  - NotificationBannerSwift (1.6.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
   - Peep (2.0.0)
   - PinterestSegment (1.2.0)
-  - Reveal-SDK (11)
-  - SideMenu (3.1.4)
+  - SideMenu (3.1.5)
   - SnapKit (4.0.0)
-  - Stellar (0.66)
-  - TOCropViewController (2.3.5)
-  - Typist (1.1.0)
-  - ViewAnimator (1.0.2)
+  - Stellar (0.67)
+  - Typist (1.2.1)
+  - ViewAnimator (1.0.5)
 
 DEPENDENCIES:
   - Alamofire
@@ -46,7 +43,6 @@ DEPENDENCIES:
   - NotificationBannerSwift
   - Peep
   - PinterestSegment
-  - Reveal-SDK
   - SideMenu
   - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
@@ -60,37 +56,35 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BulletinBoard:
-    :commit: c55de894853bc1fb4d2b9bb02be7594ff64e864a
+    :commit: cf5edbb8a965b12136247cb04fdf65920476a490
     :git: https://github.com/CaliCastle/BulletinBoard.git
   Stellar:
-    :commit: 8b76462f614f8cada1f59e1c17bf85a7045b2009
+    :commit: abecca78812d3235683fdddf358ba8d5c4421352
     :git: https://github.com/AugustRush/Stellar.git
 
 SPEC CHECKSUMS:
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   BulletinBoard: 3821a6d58d01be12d4ca2b9e5517d52848574b3c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  CropViewController: 73a095de5605b017afdf34c6f2604569e147bcbd
-  DateTimePicker: d3833535f731663cab99705326765a5ef18f66cc
+  CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
+  DateTimePicker: c7b10f7dfe6eb06014c88df964a0a994f246b791
   DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
-  Gifu: 90bd26ea4d65f8322c4cca8cbb0ca1418f5457ad
-  Haptica: ed63c31f32f2aa17ecb479c110dd50904497bf5d
+  Gifu: 6543ca2056a3d697097c09fe543ef49348ccc892
+  Haptica: 8dbc771b1eb764454ce66092c4cfc6b29dcb6cb7
   Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
-  LTMorphingLabel: 86464e41c3394dbf1ad098442ed4dcf8891ba975
-  M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
+  LTMorphingLabel: bdb51d4682e9822da89da6f567bd8aa456fd6650
+  M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
-  Motion: 1dcb3db74e157a4ba79ad99b5d437fe0222f1ddc
-  NotificationBannerSwift: 0a6f482ddbafb9555668e592245af0da7871178e
+  Motion: 9f74d115d7f72bb5380a8e3cde2f8a1fc898ac36
+  NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
   Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
-  Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
-  SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
+  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  Stellar: 0fef0b57654a5128a05664c3c2e42993dc59a88c
-  TOCropViewController: a21b39c910d161600a26b6e3f89a58707afaa4f8
-  Typist: 31a3eb9d6b97ea28e0e247bb8b14ed23fe624170
-  ViewAnimator: d7b18e0be98e05807f61ad886a36363727209377
+  Stellar: df980becd194eeb62d623af097582da0ef2219b9
+  Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
+  ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: b0cb3b484bd6f81a8752c65cbed20a94a1eb22bd
+PODFILE CHECKSUM: 077de2502d0702d290b1de47500fddbf1da253d7
 
-COCOAPODS: 1.4.0.rc.1
+COCOAPODS: 1.4.0

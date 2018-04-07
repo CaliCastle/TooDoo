@@ -9,7 +9,7 @@ target 'TooDoo' do
 
   # Reveal Debugger
   
-  pod 'Reveal-SDK', :configurations => ['Debug']
+#  pod 'Reveal-SDK', :configurations => ['Debug']
 
   # Pods for TooDoo
   pod 'Alamofire'

@@ -1,6 +1,6 @@
 {
   "name": "Stellar",
-  "version": "0.66",
+  "version": "0.67",
   "summary": "An Awesome Physical animation library base on UIDynamic.",
   "description": "A fantastic Physical animation library for swift(Not Just Spring !!!), it is base on UIDynamic and extension to it, friendly APIs make you use it or custom your own animation very easily!",
   "homepage": "https://github.com/AugustRush/Stellar",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/AugustRush/Stellar.git",
-    "tag": "0.66"
+    "tag": "0.67"
   },
   "source_files": [
     "Sources",

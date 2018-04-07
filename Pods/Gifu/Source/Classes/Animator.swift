@@ -68,12 +68,16 @@ public class Animator {
   /// - parameter contentMode: The view content mode to use for the individual frames.
   /// - parameter loopCount: Desired number of loops, <= 0 for infinite loop.
   /// - parameter completionHandler: Completion callback function
-  func prepareForAnimation(withGIFNamed imageName: String, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: ((Void) -> Void)? = .none) {
+  func prepareForAnimation(withGIFNamed imageName: String, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: (() -> Void)? = nil) {
     guard let extensionRemoved = imageName.components(separatedBy: ".")[safe: 0],
       let imagePath = Bundle.main.url(forResource: extensionRemoved, withExtension: "gif"),
       let data = try? Data(contentsOf: imagePath) else { return }
 
-    prepareForAnimation(withGIFData: data, size: size, contentMode: contentMode, loopCount: loopCount, completionHandler: completionHandler)
+    prepareForAnimation(withGIFData: data,
+                        size: size,
+                        contentMode: contentMode,
+                        loopCount: loopCount,
+                        completionHandler: completionHandler)
   }
 
   /// Prepares the animator instance for animation.
@@ -83,13 +87,16 @@ public class Animator {
   /// - parameter contentMode: The view content mode to use for the individual frames.
   /// - parameter loopCount: Desired number of loops, <= 0 for infinite loop.
   /// - parameter completionHandler: Completion callback function
-  func prepareForAnimation(withGIFData imageData: Data, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: ((Void) -> Void)? = .none) {
-    frameStore = FrameStore(data: imageData, size: size, contentMode: contentMode, framePreloadCount: frameBufferCount, loopCount: loopCount)
-    frameStore?.shouldResizeFrames = shouldResizeFrames
-    frameStore?.prepareFrames(completionHandler)
+  func prepareForAnimation(withGIFData imageData: Data, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: (() -> Void)? = nil) {
+    frameStore = FrameStore(data: imageData,
+                            size: size,
+                            contentMode: contentMode,
+                            framePreloadCount: frameBufferCount,
+                            loopCount: loopCount)
+    frameStore!.shouldResizeFrames = shouldResizeFrames
+    frameStore!.prepareFrames(completionHandler)
     attachDisplayLink()
   }
-
 
   /// Add the display link to the main run loop.
   private func attachDisplayLink() {
@@ -120,8 +127,13 @@ public class Animator {
   /// - parameter size: The target size of the individual frames.
   /// - parameter contentMode: The view content mode to use for the individual frames.
   /// - parameter loopCount: Desired number of loops, <= 0 for infinite loop.
-  func animate(withGIFNamed imageName: String, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0) {
-    prepareForAnimation(withGIFNamed: imageName, size: size, contentMode: contentMode, loopCount: loopCount)
+  /// - parameter completionHandler: Completion callback function
+  func animate(withGIFNamed imageName: String, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: (() -> Void)? = nil) {
+    prepareForAnimation(withGIFNamed: imageName,
+                        size: size,
+                        contentMode: contentMode,
+                        loopCount: loopCount,
+                        completionHandler: completionHandler)
     startAnimating()
   }
 
@@ -131,8 +143,13 @@ public class Animator {
   /// - parameter size: The target size of the individual frames.
   /// - parameter contentMode: The view content mode to use for the individual frames.
   /// - parameter loopCount: Desired number of loops, <= 0 for infinite loop.
-  func animate(withGIFData imageData: Data, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0) {
-    prepareForAnimation(withGIFData: imageData, size: size, contentMode: contentMode, loopCount: loopCount)
+  /// - parameter completionHandler: Completion callback function
+  func animate(withGIFData imageData: Data, size: CGSize, contentMode: UIViewContentMode, loopCount: Int = 0, completionHandler: (() -> Void)? = nil)  {
+    prepareForAnimation(withGIFData: imageData,
+                        size: size,
+                        contentMode: contentMode,
+                        loopCount: loopCount,
+                        completionHandler: completionHandler)
     startAnimating()
   }
 

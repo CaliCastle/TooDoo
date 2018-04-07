@@ -95,6 +95,8 @@ extension BulletinViewController {
         })
 
     }
+
+    /// When the bulletin item appeared.
     
     public func bulletinAppeared() {
         if let manager = manager, let bulletinCardAppeared = manager.bulletinCardAppeared {
@@ -398,25 +400,23 @@ extension BulletinViewController {
 
     @available(iOS 11.0, *)
     fileprivate var screenHasRoundedCorners: Bool {
-        let insets = view.safeAreaInsets
-        return insets.bottom > 0
+        return view.safeAreaInsets.bottom > 0
     }
 
     fileprivate func updateCornerRadius() {
 
-        let normalRadius = 12
-        let roundedRadius = normalRadius * 3
-        
         if manager?.cardPadding.rawValue == 0 {
             contentView.layer.cornerRadius = 0
             return
         }
 
-        var defaultRadius: NSNumber = NSNumber(value: normalRadius)
+        var defaultRadius: NSNumber = 12
 
         if #available(iOS 11.0, *) {
-            defaultRadius = NSNumber(value: screenHasRoundedCorners ? roundedRadius : normalRadius)
+            defaultRadius = screenHasRoundedCorners ? 36 : 12
         }
+
+
 
         contentView.layer.cornerRadius = CGFloat((manager?.cardCornerRadius ?? defaultRadius).doubleValue)
 
