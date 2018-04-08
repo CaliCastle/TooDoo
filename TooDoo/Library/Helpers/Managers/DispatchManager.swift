@@ -61,8 +61,8 @@ final class DispatchManager {
                 // Lock on exit
                 isAppLocked = true
             } else {
-                // Lock using timeout
-                
+                // Use timeout for automatic locking
+                UserDefaultManager.set(value: Date(), forKey: .BackgroundInactivitySince)
             }
         }
         // Check if user enabled blur content when left
@@ -72,10 +72,6 @@ final class DispatchManager {
                 window.addSubview(blurEffectView)
             }
         }
-        
-        // Check if user enabled inverval for automatic locking
-//        if UserDefaultManager.bool(forKey: )
-//        UserDefaultManager.set(value: Date(), forKey: .BackgroundInactivitySince)
     }
     
     // MARK: - Application Will Resign Active
@@ -97,13 +93,8 @@ final class DispatchManager {
                 }
             })
         }
-//        if let time = UserDefaultManager.get(forKey: .BackgroundInactivitySince) as? Date {
-//            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
-//                let unlockViewController = StoryboardManager.viewController(identifier: HomeUnlockViewController.identifier, in: .Main)
-//
-//                topViewController.present(unlockViewController, animated: false, completion: nil)
-//            }
-//        }
+        
+        displayLockControllerIfNeeded()
     }
     
     /// Display lock if needed. (Lock on exit enabled) or (time interval exceeds)
@@ -112,11 +103,29 @@ final class DispatchManager {
         // If lock on exit enabled
         guard UserDefaultManager.bool(forKey: .LockEnabled) else { return }
         
-        if UserDefaultManager.bool(forKey: .LockOnExit) {
-            if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
-                DispatchQueue.main.async {
-                    topViewController.present(StoryboardManager.viewController(identifier: LockViewController.identifier, in: .Lock), animated: false)
+        isAppLocked = UserDefaultManager.bool(forKey: .LockOnExit)
+        
+        // Check timeout passed or not
+        if !isAppLocked {
+            if let time = UserDefaultManager.get(forKey: .BackgroundInactivitySince) as? Date,
+                let timeoutType = UserDefaultManager.get(forKey: .LockTimeOut, Settings.TimeoutLock.all()[1].rawValue) as? String,
+                let timeout = Settings.TimeoutLock(rawValue: timeoutType) {
+                // Calculate interval
+                let interval = timeout.getTimeoutIntervalInSeconds()
+                let maxTime = time.addingTimeInterval(TimeInterval(interval))
+                let now = Date()
+                
+                if maxTime <= now {
+                    isAppLocked = true
                 }
+            }
+        }
+        
+        guard isAppLocked else { return }
+    
+        if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
+            DispatchQueue.main.async {
+                topViewController.present(StoryboardManager.viewController(identifier: LockViewController.identifier, in: .Lock), animated: false)
             }
         }
     }

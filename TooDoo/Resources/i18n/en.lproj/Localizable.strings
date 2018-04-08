@@ -289,7 +289,7 @@
 "settings.lock-app.1" = "Blur when left";
 "settings.lock-app.2" = "Change passcode";
 "settings.lock-app.3" = "Lock on exit";
-"settings.lock-app.4" = "Timeout";
+"settings.lock-app.4" = "Auto-Lock";
 
 "settings.lock-app.passcode.title" = "Enter Passcode";
 "settings.lock-app.passcode.description" = "This will be the passcode to unlock the app.";

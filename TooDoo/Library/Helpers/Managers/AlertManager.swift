@@ -211,8 +211,6 @@ final class AlertManager {
         page.setupFonts()
         page.setupColors()
         
-        page.nextItem = makeConfirmationPasscodePage()
-        
         page.textInputHandler = { (item, text) in
             if let nextItem = item.nextItem as? PasscodePageBulletinPage {
                 nextItem.confirming = true
@@ -221,6 +219,8 @@ final class AlertManager {
             
             item.manager?.displayNextItem()
         }
+        
+        page.nextItem = makeConfirmationPasscodePage()
         
         return page
     }
@@ -259,12 +259,11 @@ final class AlertManager {
         }
         
         page.alternativeHandler = {
-            $0.nextItem = makePasscodePage()
+            $0.nextItem = self.makePasscodePage()
             $0.manager?.displayNextItem()
         }
         
         return page
-        
     }
     
 }

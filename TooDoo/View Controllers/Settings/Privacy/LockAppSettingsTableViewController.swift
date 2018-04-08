@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Haptica
 import BulletinBoard
 import LocalAuthentication
 
@@ -62,7 +63,7 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     /// Bulletin manager for passcode.
     
     private lazy var bulletinManager: BulletinManager = {
-        return BulletinManager.standard(rootItem: AlertManager.makePasscodePage())
+        return BulletinManager.blurred(rootItem: AlertManager.makePasscodePage())
     }()
     
     // MARK: - View Life Cycle.
@@ -126,8 +127,13 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         
         // Check biometrics
         checkBiometrics()
-        // Insert sections
-        tableView.insertSections([1, 2], with: .fade)
+        
+        if !changingPassword {
+            // Insert sections
+            tableView.insertSections([1, 2], with: .fade)
+        } else {
+            changingPassword = false
+        }
     }
     
     /// Set up table view.
@@ -272,10 +278,37 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         return 0
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch (indexPath.section, indexPath.row) {
+        case (1, 0):
+            // Change password
+            changePassword()
+        case (2, 1):
+            // Set timeout
+            break
+        default:
+            return
+        }
         
+        Haptic.selection.generate()
+    }
+    
+    var changingPassword = false
+    
+    fileprivate func changePassword() {
+        changingPassword = true
+        
+        bulletinManager.prepareAndPresent(above: self)
+        
+        bulletinManager.bulletinCardAppeared = {
+            if $0 is PasscodePageBulletinPage {
+                guard let item = $0 as? PasscodePageBulletinPage else { return }
+                
+                DispatchQueue.main.async {
+                    item.passcodeTextField.becomeFirstResponder()
+                }
+            }
+        }
     }
 
 }

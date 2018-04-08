@@ -66,6 +66,7 @@ class TimeoutLockSettingsTableViewController: SettingTableViewController {
     fileprivate func configure(_ cell: UITableViewCell, for indexPath: IndexPath) {
         // Configure the cell...
         cell.textLabel?.text = "settings.lock-app.timeout.\(timeoutTypes[indexPath.row].rawValue)".localized
+        cell.textLabel?.font = AppearanceManager.font(size: 15, weight: .DemiBold)
         cell.textLabel?.textColor = currentThemeIsDark() ? .white : .flatBlack()
         
         cell.accessoryType = timeoutTypes.index(of: currentTimeout)! == indexPath.row ? .checkmark : .none

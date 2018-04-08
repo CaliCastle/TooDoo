@@ -289,7 +289,7 @@
 "settings.lock-app.1" = "离开应用后模糊内容";
 "settings.lock-app.2" = "更改密码";
 "settings.lock-app.3" = "关闭应用立即上锁";
-"settings.lock-app.4" = "锁定延迟";
+"settings.lock-app.4" = "自动锁定时间";
 
 "settings.lock-app.passcode.title" = "输入密码";
 "settings.lock-app.passcode.description" = "解锁应用将需要使用此密码";

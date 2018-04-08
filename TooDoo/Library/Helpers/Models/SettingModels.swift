@@ -32,6 +32,25 @@ struct Settings: Codable {
                 .thirtyMinutes
             ]
         }
+        
+        func getTimeoutIntervalInSeconds() -> Int {
+            switch self {
+            case .thirtySeconds:
+                return 30
+            case .oneMinute:
+                return 60
+            case .twoMinutes:
+                return 2 * 60
+            case .threeMinutes:
+                return 3 * 60
+            case .fiveMinutes:
+                return 5 * 60
+            case .tenMinutes:
+                return 10 * 60
+            default:
+                return 30 * 60
+            }
+        }
     }
     
 }
