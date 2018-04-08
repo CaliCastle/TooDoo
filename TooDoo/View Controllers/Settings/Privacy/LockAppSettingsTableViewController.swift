@@ -44,6 +44,10 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     
     private var timeout: Settings.TimeoutLock = .oneMinute
     
+    private lazy var bulletinManager: BulletinManager = {
+        return BulletinManager.blurred(rootItem: AlertManager.makePasscodePage())
+    }()
+    
     /// See if biometric is supported.
     
     private var hasBiometric: Bool = false {
@@ -60,17 +64,13 @@ class LockAppSettingsTableViewController: SettingTableViewController {
         }
     }
     
-    /// Bulletin manager for passcode.
-    
-    private lazy var bulletinManager: BulletinManager = {
-        return BulletinManager.blurred(rootItem: AlertManager.makePasscodePage())
-    }()
-    
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bulletinManager.prepare()
+        
         checkBiometrics()
         
         listen(for: .SettingPasscodeSetup, then: #selector(passcodeSetup(_:)))
@@ -133,6 +133,8 @@ class LockAppSettingsTableViewController: SettingTableViewController {
             tableView.insertSections([1, 2], with: .fade)
         } else {
             changingPassword = false
+            
+            NotificationManager.showBanner(title: "settings.lock-app.passcode-changed".localized, type: .success)
         }
     }
     
@@ -210,7 +212,9 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     
     @IBAction func enableLockDidChange(_ sender: UISwitch) {
         if sender.isOn {
-            bulletinManager.prepareAndPresent(above: self)
+            bulletinManager = BulletinManager.blurred(rootItem: AlertManager.makePasscodePage())
+            bulletinManager.prepare()
+            bulletinManager.presentBulletin(above: self, animated: true, completion: nil)
             
             bulletinManager.bulletinCardAppeared = {
                 if $0 is PasscodePageBulletinPage {
@@ -298,8 +302,11 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     fileprivate func changePassword() {
         changingPassword = true
         
-        bulletinManager.prepareAndPresent(above: self)
+        bulletinManager = BulletinManager.blurred(rootItem: AlertManager.makePasscodePage())
         
+        bulletinManager.prepare()
+        bulletinManager.presentBulletin(above: self, animated: true)
+            
         bulletinManager.bulletinCardAppeared = {
             if $0 is PasscodePageBulletinPage {
                 guard let item = $0 as? PasscodePageBulletinPage else { return }

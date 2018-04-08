@@ -295,7 +295,7 @@
 "settings.lock-app.passcode.description" = "This will be the passcode to unlock the app.";
 "settings.lock-app.passcode.confirm-title" = "Re-enter Passcode";
 "settings.lock-app.passcode.confirm-description" = "Enter the passcode one more time for confirmation and memorize it.";
-
+"settings.lock-app.passcode-changed" = "Password has been changed";
 "settings.lock-app.timeout.thirty-secs" = "30 seconds";
 "settings.lock-app.timeout.one-minute" = "1 minute";
 "settings.lock-app.timeout.two-minutes" = "2 minutes";

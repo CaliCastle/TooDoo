@@ -180,10 +180,14 @@ final class LockViewController: UIViewController {
     /// User taps unlock icon.
     
     @IBAction func unlockDidTap(_ sender: Any) {
-        // Generate haptic feedback
-        Haptic.impact(.medium).generate()
+        if let password = passcodeTextField.text, password.isEmpty {
+            // Generate haptic feedback
+            Haptic.impact(.medium).generate()
 
-        passcodeTextField.becomeFirstResponder()
+            passcodeTextField.becomeFirstResponder()
+        } else {
+            passcodeEntered(passcodeTextField)
+        }
     }
     
     /// User taps biometric.
@@ -213,6 +217,11 @@ final class LockViewController: UIViewController {
         NotificationManager.send(notification: .UserAuthenticated)
         
         DispatchQueue.main.async {
+            // Generate haptic feedback
+            Haptic.notification(.success).generate()
+        }
+        
+        DispatchQueue.main.async {
             // Animate views
             UIView.animate(withDuration: 0.25) {
                 self.backgroundGradientView.alpha = 0
@@ -221,9 +230,6 @@ final class LockViewController: UIViewController {
                 self.lockImageView.alpha = 1
                 self.lockImageView.transform = .init(scaleX: 0.01, y: 0.01)
             }) {
-                // Generate haptic feedback
-                Haptic.notification(.success).generate()
-                
                 if $0 {
                     // Dismiss self once completed
                     self.dismiss(animated: true, completion: {

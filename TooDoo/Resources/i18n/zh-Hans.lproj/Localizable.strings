@@ -295,7 +295,7 @@
 "settings.lock-app.passcode.description" = "解锁应用将需要使用此密码";
 "settings.lock-app.passcode.confirm-title" = "确认密码";
 "settings.lock-app.passcode.confirm-description" = "确认密码后请牢记此密码";
-
+"settings.lock-app.passcode-changed" = "成功设置密码";
 "settings.lock-app.timeout.thirty-secs" = "30秒";
 "settings.lock-app.timeout.one-minute" = "1分钟";
 "settings.lock-app.timeout.two-minutes" = "2分钟";

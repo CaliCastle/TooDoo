@@ -43,24 +43,20 @@ class PasscodePageBulletinPage: FeedbackPageBulletinItem {
     }
     
     override func actionButtonTapped(sender: UIButton) {
-        
         if validatePasscode(passcode: passcodeTextField.text!) {
             textInputHandler?(self, passcodeTextField.text)
             super.actionButtonTapped(sender: sender)
         } else {
             passcodeTextField.text = ""
         }
-        
     }
     
     override func alternativeButtonTapped(sender: UIButton) {
-        
         if !confirming {
             manager?.dismissBulletin()
         } else {
             alternativeHandler?(self)
         }
-        
     }
     
 }

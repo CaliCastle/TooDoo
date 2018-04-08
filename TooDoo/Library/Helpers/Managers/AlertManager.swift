@@ -204,6 +204,7 @@ final class AlertManager {
     
     open class func makePasscodePage() -> PasscodePageBulletinPage {
         let page = PasscodePageBulletinPage(title: "settings.lock-app.passcode.title".localized)
+        page.nextItem = makeConfirmationPasscodePage()
         page.isDismissable = false
         page.descriptionText =  "settings.lock-app.passcode.description".localized
         page.actionButtonTitle = "Next".localized
@@ -220,7 +221,9 @@ final class AlertManager {
             item.manager?.displayNextItem()
         }
         
-        page.nextItem = makeConfirmationPasscodePage()
+        page.alternativeHandler = {
+            $0.manager?.dismissBulletin()
+        }
         
         return page
     }
@@ -259,8 +262,7 @@ final class AlertManager {
         }
         
         page.alternativeHandler = {
-            $0.nextItem = self.makePasscodePage()
-            $0.manager?.displayNextItem()
+            $0.manager?.popItem()
         }
         
         return page
