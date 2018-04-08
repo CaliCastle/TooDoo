@@ -16,7 +16,7 @@
 "OK" = "好吧";
 "Delete" = "删除";
 "Nope" = "算了";
-"Never mind" = "不了";
+"Never mind" = "晚点再说";
 "Model.Category" = "分类";
 "Give access" = "去设置";
 "Not now" = "残忍拒绝";
@@ -220,7 +220,7 @@
 /*
  Permission
  */
-"permission.authentication.reason" = "为了保护隐私与未来解锁本应用";
+"permission.authentication.reason" = "保护隐私与解锁应用";
 "permission.no-photo-access.title" = "无相册权限";
 "permission.no-photo-access.description" = "本应用未获得照片的读写权限, 请在系统设置的 '隐私' > '照片' 中开启";
 "permission.no-notifications-access.title" = "提醒通知已关闭";

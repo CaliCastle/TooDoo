@@ -44,6 +44,7 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupViews()
         configureSideMenuAnimationCollectionView()
     }
     
@@ -60,7 +61,6 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
         if let animationType = AppearanceManager.SideMenuAnimation(rawValue: UserDefaultManager.string(forKey: .SideMenuAnimation, AppearanceManager.SideMenuAnimation.SlideInOut.rawValue)!) {
             if let index = sideMenuAnimations.index(of: animationType) {
                 sideMenuAnimationCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
-//                sideMenuAnimationCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: true)
             }
         }
     }
@@ -78,6 +78,10 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     
     func action(for layer: CALayer, forKey event: String) -> CAAction? {
         return NSNull()
+    }
+    
+    fileprivate func setupViews() {
+        sideMenuAnimationLabel.textColor = currentThemeIsDark() ? .white : .flatBlack()
     }
     
     /// Configure side menu animation collection view.

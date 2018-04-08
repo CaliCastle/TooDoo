@@ -88,7 +88,7 @@ final class LockViewController: UIViewController {
         // Configure biometric button
         biometricButton.setImage(biometricButton.image(for: .normal)?.withRenderingMode(.alwaysTemplate), for: .normal)
         biometricButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
-        biometricButton.backgroundColor = currentThemeIsDark() ? UIColor(hexString: "525252") : UIColor(hexString: "525252")
+        biometricButton.backgroundColor = currentThemeIsDark() ? UIColor(hexString: "525252") : UIColor(hexString: "EEEEEE")
         biometricButton.cornerRadius = 12
         biometricButton.layer.masksToBounds = true
     }

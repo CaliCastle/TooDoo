@@ -147,7 +147,7 @@ final class SettingsTableViewController: SettingTableViewController {
         let separatedText = text.components(separatedBy: "|")
         
         let attributedText = NSMutableAttributedString(string: separatedText.first!, attributes: [.font: AppearanceManager.font(size: 11, weight: .DemiBold), .foregroundColor: appVersionLabel.textColor])
-        attributedText.append(.init(string: separatedText.last!, attributes: [.font: AppearanceManager.font(size: 11, weight: .Bold), .foregroundColor: UIColor.white]))
+        attributedText.append(.init(string: separatedText.last!, attributes: [.font: AppearanceManager.font(size: 11, weight: .Bold), .foregroundColor: currentThemeIsDark() ? UIColor.white : UIColor.flatBlack()]))
         
         designedByLabel.attributedText = attributedText
     }
