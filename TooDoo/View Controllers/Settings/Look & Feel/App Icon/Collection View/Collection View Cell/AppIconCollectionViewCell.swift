@@ -20,6 +20,7 @@ final class AppIconCollectionViewCell: UICollectionViewCell {
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var selectedOverlay: UIView!
     @IBOutlet var checkmark: UIImageView!
+    @IBOutlet var iconContainer: UIView!
     
     // MARK: - Properties.
     
@@ -34,6 +35,9 @@ final class AppIconCollectionViewCell: UICollectionViewCell {
         checkmark.alpha = 0
         checkmark.tintColor = .white
         checkmark.transform = .init(scaleX: 0, y: 0)
+        
+        iconContainer.layer.masksToBounds = true
+        iconContainer.cornerRadius = 14
     }
     
 }

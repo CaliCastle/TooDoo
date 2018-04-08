@@ -16,6 +16,10 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         return false
     }
     
+    override public var scrollViewForDeck: UIScrollView {
+        return tableView
+    }
+    
     // MARK: - View Life Cycle.
     
     override open func viewDidLoad() {
@@ -80,7 +84,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         
         configureLabels()
     }
-    
+
     /// When the done button is tapped.
     
     @objc private func doneButtonDidTap(_ sender: UIBarButtonItem) {

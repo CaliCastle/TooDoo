@@ -146,6 +146,13 @@ final class AppearanceManager {
         return UserDefaultManager.settingThemeMode()
     }
     
+    /// Check if current theme is in dark mode
+    ///
+    /// - Returns: Result
+    open func isDarkTheme() -> Bool {
+        return currentTheme() == .Dark
+    }
+    
     /// Set current theme.
     
     open func changeTheme() {
@@ -166,7 +173,7 @@ final class AppearanceManager {
         
         // Change app icon
         if #available(iOS 10.3, *), UserDefaultManager.bool(forKey: .AppIconChangedWithTheme) {
-            ApplicationManager.changeAppIcon(to: theme == .Dark ? .Primary : .Navy)
+            ApplicationManager.changeAppIcon(to: isDarkTheme() ? .Primary : .Navy)
         }
         
         // Send notification
@@ -176,7 +183,7 @@ final class AppearanceManager {
     /// Switch on tint color.
     
     open static func switchOnTintColor() -> UIColor {
-        return AppearanceManager.default.theme == .Dark ? .flatMint() : .flatNavyBlue()
+        return AppearanceManager.default.theme == .Dark ? UIColor(hexString: "6A6A6A") : .flatNavyBlue()
     }
     
     /// Switch tint color.

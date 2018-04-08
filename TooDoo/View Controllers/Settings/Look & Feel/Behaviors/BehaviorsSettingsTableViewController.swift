@@ -60,7 +60,7 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
         if let animationType = AppearanceManager.SideMenuAnimation(rawValue: UserDefaultManager.string(forKey: .SideMenuAnimation, AppearanceManager.SideMenuAnimation.SlideInOut.rawValue)!) {
             if let index = sideMenuAnimations.index(of: animationType) {
                 sideMenuAnimationCollectionView.selectItem(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .left)
-                sideMenuAnimationCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: false)
+//                sideMenuAnimationCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: true)
             }
         }
     }
@@ -83,12 +83,12 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     /// Configure side menu animation collection view.
     
     fileprivate func configureSideMenuAnimationCollectionView() {
-        sideMenuAnimationCollectionView.layer.mask = gradientMaskForSideMenuAnimations
-        
         let layout = BouncyLayoutCollectionViewLayout(style: .prominent)
         layout.scrollDirection = .horizontal
-        
+
         sideMenuAnimationCollectionView.collectionViewLayout = layout
+        sideMenuAnimationCollectionView.isScrollEnabled = true
+        sideMenuAnimationCollectionView.layer.mask = gradientMaskForSideMenuAnimations
     }
     
     /// Update gradient frame when scrolling.
@@ -97,12 +97,52 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
         gradientMaskForSideMenuAnimations.frame = CGRect(x: sideMenuAnimationCollectionView.contentOffset.x, y: 0, width: sideMenuAnimationCollectionView.bounds.width, height: sideMenuAnimationCollectionView.bounds.height)
     }
     
-    /// Adjust scroll behavior for dismissal.
+    var currentPlayingIndex: IndexPath = .zero
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !scrollView.isEqual(sideMenuAnimationCollectionView) else { updateGradientFrame(); return }
+        guard scrollView.isEqual(sideMenuAnimationCollectionView) else { return }
         
-        super.scrollViewDidScroll(scrollView)
+        updateGradientFrame()
+        
+        let scrollOffset = Double(scrollView.contentOffset.x)
+        let itemWidth: Double = 190
+        let triggerOffset: Double = 40
+        
+        // Calculate which index it is currently scrolling at
+        let index = Int(floor(scrollOffset / (itemWidth - triggerOffset)))
+        
+        guard index < sideMenuAnimationCollectionView.numberOfItems(inSection: 0), let cell = sideMenuAnimationCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? SideMenuAnimationCollectionViewCell else { return }
+        
+        currentPlayingIndex = IndexPath(item: index, section: 0)
+        animateCellImage(cell)
+    }
+    
+    fileprivate func animateCellImage(_ cell: SideMenuAnimationCollectionViewCell) {
+        cell.animationImageView.startAnimatingGIF()
+        
+        DispatchQueue.main.async {
+            var indexPaths: [IndexPath] = []
+            let itemsCount = self.sideMenuAnimationCollectionView.numberOfItems(inSection: 0)
+            
+            // Get all index paths except current
+            for i in 0 ..< itemsCount {
+                let indexPath = IndexPath(item: i, section: 0)
+                if let thisCell = self.sideMenuAnimationCollectionView.cellForItem(at: indexPath) as? SideMenuAnimationCollectionViewCell {
+                    if thisCell.isEqual(cell) {
+                        continue
+                    }
+                    
+                    indexPaths.append(indexPath)
+                }
+            }
+            
+            // Stop other images
+            for indexPath in indexPaths {
+                if let thisCell = self.sideMenuAnimationCollectionView.cellForItem(at: indexPath) as? SideMenuAnimationCollectionViewCell {
+                    thisCell.animationImageView.stopAnimatingGIF()
+                }
+            }
+        }
     }
     
     /// Get cell labels.
@@ -124,23 +164,7 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
     /// Item spacing.
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 60
-    }
-    
-    /// Will display cell.
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
-        
-        cell.animationImageView.startAnimatingGIF()
-    }
-    
-    /// End display cell.
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
-        
-        cell.animationImageView.stopAnimatingGIF()
+        return 42
     }
     
     /// How many sections.
@@ -165,10 +189,25 @@ extension BehaviorsSettingsTableViewController: UICollectionViewDelegate, UIColl
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
+        
+        DispatchQueue.main.async {
+            cell.animationImageView.startAnimatingGIF()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? SideMenuAnimationCollectionViewCell else { return }
+        
+        cell.animationImageView.stopAnimatingGIF()
+    }
+    
     /// Configure a cell.
     
     fileprivate func configure(_ cell: SideMenuAnimationCollectionViewCell, at indexPath: IndexPath) {
         cell.animationImageView.prepareForAnimation(withGIFNamed: sideMenuAnimations[indexPath.item].rawValue)
+        cell.animationImageView.image = UIImage(imageLiteralResourceName: "\(sideMenuAnimations[indexPath.item].rawValue).gif")
         
         setCellSelected(cell.isSelected, for: cell)
     }
