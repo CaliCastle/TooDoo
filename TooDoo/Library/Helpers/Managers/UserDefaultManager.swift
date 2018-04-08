@@ -32,51 +32,51 @@ final class UserDefaultManager {
          General settings
          */
         /// - The language locale
-        case Language = "language"
+        case Language
         
         /*
          Look & Feel settings
          */
         /// - Sync app icon with theme
-        case AppIconChangedWithTheme = "icon-changed-with-theme"
+        case AppIconChangedWithTheme
         /// - The sounds option
-        case Sounds = "sounds"
+        case Sounds
         /// - The dark or light mode
-        case ThemeMode = "theme-mode"
+        case ThemeMode
         /// - The motion effect animation
-        case MotionEffects = "motion-effects"
+        case MotionEffects
         /// - The present animation for side menu
-        case SideMenuAnimation = "side-menu-animation"
+        case SideMenuAnimation
         
         /*
          Notification settings
          */
         /// - The custom notification message
-        case NotificationMessage = "notification-message"
+        case NotificationMessage
         
         /*
          Calendar settings
          */
         /// - Sync to calendars setting
-        case CalendarsSync = "calendars-sync"
+        case CalendarsSync
         /// - Sync to reminders setting
-        case RemindersSync = "reminders-sync"
+        case RemindersSync
         
         /*
          Privacy settings
          */
         /// - The authentication lock for unlocking the app
-        case LockEnabled = "lock-enabled"
+        case LockEnabled
         /// - Blur content to protect privacy
-        case BlurContent = "blur-content"
+        case BlurContent
         /// - The passcode when locked
-        case LockPasscode = "lock-passcode"
+        case LockPasscode
         /// - Lock app when exiting
-        case LockOnExit = "lock-on-exit"
+        case LockOnExit
         /// - Lock app in a certain timeout
-        case LockTimeOut = "lock-timeout"
+        case LockTimeOut
         /// - Unlock using biometric methods
-        case LockBiometric = "lock-biometric"
+        case LockBiometric
         
         /// Get string.
         func string() -> String {
@@ -307,7 +307,7 @@ extension UserDefaultManager {
     /// See if sounds setting is enabled.
     
     class func settingSoundsEnabled() -> Bool {
-        return userDefaults.value(forKey: SettingKey.Sounds.rawValue) == nil ? true : bool(forKey: .Sounds)
+        return userDefaults.value(forKey: SettingKey.Sounds.string()) == nil ? true : bool(forKey: .Sounds)
     }
     
     /// See if motion effect is enabled.

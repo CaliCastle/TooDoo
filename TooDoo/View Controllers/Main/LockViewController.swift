@@ -135,12 +135,22 @@ final class LockViewController: UIViewController {
                     self.authenticationPassed()
                 } else {
                     // User did not authenticate successfully
-                    self.authenticationFailed()
+                    self.biometricsFailed()
                 }
             }
         } else {
             // Could not evaluate policy
-            authenticationFailed()
+            biometricsFailed()
+        }
+    }
+    
+    /// Biometrics authentication failed.
+    
+    fileprivate func biometricsFailed() {
+        DispatchQueue.main.async {
+            Haptic.notification(.warning).generate()
+            
+            self.passcodeTextField.becomeFirstResponder()
         }
     }
     
@@ -148,7 +158,7 @@ final class LockViewController: UIViewController {
     
     @IBAction func togglePasscodeVisibility(_ sender: Any) {
         // Generate haptic feedback
-        Haptic.impact(.medium).generate()
+        Haptic.impact(.light).generate()
         
         passcodeTextField.isSecureTextEntry = !passcodeTextField.isSecureTextEntry
         hidePasscodeImageView.image = (passcodeTextField.isSecureTextEntry ? #imageLiteral(resourceName: "visible-icon") : #imageLiteral(resourceName: "invisible-icon")).withRenderingMode(.alwaysTemplate)
@@ -185,14 +195,14 @@ final class LockViewController: UIViewController {
     /// Authentication failed.
     
     private func authenticationFailed() {
-        // Shake it off
-        passcodeContainerView.moveX(-35).duration(0.45).easing(.elasticIn).reverses().animate()
-        
         // Show message
         NotificationManager.showBanner(title: "alert.authentication-failed".localized, type: .danger)
         
         DispatchQueue.main.async {
             Haptic.notification(.error).generate()
+            
+            // Shake it off
+            self.passcodeContainerView.moveX(-35).duration(0.45).easing(.elasticIn).reverses().animate()
         }
     }
     
@@ -203,9 +213,6 @@ final class LockViewController: UIViewController {
         NotificationManager.send(notification: .UserAuthenticated)
         
         DispatchQueue.main.async {
-            // Generate haptic feedback
-            Haptic.notification(.success).generate()
-            
             // Animate views
             UIView.animate(withDuration: 0.25) {
                 self.backgroundGradientView.alpha = 0
@@ -214,6 +221,9 @@ final class LockViewController: UIViewController {
                 self.lockImageView.alpha = 1
                 self.lockImageView.transform = .init(scaleX: 0.01, y: 0.01)
             }) {
+                // Generate haptic feedback
+                Haptic.notification(.success).generate()
+                
                 if $0 {
                     // Dismiss self once completed
                     self.dismiss(animated: true, completion: {
