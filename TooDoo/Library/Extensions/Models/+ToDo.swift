@@ -152,7 +152,7 @@ extension ToDo {
     
     /// Renew a date if it is to be repeated.
     internal func renewIfRepeated(_ dateToBeRenewed: inout Date?) {
-        guard let info = getRepeatInfo(), var date = dateToBeRenewed else { return }
+        guard let info = getRepeatInfo(), let date = dateToBeRenewed else { return }
         
         // Get next recurring date
         var component: Calendar.Component = .day

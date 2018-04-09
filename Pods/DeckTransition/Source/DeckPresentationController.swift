@@ -560,7 +560,7 @@ final class DeckPresentationController: UIPresentationController, UIGestureRecog
         guard gestureRecognizer.isEqual(pan), isSwipeToDismissGestureEnabled else {
             return
         }
-        
+
         switch gestureRecognizer.state {
         
         case .began:
@@ -574,8 +574,10 @@ final class DeckPresentationController: UIPresentationController, UIGestureRecog
         
         case .changed:
             if isSwipeToDismissAllowed() {
-                let translation = gestureRecognizer.translation(in: presentedView)
-                updatePresentedViewForTranslation(inVerticalDirection: translation.y)
+//                if let scrollView = scrollViewUpdater?.scrollView, scrollView.isTracking {
+                    let translation = gestureRecognizer.translation(in: presentedView)
+                    updatePresentedViewForTranslation(inVerticalDirection: translation.y)
+//                }
             } else {
                 gestureRecognizer.setTranslation(.zero, in: presentedView)
             }

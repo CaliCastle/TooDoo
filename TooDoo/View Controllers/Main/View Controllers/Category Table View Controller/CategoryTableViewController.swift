@@ -183,7 +183,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         categoryNameTextField.textColor = color
         categoryNameTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
         // Change placeholder color to grayish
-        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
+        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.15)])
         
         categoryRandomColorButton.setImage(#imageLiteral(resourceName: "refresh-icon").withRenderingMode(.alwaysTemplate), for: .normal)
         categoryRandomColorButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()

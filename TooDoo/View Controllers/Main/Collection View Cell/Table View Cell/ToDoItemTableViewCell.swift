@@ -245,7 +245,13 @@ final class ToDoItemTableViewCell: UITableViewCell {
             
             switch info.type {
             case .Daily, .Weekday, .Weekly, .Monthly, .Annually:
-                unit = "dates.short.\(String(describing: info.type.rawValue.first!))".localized
+                if info.type == .Weekday {
+                    unit = "dates.short.weekday".localized
+                    break
+                }
+                
+                let firstLetter = info.type.rawValue.lowercased().first!
+                unit = "dates.short.\(String(describing: firstLetter == "a" ? "y" : firstLetter ))".localized
             case .Regularly, .AfterCompletion:
                 switch info.unit {
                 case .Day:

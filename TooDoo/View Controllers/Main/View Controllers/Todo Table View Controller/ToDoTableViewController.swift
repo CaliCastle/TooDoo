@@ -287,7 +287,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         goalTextField.textColor = color
         goalTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
         // Change placeholder color to grayish
-        goalTextField.attributedPlaceholder = NSAttributedString(string: goalTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.55)])
+        goalTextField.attributedPlaceholder = NSAttributedString(string: goalTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.15)])
         
         // Configure label colors
         categoryNameLabel.textColor = color

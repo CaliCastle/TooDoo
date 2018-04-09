@@ -26,7 +26,7 @@ final class ScrollViewUpdater {
     // MARK: - Private variables
     
     private weak var rootView: UIView?
-    private weak var scrollView: UIScrollView?
+    public weak var scrollView: UIScrollView?
     private var observation: NSKeyValueObservation?
     
     // MARK: - Initializers
