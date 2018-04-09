@@ -101,7 +101,7 @@ final class DispatchManager {
     
     fileprivate func displayLockControllerIfNeeded() {
         // If lock on exit enabled
-        guard UserDefaultManager.bool(forKey: .LockEnabled) else { return }
+        guard UserDefaultManager.bool(forKey: .LockEnabled), let topViewController = ApplicationManager.getTopViewControllerInWindow() else { return }
         
         isAppLocked = UserDefaultManager.bool(forKey: .LockOnExit)
         
@@ -123,7 +123,10 @@ final class DispatchManager {
         
         guard isAppLocked else { return }
     
-        if let topViewController = ApplicationManager.getTopViewControllerInWindow() {
+        // Only present if top is not lock controller.
+        if let _ = topViewController as? LockViewController {
+            return
+        } else {
             DispatchQueue.main.async {
                 topViewController.present(StoryboardManager.viewController(identifier: LockViewController.identifier, in: .Lock), animated: false)
             }
