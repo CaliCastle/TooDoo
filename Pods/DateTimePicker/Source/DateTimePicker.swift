@@ -5,33 +5,21 @@
 //  Created by Huong Do on 9/16/16.
 //  Copyright © 2016 ichigo. All rights reserved.
 //
+//  Modified by Cali Castle.
 
 import UIKit
-
-public protocol DateTimePickerDelegate {
-    func dateTimePicker(_ picker: DateTimePicker, didSelectDate: Date)
-}
 
 @objc public class DateTimePicker: UIView {
     
     var contentHeight: CGFloat = 310
-    @objc public enum MinuteInterval: Int {
-        case `default` = 1
-        case five = 5
-        case ten = 10
-        case fifteen = 15
-        case twenty = 20
-        case thirty = 30
-    }
     
-    /// custom background color, default to clear color
+    // public vars
     public var backgroundViewColor: UIColor? = .clear {
         didSet {
             shadowView.backgroundColor = backgroundViewColor
         }
     }
     
-    /// custom highlight color, default to cyan
     public var highlightColor = UIColor(red: 0/255.0, green: 199.0/255.0, blue: 194.0/255.0, alpha: 1) {
         didSet {
             todayButton.setTitleColor(highlightColor, for: .normal)
@@ -40,7 +28,6 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    /// custom dark color, default to grey
     public var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1) {
         didSet {
             dateTitleLabel.textColor = darkColor
@@ -53,14 +40,6 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    /// custom DONE button color, default to darkColor
-    public var doneBackgroundColor: UIColor? {
-        didSet {
-            doneButton.backgroundColor = doneBackgroundColor
-        }
-    }
-    
-    /// custom background color for date cells
     public var daysBackgroundColor = UIColor(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, alpha: 1)
     
     var didLayoutAtOnce = false
@@ -75,37 +54,18 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    /// date locale (language displayed), default to American English
-    public var locale = Locale(identifier: "en_US") {
-        didSet {
-            configureView()
-        }
-    }
-    
-    /// selected date when picker is displayed, default to current date
     public var selectedDate = Date() {
         didSet {
-            self.delegate?.dateTimePicker(self, didSelectDate: selectedDate)
             resetDateTitle()
         }
     }
     
-    public var selectedDateString: String {
-        get {
-            let formatter = DateFormatter()
-            formatter.dateFormat = self.dateFormat
-            return formatter.string(from: self.selectedDate)
-        }
-    }
-    
-    /// custom date format to be displayed, default to HH:mm dd/MM/YYYY
     public var dateFormat = "HH:mm dd/MM/YYYY" {
         didSet {
             resetDateTitle()
         }
     }
     
-    /// custom title for dismiss button, default to Cancel
     public var cancelButtonTitle = "Cancel" {
         didSet {
             cancelButton.setTitle(cancelButtonTitle, for: .normal)
@@ -114,7 +74,6 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    /// custom title for reset time button, default to Today
     public var todayButtonTitle = "Today" {
         didSet {
             todayButton.setTitle(todayButtonTitle, for: .normal)
@@ -122,23 +81,18 @@ public protocol DateTimePickerDelegate {
             todayButton.frame = CGRect(x: contentView.frame.width - size - 20, y: 0, width: size, height: 44)
         }
     }
-    
-    /// custom title for done button, default to DONE
     public var doneButtonTitle = "DONE" {
         didSet {
             doneButton.setTitle(doneButtonTitle, for: .normal)
         }
     }
     
-    /// whether to display time in 12 hour format, default to false
     public var is12HourFormat = false {
         didSet {
             configureView()
         }
     }
     
-    
-    /// whether to only show date in picker view, default to false
     public var isDatePickerOnly = false {
         didSet {
             if isDatePickerOnly {
@@ -148,7 +102,6 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    /// whether to show only time in picker view, default to false
     public var isTimePickerOnly = false {
         didSet {
             if isTimePickerOnly {
@@ -158,32 +111,23 @@ public protocol DateTimePickerDelegate {
         }
     }
 
-    /// whether to include month in date cells, default to false
     public var includeMonth = false {
         didSet {
             configureView()
         }
     }
     
-    /// Time interval, in minutes, default to 1.
-    /// If not default, infinite scrolling is off.
-    public var timeInterval = MinuteInterval.default {
-        didSet {
-            resetDateTitle()
-        }
-    }
-    
     public var timeZone = TimeZone.current
     public var completionHandler: ((Date)->Void)?
     public var dismissHandler: (() -> Void)?
-    public var delegate: DateTimePickerDelegate?
-
+    
     // private vars
     internal var hourTableView: UITableView!
     internal var minuteTableView: UITableView!
     internal var amPmTableView: UITableView!
     internal var dayCollectionView: UICollectionView!
     
+    private var backgroundView: UIView!
     private var shadowView: UIView!
     private var contentView: UIView!
     private var dateTitleLabel: UILabel!
@@ -209,16 +153,14 @@ public protocol DateTimePickerDelegate {
         }
     }
     
-    
-    @objc open class func show(selected: Date? = nil, minimumDate: Date? = nil, maximumDate: Date? = nil, timeInterval: MinuteInterval = .default) -> DateTimePicker {
+    @objc open class func show(selected: Date? = nil, minimumDate: Date? = nil, maximumDate: Date? = nil) -> DateTimePicker {
         let dateTimePicker = DateTimePicker()
-        dateTimePicker.minimumDate = minimumDate ?? Date(timeIntervalSinceNow: -3600 * 24 * 10)
-        dateTimePicker.maximumDate = maximumDate ?? Date(timeIntervalSinceNow: 3600 * 24 * 10)
+        dateTimePicker.minimumDate = minimumDate ?? Date(timeIntervalSinceNow: -3600 * 24 * 365 * 20)
+        dateTimePicker.maximumDate = maximumDate ?? Date(timeIntervalSinceNow: 3600 * 24 * 365 * 20)
         dateTimePicker.selectedDate = selected ?? dateTimePicker.minimumDate
-        dateTimePicker.timeInterval = timeInterval
-        assert(dateTimePicker.minimumDate.compare(dateTimePicker.maximumDate) == .orderedAscending, "Minimum date should be earlier than maximum date")
-        assert(dateTimePicker.minimumDate.compare(dateTimePicker.selectedDate) != .orderedDescending, "Selected date should be later or equal to minimum date")
-        assert(dateTimePicker.selectedDate.compare(dateTimePicker.maximumDate) != .orderedDescending, "Selected date should be earlier or equal to maximum date")
+//        assert(dateTimePicker.minimumDate.compare(dateTimePicker.maximumDate) == .orderedAscending, "Minimum date should be earlier than maximum date")
+//        assert(dateTimePicker.minimumDate.compare(dateTimePicker.selectedDate) != .orderedDescending, "Selected date should be later or equal to minimum date")
+//        assert(dateTimePicker.selectedDate.compare(dateTimePicker.maximumDate) != .orderedDescending, "Selected date should be earlier or equal to maximum date")
         
         dateTimePicker.configureView()
         UIApplication.shared.keyWindow?.addSubview(dateTimePicker)
@@ -235,6 +177,12 @@ public protocol DateTimePickerDelegate {
                             y: 0,
                             width: screenSize.width,
                             height: screenSize.height)
+        // Background view
+        backgroundView = UIView(frame: UIScreen.main.bounds)
+        backgroundView.backgroundColor = UIColor(white: 0.15, alpha: 0.7)
+        backgroundView.alpha = 0
+        addSubview(backgroundView)
+        
         // shadow view
         shadowView = UIView(frame: CGRect(x: 0,
                                           y: 0,
@@ -252,33 +200,35 @@ public protocol DateTimePickerDelegate {
                                            y: frame.height,
                                            width: frame.width,
                                            height: contentHeight))
-        contentView.layer.shadowColor = UIColor(white: 0, alpha: 0.3).cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: -2.0)
-        contentView.layer.shadowRadius = 1.5
-        contentView.layer.shadowOpacity = 0.5
-        contentView.backgroundColor = .white
+        contentView.layer.shadowColor = UIColor(white: 0, alpha: 0.5).cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: -5.0)
+        contentView.layer.shadowRadius = 25
+        contentView.layer.shadowOpacity = 1
+        contentView.layer.cornerRadius = 12
+        contentView.layer.masksToBounds = true
+        contentView.backgroundColor = UIColor(red: 43 / 255, green: 43 / 255, blue: 43 / 255, alpha: 1)
         contentView.isHidden = true
         addSubview(contentView)
         
         // title view
         let titleView = UIView(frame: CGRect(origin: CGPoint.zero,
                                              size: CGSize(width: contentView.frame.width, height: 44)))
-        titleView.backgroundColor = .white
+        titleView.backgroundColor = UIColor(red: 43 / 255, green: 43 / 255, blue: 43 / 255, alpha: 1)
         contentView.addSubview(titleView)
         
         dateTitleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
-        dateTitleLabel.font = UIFont.systemFont(ofSize: 15)
-        dateTitleLabel.textColor = darkColor
+        dateTitleLabel.font = UIFont(name: "AvenirNext-Medium", size: 15)
+        dateTitleLabel.textColor = .white
         dateTitleLabel.textAlignment = .center
         resetDateTitle()
         titleView.addSubview(dateTitleLabel)
         
         cancelButton = UIButton(type: .system)
         cancelButton.setTitle(cancelButtonTitle, for: .normal)
-        cancelButton.setTitleColor(darkColor.withAlphaComponent(0.5), for: .normal)
+        cancelButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
         cancelButton.contentHorizontalAlignment = .left
         cancelButton.addTarget(self, action: #selector(DateTimePicker.dismissView(sender:)), for: .touchUpInside)
-        cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        cancelButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 15)
         let cancelSize = cancelButton.sizeThatFits(CGSize(width: 0, height: 44.0)).width
         cancelButton.frame = CGRect(x: 20, y: 0, width: cancelSize, height: 44)
         titleView.addSubview(cancelButton)
@@ -288,7 +238,7 @@ public protocol DateTimePickerDelegate {
         todayButton.setTitleColor(highlightColor, for: .normal)
         todayButton.addTarget(self, action: #selector(DateTimePicker.setToday), for: .touchUpInside)
         todayButton.contentHorizontalAlignment = .right
-        todayButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        todayButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
         todayButton.isHidden = self.minimumDate.compare(Date()) == .orderedDescending || self.maximumDate.compare(Date()) == .orderedAscending
         let todaySize = todayButton.sizeThatFits(CGSize(width: 0, height: 44.0)).width
         todayButton.frame = CGRect(x: contentView.frame.width - todaySize - 20, y: 0, width: todaySize, height: 44)
@@ -302,7 +252,7 @@ public protocol DateTimePickerDelegate {
         layout.itemSize = CGSize(width: 75, height: 80)
         
         dayCollectionView = UICollectionView(frame: CGRect(x: 0, y: 44, width: contentView.frame.width, height: 100), collectionViewLayout: layout)
-        dayCollectionView.backgroundColor = daysBackgroundColor
+        dayCollectionView.backgroundColor = UIColor(red: 43 / 255, green: 43 / 255, blue: 43 / 255, alpha: 1)
         dayCollectionView.showsHorizontalScrollIndicator = false
         
         if includeMonth {
@@ -322,12 +272,12 @@ public protocol DateTimePickerDelegate {
         
         // top & bottom borders on day collection view
         borderTopView = UIView(frame: CGRect(x: 0, y: titleView.frame.height, width: titleView.frame.width, height: 1))
-        borderTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        borderTopView.backgroundColor = .clear
         borderTopView.isHidden = isTimePickerOnly
         contentView.addSubview(borderTopView)
         
         borderBottomView = UIView(frame: CGRect(x: 0, y: dayCollectionView.frame.origin.y + dayCollectionView.frame.height, width: titleView.frame.width, height: 1))
-        borderBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        borderBottomView.backgroundColor = .clear
         if isTimePickerOnly {
             borderBottomView.frame = CGRect(x: 0, y: dayCollectionView.frame.origin.y, width: titleView.frame.width, height: 1)
         }
@@ -338,9 +288,9 @@ public protocol DateTimePickerDelegate {
         doneButton.frame = CGRect(x: 20, y: contentView.frame.height - 10 - 44 - 10, width: contentView.frame.width - 40, height: 44)
         doneButton.setTitle(doneButtonTitle, for: .normal)
         doneButton.setTitleColor(.white, for: .normal)
-        doneButton.backgroundColor = doneBackgroundColor ?? darkColor.withAlphaComponent(0.5)
-        doneButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        doneButton.layer.cornerRadius = 3
+        doneButton.backgroundColor = darkColor.withAlphaComponent(0.5)
+        doneButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        doneButton.layer.cornerRadius = 12
         doneButton.layer.masksToBounds = true
         doneButton.addTarget(self, action: #selector(DateTimePicker.dismissView(sender:)), for: .touchUpInside)
         contentView.addSubview(doneButton)
@@ -359,6 +309,7 @@ public protocol DateTimePickerDelegate {
         hourTableView.delegate = self
         hourTableView.dataSource = self
         hourTableView.isHidden = isDatePickerOnly
+        hourTableView.backgroundColor = .clear
         contentView.addSubview(hourTableView)
         
         // minute table view
@@ -372,11 +323,7 @@ public protocol DateTimePickerDelegate {
         minuteTableView.delegate = self
         minuteTableView.dataSource = self
         minuteTableView.isHidden = isDatePickerOnly
-        if timeInterval != .default {
-            minuteTableView.contentInset = UIEdgeInsetsMake(minuteTableView.frame.height / 2, 0, minuteTableView.frame.height / 2, 0)
-        } else {
-            minuteTableView.contentInset = UIEdgeInsets.zero
-        }
+        minuteTableView.backgroundColor = .clear
         contentView.addSubview(minuteTableView)
         
         // am/pm table view
@@ -390,6 +337,7 @@ public protocol DateTimePickerDelegate {
         amPmTableView.separatorStyle = .none
         amPmTableView.delegate = self
         amPmTableView.dataSource = self
+        amPmTableView.backgroundColor = .clear
         amPmTableView.isHidden = !is12HourFormat || isDatePickerOnly
         contentView.addSubview(amPmTableView)
         
@@ -407,7 +355,7 @@ public protocol DateTimePickerDelegate {
         
         colonLabel2 = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 36))
         colonLabel2.text = ":"
-        colonLabel2.font = UIFont.boldSystemFont(ofSize: 18)
+        colonLabel2.font = UIFont(name: "AvenirNext-DemiBold", size: 18)
         colonLabel2.textColor = highlightColor
         colonLabel2.textAlignment = .center
         var colon2Center = colonLabel1.center
@@ -417,14 +365,14 @@ public protocol DateTimePickerDelegate {
         contentView.addSubview(colonLabel2)
         
         // time separators
-        separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
-        separatorTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        separatorTopView = UIView(frame: CGRect(x: 0, y: -3, width: 90 - extraSpace * 2, height: 1))
+        separatorTopView.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         separatorTopView.center = CGPoint(x: contentView.frame.width / 2, y: borderBottomView.frame.origin.y + 36)
         separatorTopView.isHidden = isDatePickerOnly
         contentView.addSubview(separatorTopView)
         
-        separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
-        separatorBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        separatorBottomView = UIView(frame: CGRect(x: 0, y: -3, width: 90 - extraSpace * 2, height: 1))
+        separatorBottomView.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         separatorBottomView.center = CGPoint(x: contentView.frame.width / 2, y: separatorTopView.frame.origin.y + 36)
         separatorBottomView.isHidden = isDatePickerOnly
         contentView.addSubview(separatorBottomView)
@@ -448,12 +396,20 @@ public protocol DateTimePickerDelegate {
         resetTime()
         
         // animate to show contentView
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.4, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 4.5, options: .curveEaseIn, animations: {
             self.contentView.frame = CGRect(x: 0,
                                             y: self.frame.height - self.contentHeight,
                                             width: self.frame.width,
                                             height: self.contentHeight)
-        }, completion: nil)
+            self.backgroundView.alpha = 1
+        }) {
+            if $0 {
+                if #available(iOS 10.0, *) {
+                    let generator = UIImpactFeedbackGenerator(style: .light)
+                    generator.impactOccurred()
+                }
+            }
+        }
     }
     
     @objc
@@ -488,11 +444,7 @@ public protocol DateTimePickerDelegate {
         }
         
         if let minute = components.minute {
-            var expectedRow = minute / timeInterval.rawValue
-            if timeInterval == .default {
-                expectedRow = expectedRow == 0 ? 120 : expectedRow + 60 // workaround for issue when minute = 0
-            }
-            
+            let expectedRow = minute == 0 ? 120 : minute + 60 // workaround for issue when minute = 0
             minuteTableView.selectRow(at: IndexPath(row: expectedRow, section: 0), animated: true, scrollPosition: .middle)
         }
     }
@@ -501,8 +453,9 @@ public protocol DateTimePickerDelegate {
         guard dateTitleLabel != nil else {
             return
         }
-    
-        dateTitleLabel.text = selectedDateString
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        dateTitleLabel.text = formatter.string(from: selectedDate)
         dateTitleLabel.sizeToFit()
         dateTitleLabel.center = CGPoint(x: contentView.frame.width / 2, y: 22)
     }
@@ -558,15 +511,16 @@ public protocol DateTimePickerDelegate {
                                             y: self.frame.height,
                                             width: self.frame.width,
                                             height: self.contentHeight)
+            self.backgroundView.alpha = 0
         }) {[weak self] (completed) in
             guard let `self` = self else {
                 return
             }
-            if sender == self.doneButton {
-                self.completionHandler?(self.selectedDate)
-            } else {
-                self.dismissHandler?()
-            }
+//            if sender == self.doneButton {
+            self.completionHandler?(self.selectedDate)
+//            } else {
+//                self.dismissHandler?()
+//            }
             self.removeFromSuperview()
         }
     }
@@ -584,10 +538,6 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
         } else if tableView == amPmTableView {
             return 2
         }
-        
-        if timeInterval != .default {
-            return 60 / timeInterval.rawValue
-        }
         // need triple of origin storage to scroll infinitely
         return 60 * 3
     }
@@ -597,19 +547,15 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
         
         cell.selectedBackgroundView = UIView()
         cell.textLabel?.textAlignment = tableView == hourTableView ? .right : .left
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        cell.textLabel?.textColor = darkColor.withAlphaComponent(0.4)
+        cell.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 18)
+        cell.textLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
         cell.textLabel?.highlightedTextColor = highlightColor
+    
         // add module operation to set value same
         if tableView == amPmTableView {
             cell.textLabel?.text = (indexPath.row == 0) ? "AM" : "PM"
         } else if tableView == minuteTableView{
-            if timeInterval == .default {
-                cell.textLabel?.text = String(format: "%02i", indexPath.row % 60)
-            } else {
-                cell.textLabel?.text = String(format: "%02i", indexPath.row * timeInterval.rawValue)
-            }
-            
+            cell.textLabel?.text = String(format: "%02i", indexPath.row % 60)
         } else {
             if is12HourFormat {
                 cell.textLabel?.text = String(format: "%02i", (indexPath.row % 12) + 1)
@@ -618,21 +564,20 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
+        cell.backgroundColor = .clear
+        cell.backgroundView = UIView()
         
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var selectedRow = indexPath.row
-        var shouldAnimate = true
-        
-        // adjust selected row number for inifinite scrolling
-        if selectedRow != adjustedRowForInfiniteScrolling(tableView: tableView, selectedRow: selectedRow) {
-            selectedRow = adjustedRowForInfiniteScrolling(tableView: tableView, selectedRow: selectedRow)
-            shouldAnimate = false
+        if #available(iOS 10.0, *) {
+            let generator = UISelectionFeedbackGenerator()
+            generator.selectionChanged()
         }
         
-        tableView.selectRow(at: IndexPath(row: selectedRow, section: 0), animated: shouldAnimate, scrollPosition: .middle)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+        
         if tableView == hourTableView {
             if is12HourFormat {
                 var hour = (indexPath.row - 12)%12 + 1
@@ -649,12 +594,7 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
             }
             
         } else if tableView == minuteTableView {
-            if timeInterval == .default {
-                components.minute = (indexPath.row - 60)%60
-            } else {
-                components.minute = indexPath.row * timeInterval.rawValue
-            }
-            
+            components.minute = (indexPath.row - 60)%60
         } else if tableView == amPmTableView {
             if let hour = components.hour,
                 indexPath.row == 0 && hour >= 12 {
@@ -675,6 +615,20 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    // for infinite scrolling, use modulo operation.
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView != dayCollectionView && scrollView != amPmTableView else {
+            return
+        }
+        let totalHeight = scrollView.contentSize.height
+        let visibleHeight = totalHeight / 3.0
+        if scrollView.contentOffset.y < visibleHeight || scrollView.contentOffset.y > visibleHeight + visibleHeight {
+            let positionValueLoss = scrollView.contentOffset.y - CGFloat(Int(scrollView.contentOffset.y))
+            let heightValueLoss = visibleHeight - CGFloat(Int(visibleHeight))
+            let modifiedPotisionY = CGFloat(Int( scrollView.contentOffset.y ) % Int( visibleHeight ) + Int( visibleHeight )) - positionValueLoss - heightValueLoss
+            scrollView.contentOffset.y = modifiedPotisionY
+        }
+    }
 }
 
 extension DateTimePicker: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -690,14 +644,14 @@ extension DateTimePicker: UICollectionViewDataSource, UICollectionViewDelegate {
         if includeMonth {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as! FullDateCollectionViewCell
             let date = dates[indexPath.item]
-            cell.populateItem(date: date, highlightColor: highlightColor, darkColor: darkColor, locale: locale)
+            cell.populateItem(date: date, highlightColor: highlightColor, darkColor: darkColor)
 
             return cell
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as! DateCollectionViewCell
             let date = dates[indexPath.item]
-            cell.populateItem(date: date, highlightColor: highlightColor, darkColor: darkColor, locale: locale)
+            cell.populateItem(date: date, highlightColor: highlightColor, darkColor: darkColor)
 
             return cell
         }
@@ -769,20 +723,12 @@ extension DateTimePicker: UICollectionViewDataSource, UICollectionViewDelegate {
             if let firstVisibleCell = tableView.visibleCells.first,
                 tableView != amPmTableView {
                 var firstVisibleRow = 0
-                if tableView.contentOffset.y >= firstVisibleCell.frame.origin.y + tableView.rowHeight/2 - tableView.contentInset.top {
+                if (tableView.contentOffset.y >= firstVisibleCell.frame.origin.y + tableView.rowHeight/2 - tableView.contentInset.top) {
                     firstVisibleRow = (tableView.indexPath(for: firstVisibleCell)?.row ?? 0) + 1
                 } else {
                     firstVisibleRow = (tableView.indexPath(for: firstVisibleCell)?.row ?? 0)
                 }
-                if tableView == minuteTableView && timeInterval != .default {
-                    selectedRow = min(max(firstVisibleRow, 0), self.tableView(tableView, numberOfRowsInSection: 0)-1)
-                } else {
-                    selectedRow = firstVisibleRow + 1
-                }
-                
-                // adjust selected row number for inifinite scrolling
-                selectedRow = adjustedRowForInfiniteScrolling(tableView: tableView, selectedRow: selectedRow)
-                
+                selectedRow = firstVisibleRow + 1
             } else if tableView == amPmTableView {
                 if -tableView.contentOffset.y > tableView.rowHeight/2 {
                     selectedRow = 0
@@ -808,11 +754,7 @@ extension DateTimePicker: UICollectionViewDataSource, UICollectionViewDelegate {
                     components.hour = (selectedRow - 24)%24
                 }
             } else if tableView == minuteTableView {
-                if timeInterval == .default {
-                    components.minute = (selectedRow - 60)%60
-                } else {
-                    components.minute = selectedRow * timeInterval.rawValue
-                }
+                components.minute = (selectedRow - 60)%60
             } else if tableView == amPmTableView {
                 if let hour = components.hour,
                     selectedRow == 0 && hour >= 12 {
@@ -833,20 +775,5 @@ extension DateTimePicker: UICollectionViewDataSource, UICollectionViewDelegate {
                 
             }
         }
-    }
-    
-    func adjustedRowForInfiniteScrolling(tableView: UITableView, selectedRow: Int) -> Int {
-        if tableView == minuteTableView &&
-            timeInterval != .default {
-            return selectedRow
-        }
-        
-        let numberOfRow = self.tableView(tableView, numberOfRowsInSection: 0)
-        if selectedRow == 1 {
-            return selectedRow + numberOfRow / 3
-        } else if selectedRow == numberOfRow - 2 {
-            return selectedRow - numberOfRow / 3
-        }
-        return selectedRow
     }
 }
