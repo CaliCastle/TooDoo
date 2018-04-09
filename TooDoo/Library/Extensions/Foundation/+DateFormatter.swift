@@ -11,7 +11,6 @@ import Foundation
 extension DateFormatter {
     
     /// Set locale to current language.
-    
     open func setLocale() {
         locale = Locale(identifier: LocaleManager.default.currentLanguage.string())
     }
@@ -19,7 +18,6 @@ extension DateFormatter {
     /// Get localized date formatter.
     ///
     /// - Returns: The localized formatter
-    
     open class func localized() -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.setLocale()
@@ -30,7 +28,6 @@ extension DateFormatter {
     /// Get English date formatter
     ///
     /// - Returns: The english formatter.
-    
     open class func inEnglish() -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")

@@ -12,7 +12,6 @@ import BulletinBoard
 extension BulletinManager {
     
     /// Get the standard manager.
-
     static func standard(rootItem: BulletinItem) -> BulletinManager {
         let manager = BulletinManager(rootItem: rootItem)
         manager.setupManagerInterface()
@@ -23,7 +22,6 @@ extension BulletinManager {
     }
     
     /// Get the blurred manager.
-    
     static func blurred(rootItem: BulletinItem) -> BulletinManager {
         let manager = BulletinManager(rootItem: rootItem)
         manager.setupManagerInterface()
@@ -34,7 +32,6 @@ extension BulletinManager {
     }
     
     /// Set up manager interface.
-    
     private func setupManagerInterface() {
         cardPadding = .compact
         hidesHomeIndicator = true

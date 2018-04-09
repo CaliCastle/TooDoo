@@ -15,13 +15,11 @@ extension ToDo {
     /// The max length limit for goal string.
     ///
     /// - Returns: The max characters limit in integer
-    
     open class func goalMaxLimit() -> Int {
         return 150
     }
     
     /// Find all to-dos.
-    
     class func findAll(in managedObjectContext: NSManagedObjectContext) -> [ToDo] {
         // Create Fetch Request
         let request: NSFetchRequest<ToDo> = fetchRequest()
@@ -30,7 +28,6 @@ extension ToDo {
     }
     
     /// Set default due date.
-    
     func setDefaultDueDate() {
         let calendar = Calendar.current
         
@@ -46,7 +43,7 @@ extension ToDo {
     }
     
     // MARK: - Configurations after creation.
-    
+
     func created() {
         // Assign UUID
         uuid = UUID().uuidString
@@ -61,7 +58,6 @@ extension ToDo {
     }
     
     /// Create to events with EventKit.
-    
     func createToEvents() {
         guard UserDefaultManager.bool(forKey: .CalendarsSync) else { return }
         
@@ -94,7 +90,6 @@ extension ToDo {
     }
     
     /// Create to reminders with EventKit.
-    
     func createToReminders() {
         guard UserDefaultManager.bool(forKey: .RemindersSync) else { return }
         
@@ -123,7 +118,6 @@ extension ToDo {
     }
     
     /// Set completed attribute.
-    
     func complete(completed: Bool) {
         if self.completed != completed {
             // Handle notifications
@@ -133,7 +127,7 @@ extension ToDo {
                 
                 if completed {
                     // Renew itself if it is repeated
-                    self.renewIfRepeated()
+                    self.renewDates()
                     // Remove notifications
                     NotificationManager.removeTodoReminderNotification(for: self)
                     // Remove from events
@@ -150,97 +144,114 @@ extension ToDo {
         }
     }
     
-    /// Renew to-do if it is repeated.
+    /// Renew all the dates.
+    internal func renewDates() {
+        renewDue()
+        renewRemindAt()
+    }
     
-    internal func renewIfRepeated() {
-        if let info = getRepeatInfo() {
-            // Get next recurring date
-            var component: Calendar.Component = .day
-            var amount: Int = info.frequency
-            
-            switch info.type {
-            case .None:
-                return
-            case .Daily:
-                component = .day
-                amount = 1
+    /// Renew a date if it is to be repeated.
+    internal func renewIfRepeated(_ dateToBeRenewed: inout Date?) {
+        guard let info = getRepeatInfo(), var date = dateToBeRenewed else { return }
+        
+        // Get next recurring date
+        var component: Calendar.Component = .day
+        var amount: Int = info.frequency
+        
+        switch info.type {
+        case .None:
+            return
+        case .Daily:
+            component = .day
+            amount = 1
+        case .Weekday:
+            component = .weekday
+            amount = 1
+        case .Weekly:
+            component = .day
+            amount = 7
+        case .Monthly:
+            component = .month
+            amount = 1
+        case .Annually:
+            component = .year
+            amount = 1
+        case .Regularly, .AfterCompletion:
+            switch info.unit {
+            case .Minute:
+                component = .minute
+            case .Hour:
+                component = .hour
+            case .Month:
+                component = .month
             case .Weekday:
                 component = .weekday
-                amount = 1
-            case .Weekly:
-                component = .day
-                amount = 7
-            case .Monthly:
-                component = .month
-                amount = 1
-            case .Annually:
+            case .Week:
+                amount = amount * 7
+            case .Year:
                 component = .year
-                amount = 1
-            case .Regularly, .AfterCompletion:
-                switch info.unit {
-                case .Minute:
-                    component = .minute
-                case .Hour:
-                    component = .hour
-                case .Month:
-                    component = .month
-                case .Weekday:
-                    component = .weekday
-                case .Week:
-                    amount = amount * 7
-                case .Year:
-                    component = .year
-                default:
-                    break
-                }
+            default:
+                break
             }
-            
-            let baseDate: Date = info.type == .AfterCompletion ? Date() : (due ?? Date())
-            var nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
-            
-            if component == .weekday {
-                let dateFormatter = DateFormatter.inEnglish()
-                dateFormatter.dateFormat = "EEE"
-                
-                switch dateFormatter.string(from: nextDate) {
-                case "Sat":
-                    // Set date to next monday by adding two more days
-                    nextDate = Calendar.current.date(byAdding: .day, value: 2, to: nextDate)!
-                case "Sun":
-                    // Set date to next monday by adding one more day
-                    nextDate = Calendar.current.date(byAdding: .day, value: 2, to: nextDate)!
-                default:
-                    break
-                }
-            }
-            
-            // Renew for remind notification
-            if let remindAt = remindAt {
-                self.remindAt = Calendar.current.date(byAdding: component, value: amount, to: info.type == .AfterCompletion ? Date() : remindAt)
-            }
-            
-            // Check if passed end repeating date
-            if let endDate = info.endDate, nextDate > endDate {
-                return
-            }
-            
-            // Renew self
-            due = nextDate
-            
-            if self.completed {
-                self.complete(completed: false)
-            }
+        }
+        
+        // Get initial next date
+        let baseDate: Date = info.type == .AfterCompletion ? Date() : date
+        var nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
+        
+        // Calculate next weekday
+        if component == .weekday {
+            calculateNextDateForWeekday(&nextDate)
+        }
+        
+        // Add renewal calculation
+        dateToBeRenewed = nextDate
+        
+        // Check if passed end repeating date
+        if let endDate = info.endDate, nextDate > endDate { return }
+        
+        // Set incomplete once it's renewed
+        if self.completed {
+            self.complete(completed: false)
+        }
+    }
+    
+    
+    /// Renew due date if needed.
+    internal func renewDue() {
+        renewIfRepeated(&due)
+    }
+    
+    /// Renew remind at date if needed.
+    internal func renewRemindAt() {
+        renewIfRepeated(&remindAt)
+    }
+    
+    /// Calculate next weekday accordingly (excluding Sat, Sun.)
+    ///
+    /// - Parameter date: The referenced date
+    internal func calculateNextDateForWeekday(_ date: inout Date) {
+        let dateFormatter = DateFormatter.inEnglish()
+        dateFormatter.dateFormat = "EEE"
+        
+        switch dateFormatter.string(from: date) {
+        case "Sat":
+            // Set date to next monday by adding two more days
+            date = Calendar.current.date(byAdding: .day, value: 2, to: date)!
+        case "Sun":
+            // Set date to next monday by adding one more day
+            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+        default:
+            break
         }
     }
     
     /// Check if is moved to trash.
-    
     func isMovedToTrash() -> Bool {
         return movedToTrashAt != nil
     }
     
     /// Set moved to trash attribute to current time.
-    
     func moveToTrash() {
         movedToTrashAt = Date()
         // Remove from events
@@ -252,7 +263,6 @@ extension ToDo {
     }
     
     /// Complete to reminders.
-    
     func setCompletedToReminders(completed: Bool) {
         guard UserDefaultManager.bool(forKey: .RemindersSync), let identifier = reminderIdentifier else { return }
         
@@ -273,7 +283,6 @@ extension ToDo {
     }
     
     /// Remove from events.
-    
     func removeFromEvents() {
         guard UserDefaultManager.bool(forKey: .CalendarsSync), let identifier = eventIdentifier else { return }
         
@@ -291,7 +300,6 @@ extension ToDo {
     }
     
     /// Remove from reminders.
-    
     func removeFromReminders() {
         guard UserDefaultManager.bool(forKey: .RemindersSync), let identifier = reminderIdentifier else { return }
         
@@ -309,7 +317,6 @@ extension ToDo {
     }
     
     /// Set reminder date.
-    
     func setReminder(_ remindDate: Date?) {
         if let remindDate = remindDate {
             remindAt = remindDate
@@ -331,7 +338,6 @@ extension ToDo {
     /// Get object identifier.
     ///
     /// - Returns: Identifier
-    
     func identifier() -> String {
         return objectID.uriRepresentation().relativePath
     }
@@ -341,32 +347,29 @@ extension ToDo {
 extension ToDo {
     
     /// Repeat types.
-    
     public enum RepeatType: String, Codable {
-        case None = "none"
-        case Daily = "daily"
-        case Weekly = "weekly"
-        case Weekday = "weekday"
-        case Monthly = "monthly"
-        case Annually = "yearly"
-        case Regularly = "regularly"
-        case AfterCompletion = "after-completion"
+        case None
+        case Daily
+        case Weekly
+        case Weekday
+        case Monthly
+        case Annually
+        case Regularly
+        case AfterCompletion
     }
     
     /// Repeat regularly unit.
-    
     public enum RepeatUnit: String, Codable {
-        case Minute = "minute"
-        case Hour = "hour"
-        case Day = "day"
-        case Weekday = "weekday"
-        case Week = "week"
-        case Month = "month"
-        case Year = "year"
+        case Minute
+        case Hour
+        case Day
+        case Weekday
+        case Week
+        case Month
+        case Year
     }
     
     /// Repeat structure.
-    
     struct Repeat: Codable {
         var type: RepeatType = .None
         var frequency: Int = 1
@@ -375,19 +378,16 @@ extension ToDo {
     }
     
     /// Repeat types.
-    
     static let repeatTypes: [RepeatType] = [
         .None, .Daily, .Weekday, .Weekly, .Monthly, .Annually, .Regularly, .AfterCompletion
     ]
     
     /// Repeat units.
-    
     static let repeatUnits: [RepeatUnit] = [
         .Minute, .Hour, .Day, .Weekday, .Week, .Month, .Year
     ]
     
     /// Retrieve repeat info.
-    
     func getRepeatInfo() -> ToDo.Repeat? {
         if let data = repeatInfo {
             return try? JSONDecoder().decode(ToDo.Repeat.self, from: data)
@@ -397,7 +397,6 @@ extension ToDo {
     }
     
     /// Set repeat info to data.
-    
     func setRepeatInfo(info: ToDo.Repeat?) {
         if let info = info {
             if let data = try? JSONEncoder().encode(info) {

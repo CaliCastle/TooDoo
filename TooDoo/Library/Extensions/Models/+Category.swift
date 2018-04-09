@@ -12,7 +12,6 @@ import CoreData
 extension Category {
     
     /// Find all categories.
-    
     class func findAll(in managedObjectContext: NSManagedObjectContext, with sortDescriptors: [NSSortDescriptor]? = nil) -> [Category] {
         // Create Fetch Request
         let request: NSFetchRequest<Category> = fetchRequest()
@@ -25,13 +24,11 @@ extension Category {
     }
     
     /// Get sort descriptor by order.
-    
     class func sortByOrder(ascending: Bool = true) -> NSSortDescriptor {
         return NSSortDescriptor(key: #keyPath(Category.order), ascending: ascending)
     }
     
     /// Get sort descriptor by createdAt.
-    
     class func sortByCreatedAt(ascending: Bool = true) -> NSSortDescriptor {
         return NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: ascending)
     }
@@ -39,7 +36,6 @@ extension Category {
     /// Create default `personal` and `work` category.
     ///
     /// - Parameter context: Managed object context
-    
     class func createDefault(context: NSManagedObjectContext) {
         let personalCategory = self.init(context: context)
         
@@ -66,7 +62,6 @@ extension Category {
     /// Get default category.
     ///
     /// - Returns: The default category
-    
     class func `default`() -> Category? {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         
@@ -83,7 +78,6 @@ extension Category {
     /// Newest first sort descriptor.
     ///
     /// - Returns: Sort descriptor for newest first
-    
     class func ordered() -> NSSortDescriptor {
         return NSSortDescriptor(key: #keyPath(Category.order), ascending: true)
     }
@@ -98,7 +92,6 @@ extension Category {
     /// Get category color.
     ///
     /// - Returns: UIColor color
-    
     func categoryColor() -> UIColor {
         guard let color = color else { return CategoryColor.default().first! }
         
@@ -108,7 +101,6 @@ extension Category {
     /// Get category icon.
     ///
     /// - Returns: UIImage icon
-    
     func categoryIcon() -> UIImage {
         guard let icon = icon else { return UIImage() }
         
@@ -118,7 +110,6 @@ extension Category {
     /// Set color property.
     ///
     /// - Parameter color: Color to be converted in string
-    
     func color(_ color: UIColor) {
         self.color = color.hexValue().replacingOccurrences(of: "#", with: "")
     }
@@ -126,13 +117,11 @@ extension Category {
     /// Set order position.
     ///
     /// - Parameter indexPath: The index path for new order
-    
     func order(indexPath: IndexPath) {
         order = Int16(indexPath.item)
     }
     
     /// Get valid todos. (The ones that are either completed or moved to trash)
-    
     func validTodos() -> [ToDo] {
         var validTodos: [ToDo] = []
         

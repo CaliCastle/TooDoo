@@ -12,7 +12,6 @@ import DeckTransition
 extension UITableViewController: DeckTransitionViewControllerProtocol {
     
     /// Scroll view for deck transition.
-    
     public var scrollViewForDeck: UIScrollView {
         return tableView
     }

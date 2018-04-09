@@ -20,7 +20,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
     var isAdding = true
     
     /// Keyboard manager.
-    
     let keyboard = Typist()
     
     // MARK: - View Life Cycle.
@@ -66,8 +65,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         
     }
     
-    /// Set up views.
-    
     internal func setupViews() {
         // Remove delete button when creating new category
         if isAdding, let items = toolbarItems {
@@ -78,8 +75,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(cancelDidTap(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done".localized, style: .done, target: self, action: #selector(doneDidTap(_:)))
     }
-    
-    /// Configure colors.
     
     internal func configureColors() {
         // Configure bar buttons
@@ -109,13 +104,9 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         }
     }
     
-    /// Get cell labels.
-    
     internal func getCellLabels() -> [UILabel] {
         return []
     }
-    
-    /// Register keyboard events.
     
     internal func registerKeyboardEvents() {
         keyboard.on(event: .willShow) {
@@ -128,8 +119,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
             self.navigationController?.setToolbarHidden(false, animated: true)
         }.start()
     }
-    
-    /// Configure input accessory view.
     
     internal func configureInputAccessoryView() -> UIToolbar {
         // Set up recolorable toolbar
@@ -156,9 +145,7 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         
         return inputToolbar
     }
-    
-    /// Animate views.
-    
+
     internal func animateViews() {
         // Set table view to initially hidden
         tableView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
@@ -175,8 +162,6 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         tableView.endEditing(true)
     }
     
-    /// User tapped cancel button.
-    
     @objc private func cancelDidTap(_ sender: Any) {
         // Generate haptic feedback
         Haptic.impact(.light).generate()
@@ -186,15 +171,11 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    /// When user tapped done.
-    
     @objc internal func doneDidTap(_ sender: Any) {
         tableView.endEditing(true)
         navigationController?.dismiss(animated: true, completion: nil)
     }
-    
-    /// User tapped delete button.
-    
+
     @objc internal func deleteDidTap(_ sender: Any) {
         tableView.endEditing(true)
         // Generate haptic feedback and play sound

@@ -11,25 +11,21 @@ import UIKit
 extension UIView {
     
     /// Apply basic gradients.
-    
     func applyGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil)
     }
     
     /// Apply horizontal gradient layer.
-    
     func applyHorizontalGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil, horizontal: true)
     }
     
     /// Apply diagonal gradient layer.
-    
     func applyDiagonalGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil, diagonal: true)
     }
     
     /// Apply full gradient layer.
-    
     func applyGradient(colors: [UIColor], locations: [NSNumber]?, diagonal: Bool = false, horizontal: Bool = false) {
         let gradient = CAGradientLayer()
         gradient.frame = bounds
@@ -48,7 +44,6 @@ extension UIView {
     }
     
     /// Add tilt.
-    
     func addTilt() {
         self.layer.transform = CATransform3DIdentity
         self.layer.transform.m34 = 1 / 1000.0
@@ -117,7 +112,6 @@ extension UIView {
     }
     
     /// Add shadow
-    
     func addShadow(with color: UIColor) {
         layer.shadowColor = color.cgColor
         layer.shadowRadius = 8
@@ -126,19 +120,16 @@ extension UIView {
     }
     
     /// Remove shadow.
-    
     func removeShadow() {
         layer.shadowOpacity = 0
     }
     
     /// Quickly add self to notification center.
-    
     internal func listen(for notification: NotificationManager.Notifications, then do: Selector, object: Any? = nil) {
         NotificationManager.listen(self, do: `do`, notification: notification, object: object)
     }
     
     /// Quickly add self to notification center with Apple API Notifications.
-    
     internal func listenTo(_ notification: NSNotification.Name, _ do: @escaping (Notification) -> Void, object: Any? = nil) {
         NotificationManager.center.addObserver(forName: notification, object: nil, queue: OperationQueue.main, using: `do`)
     }

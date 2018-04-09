@@ -11,11 +11,9 @@ import Foundation
 extension Bundle {
  
     /// The is beta key in info.plist.
-    
     static let betaInfoKey = "CCIsBeta"
     
     /// Get version number.
-    
     var versionNumber: String? {
         guard let info = infoDictionary else { return nil }
         
@@ -23,7 +21,6 @@ extension Bundle {
     }
     
     /// Get build number.
-    
     var buildNumber: String? {
         guard let info = infoDictionary else { return nil }
         
@@ -31,7 +28,6 @@ extension Bundle {
     }
     
     /// Check is beta.
-    
     var isBeta: Bool {
         guard let info = infoDictionary else { return false }
         
@@ -43,7 +39,6 @@ extension Bundle {
     }
     
     /// The localized app name.
-    
     var localizedAppName: String {
         guard let info = localizedInfoDictionary else { return "TooDoo" }
         
@@ -53,7 +48,6 @@ extension Bundle {
     /// Set version text to something like:
     /// -- TooDoo version 1.0.0
     /// --    Beta Build 11
-    
     var localizedVersionLabelString: String {
         let version = versionNumber!
         let build = buildNumber!
@@ -64,7 +58,6 @@ extension Bundle {
     /// Get localized bundle.
     ///
     /// - Returns: The bundle in the specific localization
-    
     public class func localizedBundle() -> Bundle {
         let bundlePath = Bundle.main.path(forResource: LocaleManager.default.currentLanguage.string(), ofType: "lproj")
         let bundle = Bundle(path: bundlePath!)

@@ -49,7 +49,7 @@
 "MMM d yyyy" = "MMM d, yyyy";
 
 "dates.short.d" = "d";
-"dates.short.weekday" = "wkday";
+"dates.short.weekday" = "wkd";
 "dates.short.w" = "w";
 "dates.short.m" = "mo";
 "dates.short.min" = "min";

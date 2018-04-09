@@ -40,37 +40,31 @@ extension UIViewController {
     }
     
     /// Dependency Injection for Managed Object Context.
-    
     open var managedObjectContext: NSManagedObjectContext {
         return CoreDataManager.main.persistentContainer.viewContext
     }
     
     /// Quickly add self to notification center.
-    
     internal func listen(for notification: NotificationManager.Notifications, then do: Selector, object: Any? = nil) {
         NotificationManager.listen(self, do: `do`, notification: notification, object: object)
     }
     
     /// Quickly add self to notification center with Apple API Notifications.
-    
     internal func listenTo(_ notification: NSNotification.Name, _ do: @escaping (Notification) -> Void, object: Any? = nil) {
         NotificationManager.center.addObserver(forName: notification, object: nil, queue: OperationQueue.main, using: `do`)
     }
     
     /// Get status bar style based on appearnce.
-    
     open func themeStatusBarStyle() -> UIStatusBarStyle {
         return AppearanceManager.default.theme == .Dark ? .lightContent : .default
     }
     
     /// Get current theme method.
-    
     open func currentThemeIsDark() -> Bool {
         return AppearanceManager.default.theme == .Dark
     }
     
     /// Update the status bar.
-    
     @objc public func updateStatusBar() {
         // Delay update status bar style
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

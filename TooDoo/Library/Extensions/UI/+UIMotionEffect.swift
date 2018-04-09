@@ -11,7 +11,6 @@ import UIKit
 extension UIMotionEffect {
     
     /// Two axes translation.
-    
     class func twoAxesShift(strength: Float) -> UIMotionEffect {
         // internal method that creates motion effect
         func motion(type: UIInterpolatingMotionEffectType) -> UIInterpolatingMotionEffect {
@@ -32,7 +31,6 @@ extension UIMotionEffect {
     }
     
     /// Two axes tilt.
-    
     class func twoAxesTilt(strength: Float) -> UIMotionEffect {
         // Get relative change with `strength` passed to the main method.
         func relativeValue(isMax: Bool, type: UIInterpolatingMotionEffectType) -> NSValue {

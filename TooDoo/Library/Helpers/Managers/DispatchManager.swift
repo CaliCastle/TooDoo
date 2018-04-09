@@ -14,24 +14,18 @@ import CoreData
 final class DispatchManager {
     
     /// Only instance.
-    
     public static let main = DispatchManager()
     
     /// Redirection segue identifier.
-    
     open var redirectSegueIdentifier: String?
     
     /// The blur effect view for blurring out content as an overlay.
-    
     private lazy var blurEffectView: UIVisualEffectView = {
         return configureBlurEffectView()
     }()
     
     /// Is the app locked.
-    
     open private(set) var isAppLocked: Bool = false
-    
-    /// Configure blur effect view.
     
     fileprivate func configureBlurEffectView() -> UIVisualEffectView {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: AppearanceManager.default.currentTheme() == .Dark ? .dark : .light))
@@ -98,7 +92,6 @@ final class DispatchManager {
     }
     
     /// Display lock if needed. (Lock on exit enabled) or (time interval exceeds)
-    
     fileprivate func displayLockControllerIfNeeded() {
         // If lock on exit enabled
         guard UserDefaultManager.bool(forKey: .LockEnabled), let topViewController = ApplicationManager.getTopViewControllerInWindow() else { return }
@@ -148,7 +141,6 @@ final class DispatchManager {
     /// Set redirect to identifier.
     ///
     /// - Parameter notification: Notification event
-    
     @objc private func setRedirectTo(_ notification: Notification) {
         guard let identifier = notification.object as? String else { return }
         
@@ -205,7 +197,6 @@ final class DispatchManager {
     }
     
     /// Once user has finished setup process.
-    
     @objc func userHasSetup() {
         // Create shortcut items
         ApplicationManager.createShortcutItems(for: UIApplication.shared)
@@ -215,26 +206,22 @@ final class DispatchManager {
     }
     
     /// Configure installation to user defaults if none.
-    
     fileprivate func configureInstallationDateIfNone() {
         let _ = UserDefaultManager.userHasBeenUsingThisAppDaysCount()
     }
     
     /// Register notifications for handling.
-    
     fileprivate func registerNotifications() {
         NotificationManager.listen(self, do: #selector(setRedirectTo(_:)), notification: .UserAuthenticationRedirect, object: nil)
         NotificationManager.listen(self, do: #selector(localeHasChanged(_:)), notification: .SettingLocaleChanged, object: nil)
     }
     
     /// When the locale has changed.
-    
     @objc fileprivate func localeHasChanged(_ notification: Notification) {
         ApplicationManager.createShortcutItems(for: UIApplication.shared, forces: true)
     }
     
     /// Open app's system settings.
-    
     public func openSystemSettings() {
         guard let openSettingsURL = URL(string: UIApplicationOpenSettingsURLString + Bundle.main.bundleIdentifier!) else { return }
         
@@ -244,6 +231,5 @@ final class DispatchManager {
     }
     
     /// Inaccessible initialization.
-    
     private init() {}
 }

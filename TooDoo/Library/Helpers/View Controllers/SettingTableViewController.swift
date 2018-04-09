@@ -41,15 +41,11 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         NotificationManager.remove(self)
     }
     
-    /// Configure the right bar button.
-    
     private func configureRightNavigationButton() {
         /// Add right bar button
         let rightBarButton = UIBarButtonItem(title: "Done".localized, style: .done, target: self, action: #selector(doneButtonDidTap(_:)))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-    
-    /// Localize interface.
     
     @objc public func localizeInterface() {
         if let rightBarButton = navigationItem.rightBarButtonItem {
@@ -60,8 +56,6 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         tableView.reloadData()
     }
     
-    /// Configure labels.
-    
     open func configureLabels() {
         if let cellLabels = getCellLabels() {
             cellLabels.forEach {
@@ -70,13 +64,9 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         }
     }
     
-    /// Get cell labels.
-    
     open func getCellLabels() -> [UILabel]? {
         return nil
     }
-    
-    /// Set up table view.
     
     open func setupTableView() {
         // Remove redundant lines
@@ -85,8 +75,6 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         configureLabels()
     }
 
-    /// When the done button is tapped.
-    
     @objc private func doneButtonDidTap(_ sender: UIBarButtonItem) {
         // Generate haptic feedback
         Haptic.impact(.medium).generate()
@@ -95,14 +83,10 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    /// Light status bar.
-    
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
-    /// Hide home indicator.
-    
     @available(iOS 11, *)
     open override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true

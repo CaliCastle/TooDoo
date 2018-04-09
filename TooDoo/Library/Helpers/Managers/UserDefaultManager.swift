@@ -90,7 +90,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Default Key
     /// - Returns: String result
-    
     class func string(forKey key: Key, _ default: String? = nil) -> String? {
         let value = userDefaults.string(forKey: key.rawValue)
         
@@ -105,7 +104,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Setting Key
     /// - Returns: String result
-    
     class func string(forKey key: SettingKey, _ default: String? = nil) -> String? {
         let value = userDefaults.string(forKey: key.string())
         
@@ -120,7 +118,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Default Key
     /// - Returns: Image result
-    
     class func image(forKey key: Key) -> UIImage? {
         guard let imageData = UserDefaults.standard.data(forKey: key.rawValue) else { return nil }
         
@@ -131,7 +128,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Setting Key
     /// - Returns: Image result
-    
     class func image(forKey key: SettingKey) -> UIImage? {
         guard let imageData = UserDefaults.standard.data(forKey: key.string()) else { return nil }
         
@@ -142,7 +138,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Default key
     /// - Returns: Boolean result
-    
     class func bool(forKey key: Key) -> Bool {
         return userDefaults.bool(forKey: key.rawValue)
     }
@@ -151,7 +146,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Setting key
     /// - Returns: Boolean result
-    
     class func bool(forKey key: SettingKey) -> Bool {
         return userDefaults.bool(forKey: key.string())
     }
@@ -161,7 +155,6 @@ final class UserDefaultManager {
     /// - Parameters:
     ///   - value: The value to be set
     ///   - key: The unique user default key
-    
     class func set(value: Any?, forKey key: Key) {
         userDefaults.set(value, forKey: key.rawValue)
     }
@@ -171,7 +164,6 @@ final class UserDefaultManager {
     /// - Parameters:
     ///   - value: The value to be set
     ///   - key: The unique user settings key
-    
     class func set(value: Any?, forKey key: SettingKey) {
         userDefaults.set(value, forKey: key.string())
     }
@@ -182,7 +174,6 @@ final class UserDefaultManager {
     ///   - key: The unique user default key
     ///   - default: Default value
     /// - Returns: The value
-    
     class func get(forKey key: Key, _ default: Any? = nil) -> Any? {
         let value = userDefaults.value(forKey: key.rawValue)
         
@@ -199,7 +190,6 @@ final class UserDefaultManager {
     ///   - key: The unique user settings key
     ///   - default: Default value
     /// - Returns: The value
-    
     class func get(forKey key: SettingKey, _ default: Any? = nil) -> Any? {
         let value = userDefaults.value(forKey: key.string())
         
@@ -214,7 +204,6 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The unique user default key
     /// - Returns: The integer value
-    
     class func int(forKey key: Key) -> Int {
         return userDefaults.integer(forKey: key.rawValue)
     }
@@ -224,7 +213,6 @@ final class UserDefaultManager {
     /// - Parameters:
     ///   - image: The image to be set
     ///   - key: The unique user default key
-    
     class func set(image: UIImage, forKey key: Key) {
         set(value: UIImagePNGRepresentation(image)! as NSData, forKey: key)
     }
@@ -232,7 +220,6 @@ final class UserDefaultManager {
     /// Remove a User Defaults object
     ///
     /// - Parameter key: The User Default key
-    
     class func remove(for key: Key) {
         userDefaults.removeObject(forKey: key.rawValue)
     }
@@ -240,13 +227,11 @@ final class UserDefaultManager {
     /// Remove a User Setting object
     ///
     /// - Parameter key: The User Default key
-    
     class func remove(for key: SettingKey) {
         userDefaults.removeObject(forKey: key.string())
     }
     
     // Private init
-    
     private init() {}
     
 }
@@ -258,13 +243,11 @@ extension UserDefaultManager {
     /// Check if the user has already setup
     ///
     /// - Returns: If setup or not
-    
     class func userHasSetup() -> Bool {
         return string(forKey: .UserName) != nil
     }
     
     /// Default date format.
-    
     static var dateFormat: String {
         return "yyyy-MM-dd"
     }
@@ -272,7 +255,6 @@ extension UserDefaultManager {
     /// Get how many days has the user been using this app
     ///
     /// - Returns: The days integer
-    
     class func userHasBeenUsingThisAppDaysCount() -> Int {
         guard let installationDateAsString = string(forKey: .UserHasBeenUsingSince) else { setUserInstallationDate(); return 0 }
         
@@ -288,7 +270,6 @@ extension UserDefaultManager {
     }
     
     /// Set user installation date to today's date.
-    
     fileprivate class func setUserInstallationDate() {
         // Configure date
         let today = Date()
@@ -299,19 +280,16 @@ extension UserDefaultManager {
     }
     
     /// Get user avatar.
-    
     class func userAvatar() -> UIImage {
         return image(forKey: .UserAvatar) ?? UIImage()
     }
     
     /// See if sounds setting is enabled.
-    
     class func settingSoundsEnabled() -> Bool {
         return userDefaults.value(forKey: SettingKey.Sounds.string()) == nil ? true : bool(forKey: .Sounds)
     }
     
     /// See if motion effect is enabled.
-    
     class func settingMotionEffectsEnabled() -> Bool {
         return bool(forKey: .MotionEffects)
     }
@@ -319,7 +297,6 @@ extension UserDefaultManager {
     /// Get current theme mode.
     ///
     /// - Returns: The theme mode
-    
     class func settingThemeMode() -> AppearanceManager.ThemeMode {
         guard let themeMode = get(forKey: .ThemeMode) as? String else { return .Dark }
         
