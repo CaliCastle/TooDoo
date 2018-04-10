@@ -414,6 +414,8 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         SoundManager.play(soundEffect: .Success)
         // Dismiss controller
         navigationController?.dismiss(animated: true, completion: nil)
+        
+        delegate.categoryActionDone?(category)
     }
     
     /// Delete current category.
@@ -627,7 +629,7 @@ extension CategoryTableViewController: FCAlertViewDelegate {
         // Dismiss controller
         navigationController?.dismiss(animated: true, completion: {
             // Delete category from context
-            delegate.deleteCategory(category)
+            delegate.deleteCategory?(category)
         })
     }
     

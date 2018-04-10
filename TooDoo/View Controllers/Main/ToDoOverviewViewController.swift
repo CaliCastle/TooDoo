@@ -11,6 +11,7 @@ import Hokusai
 import CoreData
 import SideMenu
 import ViewAnimator
+import DeckTransition
 
 final class ToDoOverviewViewController: UIViewController {
 
@@ -591,6 +592,10 @@ final class ToDoOverviewViewController: UIViewController {
             let destinationViewController = destination.viewControllers.first as! ReorderCategoriesTableViewController
 
             destinationViewController.delegate = self
+            
+            if let deckSegue = segue as? DeckSegue {
+                deckSegue.swipeToDismissEnabled = false
+            }
         case Segue.ShowTodo.rawValue:
             // About to show add/edit todo
             let destination = segue.destination as! UINavigationController
@@ -786,13 +791,11 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
 extension ToDoOverviewViewController: UICollectionViewDelegateFlowLayout {
 
     /// Set the collection items size.
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width * 0.8, height: collectionView.bounds.height)
     }
     
     /// Set spacing for each collection item.
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         var insets = collectionView.contentInset
     
@@ -810,7 +813,6 @@ extension ToDoOverviewViewController: UICollectionViewDelegateFlowLayout {
 extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     
     /// When the content did change with delete, insert, move and update type.
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         if anObject is ToDo {
             setupMessageLabel()
@@ -867,6 +869,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             break
         }
     }
+    
 }
 
 // MARK: - Handle Category Actions.
@@ -874,7 +877,6 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
 extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDelegate {
     
     /// Began adding new todo.
-    
     func newTodoBeganEditing() {
         // Remove reorder gesture
         longPressForReorderCategoryGesture.isEnabled = false
@@ -885,7 +887,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Done adding new todo.
-    
     func newTodoDoneEditing() {
         // Restore reorder gesture
         longPressForReorderCategoryGesture.isEnabled = true
@@ -896,7 +897,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show controller for adding new todo.
-    
     func showAddNewTodo(goal: String, for category: Category) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
@@ -906,7 +906,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Display category menu.
-    
     func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell) {
         guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
         currentRelatedCategoryIndex = selectedIndexPath
@@ -928,7 +927,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show category edit controller.
-    
     @objc private func showEditCategory() {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
@@ -938,7 +936,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show alert for deleting category.
-    
     @objc private func showDeleteCategory() {
         guard let index = currentRelatedCategoryIndex else { return }
         
@@ -950,7 +947,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show reorder categories.
-    
     @objc private func showReorderCategories(_ sender: Any?) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
@@ -966,7 +962,6 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
 extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     
     /// Validate category with unique name.
-    
     func validateCategory(_ category: Category?, with name: String) -> Bool {
         guard var categories = fetchedResultsController.fetchedObjects else { return false }
         // Remove current category from checking if exists
@@ -986,14 +981,12 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     }
     
     /// Delete the category.
-    
     func deleteCategory(_ category: Category) {
         // Delete from context
         managedObjectContext.delete(category)
     }
     
     /// Show menu for todo.
-    
     func showTodoMenu(for todo: ToDo) {
         let actionSheet = AlertManager.actionSheet(headline: "\("actionsheet.todo.title".localized)\(todo.goal!)", category: todo.category!)
         
@@ -1036,7 +1029,6 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
 extension ToDoOverviewViewController: ReorderCategoriesTableViewControllerDelegate {
     
     /// Once categories have been done organizing.
-    
     func categoriesDoneOrganizing() {
         guard let index = currentRelatedCategoryIndex else { return }
         // Reload current item
@@ -1050,13 +1042,11 @@ extension ToDoOverviewViewController: ReorderCategoriesTableViewControllerDelega
 extension ToDoOverviewViewController: FCAlertViewDelegate {
     
     /// Dismissal of alert.
-    
     func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
         alertView.dismissAlertView()
     }
     
     /// Confirmation of alert.
-    
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
         guard let index = currentRelatedCategoryIndex else { return }
         

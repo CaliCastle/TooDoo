@@ -16,20 +16,14 @@ protocol ReorderCategoriesTableViewControllerDelegate {
 
 final class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
     
+    fileprivate enum Segue: String {
+        case AddCategory
+    }
+    
     /// Fetched Results Controller.
     
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
+        return configureFetchedResultsController()
     }()
     
     var delegate: ReorderCategoriesTableViewControllerDelegate?
@@ -37,6 +31,21 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     /// The category to be deleted.
     
     var deletingCategory: Category?
+    
+    lazy var newCategoryButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 80))
+        button.setTitle("  \("shortcut.items.add-category".localized)", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "plus-button"), for: .normal)
+        button.titleLabel?.font = AppearanceManager.font(size: 17, weight: .Medium)
+        
+        let color: UIColor = currentThemeIsDark() ? .flatWhite() : .flatPurple()
+        button.setTitleColor(color, for: .normal)
+        button.tintColor = color
+        
+        button.addTarget(self, action: #selector(newCategoryDidTap), for: .touchUpInside)
+        
+        return button
+    }()
     
     // MARK: - View Life Cycle.
     
@@ -66,12 +75,25 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         title = "manage-categories.title".localized
     }
     
-    /// Setup views.
+    fileprivate func configureFetchedResultsController() -> NSFetchedResultsController<Category> {
+        // Create fetch request
+        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        
+        // Configure fetch request sort method
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
+        
+        // Create controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }
     
+    /// Setup views.
     private func setupViews() {
         navigationItem.rightBarButtonItem = editButtonItem
-        
-        tableView.tableFooterView = UIView()
+
+        tableView.tableFooterView = newCategoryButton
         
         // Set theme color
         navigationController?.navigationBar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
@@ -120,6 +142,10 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         return true
     }
     
+    @objc fileprivate func newCategoryDidTap() {
+        performSegue(withIdentifier: Segue.AddCategory.rawValue, sender: nil)
+    }
+    
     /// User tapped cancel.
     
     @IBAction func cancelDidTap(_ sender: UIBarButtonItem) {
@@ -130,6 +156,23 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         
         navigationController?.dismiss(animated: true) {
             self.delegate?.categoriesDoneOrganizing()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else { return }
+        
+        switch id {
+        case Segue.AddCategory.rawValue:
+            let destination = segue.destination as! UINavigationController
+            if let destinationViewController = destination.viewControllers.first as? CategoryTableViewController {
+                guard let categories = fetchedResultsController.fetchedObjects else { return }
+                
+                destinationViewController.delegate = self
+                destinationViewController.newCategoryOrder = Int16(categories.count)
+            }
+        default:
+            break
         }
     }
     
@@ -225,6 +268,28 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
 
 }
 
+extension ReorderCategoriesTableViewController: CategoryTableViewControllerDelegate {
+    
+    func validateCategory(_ category: Category?, with name: String) -> Bool {
+        guard var categories = fetchedResultsController.fetchedObjects else { return false }
+        // Remove current category from checking if exists
+        if let category = category, let index = categories.index(of: category) {
+            categories.remove(at: index)
+        }
+        
+        var validated = true
+        // Go through each and check name
+        let _ = categories.map {
+            if $0.name! == name {
+                validated = false
+            }
+        }
+        
+        return validated
+    }
+    
+}
+
 extension ReorderCategoriesTableViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -237,6 +302,10 @@ extension ReorderCategoriesTableViewController: NSFetchedResultsControllerDelega
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .middle)
             }
+        case .insert:
+            if let _ = newIndexPath {
+                tableView.reloadSections([0], with: .automatic)
+            }
         default:
             break
         }
@@ -245,12 +314,12 @@ extension ReorderCategoriesTableViewController: NSFetchedResultsControllerDelega
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
+    
 }
 
 extension ReorderCategoriesTableViewController: FCAlertViewDelegate {
     
     /// Alert dismissal.
-    
     func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
         alertView.dismissAlertView()
         // Reset deleting category
@@ -258,7 +327,6 @@ extension ReorderCategoriesTableViewController: FCAlertViewDelegate {
     }
     
     /// Alert confirmed.
-    
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
         guard let category = deletingCategory else { return }
         // Delete category from context
@@ -266,4 +334,5 @@ extension ReorderCategoriesTableViewController: FCAlertViewDelegate {
         // Reset deleting category
         deletingCategory = nil
     }
+    
 }

@@ -16,9 +16,12 @@ public final class DeckSegue: UIStoryboardSegue {
     
     var transition: UIViewControllerTransitioningDelegate?
     
+    @IBInspectable
+    public var swipeToDismissEnabled: Bool = true
+    
     /// Performs the visual transition for the Deck segue.
     public override func perform() {
-        transition = DeckTransitioningDelegate()
+        transition = DeckTransitioningDelegate(isSwipeToDismissEnabled: swipeToDismissEnabled)
         destination.transitioningDelegate = transition
         destination.modalPresentationStyle = .custom
         source.present(destination, animated: true, completion: nil)

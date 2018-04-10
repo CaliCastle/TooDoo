@@ -84,6 +84,12 @@ final class ApplicationManager {
         func displayName() -> String {
             return rawValue.capitalized.replacingOccurrences(of: "-", with: " ")
         }
+        
+        func localizedName() -> String {
+            let displayName = self.displayName()
+            
+            return "app-icons.\(displayName.lowercased())".localized
+        }
     }
     
     /// Create shortcut items for 3D Touch.

@@ -312,3 +312,21 @@
 "category-icon-work" = "工作";
 "category-icon-social" = "社交";
 "category-icon-other" = "其他";
+
+/*
+ App icons
+ */
+"app-icons.primary" = "默认";
+"app-icons.bumblebee" = "大黄蜂";
+"app-icons.navy" = "海军蓝";
+"app-icons.navy alt" = "海军蓝反";
+"app-icons.mocha" = "摩卡";
+"app-icons.rose" = "玫瑰红";
+"app-icons.flamingo" = "艳红";
+"app-icons.things blue" = "非常蓝";
+"app-icons.indigo" = "靛蓝";
+"app-icons.blush" = "通红";
+"app-icons.unicorn" = "独角兽";
+"app-icons.ebony" = "乌黑";
+"app-icons.emerald" = "翠绿";
+"app-icons.olive" = "橄榄";

@@ -8,10 +8,12 @@
 
 import Foundation
 
-public protocol CategoryTableViewControllerDelegate {
+@objc public protocol CategoryTableViewControllerDelegate {
     
     func validateCategory(_ category: Category?, with name: String) -> Bool
     
-    func deleteCategory(_ category: Category)
+    @objc optional func deleteCategory(_ category: Category)
+    
+    @objc optional func categoryActionDone(_ category: Category?)
     
 }

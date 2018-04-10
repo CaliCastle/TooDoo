@@ -312,3 +312,21 @@
 "category-icon-work" = "Work";
 "category-icon-social" = "Social";
 "category-icon-other" = "Other";
+
+/*
+ App icons
+ */
+"app-icons.primary" = "Primary";
+"app-icons.bumblebee" = "Bumblebee";
+"app-icons.navy" = "Navy";
+"app-icons.navy alt" = "Navy Alt";
+"app-icons.mocha" = "Mocha";
+"app-icons.rose" = "Rose";
+"app-icons.flamingo" = "Flamingo";
+"app-icons.things blue" = "Really Blue";
+"app-icons.indigo" = "Indigo";
+"app-icons.blush" = "Blush";
+"app-icons.unicorn" = "Unicorn";
+"app-icons.ebony" = "Ebony";
+"app-icons.emerald" = "Emerald";
+"app-icons.olive" = "Olive";

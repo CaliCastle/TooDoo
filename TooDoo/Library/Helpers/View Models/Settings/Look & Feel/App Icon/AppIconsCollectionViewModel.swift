@@ -83,7 +83,8 @@ extension AppIconsCollectionViewModel: UICollectionViewDelegate, UICollectionVie
         if #available(iOS 10.3, *) {
             let icon = appIcons[indexPath.item]
 
-            cell.iconNameLabel.text = icon.displayName()
+            cell.iconNameLabel.font = AppearanceManager.font(size: 11, weight: .Medium)
+            cell.iconNameLabel.text = icon.localizedName()
             cell.iconNameLabel.textColor = AppearanceManager.default.isDarkTheme() ? .white : .flatBlack()
 
             loadIconImage(for: cell, of: icon)

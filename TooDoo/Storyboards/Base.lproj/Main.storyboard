@@ -1052,10 +1052,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="C1K-bA-8mE" kind="custom" identifier="AddCategory" customClass="DeckSegue" customModule="DeckTransition" id="wpw-r0-NkR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzi-Vn-MhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2548" y="270"/>
+            <point key="canvasLocation" x="2548" y="269.70443349753697"/>
         </scene>
         <!--Settings-->
         <scene sceneID="UHL-M5-xBm">
@@ -2216,5 +2219,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZkO-cV-wbj"/>
         <segue reference="8yd-2R-K4r"/>
+        <segue reference="wpw-r0-NkR"/>
     </inferredMetricsTieBreakers>
 </document>
