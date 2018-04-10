@@ -244,6 +244,7 @@
 "settings.avatar.changed" = "头像已更改!";
 
 "settings.sounds" = "音效";
+"settings.haptics" = "震动反馈";
 "settings.motion-effects" = "位移视差";
 
 /*

@@ -41,6 +41,8 @@ final class UserDefaultManager {
         case AppIconChangedWithTheme
         /// - The sounds option
         case Sounds
+        /// - The haptics option
+        case Haptics
         /// - The dark or light mode
         case ThemeMode
         /// - The motion effect animation
@@ -138,16 +140,28 @@ final class UserDefaultManager {
     ///
     /// - Parameter key: The User Default key
     /// - Returns: Boolean result
-    class func bool(forKey key: Key) -> Bool {
-        return userDefaults.bool(forKey: key.rawValue)
+    class func bool(forKey key: Key, default: Bool? = nil) -> Bool {
+        let value = userDefaults.value(forKey: key.rawValue)
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return (value as? Bool) ?? false
     }
     
     /// Get boolean for a User Settings key
     ///
     /// - Parameter key: The User Setting key
     /// - Returns: Boolean result
-    class func bool(forKey key: SettingKey) -> Bool {
-        return userDefaults.bool(forKey: key.string())
+    class func bool(forKey key: SettingKey, default: Bool? = nil) -> Bool {
+        let value = userDefaults.value(forKey: key.string())
+        
+        if let `default` = `default`, value == nil {
+            return `default`
+        }
+        
+        return (value as? Bool) ?? false
     }
     
     /// Set a value for a User Defaults key
@@ -286,7 +300,12 @@ extension UserDefaultManager {
     
     /// See if sounds setting is enabled.
     class func settingSoundsEnabled() -> Bool {
-        return userDefaults.value(forKey: SettingKey.Sounds.string()) == nil ? true : bool(forKey: .Sounds)
+        return bool(forKey: .Sounds, default: true)
+    }
+    
+    /// See if haptics is enabled.
+    class func settingHapticsEnabled() -> Bool {
+        return bool(forKey: .Haptics, default: true)
     }
     
     /// See if motion effect is enabled.

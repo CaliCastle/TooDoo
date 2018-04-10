@@ -24,13 +24,11 @@ final class SettingsTableViewController: SettingTableViewController {
     @IBOutlet var appVersionLabel: UILabel!
     @IBOutlet var designedByLabel: UILabel!
     
-    // MARK: - Localizable Outlets.
-    
     /// Switch types.
-    
     private enum Switch: Int {
         case Sounds = 0
-        case MotionEffects = 1
+        case Haptics = 1
+        case MotionEffects = 2
     }
     
     // MARK: - View Life Cycle.
@@ -52,7 +50,6 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Localize interface.
-    
     override func localizeInterface() {
         super.localizeInterface()
         
@@ -62,7 +59,6 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Configure app icon to be cornered.
-    
     fileprivate func configureAppIconImage() {
         appIconImageView.cornerRadius = 6
         appIconImageView.layer.masksToBounds = true
@@ -74,7 +70,6 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Configure icon image views.
-    
     fileprivate func configureIconImages() {
         iconImageViews.forEach {
             // Bulk set image tint colors
@@ -84,13 +79,14 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Configure switches.
-    
     fileprivate func configureSwitches() {
         switches.forEach {
             switch $0.tag {
             case Switch.Sounds.rawValue:
                 // Sounds switch
                 $0.setOn(UserDefaultManager.settingSoundsEnabled(), animated: false)
+            case Switch.Haptics.rawValue:
+                $0.setOn(UserDefaultManager.settingHapticsEnabled(), animated: false)
             case Switch.MotionEffects.rawValue:
                 // Motion switch
                 $0.setOn(UserDefaultManager.settingMotionEffectsEnabled(), animated: false)
@@ -101,7 +97,6 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Set up table view.
-    
     internal override func setupTableView() {
         super.setupTableView()
         
@@ -110,19 +105,16 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Set cell labels
-    
     override func getCellLabels() -> [UILabel]? {
         return cellLabels
     }
     
     /// Set app version text.
-    
     fileprivate func setVersionText() {
         appVersionLabel.text = Bundle.main.localizedVersionLabelString
     }
     
     /// Set up designed and developed label.
-    
     fileprivate func setDesignedByText() {
         let text = "designed by".localized
         let separatedText = text.components(separatedBy: "|")
@@ -134,60 +126,27 @@ final class SettingsTableViewController: SettingTableViewController {
     }
     
     /// Sounds switch value changed.
-    
     @IBAction func soundsSwitchChanged(_ sender: UISwitch) {
         UserDefaultManager.set(value: sender.isOn, forKey: .Sounds)
     }
     
-    /// Motion effects switch changed.
+    /// Haptics switch changed.
+    @IBAction func hapticsSwitchChanged(_ sender: UISwitch) {
+        UserDefaultManager.set(value: sender.isOn, forKey: .Haptics)
+    }
     
+    /// Motion effects switch changed.
     @IBAction func motionEffectSwitchChanged(_ sender: UISwitch) {
         UserDefaultManager.set(value: sender.isOn, forKey: .MotionEffects)
         NotificationManager.send(notification: .SettingMotionEffectsChanged)
     }
     
-    /// Authentication switch value changed.
-    
-    @IBAction func authenticationSwitchChanged(_ sender: UISwitch) {
-        let context = LAContext()
-        let reason = "permission.authentication.reason".localized
-        
-        var authError: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, evaluateError in
-                if success {
-                    // User authenticated successfully
-                    DispatchQueue.main.async {
-                        UserDefaultManager.set(value: sender.isOn, forKey: .LockBiometric)
-                    }
-                } else {
-                    // User did not authenticate successfully
-                    self.authenticationFailed(sender)
-                }
-            }
-        } else {
-            // Could not evaluate policy
-            authenticationFailed(sender)
-        }
-    }
-    
-    /// Set authentication switch to off state.
-    
-    private func authenticationFailed(_ sender: UISwitch) {
-        DispatchQueue.main.async {
-            sender.setOn(false, animated: true)
-        }
-    }
-    
     /// When cell is about to be displayed.
-    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.prepareDisclosureIndicator()
     }
     
     /// Table header titles.
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -201,26 +160,7 @@ final class SettingsTableViewController: SettingTableViewController {
         }
     }
     
-    /// Table view rows.
-    
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        switch section {
-//        case 0:
-//            // Generals
-//            return 3
-//        case 1:
-//            // Look & Feel
-//            return 3
-//        case 2:
-//            // Privacy
-//            return 1
-//        default:
-//            return 1
-//        }
-//    }
-    
     /// Prepare for segue.
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         DispatchQueue.main.async {
             // Generate haptic feedback

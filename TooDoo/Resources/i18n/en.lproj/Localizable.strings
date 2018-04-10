@@ -245,6 +245,7 @@
 "settings.avatar.changed" = "Avatar changed!";
 
 "settings.sounds" = "Sounds";
+"settings.haptics" = "Haptics";
 "settings.motion-effects" = "Motion Effects";
 
 /*

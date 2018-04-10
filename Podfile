@@ -17,7 +17,6 @@ target 'TooDoo' do
   pod 'ChameleonFramework/Swift'
   pod 'Typist'
   pod 'LTMorphingLabel'
-  pod 'Haptica'
   pod 'Motion'
   pod 'BulletinBoard', :git => 'https://github.com/CaliCastle/BulletinBoard.git'
   pod 'Peep'

@@ -255,6 +255,9 @@
                                                 </imageView>
                                                 <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pDd-dD-FDW">
                                                     <rect key="frame" x="310" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="hapticsSwitchChanged:" destination="0DN-7j-0Ql" eventType="valueChanged" id="ucJ-OF-fug"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haptics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3x-Ju-E4C">
                                                     <rect key="frame" x="54" y="18" width="248" height="23.666666666666671"/>
@@ -293,7 +296,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="EMR-Jt-zxB"/>
                                                     </constraints>
                                                 </imageView>
-                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzU-0l-Xom">
+                                                <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzU-0l-Xom">
                                                     <rect key="frame" x="310" y="14" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="motionEffectSwitchChanged:" destination="0DN-7j-0Ql" eventType="valueChanged" id="UoE-58-P3F"/>
