@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Haptica
 import Hokusai
 import CoreData
 import SideMenu

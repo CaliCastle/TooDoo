@@ -8,7 +8,6 @@
 
 import UIKit
 import Typist
-import Haptica
 import CoreData
 import ViewAnimator
 

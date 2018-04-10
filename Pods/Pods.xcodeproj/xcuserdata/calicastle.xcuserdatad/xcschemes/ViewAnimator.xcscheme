@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "029B4015AD6A8C559500429E89D5939E"
+               BlueprintIdentifier = "7072FB2D34C4320F66E50859FBAD7151"
                BuildableName = "ViewAnimator.framework"
                BlueprintName = "ViewAnimator"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "029B4015AD6A8C559500429E89D5939E"
+            BlueprintIdentifier = "7072FB2D34C4320F66E50859FBAD7151"
             BuildableName = "ViewAnimator.framework"
             BlueprintName = "ViewAnimator"
             ReferencedContainer = "container:Pods.xcodeproj">

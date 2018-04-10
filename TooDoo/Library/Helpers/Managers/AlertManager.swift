@@ -8,7 +8,6 @@
 
 import UIKit
 import Hokusai
-import Haptica
 import BulletinBoard
 
 final class AlertManager {

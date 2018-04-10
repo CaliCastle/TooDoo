@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "388C0D78EEDE49316516D22DC7D2F08A"
+               BlueprintIdentifier = "481A1AEA1137B2A4807DB90D1B78B7CE"
                BuildableName = "Typist.framework"
                BlueprintName = "Typist"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "388C0D78EEDE49316516D22DC7D2F08A"
+            BlueprintIdentifier = "481A1AEA1137B2A4807DB90D1B78B7CE"
             BuildableName = "Typist.framework"
             BlueprintName = "Typist"
             ReferencedContainer = "container:Pods.xcodeproj">

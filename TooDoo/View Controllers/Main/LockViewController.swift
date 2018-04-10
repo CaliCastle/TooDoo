@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Haptica
 import Stellar
 import LocalAuthentication
 

@@ -8,7 +8,6 @@
 
 import UIKit
 import Typist
-import Haptica
 import ViewAnimator
 
 open class DeckEditorTableViewController: UITableViewController, LocalizableInterface {

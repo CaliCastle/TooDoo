@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Haptica
 import ViewAnimator
 import DeckTransition
 

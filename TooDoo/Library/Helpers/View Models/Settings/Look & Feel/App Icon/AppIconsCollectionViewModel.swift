@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Haptica
 
 protocol AppIconsCollectionViewModelDelegate {
     func appIconsCollectionViewDidScroll(_ scrollView: UIScrollView)

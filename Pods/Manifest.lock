@@ -8,7 +8,6 @@ PODS:
   - DateTimePicker (1.2.1)
   - DeckTransition (2.0.0)
   - Gifu (3.0.0)
-  - Haptica (2.0.1)
   - Hokusai (0.4.0)
   - LTMorphingLabel (0.5.6)
   - M13Checkbox (3.2.2)
@@ -35,7 +34,6 @@ DEPENDENCIES:
   - DateTimePicker
   - DeckTransition
   - Gifu
-  - Haptica
   - Hokusai
   - LTMorphingLabel
   - M13Checkbox
@@ -47,6 +45,27 @@ DEPENDENCIES:
   - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
   - ViewAnimator
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - ChameleonFramework
+    - CropViewController
+    - DateTimePicker
+    - DeckTransition
+    - Gifu
+    - Hokusai
+    - LTMorphingLabel
+    - M13Checkbox
+    - MarqueeLabel
+    - Motion
+    - NotificationBannerSwift
+    - Peep
+    - PinterestSegment
+    - SideMenu
+    - SnapKit
+    - Typist
+    - ViewAnimator
 
 EXTERNAL SOURCES:
   BulletinBoard:
@@ -70,7 +89,6 @@ SPEC CHECKSUMS:
   DateTimePicker: c7b10f7dfe6eb06014c88df964a0a994f246b791
   DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
   Gifu: 6543ca2056a3d697097c09fe543ef49348ccc892
-  Haptica: 8dbc771b1eb764454ce66092c4cfc6b29dcb6cb7
   Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
   LTMorphingLabel: bdb51d4682e9822da89da6f567bd8aa456fd6650
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
@@ -85,6 +103,6 @@ SPEC CHECKSUMS:
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
   ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: 077de2502d0702d290b1de47500fddbf1da253d7
+PODFILE CHECKSUM: 59cee4f701462fc4ceee4087e6de506f2ec9ac3e
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

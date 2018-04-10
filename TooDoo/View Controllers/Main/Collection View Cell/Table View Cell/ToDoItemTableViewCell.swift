@@ -8,7 +8,6 @@
 
 import UIKit
 import Stellar
-import Haptica
 import M13Checkbox
 
 protocol ToDoItemTableViewCellDelegate {
