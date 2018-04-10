@@ -25,7 +25,6 @@ target 'TooDoo' do
   pod 'Hokusai'
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'
-  pod 'DateTimePicker'
   pod 'SideMenu'
   pod 'PinterestSegment'
   pod 'Gifu'

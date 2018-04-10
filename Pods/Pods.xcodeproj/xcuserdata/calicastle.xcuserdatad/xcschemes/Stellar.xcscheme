@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D5F29C0436969EFF95EAAD35D609E32E"
+               BlueprintIdentifier = "9416364C78A240DDCB3872DD7D9907DB"
                BuildableName = "Stellar.framework"
                BlueprintName = "Stellar"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D5F29C0436969EFF95EAAD35D609E32E"
+            BlueprintIdentifier = "9416364C78A240DDCB3872DD7D9907DB"
             BuildableName = "Stellar.framework"
             BlueprintName = "Stellar"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import BulletinBoard
-import DateTimePicker
 
 final class ToDoTableViewController: DeckEditorTableViewController {
 
@@ -561,6 +560,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     @IBAction func dueTimeDidTap(_ sender: Any) {
         let dateTimePicker = DateTimePicker.show(selected: dueDate ?? now, minimumDate: now, maximumDate: nil)
         dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
         dateTimePicker.todayButtonTitle = "Today".localized

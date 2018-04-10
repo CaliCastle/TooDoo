@@ -5,7 +5,6 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - CropViewController (2.3.6)
-  - DateTimePicker (1.2.1)
   - DeckTransition (2.0.0)
   - Gifu (3.0.0)
   - Hokusai (0.4.0)
@@ -31,7 +30,6 @@ DEPENDENCIES:
   - BulletinBoard (from `https://github.com/CaliCastle/BulletinBoard.git`)
   - ChameleonFramework/Swift
   - CropViewController
-  - DateTimePicker
   - DeckTransition
   - Gifu
   - Hokusai
@@ -51,7 +49,6 @@ SPEC REPOS:
     - Alamofire
     - ChameleonFramework
     - CropViewController
-    - DateTimePicker
     - DeckTransition
     - Gifu
     - Hokusai
@@ -86,7 +83,6 @@ SPEC CHECKSUMS:
   BulletinBoard: 3821a6d58d01be12d4ca2b9e5517d52848574b3c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
-  DateTimePicker: c7b10f7dfe6eb06014c88df964a0a994f246b791
   DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
   Gifu: 6543ca2056a3d697097c09fe543ef49348ccc892
   Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
@@ -103,6 +99,6 @@ SPEC CHECKSUMS:
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
   ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: 59cee4f701462fc4ceee4087e6de506f2ec9ac3e
+PODFILE CHECKSUM: 43d6acf7d848d6835965b8294b96b349887670dc
 
 COCOAPODS: 1.5.0

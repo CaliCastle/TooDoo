@@ -28,6 +28,8 @@ import UIKit
         }
     }
     
+    public var hightlightTextColor = UIColor.white
+    
     public var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1) {
         didSet {
             dateTitleLabel.textColor = darkColor

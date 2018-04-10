@@ -5,6 +5,7 @@
 //  Created by Huong Do on 9/26/16.
 //  Copyright © 2016 ichigo. All rights reserved.
 //
+//  Modified by Cali Castle
 
 import UIKit
 
@@ -13,6 +14,8 @@ class DateCollectionViewCell: UICollectionViewCell {
     var numberLabel: UILabel!
     var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1)
     var highlightColor = UIColor(red: 0/255.0, green: 199.0/255.0, blue: 194.0/255.0, alpha: 1)
+    var textColor = UIColor.white
+    var highlightTextColor = UIColor.white
     
     override init(frame: CGRect) {
         
@@ -46,10 +49,7 @@ class DateCollectionViewCell: UICollectionViewCell {
             contentView.layer.borderWidth = isSelected == true ? 0 : 1
             
             if isSelected {
-                if #available(iOS 10.0, *) {
-                    let generator = UISelectionFeedbackGenerator()
-                    generator.selectionChanged()
-                }
+                Haptic.selection.generate()
             }
         }
     }
@@ -61,12 +61,12 @@ class DateCollectionViewCell: UICollectionViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         dayLabel.text = dateFormatter.string(from: date).uppercased()
-        dayLabel.textColor = isSelected == true ? UIColor(red: 50 / 255, green: 60.0/255.0, blue: 59.0/255.0, alpha: 1) : .white
+        dayLabel.textColor = isSelected == true ? highlightTextColor : textColor
         
         let numberFormatter = DateFormatter()
         numberFormatter.dateFormat = "d"
         numberLabel.text = numberFormatter.string(from: date)
-        numberLabel.textColor = isSelected == true ? UIColor(red: 50 / 255, green: 60.0/255.0, blue: 59.0/255.0, alpha: 1) : .white
+        numberLabel.textColor = isSelected == true ? highlightTextColor : textColor
         
         contentView.layer.borderColor = darkColor.withAlphaComponent(0.2).cgColor
         contentView.backgroundColor = isSelected == true ? highlightColor : UIColor(red: 50 / 255, green: 60.0/255.0, blue: 59.0/255.0, alpha: 1)

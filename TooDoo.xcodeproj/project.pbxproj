@@ -159,6 +159,10 @@
 		9DBCB2402079FF5D00A8ECF2 /* Side_Menu_Slide_In_Out.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB23C2079FF5D00A8ECF2 /* Side_Menu_Slide_In_Out.gif */; };
 		9DBCB2412079FF5D00A8ECF2 /* Side_Menu_Slide_In.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB23D2079FF5D00A8ECF2 /* Side_Menu_Slide_In.gif */; };
 		9DBCB2422079FF5D00A8ECF2 /* Side_Menu_Slide_Out.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB23E2079FF5D00A8ECF2 /* Side_Menu_Slide_Out.gif */; };
+		9DD9B29E207D7065005AD61D /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9B29A207D7064005AD61D /* DateCollectionViewCell.swift */; };
+		9DD9B29F207D7065005AD61D /* StepCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9B29B207D7064005AD61D /* StepCollectionViewFlowLayout.swift */; };
+		9DD9B2A0207D7065005AD61D /* FullDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9B29C207D7064005AD61D /* FullDateCollectionViewCell.swift */; };
+		9DD9B2A1207D7065005AD61D /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9B29D207D7065005AD61D /* DateTimePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -333,6 +337,10 @@
 		9DBCB23C2079FF5D00A8ECF2 /* Side_Menu_Slide_In_Out.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_In_Out.gif; sourceTree = "<group>"; };
 		9DBCB23D2079FF5D00A8ECF2 /* Side_Menu_Slide_In.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_In.gif; sourceTree = "<group>"; };
 		9DBCB23E2079FF5D00A8ECF2 /* Side_Menu_Slide_Out.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Slide_Out.gif; sourceTree = "<group>"; };
+		9DD9B29A207D7064005AD61D /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
+		9DD9B29B207D7064005AD61D /* StepCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		9DD9B29C207D7064005AD61D /* FullDateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullDateCollectionViewCell.swift; sourceTree = "<group>"; };
+		9DD9B29D207D7065005AD61D /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
 		D6C60B7BF83007E4F0CAFE92 /* Pods-TooDoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TooDoo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -600,6 +608,7 @@
 		8D4784E31F90782F0067E0FE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9DD9B291207D7016005AD61D /* DateTimePicker */,
 				8D3DFE141FDC997C0021D9AC /* Segmented Control */,
 				8D3DFE111FDC7C000021D9AC /* Collection View Layout */,
 				8D2075BC1FCFEEA400FBE622 /* Bulletin */,
@@ -1166,6 +1175,17 @@
 			path = "Side Menu";
 			sourceTree = "<group>";
 		};
+		9DD9B291207D7016005AD61D /* DateTimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9B29A207D7064005AD61D /* DateCollectionViewCell.swift */,
+				9DD9B29D207D7065005AD61D /* DateTimePicker.swift */,
+				9DD9B29C207D7064005AD61D /* FullDateCollectionViewCell.swift */,
+				9DD9B29B207D7064005AD61D /* StepCollectionViewFlowLayout.swift */,
+			);
+			path = DateTimePicker;
+			sourceTree = "<group>";
+		};
 		DAB3235CDD8F1ABEA16D25BC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1326,7 +1346,6 @@
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/DateTimePicker/DateTimePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/DeckTransition/DeckTransition.framework",
 				"${BUILT_PRODUCTS_DIR}/Gifu/Gifu.framework",
 				"${BUILT_PRODUCTS_DIR}/Hokusai/Hokusai.framework",
@@ -1349,7 +1368,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BulletinBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateTimePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeckTransition.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gifu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hokusai.framework",
@@ -1400,7 +1418,9 @@
 				8D3DFE131FDC7C1B0021D9AC /* BouncyLayoutCollectionViewLayout.swift in Sources */,
 				8DD3D6E31FB7DC6300BE4FEF /* CategoryIconCollectionViewCell.swift in Sources */,
 				8D9BCBC21F92FC9800721980 /* CoreDataManager.swift in Sources */,
+				9DD9B29E207D7065005AD61D /* DateCollectionViewCell.swift in Sources */,
 				8D4E2BC41FC6582700195D5C /* RecolorableTableView.swift in Sources */,
+				9DD9B2A1207D7065005AD61D /* DateTimePicker.swift in Sources */,
 				8DB277F81FD5D93A00EB774B /* NavigationBarAnimatable.swift in Sources */,
 				9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */,
 				8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
@@ -1433,6 +1453,7 @@
 				8D2075C01FCFF2F100FBE622 /* PermissionManager.swift in Sources */,
 				8DAC8F841FB0414B006207F6 /* +UIView.swift in Sources */,
 				8D3DFDEE1FDC676F0021D9AC /* +UIImageView.swift in Sources */,
+				9DD9B2A0207D7065005AD61D /* FullDateCollectionViewCell.swift in Sources */,
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */,
@@ -1486,6 +1507,7 @@
 				9D3E9766207CC0710044E9F8 /* Haptic.swift in Sources */,
 				8DD7CAF01FCEC68100EFA73A /* LanguageSettingsTableViewController.swift in Sources */,
 				8DBA55921FC430F80012B941 /* +UITextView.swift in Sources */,
+				9DD9B29F207D7065005AD61D /* StepCollectionViewFlowLayout.swift in Sources */,
 				8D6A13A71F93EF70004238D8 /* StoryboardManager.swift in Sources */,
 				8D88C3161F949A40003C767C /* AppearanceManager.swift in Sources */,
 				8D38562C20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift in Sources */,
