@@ -22,13 +22,6 @@ final class NotificationSettingsTableViewController: SettingTableViewController 
     
     @IBOutlet var appIconImageView: UIImageView!
     
-    // MARK: - Localizable Outlets.
-    
-    @IBOutlet var enableLabel: UILabel!
-    @IBOutlet var goToSystemSettingsLabel: UILabel!
-    @IBOutlet var notificationMessageLabel: UILabel!
-    @IBOutlet var justNowLabel: UILabel!
-    
     // MARK: - Properties.
     
     private let defaultMessage = "notifications.todo.due.title".localized
@@ -88,12 +81,7 @@ final class NotificationSettingsTableViewController: SettingTableViewController 
     override func localizeInterface() {
         super.localizeInterface()
         
-        title = "settings.titles.notifications".localized
-        enableLabel.text = "Fxl-qE-KWK.text".localized
-        goToSystemSettingsLabel.text = "83Q-F0-iKd.text".localized
-        notificationMessageLabel.text = "dUh-Si-LBV.text".localized
         messageTextField.placeholder = "PSE-Nm-hRW.placeholder".localized
-        justNowLabel.text = "bWR-5i-ucd.text".localized
     }
     
     /// Configure app icon to be cornered.

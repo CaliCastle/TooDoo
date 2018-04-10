@@ -63,7 +63,6 @@ final class LockViewController: UIViewController {
     }
     
     /// Set up views.
-    
     fileprivate func setupViews() {
         // Configure background gradient view
         backgroundGradientView.alpha = 1
@@ -91,10 +90,22 @@ final class LockViewController: UIViewController {
         biometricButton.backgroundColor = currentThemeIsDark() ? UIColor(hexString: "525252") : UIColor(hexString: "EEEEEE")
         biometricButton.cornerRadius = 12
         biometricButton.layer.masksToBounds = true
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swiped))
+        swipeGesture.direction = [.up, .down]
+        view.addGestureRecognizer(swipeGesture)
+    }
+    
+    /// Once user swiped, dismiss keyboard
+    ///
+    /// - Parameter recognizer: Swipe gesture
+    @objc fileprivate func swiped(_ recognizer: UIGestureRecognizer) {
+        if passcodeTextField.isFirstResponder {
+            passcodeTextField.resignFirstResponder()
+        }
     }
     
     /// Check biometrics support.
-    
     private func checkBiometrics() {
         // Check for biometric types
         let context = LAContext()

@@ -149,6 +149,9 @@
 		9D271998207AA01B00B87CFE /* icon-things-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197B207AA01B00B87CFE /* icon-things-blue@3x.png */; };
 		9D271999207AA01B00B87CFE /* icon-unicorn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197D207AA01B00B87CFE /* icon-unicorn@2x.png */; };
 		9D27199A207AA01B00B87CFE /* icon-unicorn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */; };
+		9D3E9760207C7BA80044E9F8 /* +UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */; };
+		9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E9761207CA03D0044E9F8 /* Colors.xcassets */; };
+		9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9763207CA6750044E9F8 /* +UILabel.swift */; };
 		9DBCB22B2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBCB22A2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift */; };
 		9DBCB22D2079F77300A8ECF2 /* AppIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */; };
 		9DBCB23F2079FF5D00A8ECF2 /* Side_Menu_Fade.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB23B2079FF5D00A8ECF2 /* Side_Menu_Fade.gif */; };
@@ -319,6 +322,9 @@
 		9D27197B207AA01B00B87CFE /* icon-things-blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-things-blue@3x.png"; sourceTree = "<group>"; };
 		9D27197D207AA01B00B87CFE /* icon-unicorn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@2x.png"; sourceTree = "<group>"; };
 		9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@3x.png"; sourceTree = "<group>"; };
+		9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIScrollView.swift"; sourceTree = "<group>"; };
+		9D3E9761207CA03D0044E9F8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		9D3E9763207CA6750044E9F8 /* +UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
 		9DBCB22A2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconsCollectionViewModel.swift; sourceTree = "<group>"; };
 		9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcons.xcassets; sourceTree = "<group>"; };
 		9DBCB23B2079FF5D00A8ECF2 /* Side_Menu_Fade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Fade.gif; sourceTree = "<group>"; };
@@ -390,6 +396,7 @@
 				9D271955207AA01B00B87CFE /* App Icons */,
 				9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */,
 				8D030E111FDBD51600FA5ED5 /* Animations */,
+				9D3E9761207CA03D0044E9F8 /* Colors.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -718,6 +725,8 @@
 				8DCC7EF81FCBA09B000E99BA /* +UITableViewCell.swift */,
 				8D030E0A1FDBCCF500FA5ED5 /* +UIImage.swift */,
 				8D3DFDED1FDC676F0021D9AC /* +UIImageView.swift */,
+				9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */,
+				9D3E9763207CA6750044E9F8 /* +UILabel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1230,6 +1239,7 @@
 				9DBCB2402079FF5D00A8ECF2 /* Side_Menu_Slide_In_Out.gif in Resources */,
 				9D271996207AA01B00B87CFE /* icon-rose@3x.png in Resources */,
 				8DCFF0F41FD86D18009532A2 /* due_notification.m4a in Resources */,
+				9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */,
 				9D271989207AA01B00B87CFE /* icon-primary@2x.png in Resources */,
 				9D271991207AA01B00B87CFE /* icon-navy-alt@2x.png in Resources */,
 				8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */,
@@ -1407,12 +1417,14 @@
 				8D9BCBC21F92FC9800721980 /* CoreDataManager.swift in Sources */,
 				8D4E2BC41FC6582700195D5C /* RecolorableTableView.swift in Sources */,
 				8DB277F81FD5D93A00EB774B /* NavigationBarAnimatable.swift in Sources */,
+				9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */,
 				8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */,
 				8DCC7EF91FCBA09B000E99BA /* +UITableViewCell.swift in Sources */,
 				8DB49E5F1FB9731E003240E1 /* ToDoItemTableViewCell.swift in Sources */,
 				8D26DA8D1FCD40A200F61FE7 /* +Bundle.swift in Sources */,
 				8DE7F1E61FBC13670026E65B /* ReorderCategoriesTableViewController.swift in Sources */,
+				9D3E9760207C7BA80044E9F8 /* +UIScrollView.swift in Sources */,
 				8D49E6441FBD83BF006167C0 /* ToDoAddItemTableViewCell.swift in Sources */,
 				8D2075C31FCFFEC600FBE622 /* CalendarsSettingsTableViewController.swift in Sources */,
 				8DAC562A1FC0A6E600F6956F /* SelectCategoryTableViewController.swift in Sources */,

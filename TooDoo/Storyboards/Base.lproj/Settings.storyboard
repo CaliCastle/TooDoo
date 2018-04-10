@@ -43,6 +43,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.general"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -81,6 +84,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.notifications"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -119,6 +125,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.calendars"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -161,6 +170,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.app-icon"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -200,6 +212,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.sounds"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AJM-Fq-s8Z">
                                                     <rect key="frame" x="310" y="11" width="51" height="31"/>
@@ -223,8 +238,48 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="K6x-Cm-3qk" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="wuq-b0-VNg" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="404.33333333333337" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wuq-b0-VNg" id="m20-pf-6GM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="haptic-icon" translatesAutoresizingMaskIntoConstraints="NO" id="J3d-br-dXx">
+                                                    <rect key="frame" x="16" y="15" width="30" height="30"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="axR-m2-MQT"/>
+                                                        <constraint firstAttribute="height" constant="30" id="da7-X3-nsv"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pDd-dD-FDW">
+                                                    <rect key="frame" x="310" y="14" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haptics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3x-Ju-E4C">
+                                                    <rect key="frame" x="54" y="18" width="248" height="23.666666666666671"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.haptics"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="v3x-Ju-E4C" firstAttribute="centerY" secondItem="m20-pf-6GM" secondAttribute="centerY" id="22D-Wb-zC6"/>
+                                                <constraint firstItem="pDd-dD-FDW" firstAttribute="leading" secondItem="v3x-Ju-E4C" secondAttribute="trailing" constant="8" id="Ih8-Hu-1MG"/>
+                                                <constraint firstItem="J3d-br-dXx" firstAttribute="centerY" secondItem="m20-pf-6GM" secondAttribute="centerY" id="NqX-4p-WRh"/>
+                                                <constraint firstItem="v3x-Ju-E4C" firstAttribute="leading" secondItem="J3d-br-dXx" secondAttribute="trailing" constant="8" id="REH-K6-qF9"/>
+                                                <constraint firstItem="pDd-dD-FDW" firstAttribute="centerY" secondItem="m20-pf-6GM" secondAttribute="centerY" id="dzR-xb-kpy"/>
+                                                <constraint firstItem="J3d-br-dXx" firstAttribute="leading" secondItem="m20-pf-6GM" secondAttribute="leading" constant="16" id="hyD-0Y-Qse"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="pDd-dD-FDW" secondAttribute="trailing" id="iNQ-lo-nlq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="K6x-Cm-3qk" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="464.33333333333337" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K6x-Cm-3qk" id="aDH-A7-Ltn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
@@ -249,6 +304,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.motion-effects"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -264,7 +322,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="60" id="rDL-sw-rJ4" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="464.33333333333337" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="524.33333333333337" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rDL-sw-rJ4" id="g2Y-dM-uLC">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="60"/>
@@ -283,6 +341,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.behaviors"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -306,7 +367,7 @@
                             <tableViewSection headerTitle="Privacy" id="DWK-PL-MAi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="53" id="Bel-bL-Kgu" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="580.33333333333337" width="375" height="53"/>
+                                        <rect key="frame" x="0.0" y="640.33333333333337" width="375" height="53"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bel-bL-Kgu" id="Ftd-GR-aZL">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="53"/>
@@ -326,6 +387,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.lock-app"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -352,10 +416,10 @@
                             <tableViewSection id="NYc-Cm-glP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="55" id="tQI-Tr-BPx" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="669.33333333333337" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="729.33333333333337" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tQI-Tr-BPx" id="kTZ-GO-Tmx">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TooDoo version v1.0.0 Build 11" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hO-rj-Cxi">
@@ -373,7 +437,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="45" id="bHF-xG-WfM" customClass="RecolorableTableViewCell" customModule="TooDoo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="724.33333333333337" width="375" height="45"/>
+                                        <rect key="frame" x="0.0" y="784.33333333333337" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bHF-xG-WfM" id="y2C-b5-Rzf">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44.666666666666664"/>
@@ -420,6 +484,7 @@
                         </sections>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.index"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="0DN-7j-0Ql" id="6If-Q3-Hfa"/>
@@ -435,16 +500,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="appIconImageView" destination="Wsg-po-7Ch" id="NNg-Ye-5Gs"/>
-                        <outlet property="appIconLabel" destination="w8T-Pa-04L" id="gZM-oZ-cGj"/>
                         <outlet property="appVersionLabel" destination="3hO-rj-Cxi" id="ZrP-WZ-jFR"/>
-                        <outlet property="behaviorsLabel" destination="eAb-CX-XMq" id="yOn-mZ-hoO"/>
-                        <outlet property="calendarsLabel" destination="biD-wE-oIV" id="zoP-Nd-zP8"/>
                         <outlet property="designedByLabel" destination="fMZ-Oj-9kY" id="FGA-DL-mkv"/>
-                        <outlet property="generalLabel" destination="3Ib-Ds-oL8" id="2z1-WL-uyY"/>
-                        <outlet property="lockAppLabel" destination="riX-v5-UWi" id="U3N-AY-oET"/>
-                        <outlet property="motionEffectsLabel" destination="1ke-5t-BG6" id="xDI-Ib-mL6"/>
-                        <outlet property="notificationsLabel" destination="5ZD-KG-2qS" id="bS3-UK-uOP"/>
-                        <outlet property="soundsLabel" destination="PfQ-Ym-gsc" id="01u-ov-SWm"/>
                         <outletCollection property="switches" destination="HzU-0l-Xom" collectionClass="NSMutableArray" id="uw3-Vk-VCu"/>
                         <outletCollection property="iconImageViews" destination="Xay-ll-IEt" collectionClass="NSMutableArray" id="yAK-fh-rGZ"/>
                         <outletCollection property="iconImageViews" destination="luB-U6-0q7" collectionClass="NSMutableArray" id="ORC-NM-wiR"/>
@@ -462,6 +519,9 @@
                         <outletCollection property="cellLabels" destination="w8T-Pa-04L" collectionClass="NSMutableArray" id="WVt-mF-bVR"/>
                         <outletCollection property="iconImageViews" destination="z3u-7c-sWF" collectionClass="NSMutableArray" id="zn9-eE-4nr"/>
                         <outletCollection property="cellLabels" destination="eAb-CX-XMq" collectionClass="NSMutableArray" id="hsO-P3-uuJ"/>
+                        <outletCollection property="iconImageViews" destination="J3d-br-dXx" collectionClass="NSMutableArray" id="EXf-4K-2fG"/>
+                        <outletCollection property="cellLabels" destination="v3x-Ju-E4C" collectionClass="NSMutableArray" id="L9J-AP-z8F"/>
+                        <outletCollection property="switches" destination="pDd-dD-FDW" collectionClass="NSMutableArray" id="kOA-xh-Nt2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqv-qn-hSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -492,6 +552,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.general.language"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="English" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yg6-CY-zPl">
                                                     <rect key="frame" x="289" y="18" width="51" height="20.666666666666668"/>
@@ -515,6 +578,7 @@
                         </sections>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.general"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="dPE-bA-kV2" id="3al-NT-fgq"/>
@@ -526,7 +590,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="currentLanguageLabel" destination="Yg6-CY-zPl" id="Bj5-k3-TZ5"/>
-                        <outlet property="languageLabel" destination="HWC-iH-YtI" id="yEW-WS-bIk"/>
                         <outletCollection property="cellLabels" destination="HWC-iH-YtI" collectionClass="NSMutableArray" id="gDJ-Wu-ARk"/>
                     </connections>
                 </tableViewController>
@@ -603,6 +666,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="Fxl-qE-KWK.text"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaC-4d-nyf">
                                                     <rect key="frame" x="310" y="17" width="51" height="31"/>
@@ -630,6 +696,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="83Q-F0-iKd.text"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iOS-settings" translatesAutoresizingMaskIntoConstraints="NO" id="4Av-jw-QJn">
                                                     <rect key="frame" x="329" y="17.666666666666671" width="30" height="30"/>
@@ -661,6 +730,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="dUh-Si-LBV.text"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="✎ Enter custom message" textAlignment="natural" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="PSE-Nm-hRW">
                                                     <rect key="frame" x="16" y="39" width="343" height="30"/>
@@ -715,6 +787,9 @@
                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="Just now"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -775,6 +850,7 @@
                         </sections>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="solidBackground" value="YES"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.notifications"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="HxS-qp-ppf" id="3nv-hy-yJl"/>
@@ -786,12 +862,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="appIconImageView" destination="Me8-IK-sfM" id="ssw-j4-DsZ"/>
-                        <outlet property="enableLabel" destination="Fxl-qE-KWK" id="VYx-Ef-sKe"/>
                         <outlet property="enableSwitch" destination="OaC-4d-nyf" id="N3M-x9-9kR"/>
-                        <outlet property="goToSystemSettingsLabel" destination="83Q-F0-iKd" id="7Su-Om-hGX"/>
-                        <outlet property="justNowLabel" destination="bWR-5i-ucd" id="FyY-Rl-7q5"/>
                         <outlet property="messageTextField" destination="PSE-Nm-hRW" id="6Hh-Y8-ury"/>
-                        <outlet property="notificationMessageLabel" destination="dUh-Si-LBV" id="onz-PN-fvT"/>
                         <outlet property="notificationWidgetMessageLabel" destination="ADu-dv-FQH" id="EMQ-ai-bFz"/>
                         <outlet property="notificationWidgetView" destination="JNK-AP-gBg" id="9hV-sc-tAr"/>
                         <outletCollection property="cellLabels" destination="Fxl-qE-KWK" collectionClass="NSMutableArray" id="2jQ-h3-5s5"/>
@@ -832,6 +904,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.calendars.sync-calendars"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -863,6 +938,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.calendars.sync-reminders"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -888,6 +966,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="83Q-F0-iKd.text"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iOS-settings" translatesAutoresizingMaskIntoConstraints="NO" id="CvE-S2-N78">
                                                     <rect key="frame" x="329" y="10" width="30" height="30"/>
@@ -910,6 +991,9 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.calendars"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="BMP-PP-oxR" id="AlT-nR-x6L"/>
                             <outlet property="delegate" destination="BMP-PP-oxR" id="hr4-Fi-wTT"/>
@@ -917,10 +1001,7 @@
                     </tableView>
                     <connections>
                         <outlet property="calendarSwitch" destination="JLt-lr-lNC" id="L6V-2T-zlw"/>
-                        <outlet property="goToSystemSettingsLabel" destination="ph4-r3-pb5" id="b1l-xu-0KT"/>
                         <outlet property="reminderSwitch" destination="2ud-Da-GJj" id="S5Q-sG-IWg"/>
-                        <outlet property="syncCalendarsLabel" destination="wPC-z3-WrR" id="u4b-YD-liJ"/>
-                        <outlet property="syncRemindersLabel" destination="rQJ-Ps-hCK" id="Dv2-HI-IlB"/>
                         <outletCollection property="cellLabels" destination="wPC-z3-WrR" collectionClass="NSMutableArray" id="SzS-6S-zh6"/>
                         <outletCollection property="cellLabels" destination="rQJ-Ps-hCK" collectionClass="NSMutableArray" id="wdi-0N-a8N"/>
                         <outletCollection property="cellLabels" destination="ph4-r3-pb5" collectionClass="NSMutableArray" id="GJy-98-00w"/>
@@ -953,6 +1034,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.app-icon.change-with-theme"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="K9v-vB-lA4">
                                                     <rect key="frame" x="310" y="7" width="51" height="31"/>
@@ -1100,6 +1184,9 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.app-icon"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="scd-AG-3Bx" id="brI-IA-vSy"/>
                             <outlet property="delegate" destination="scd-AG-3Bx" id="wsl-1w-J1M"/>
@@ -1107,7 +1194,6 @@
                     </tableView>
                     <connections>
                         <outlet property="appIconsCollectionView" destination="duo-YW-lHb" id="6TG-xq-bbo"/>
-                        <outlet property="changeWithThemeLabel" destination="ZK1-Jv-4ZN" id="R8m-3u-wfx"/>
                         <outlet property="collectionViewModel" destination="tVI-Xi-l3Y" id="bgF-YL-QsN"/>
                         <outlet property="iconChangeWithThemeSwitch" destination="K9v-vB-lA4" id="Rua-zf-m2D"/>
                         <outletCollection property="cellLabels" destination="ZK1-Jv-4ZN" collectionClass="NSMutableArray" id="hBm-Ed-iBz"/>
@@ -1141,6 +1227,9 @@
                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.behaviors.side-menu-animation"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -1233,6 +1322,9 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizationIdentifier" value="settings.titles.behaviors"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="BMj-Uk-ywq" id="Nl6-cJ-lz8"/>
                             <outlet property="delegate" destination="BMj-Uk-ywq" id="t0s-hC-f2f"/>
@@ -1240,7 +1332,7 @@
                     </tableView>
                     <connections>
                         <outlet property="sideMenuAnimationCollectionView" destination="3Fb-6x-Ume" id="t3I-dk-pfm"/>
-                        <outlet property="sideMenuAnimationLabel" destination="gHP-8v-7c4" id="4IE-0N-jq8"/>
+                        <outletCollection property="cellLabels" destination="gHP-8v-7c4" collectionClass="NSMutableArray" id="V9c-4U-Sko"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="23C-bc-prE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1637,6 +1729,7 @@
         <image name="behaviors-icon" width="33" height="33"/>
         <image name="calendar" width="30" height="30"/>
         <image name="checkmark-filled-circle-icon" width="34" height="34"/>
+        <image name="haptic-icon" width="33" height="33"/>
         <image name="iOS-settings" width="240" height="240"/>
         <image name="invisible-icon" width="60" height="60"/>
         <image name="key-icon" width="60" height="60"/>

@@ -10,6 +10,16 @@ import UIKit
 
 extension UIView {
     
+    @IBInspectable
+    var localizationIdentifier: String {
+        get {
+            return accessibilityIdentifier ?? ""
+        }
+        set {
+            accessibilityIdentifier = newValue
+        }
+    }
+    
     /// Apply basic gradients.
     func applyGradient(colors: [UIColor]) {
         applyGradient(colors: colors, locations: nil)

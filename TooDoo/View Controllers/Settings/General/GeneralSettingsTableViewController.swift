@@ -18,8 +18,6 @@ final class GeneralSettingsTableViewController: SettingTableViewController {
     
     // MARK: - Localizable Outlets.
     
-    @IBOutlet var languageLabel: UILabel!
-    
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
@@ -37,9 +35,6 @@ final class GeneralSettingsTableViewController: SettingTableViewController {
     
     override func localizeInterface() {
         super.localizeInterface()
-        
-        title = "settings.titles.general".localized
-        languageLabel.text = "settings.titles.general.language".localized
     }
     
     /// Get cell labels.

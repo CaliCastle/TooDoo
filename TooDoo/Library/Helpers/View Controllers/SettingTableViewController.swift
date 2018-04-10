@@ -48,9 +48,18 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
     }
     
     @objc public func localizeInterface() {
+        // Localize title
+        title = titleLocalizationIdentifier.localized
+        
+        // Localize navigation bar item
         if let rightBarButton = navigationItem.rightBarButtonItem {
             rightBarButton.title = "Done".localized
             navigationItem.rightBarButtonItem = rightBarButton
+        }
+        
+        // Localize table cell labels
+        if let cellLabels = getCellLabels() {
+            cellLabels.forEach { $0.localize() }
         }
         
         tableView.reloadData()
@@ -74,7 +83,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
         
         configureLabels()
     }
-
+    
     @objc private func doneButtonDidTap(_ sender: UIBarButtonItem) {
         // Generate haptic feedback
         Haptic.impact(.medium).generate()

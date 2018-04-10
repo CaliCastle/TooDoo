@@ -26,15 +26,6 @@ final class SettingsTableViewController: SettingTableViewController {
     
     // MARK: - Localizable Outlets.
     
-    @IBOutlet var generalLabel: UILabel!
-    @IBOutlet var notificationsLabel: UILabel!
-    @IBOutlet var calendarsLabel: UILabel!
-    @IBOutlet var appIconLabel: UILabel!
-    @IBOutlet var soundsLabel: UILabel!
-    @IBOutlet var motionEffectsLabel: UILabel!
-    @IBOutlet var behaviorsLabel: UILabel!
-    @IBOutlet var lockAppLabel: UILabel!
-    
     /// Switch types.
     
     private enum Switch: Int {
@@ -64,16 +55,6 @@ final class SettingsTableViewController: SettingTableViewController {
     
     override func localizeInterface() {
         super.localizeInterface()
-        
-        title = "settings.titles.index".localized
-        generalLabel.text = "settings.titles.general".localized
-        notificationsLabel.text = "settings.titles.notifications".localized
-        calendarsLabel.text = "settings.titles.calendars".localized
-        appIconLabel.text = "settings.titles.app-icon".localized
-        soundsLabel.text = "settings.sounds".localized
-        motionEffectsLabel.text = "settings.motion-effects".localized
-        behaviorsLabel.text = "settings.titles.behaviors".localized
-        lockAppLabel.text = "settings.titles.lock-app".localized
         
         setVersionText()
         setDesignedByText()

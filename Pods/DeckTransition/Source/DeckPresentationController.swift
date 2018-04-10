@@ -574,10 +574,8 @@ final class DeckPresentationController: UIPresentationController, UIGestureRecog
         
         case .changed:
             if isSwipeToDismissAllowed() {
-//                if let scrollView = scrollViewUpdater?.scrollView, scrollView.isTracking {
-                    let translation = gestureRecognizer.translation(in: presentedView)
-                    updatePresentedViewForTranslation(inVerticalDirection: translation.y)
-//                }
+                let translation = gestureRecognizer.translation(in: presentedView)
+                updatePresentedViewForTranslation(inVerticalDirection: translation.y)
             } else {
                 gestureRecognizer.setTranslation(.zero, in: presentedView)
             }

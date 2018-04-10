@@ -9,6 +9,7 @@
 import UIKit
 import Haptica
 import ViewAnimator
+import DeckTransition
 
 final class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
     
@@ -19,10 +20,6 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
     @IBOutlet var appIconsCollectionView: UICollectionView!
     
     @IBOutlet var collectionViewModel: AppIconsCollectionViewModel!
-    
-    // MARK: - Localizable Outlets.
-    
-    @IBOutlet var changeWithThemeLabel: UILabel!
     
     // MARK: - Properties
     
@@ -71,14 +68,12 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
             }
         }
     }
-    
+
     /// Localize interface.
     
     override func localizeInterface() {
         super.localizeInterface()
         
-        title = "settings.titles.app-icon".localized
-        changeWithThemeLabel.text = "settings.app-icon.change-with-theme".localized
     }
     
     // MARK: - View Life Cycle
@@ -130,6 +125,7 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
     @available(iOS 10.3, *)
     fileprivate func configureAppIconsCollectionView() {
         collectionViewModel.delegate = self
+
         appIconsCollectionView.delegate = collectionViewModel
         appIconsCollectionView.dataSource = collectionViewModel
         
@@ -190,7 +186,7 @@ final class AppIconSettingsTableViewController: SettingTableViewController, CALa
             return 1
         }
     }
-    
+
 }
 
 extension AppIconSettingsTableViewController: AppIconsCollectionViewModelDelegate {

@@ -44,6 +44,18 @@ extension UIViewController {
         return CoreDataManager.main.persistentContainer.viewContext
     }
     
+    @IBInspectable
+    public var titleLocalizationIdentifier: String {
+        get {
+            return view.localizationIdentifier
+        }
+        set {
+            title = newValue.localized
+            
+            view.localizationIdentifier = newValue
+        }
+    }
+    
     /// Quickly add self to notification center.
     internal func listen(for notification: NotificationManager.Notifications, then do: Selector, object: Any? = nil) {
         NotificationManager.listen(self, do: `do`, notification: notification, object: object)

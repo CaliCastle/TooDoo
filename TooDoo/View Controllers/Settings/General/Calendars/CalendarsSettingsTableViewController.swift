@@ -17,12 +17,6 @@ final class CalendarsSettingsTableViewController: SettingTableViewController {
     @IBOutlet var calendarSwitch: UISwitch!
     @IBOutlet var reminderSwitch: UISwitch!
     
-    // MARK: - Localizable Outlets.
-    
-    @IBOutlet var syncCalendarsLabel: UILabel!
-    @IBOutlet var syncRemindersLabel: UILabel!
-    @IBOutlet var goToSystemSettingsLabel: UILabel!
-    
     // MARK: - Properties.
     
     /// Has Calendars access.
@@ -71,11 +65,6 @@ final class CalendarsSettingsTableViewController: SettingTableViewController {
     
     override func localizeInterface() {
         super.localizeInterface()
-        
-        title = "settings.titles.calendars".localized
-        syncCalendarsLabel.text = "settings.calendars.sync-calendars".localized
-        syncRemindersLabel.text = "settings.calendars.sync-reminders".localized
-        goToSystemSettingsLabel.text = "83Q-F0-iKd.text".localized
     }
     
     /// Configure switches.

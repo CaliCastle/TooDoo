@@ -18,10 +18,6 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     @IBOutlet var cellLabels: [UILabel]!
     @IBOutlet var sideMenuAnimationCollectionView: UICollectionView!
     
-    // MARK: - Localizable Outlets.
-    
-    @IBOutlet var sideMenuAnimationLabel: UILabel!
-    
     // MARK: - Properties.
     
     let sideMenuAnimations = AppearanceManager.default.sideMenuAnimations()
@@ -44,7 +40,6 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupViews()
         configureSideMenuAnimationCollectionView()
     }
     
@@ -70,18 +65,12 @@ final class BehaviorsSettingsTableViewController: SettingTableViewController, CA
     override func localizeInterface() {
         super.localizeInterface()
         
-        title = "settings.titles.behaviors".localized
-        sideMenuAnimationLabel.text = "settings.behaviors.side-menu-animation".localized
     }
     
     /// Remove action from gradient layer.
     
     func action(for layer: CALayer, forKey event: String) -> CAAction? {
         return NSNull()
-    }
-    
-    fileprivate func setupViews() {
-        sideMenuAnimationLabel.textColor = currentThemeIsDark() ? .white : .flatBlack()
     }
     
     /// Configure side menu animation collection view.
