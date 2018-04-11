@@ -153,6 +153,7 @@
 		9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E9761207CA03D0044E9F8 /* Colors.xcassets */; };
 		9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9763207CA6750044E9F8 /* +UILabel.swift */; };
 		9D3E9766207CC0710044E9F8 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9765207CC0710044E9F8 /* Haptic.swift */; };
+		9DA5D647207DDE24001554A5 /* +UIDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */; };
 		9DBCB22B2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBCB22A2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift */; };
 		9DBCB22D2079F77300A8ECF2 /* AppIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */; };
 		9DBCB23F2079FF5D00A8ECF2 /* Side_Menu_Fade.gif in Resources */ = {isa = PBXBuildFile; fileRef = 9DBCB23B2079FF5D00A8ECF2 /* Side_Menu_Fade.gif */; };
@@ -331,6 +332,7 @@
 		9D3E9761207CA03D0044E9F8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		9D3E9763207CA6750044E9F8 /* +UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
 		9D3E9765207CC0710044E9F8 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIDatePicker.swift"; sourceTree = "<group>"; };
 		9DBCB22A2079BDD200A8ECF2 /* AppIconsCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconsCollectionViewModel.swift; sourceTree = "<group>"; };
 		9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcons.xcassets; sourceTree = "<group>"; };
 		9DBCB23B2079FF5D00A8ECF2 /* Side_Menu_Fade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Side_Menu_Fade.gif; sourceTree = "<group>"; };
@@ -739,6 +741,7 @@
 				8D3DFDED1FDC676F0021D9AC /* +UIImageView.swift */,
 				9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */,
 				9D3E9763207CA6750044E9F8 /* +UILabel.swift */,
+				9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1178,8 +1181,8 @@
 		9DD9B291207D7016005AD61D /* DateTimePicker */ = {
 			isa = PBXGroup;
 			children = (
-				9DD9B29A207D7064005AD61D /* DateCollectionViewCell.swift */,
 				9DD9B29D207D7065005AD61D /* DateTimePicker.swift */,
+				9DD9B29A207D7064005AD61D /* DateCollectionViewCell.swift */,
 				9DD9B29C207D7064005AD61D /* FullDateCollectionViewCell.swift */,
 				9DD9B29B207D7064005AD61D /* StepCollectionViewFlowLayout.swift */,
 			);
@@ -1455,6 +1458,7 @@
 				8D3DFDEE1FDC676F0021D9AC /* +UIImageView.swift in Sources */,
 				9DD9B2A0207D7065005AD61D /* FullDateCollectionViewCell.swift in Sources */,
 				8DCBEA5F1FB2A6A800AD34D9 /* SoundManager.swift in Sources */,
+				9DA5D647207DDE24001554A5 /* +UIDatePicker.swift in Sources */,
 				8DB49E581FB8D859003240E1 /* FCAlertView.swift in Sources */,
 				8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */,
 				8D030E0B1FDBCCF500FA5ED5 /* +UIImage.swift in Sources */,

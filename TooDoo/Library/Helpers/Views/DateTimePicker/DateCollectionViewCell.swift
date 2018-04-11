@@ -12,6 +12,7 @@ import UIKit
 class DateCollectionViewCell: UICollectionViewCell {
     var dayLabel: UILabel! // rgb(128,138,147)
     var numberLabel: UILabel!
+    
     var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1)
     var highlightColor = UIColor(red: 0/255.0, green: 199.0/255.0, blue: 194.0/255.0, alpha: 1)
     var textColor = UIColor.white
@@ -58,7 +59,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         self.highlightColor = highlightColor
         self.darkColor = darkColor
         
-        let dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter.localized()
         dateFormatter.dateFormat = "EEEE"
         dayLabel.text = dateFormatter.string(from: date).uppercased()
         dayLabel.textColor = isSelected == true ? highlightTextColor : textColor
