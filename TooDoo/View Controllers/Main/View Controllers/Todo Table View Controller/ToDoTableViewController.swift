@@ -581,6 +581,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         
         let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: now)
         dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.includeMonth = true
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
         dateTimePicker.todayButtonTitle = "Today".localized
