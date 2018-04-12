@@ -26,42 +26,24 @@ final class CategoryIconCollectionViewCell: UICollectionViewCell {
         didSet {
             // Once set, change image to icon image
             iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
-            iconImageView.tintColor = color
-        }
-    }
-    
-    /// Stored color property.
-    var color: UIColor = .white {
-        didSet {
-            UIView.animate(withDuration: 0.25) {
-                self.iconImageView.tintColor = self.color.lighten(byPercentage: 0.2)
-            }
-        }
-    }
-    
-    /// Pass tint color to color property.
-
-    override var tintColor: UIColor! {
-        didSet {
-            color = tintColor
-            if isSelected {
-                contentView.backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: tintColor, isFlat: true)
-            }
+            configureColors()
         }
     }
     
     /// Set selected style.
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.contentView.backgroundColor = (AppearanceManager.default.isDarkTheme() ? UIColor.white : UIColor.black).withAlphaComponent(0.9)
-                })
-            } else {
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.contentView.backgroundColor = .clear
-                })
-            }
+            UIView.animate(withDuration: 0.35, animations: {
+                self.configureColors()
+            })
         }
+    }
+    
+    /// Configure cell colors.
+    fileprivate func configureColors() {
+        let color = AppearanceManager.default.isDarkTheme() ? UIColor.white : UIColor.black
+        
+        contentView.backgroundColor = isSelected ? color.withAlphaComponent(0.9) : .clear
+        iconImageView.tintColor = isSelected ? UIColor(contrastingBlackOrWhiteColorOn: color, isFlat: true) : color.withAlphaComponent(0.4)
     }
 }

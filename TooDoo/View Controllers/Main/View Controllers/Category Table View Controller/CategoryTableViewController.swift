@@ -503,7 +503,7 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
                 return UICollectionViewCell()
             }
             
-            cell.color = categoryColors[indexPath.item]
+//            cell.color = categoryColors[indexPath.item]
             
             return cell
         default:
@@ -512,14 +512,28 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
                 return UICollectionViewCell()
             }
             
-            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
-            cell.color = (currentThemeIsDark() ? UIColor.flatWhite() : .flatBlack()).withAlphaComponent(0.8)
-            cell.tintColor = cell.isSelected ? UIColor(contrastingBlackOrWhiteColorOn: cell.color, isFlat: true) : (currentThemeIsDark() ? UIColor.white : UIColor.black).withAlphaComponent(0.5)
+//            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
+//            cell.color = (currentThemeIsDark() ? UIColor.flatWhite() : .flatBlack()).withAlphaComponent(0.8)
+//            cell.tintColor = cell.isSelected ? UIColor(contrastingBlackOrWhiteColorOn: cell.color, isFlat: true) : (currentThemeIsDark() ? UIColor.white : UIColor.black).withAlphaComponent(0.5)
             
             return cell
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        switch collectionView.tag {
+        case CategoryCollectionType.Icon.rawValue:
+            guard let cell = cell as? CategoryIconCollectionViewCell else { return }
+            
+            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
+        case CategoryCollectionType.Color.rawValue:
+            guard let cell = cell as? CategoryColorCollectionViewCell else { return }
+            
+            cell.color = categoryColors[indexPath.item]
+        default:
+            return
+        }
+    }
     
     /// Select items in collection view.
     
