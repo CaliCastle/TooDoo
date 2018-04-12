@@ -475,12 +475,14 @@ final class ToDoOverviewViewController: UIViewController {
         Haptic.impact(.light).generate()
         
         // Show action sheet
-        let actionSheet = AlertManager.actionSheet(headline: "actionsheet.create-a".localized)
-
-        let _ = actionSheet.addButton("actionsheet.new-todo".localized, target: self, selector: #selector(showAddTodo))
-        let _ = actionSheet.addButton("actionsheet.new-category".localized, target: self, selector: #selector(showAddCategory))
+//        let actionSheet = AlertManager.actionSheet(headline: "actionsheet.create-a".localized)
+//
+//        let _ = actionSheet.addButton("actionsheet.new-todo".localized, target: self, selector: #selector(showAddTodo))
+//        let _ = actionSheet.addButton("actionsheet.new-category".localized, target: self, selector: #selector(showAddCategory))
+//        actionSheet.show()
         
-        actionSheet.show()
+        // Show pop menu
+        PopMenuManager.shared.present()
     }
     
     /// Show add todo view controller.
