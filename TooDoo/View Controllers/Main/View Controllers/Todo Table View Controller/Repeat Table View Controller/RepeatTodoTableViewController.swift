@@ -198,6 +198,7 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     /// Update next date label.
     fileprivate func updateNextDateLabel() -> Date? {
         if let info = repeatInfo {
+            if info.type == .AfterCompletion { repeatNextDateLabel.text = "repeat-todo.after-completion-next-date".localized; return nil }
             guard let nextDate = info.getNextDate(dueDate ?? Date()) else { return nil }
                 
             repeatNextDateLabel.text = "\("repeat-todo.custom.footer".localized)\n\(dateFormatter.string(from: nextDate))"
