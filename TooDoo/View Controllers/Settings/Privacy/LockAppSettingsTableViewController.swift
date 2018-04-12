@@ -87,6 +87,9 @@ class LockAppSettingsTableViewController: SettingTableViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+    }
+    
+    deinit {
         NotificationManager.remove(self)
     }
     

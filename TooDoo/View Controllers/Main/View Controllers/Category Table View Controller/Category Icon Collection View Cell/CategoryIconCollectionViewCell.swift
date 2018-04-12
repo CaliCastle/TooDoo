@@ -11,7 +11,6 @@ import UIKit
 final class CategoryIconCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
-    
     static let identifier = "CategoryIconCell"
     
     override var reuseIdentifier: String? {
@@ -23,7 +22,6 @@ final class CategoryIconCollectionViewCell: UICollectionViewCell {
     @IBOutlet var iconImageView: UIImageView!
     
     /// Stored icon property.
-    
     var icon: UIImage = UIImage() {
         didSet {
             // Once set, change image to icon image
@@ -33,7 +31,6 @@ final class CategoryIconCollectionViewCell: UICollectionViewCell {
     }
     
     /// Stored color property.
-    
     var color: UIColor = .white {
         didSet {
             UIView.animate(withDuration: 0.25) {
@@ -43,7 +40,7 @@ final class CategoryIconCollectionViewCell: UICollectionViewCell {
     }
     
     /// Pass tint color to color property.
-    
+
     override var tintColor: UIColor! {
         didSet {
             color = tintColor
@@ -54,12 +51,11 @@ final class CategoryIconCollectionViewCell: UICollectionViewCell {
     }
     
     /// Set selected style.
-    
     override var isSelected: Bool {
         didSet {
             if isSelected {
                 UIView.animate(withDuration: 0.35, animations: {
-                    self.contentView.backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: self.color, isFlat: true)
+                    self.contentView.backgroundColor = (AppearanceManager.default.isDarkTheme() ? UIColor.white : UIColor.black).withAlphaComponent(0.9)
                 })
             } else {
                 UIView.animate(withDuration: 0.35, animations: {

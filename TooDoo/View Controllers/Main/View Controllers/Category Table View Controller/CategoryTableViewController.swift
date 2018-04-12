@@ -263,9 +263,9 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         let color = categoryColors[selectedColorIndex.item]
         
         // Change icons in collection view to current color
-        categoryIconCollectionView.subviews.forEach {
-            $0.tintColor = color
-        }
+//        categoryIconCollectionView.subviews.forEach {
+//            $0.tintColor = color
+//        }
         
         guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
@@ -513,7 +513,8 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
             }
             
             cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
-            cell.color = categoryColors[selectedColorIndex.item]
+            cell.color = (currentThemeIsDark() ? UIColor.flatWhite() : .flatBlack()).withAlphaComponent(0.8)
+            cell.tintColor = cell.isSelected ? UIColor(contrastingBlackOrWhiteColorOn: cell.color, isFlat: true) : (currentThemeIsDark() ? UIColor.white : UIColor.black).withAlphaComponent(0.5)
             
             return cell
         }
@@ -523,6 +524,8 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     /// Select items in collection view.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        
         switch collectionView.tag {
         case CategoryCollectionType.Color.rawValue:
             // Color collection
