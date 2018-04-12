@@ -17,7 +17,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     ///
     /// - Color: Color chooser
     /// - Icon: Icon chooser
-    
     private enum CategoryCollectionType: Int {
         case Color
         case Icon
@@ -26,7 +25,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     // MARK: - Properties
     
     /// Stored category property.
-    
     var category: Category? {
         didSet {
             isAdding = false
@@ -34,19 +32,15 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Stored new order for category.
-    
     var newCategoryOrder: Int16 = 0
     
     /// Default category colors.
-    
     let categoryColors: [UIColor] = CategoryColor.default()
     
     /// Default category icons.
-    
     let categoryIcons: [String: [UIImage]] = CategoryIcon.default()
     
     /// Selected color index.
-    
     var selectedColorIndex: IndexPath = .zero {
         didSet {
             changeColors()
@@ -54,7 +48,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Selected icon index.
-    
     var selectedIconIndex: IndexPath? {
         didSet {
             changeIcon()
@@ -62,7 +55,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Table header height.
-    
     let tableHeaderHeight: CGFloat = 70
     
     var delegate: CategoryTableViewControllerDelegate?
@@ -83,7 +75,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     @IBOutlet var chooseIconLabel: UILabel!
     
     /// Gradient mask for color collection view.
-    
     private lazy var gradientMaskForColors: CAGradientLayer = {
         let gradientMask = CAGradientLayer()
         gradientMask.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
@@ -96,7 +87,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }()
     
     /// Gradent mask for icon collection view.
-    
     private lazy var gradientMaskForIcons: CAGradientLayer = {
         let gradientMask = CAGradientLayer()
         gradientMask.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
@@ -140,8 +130,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         selectDefaultIcon()
     }
     
-    /// Localize interface.
-    
     override func localizeInterface() {
         super.localizeInterface()
         
@@ -154,7 +142,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Additional views setup.
-    
     override func setupViews() {
         super.setupViews()
         
@@ -172,7 +159,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Configure colors.
-    
     override func configureColors() {
         super.configureColors()
         
@@ -191,13 +177,11 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Get cell labels.
-    
     override func getCellLabels() -> [UILabel] {
         return cellLabels
     }
     
     /// Configure name text field properties.
-    
     fileprivate func configureNameTextField() {
         if let category = category {
             // If editing category, fill out text field
@@ -211,13 +195,11 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Select default color in category color collection view.
-    
     fileprivate func selectDefaultColor() {
         categoryColorCollectionView.selectItem(at: selectedColorIndex, animated: true, scrollPosition: .centeredHorizontally)
     }
     
     /// Select default icon in category icon collection view.
-    
     fileprivate func selectDefaultIcon() {
         if let _ = category {
             if let indexPath = selectedIconIndex {
@@ -227,20 +209,17 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Update gradient frame when scrolling.
-    
     private func updateGradientFrame() {
         gradientMaskForColors.frame = CGRect(x: categoryColorCollectionView.contentOffset.x, y: 0, width: categoryColorCollectionView.bounds.width, height: categoryColorCollectionView.bounds.height)
         gradientMaskForIcons.frame = CGRect(x: categoryIconCollectionView.contentOffset.x, y: 0, width: categoryIconCollectionView.bounds.width, height: categoryIconCollectionView.bounds.height)
     }
     
     /// Remove action from gradient layer.
-    
     func action(for layer: CALayer, forKey event: String) -> CAAction? {
         return NSNull()
     }
     
     /// Animate views.
-    
     override func animateViews() {
         super.animateViews()
         
@@ -251,21 +230,14 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Register header view for category icons.
-    
     fileprivate func registerHeaderView() {
         categoryIconCollectionView.register(UINib(nibName: CategoryIconHeaderView.nibName, bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: CategoryIconHeaderView.identifier)
         categoryIconCollectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
     }
     
     /// Change icon color accordingly.
-    
     fileprivate func changeColors() {
         let color = categoryColors[selectedColorIndex.item]
-        
-        // Change icons in collection view to current color
-//        categoryIconCollectionView.subviews.forEach {
-//            $0.tintColor = color
-//        }
         
         guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
@@ -273,7 +245,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Change icon accordingly.
-    
     fileprivate func changeIcon() {
         guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
@@ -283,7 +254,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     /// Get current icon.
     ///
     /// - Returns: The current icon image
-    
     fileprivate func getCurrentIcon() -> UIImage? {
         guard let selectedIconIndex = selectedIconIndex else { return nil }
         if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex.section]] {
@@ -294,7 +264,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Toggle category icon.
-    
     fileprivate func toggleCategoryIcon(enable: Bool = true) {
         categoryIconCollectionView.isUserInteractionEnabled = enable
         categoryIconCollectionView.alpha = enable ? 1 : 0.5
@@ -306,7 +275,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Random color did tap.
-    
     @IBAction func randomColorDidTap(_ sender: UIButton) {
         if let newColor = categoryColors.randomElement() {
             // Play click sound and haptic feedback
@@ -321,19 +289,16 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Icon switch did change.
-    
     @IBAction func iconSwitchDidChange(_ sender: UISwitch) {
         toggleCategoryIcon(enable: sender.isOn)
     }
     
     /// Keyboard dismissal on exit.
-    
     @IBAction func nameEndOnExit(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
     /// User changed category name.
-    
     @IBAction func nameChanged(_ sender: UITextField) {
         guard let header = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
@@ -341,7 +306,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// User tapped done button.
-    
     override func doneDidTap(_ sender: Any) {
         // Validates first
         guard validateUserInput() else {
@@ -361,7 +325,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// User tapped delete button.
-    
     override func deleteDidTap(_ sender: Any) {
         super.deleteDidTap(sender)
         
@@ -371,7 +334,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     /// Validates user input.
     ///
     /// - Returns: Validation passesd or not
-    
     fileprivate func validateUserInput() -> Bool {
         guard categoryNameTextField.text?.trimmingCharacters(in: .whitespaces).count != 0 else { return false }
         
@@ -379,7 +341,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Save category to Core Data.
-    
     fileprivate func saveCategory() {
         // Retreive context
         guard let delegate = delegate else { return }
@@ -419,7 +380,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Delete current category.
-    
     fileprivate func deleteCategory() {
         guard let category = category else { return }
         
@@ -427,7 +387,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Show validation error banner.
-    
     fileprivate func showValidationError() {
         NotificationManager.showBanner(title: "notification.name-exists".localized, type: .danger)
     }
@@ -439,7 +398,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
 extension CategoryTableViewController {
     
     /// Adjust scroll behavior for dismissal.
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.isEqual(categoryColorCollectionView) || scrollView.isEqual(categoryIconCollectionView) {
             updateGradientFrame()
@@ -447,13 +405,11 @@ extension CategoryTableViewController {
     }
     
     /// Set preview header height.
-    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? tableHeaderHeight : 0
     }
     
     /// Set preview header view.
-    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
         
@@ -478,7 +434,6 @@ extension CategoryTableViewController {
 extension CategoryTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     /// How many sections in collection view.
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard collectionView.isEqual(categoryIconCollectionView) else { return 1 }
 
@@ -486,7 +441,6 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     /// How many items each section.
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard collectionView.isEqual(categoryIconCollectionView) else { return categoryColors.count }
         
@@ -494,7 +448,6 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     /// Get each item for collection view.
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case CategoryCollectionType.Color.rawValue:
@@ -503,23 +456,18 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
                 return UICollectionViewCell()
             }
             
-//            cell.color = categoryColors[indexPath.item]
-            
             return cell
         default:
             // Icon collection
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryIconCollectionViewCell.identifier, for: indexPath) as? CategoryIconCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            
-//            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
-//            cell.color = (currentThemeIsDark() ? UIColor.flatWhite() : .flatBlack()).withAlphaComponent(0.8)
-//            cell.tintColor = cell.isSelected ? UIColor(contrastingBlackOrWhiteColorOn: cell.color, isFlat: true) : (currentThemeIsDark() ? UIColor.white : UIColor.black).withAlphaComponent(0.5)
-            
+
             return cell
         }
     }
     
+    /// Use will display to configure cells.
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         switch collectionView.tag {
         case CategoryCollectionType.Icon.rawValue:
@@ -536,7 +484,6 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     /// Select items in collection view.
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         
@@ -554,7 +501,6 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     /// Set left spacing for collection.
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch collectionView.tag {
         case CategoryCollectionType.Color.rawValue:
@@ -572,7 +518,6 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     /// Supplementary view.
-    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard collectionView.isEqual(categoryIconCollectionView) else { return UICollectionReusableView() }
         
@@ -593,34 +538,30 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
 extension CategoryTableViewController: HorizontalFloatingHeaderLayoutDelegate {
     
     /// Collection view item size.
-    
     func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderItemSizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 50)
     }
     
     /// Section size.
-    
     func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderSizeForSectionAtIndex section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width / 3, height: 30)
     }
     
     /// Section insets.
-    
     func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderSectionInsetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 2, left: 10, bottom: 5, right: 0)
     }
     
     /// Item spacing.
-    
     func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderItemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 6
     }
     
     /// Item line spacing.
-    
     func collectionView(_ collectionView: UICollectionView, horizontalFloatingHeaderColumnSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 6
     }
+    
 }
 
 // MARK: - Alert Delegate Methods.
@@ -628,13 +569,11 @@ extension CategoryTableViewController: HorizontalFloatingHeaderLayoutDelegate {
 extension CategoryTableViewController: FCAlertViewDelegate {
     
     /// Irrelevant button clicked.
-    
     func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
         alertView.dismissAlertView()
     }
     
     /// Delete button clicked.
-    
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
         guard let category = category, let delegate = delegate else {
             navigationController?.dismiss(animated: true, completion: nil)

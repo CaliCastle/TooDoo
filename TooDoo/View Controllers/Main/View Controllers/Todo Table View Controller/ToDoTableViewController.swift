@@ -556,8 +556,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     }
     
     /// When user tapped due time.
-    
     @IBAction func dueTimeDidTap(_ sender: Any) {
+        tableView.endEditing(true)
+        
         let dateTimePicker = DateTimePicker.show(selected: dueDate ?? now, minimumDate: now, maximumDate: nil)
         dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
         dateTimePicker.includeMonth = true
@@ -571,8 +572,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     }
     
     /// When user tapped set reminder.
-    
     @IBAction func reminderDidTap(_ sender: Any) {
+        tableView.endEditing(true)
+        
         var selectedDate = dueDate ?? now
         
         if let remindDate = remindDate {

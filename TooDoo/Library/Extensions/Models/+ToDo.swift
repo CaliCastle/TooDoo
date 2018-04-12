@@ -155,54 +155,7 @@ extension ToDo {
         guard let info = getRepeatInfo(), let date = dateToBeRenewed else { return }
         
         // Get next recurring date
-        var component: Calendar.Component = .day
-        var amount: Int = info.frequency
-        
-        switch info.type {
-        case .None:
-            return
-        case .Daily:
-            component = .day
-            amount = 1
-        case .Weekday:
-            component = .weekday
-            amount = 1
-        case .Weekly:
-            component = .day
-            amount = 7
-        case .Monthly:
-            component = .month
-            amount = 1
-        case .Annually:
-            component = .year
-            amount = 1
-        case .Regularly, .AfterCompletion:
-            switch info.unit {
-            case .Minute:
-                component = .minute
-            case .Hour:
-                component = .hour
-            case .Month:
-                component = .month
-            case .Weekday:
-                component = .weekday
-            case .Week:
-                amount = amount * 7
-            case .Year:
-                component = .year
-            default:
-                break
-            }
-        }
-        
-        // Get initial next date
-        let baseDate: Date = info.type == .AfterCompletion ? Date() : date
-        var nextDate = Calendar.current.date(byAdding: component, value: amount, to: baseDate)!
-        
-        // Calculate next weekday
-        if component == .weekday {
-            calculateNextDateForWeekday(&nextDate)
-        }
+        guard let nextDate = info.getNextDate(date) else { return }
         
         // Add renewal calculation
         dateToBeRenewed = nextDate
@@ -230,20 +183,19 @@ extension ToDo {
     /// Calculate next weekday accordingly (excluding Sat, Sun.)
     ///
     /// - Parameter date: The referenced date
-    internal func calculateNextDateForWeekday(_ date: inout Date) {
-        let dateFormatter = DateFormatter.inEnglish()
-        dateFormatter.dateFormat = "EEE"
+    open class func calculateNextDateForWeekday(_ date: inout Date, amount: Int) {
+        var daysToAdd = amount
         
-        switch dateFormatter.string(from: date) {
-        case "Sat":
-            // Set date to next monday by adding two more days
-            date = Calendar.current.date(byAdding: .day, value: 2, to: date)!
-        case "Sun":
-            // Set date to next monday by adding one more day
-            date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
-        default:
-            break
-        }
+        repeat {
+            date = date.next(.day)
+            
+            if date.isWeekend {
+                // If next day is weekend
+                continue
+            }
+            
+            daysToAdd -= 1
+        } while daysToAdd != 0
     }
     
     /// Check if is moved to trash.
@@ -375,6 +327,64 @@ extension ToDo {
         var frequency: Int = 1
         var unit: RepeatUnit = .Day
         var endDate: Date?
+        
+        func getNextDate(_ date: Date) -> Date? {
+            let info = self
+            
+            var component: Calendar.Component = .day
+            var amount: Int = info.frequency
+            
+            switch info.type {
+            case .None:
+                return nil
+            case .Daily:
+                component = .day
+                amount = 1
+            case .Weekday:
+                component = .weekday
+                amount = 1
+            case .Weekly:
+                component = .day
+                amount = 7
+            case .Monthly:
+                component = .month
+                amount = 1
+            case .Annually:
+                component = .year
+                amount = 1
+            case .Regularly, .AfterCompletion:
+                switch info.unit {
+                case .Minute:
+                    component = .minute
+                case .Hour:
+                    component = .hour
+                case .Month:
+                    component = .month
+                case .Weekday:
+                    component = .weekday
+                case .Week:
+                    amount = amount * 7
+                case .Year:
+                    component = .year
+                default:
+                    break
+                }
+            }
+            
+            // Get initial next date
+            var nextDate: Date = info.type == .AfterCompletion ? Date() : date
+
+            if component == .weekday {
+                // Calculate next weekday
+                calculateNextDateForWeekday(&nextDate, amount: amount)
+            } else {
+                // Calculate next by component
+                nextDate = Calendar.current.date(byAdding: component, value: amount, to: nextDate)!
+            }
+            
+            // Add renewal calculation
+            return nextDate
+        }
     }
     
     /// Repeat types.

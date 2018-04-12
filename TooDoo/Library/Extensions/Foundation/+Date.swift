@@ -33,6 +33,24 @@ public extension Date {
         return calendar.dateComponents(unitFlags, from: self, to: now)
     }
     
+    /// If the date is in weekend.
+    public var isWeekend: Bool {
+        let dateFormatter = DateFormatter.inEnglish()
+        dateFormatter.dateFormat = "EEE"
+        
+        let nextDay = dateFormatter.string(from: self)
+        
+        return nextDay == "Sat" || nextDay == "Sun"
+    }
+    
+    /// Get next date.
+    ///
+    /// - Parameter component: The component, `day`, `week`, `month` etc
+    /// - Returns: The next date
+    public func next(_ component: Calendar.Component) -> Date {
+        return calendar.date(byAdding: component, value: 1, to: self)!
+    }
+    
     public func timeAgo(numericDates: Bool = false, numericTimes: Bool = false) -> String {
         if let year = components.year, year > 0 {
             if year >= 2 { return String(format: "%d years ago".adjustedKey(forValue: year).localized, year) }

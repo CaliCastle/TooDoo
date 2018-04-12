@@ -18,7 +18,7 @@ final class CategoryColor {
         "FFCD00", "3398DB", "745EC5", "79302A",
         "F0DEB4", "2FCC71", "5E4533", "A28671",
         "34485E", "1BBC9C", "5E345E", "B8C8F1",
-        "ECF0F1", "EF717A", "5064A1", "C0392C",
+        "BDC3C7", "EF717A", "5064A1", "C0392C",
         "FFA800", "D45C9F", "99ABD5", "14A085"
     ]
     
@@ -40,15 +40,12 @@ final class CategoryColor {
 final class CategoryIcon {
     
     /// Icons plist file name.
-    
     internal static let iconsFileName = "Category Icons"
     
     /// Icons prefix name.
-    
     internal static let iconsPrefix = "category-icon-"
     
     /// Icons category indexes.
-    
     open static let iconCategoryIndexes = [
         "lifestyle", "work", "social", "other"
     ]
@@ -57,7 +54,6 @@ final class CategoryIcon {
     ///
     /// - lifestyle:
     /// - social... etc
-    
     static var defaultIcons: [String: [String]] = {
         if let path = Bundle.main.url(forResource: iconsFileName, withExtension: "plist") {
             if let data = try? Data(contentsOf: path) {
@@ -71,7 +67,6 @@ final class CategoryIcon {
     /// Get default icons for category.
     ///
     /// - Returns: Default icons
-    
     class func `default`() -> [String: [UIImage]] {
         var icons: [String: [UIImage]] = [:]
         
@@ -87,7 +82,6 @@ final class CategoryIcon {
     }
     
     /// Get category icon index.
-    
     class func getIconIndex(for icon: UIImage) -> IndexPath {
         let icons = defaultIcons
         var item = 0
@@ -108,7 +102,6 @@ final class CategoryIcon {
     }
     
     /// Get category icon name suffix.
-    
     class func getIconName(for icon: UIImage) -> String {
         for iconCategory in defaultIcons {
             for iconName in iconCategory.value {

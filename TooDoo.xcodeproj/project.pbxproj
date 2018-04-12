@@ -118,6 +118,7 @@
 		8DF35D631FBE54FA001877F4 /* +ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D621FBE54FA001877F4 /* +ToDo.swift */; };
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 		8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */; };
+		8DF64CF3207FDB4500233E23 /* +UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF64CF2207FDB4500233E23 /* +UIPickerView.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
 		8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0571FC5074D00162996 /* Menu.storyboard */; };
 		8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */; };
@@ -292,6 +293,7 @@
 		8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 		8DF55B291FCAE85900A1DA95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8DF64CF2207FDB4500233E23 /* +UIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIPickerView.swift"; sourceTree = "<group>"; };
 		8DF7B04F1FC502A100162996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuTableHeaderView.xib; sourceTree = "<group>"; };
 		8DF7B0521FC502A600162996 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuTableHeaderView.strings; sourceTree = "<group>"; };
 		8DF7B0541FC502A800162996 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuTableHeaderView.strings"; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */,
 				9D3E9763207CA6750044E9F8 /* +UILabel.swift */,
 				9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */,
+				8DF64CF2207FDB4500233E23 /* +UIPickerView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1444,6 +1447,7 @@
 				8D1599081FAAEE310004846F /* GradientView.swift in Sources */,
 				8D4E2BC91FC6AB3700195D5C /* +IndexPath.swift in Sources */,
 				8D4E2BC21FC655D300195D5C /* RecolorableTableViewCell.swift in Sources */,
+				8DF64CF3207FDB4500233E23 /* +UIPickerView.swift in Sources */,
 				8D2075BE1FCFEEB900FBE622 /* FeedbackPageBulletinItem.swift in Sources */,
 				8D4784CF1F9077820067E0FE /* TooDoo.xcdatamodeld in Sources */,
 				8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */,

@@ -27,7 +27,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     
     // MARK: - Localizable Outlets.
     
-    
     // MARK: - Properties.
     
     var delegate: RepeatTodoTableViewControllerDelegate?
@@ -49,7 +48,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Date formatter.
-    
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter.localized()
         dateFormatter.dateFormat = "yyyy MMM dd, EEE".localized
@@ -58,15 +56,12 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }()
     
     /// Due date for todo.
-    
     var dueDate: Date?
     
     /// Repeat frequencies.
-    
     let repeatFrequencies = 800
     
     /// Selected frequency.
-    
     var selectedFrequency: Int? {
         didSet {
             if var info = repeatInfo {
@@ -82,7 +77,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Selected unit.
-    
     var selectedUnit: ToDo.RepeatUnit? {
         didSet {
             if var info = repeatInfo {
@@ -99,7 +93,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Has end date.
-    
     var hasEndDate: Bool = false {
         didSet {
             guard hasEndDate != oldValue else { return }
@@ -153,7 +146,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Localize interface.
-    
     func localizeInterface() {
         title = "todo-table.repeat".localized
         
@@ -166,8 +158,12 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Setup views.
-    
     fileprivate func setupViews() {
+        repeatTypePickerView.textColor = .white
+        repeatTypePickerView.setSeparator(color: UIColor.white.withAlphaComponent(0.1))
+        endDatePicker.textColor = .white
+        endDatePicker.setSeparator(color: UIColor.white.withAlphaComponent(0.1))
+        
         if let info = repeatInfo {
             if let index = ToDo.repeatTypes.index(of: info.type) {
                 tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
@@ -187,7 +183,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Configure colors.
-    
     fileprivate func configureColors() {
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
         
@@ -201,34 +196,11 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Update next date label.
-    
     fileprivate func updateNextDateLabel() -> Date? {
         if let info = repeatInfo {
-            var component: Calendar.Component = .day
-            var amount: Int = info.frequency
-            
-            switch info.unit {
-            case .Minute:
-                component = .minute
-            case .Hour:
-                component = .hour
-            case .Day:
-                component = .day
-            case .Weekday:
-                component = .weekday
-            case .Month:
-                component = .month
-            case .Week:
-                component = .day
-                amount = amount * 7
-            case .Year:
-                component = .year
-            }
-            
-            if info.type == .AfterCompletion { repeatNextDateLabel.text = "repeat-todo.after-completion-next-date".localized; return nil }
-            
-            let nextDate = Calendar.current.date(byAdding: component, value: amount, to: dueDate ?? Date())
-            repeatNextDateLabel.text = "\("repeat-todo.custom.footer".localized)\n\(dateFormatter.string(from: nextDate!))"
+            guard let nextDate = info.getNextDate(dueDate ?? Date()) else { return nil }
+                
+            repeatNextDateLabel.text = "\("repeat-todo.custom.footer".localized)\n\(dateFormatter.string(from: nextDate))"
             
             return nextDate
         }
@@ -237,33 +209,28 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Update next recurring date.
-    
     fileprivate func updateNextDate() {
         endDatePicker.date = updateNextDateLabel() ?? Date()
     }
     
     /// Light status bar.
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     /// Auto hide home indicator
-    
     @available(iOS 11, *)
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
     }
     
     /// End date switch did change.
-    
     @IBAction func endDateSwitchDidChange(_ sender: UISwitch) {
         hasEndDate = sender.isOn
         updateNextDate()
     }
     
     /// End date picker did change.
-    
     @IBAction func endDatePickerDidChange(_ sender: UIDatePicker) {
         guard var info = repeatInfo else { return }
         
@@ -273,7 +240,7 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         guard let info = repeatInfo else { return 0 }
         
@@ -286,7 +253,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
 
     /// Number of rows.
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 1:
@@ -299,13 +265,11 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// About to display cell.
-    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.accessoryType = cell.isSelected ? .checkmark : .none
     }
     
     /// Select row.
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard var info = repeatInfo else { return }
         
@@ -355,7 +319,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Select highlight cell.
-    
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
         
@@ -367,7 +330,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
     
     /// Select unhightlight cell.
-    
     override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
         
@@ -381,7 +343,6 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
     }
 
     /// Header titles.
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
@@ -400,13 +361,11 @@ class RepeatTodoTableViewController: UITableViewController, LocalizableInterface
 extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     /// Number of components.
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 2
     }
     
     /// Number of rows.
-    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
         case 0:
@@ -417,7 +376,6 @@ extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
     
     /// Selected row.
-    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
@@ -430,7 +388,6 @@ extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
     
     /// Attributed string for each component.
-    
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var text = ""
         
@@ -443,4 +400,5 @@ extension RepeatTodoTableViewController: UIPickerViewDelegate, UIPickerViewDataS
         
         return NSAttributedString(string: text, attributes: [.foregroundColor: currentThemeIsDark() ? UIColor.white : .flatBlack(), .font: AppearanceManager.font(size: 17, weight: .DemiBold)])
     }
+    
 }
