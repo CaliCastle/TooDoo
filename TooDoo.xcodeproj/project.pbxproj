@@ -151,6 +151,7 @@
 		9D271998207AA01B00B87CFE /* icon-things-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197B207AA01B00B87CFE /* icon-things-blue@3x.png */; };
 		9D271999207AA01B00B87CFE /* icon-unicorn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197D207AA01B00B87CFE /* icon-unicorn@2x.png */; };
 		9D27199A207AA01B00B87CFE /* icon-unicorn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */; };
+		9D397AED2080765B00C58037 /* HasSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D397AEC2080765B00C58037 /* HasSegue.swift */; };
 		9D3E9760207C7BA80044E9F8 /* +UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */; };
 		9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E9761207CA03D0044E9F8 /* Colors.xcassets */; };
 		9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9763207CA6750044E9F8 /* +UILabel.swift */; };
@@ -332,6 +333,7 @@
 		9D27197B207AA01B00B87CFE /* icon-things-blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-things-blue@3x.png"; sourceTree = "<group>"; };
 		9D27197D207AA01B00B87CFE /* icon-unicorn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@2x.png"; sourceTree = "<group>"; };
 		9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@3x.png"; sourceTree = "<group>"; };
+		9D397AEC2080765B00C58037 /* HasSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasSegue.swift; sourceTree = "<group>"; };
 		9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIScrollView.swift"; sourceTree = "<group>"; };
 		9D3E9761207CA03D0044E9F8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		9D3E9763207CA6750044E9F8 /* +UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 		8D4784DE1F9077BB0067E0FE /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9D397AEA2080762400C58037 /* Classes */,
 				9DBCB2262079BD8200A8ECF2 /* View Models */,
 				8DCC7EFC1FCBBB04000E99BA /* View Controllers */,
 				8DD3D6D41FB797CC00BE4FEF /* Models */,
@@ -1141,6 +1144,22 @@
 			path = Unicorn;
 			sourceTree = "<group>";
 		};
+		9D397AEA2080762400C58037 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				9D397AEB2080763B00C58037 /* Segue */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		9D397AEB2080763B00C58037 /* Segue */ = {
+			isa = PBXGroup;
+			children = (
+				9D397AEC2080765B00C58037 /* HasSegue.swift */,
+			);
+			path = Segue;
+			sourceTree = "<group>";
+		};
 		9DBCB2262079BD8200A8ECF2 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1432,6 +1451,7 @@
 				9DD9B2A1207D7065005AD61D /* DateTimePicker.swift in Sources */,
 				8DB277F81FD5D93A00EB774B /* NavigationBarAnimatable.swift in Sources */,
 				9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */,
+				9D397AED2080765B00C58037 /* HasSegue.swift in Sources */,
 				8D9EE7971FB463CE0027C101 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				8DD3D6DE1FB79DB500BE4FEF /* CategoryColorCollectionViewCell.swift in Sources */,
 				8DCC7EF91FCBA09B000E99BA /* +UITableViewCell.swift in Sources */,
