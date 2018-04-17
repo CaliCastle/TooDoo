@@ -19,9 +19,9 @@ final class ApplicationManager {
     /// - Search: Search query
     /// - Settings: Open settings
     
-    private enum ShortcutItemIcon: String {
-        case AddTodo = "checkmark-filled-circle-icon"
-        case AddCategory = "todo-list-icon"
+    public enum ShortcutItemIcon: String {
+        case AddTodo = "todo-item-icon"
+        case AddCategory = "category-icon"
         case Search = "search-todo-icon"
         case Settings = "settings-icon"
     }

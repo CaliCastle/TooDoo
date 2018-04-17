@@ -198,12 +198,10 @@
 /*
  Action Sheet & Alert
  */
-"actionsheet.create-a" = "Create a";
 "actionsheet.new-todo" = "New To-do";
 "actionsheet.new-category" = "New Category";
-"actionsheet.category.title" = "Category - ";
-"actionsheet.actions.edit-category" = "Edit Category";
-"actionsheet.actions.delete-category" = "Delete Category";
+"actionsheet.actions.edit-category" = "Edit $category";
+"actionsheet.actions.delete-category" = "Delete $category";
 "actionsheet.actions.organize-categories" = "Organize Categories";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";

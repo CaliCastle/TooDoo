@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "PopMenu.h"
 
-FOUNDATION_EXPORT double HokusaiVersionNumber;
-FOUNDATION_EXPORT const unsigned char HokusaiVersionString[];
+FOUNDATION_EXPORT double NewPopMenuVersionNumber;
+FOUNDATION_EXPORT const unsigned char NewPopMenuVersionString[];
 

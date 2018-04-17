@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.7.1)
+  - Alamofire (4.7.2)
   - BulletinBoard (1.3.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
@@ -7,13 +7,13 @@ PODS:
   - CropViewController (2.3.6)
   - DeckTransition (2.0.0)
   - Gifu (3.0.0)
-  - Hokusai (0.4.0)
   - LTMorphingLabel (0.5.6)
   - M13Checkbox (3.2.2)
   - MarqueeLabel/Swift (3.1.4)
   - Motion (1.3.5):
     - Motion/Core (= 1.3.5)
   - Motion/Core (1.3.5)
+  - NewPopMenu (1.0.1)
   - NotificationBannerSwift (1.6.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
@@ -32,10 +32,10 @@ DEPENDENCIES:
   - CropViewController
   - DeckTransition
   - Gifu
-  - Hokusai
   - LTMorphingLabel
   - M13Checkbox
   - Motion
+  - NewPopMenu
   - NotificationBannerSwift
   - Peep
   - PinterestSegment
@@ -43,26 +43,6 @@ DEPENDENCIES:
   - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
   - ViewAnimator
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Alamofire
-    - ChameleonFramework
-    - CropViewController
-    - DeckTransition
-    - Gifu
-    - Hokusai
-    - LTMorphingLabel
-    - M13Checkbox
-    - MarqueeLabel
-    - Motion
-    - NotificationBannerSwift
-    - Peep
-    - PinterestSegment
-    - SideMenu
-    - SnapKit
-    - Typist
-    - ViewAnimator
 
 EXTERNAL SOURCES:
   BulletinBoard:
@@ -79,17 +59,17 @@ CHECKOUT OPTIONS:
     :git: https://github.com/AugustRush/Stellar.git
 
 SPEC CHECKSUMS:
-  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   BulletinBoard: 3821a6d58d01be12d4ca2b9e5517d52848574b3c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
   DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
   Gifu: 6543ca2056a3d697097c09fe543ef49348ccc892
-  Hokusai: aa3c38a5f02af0eff35aa69fdd8249c234c956c0
   LTMorphingLabel: bdb51d4682e9822da89da6f567bd8aa456fd6650
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
   Motion: 9f74d115d7f72bb5380a8e3cde2f8a1fc898ac36
+  NewPopMenu: b3ff461c313c3ebf3a479a810d32aba0f9f286df
   NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
   Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
@@ -99,6 +79,6 @@ SPEC CHECKSUMS:
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
   ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: 43d6acf7d848d6835965b8294b96b349887670dc
+PODFILE CHECKSUM: 75ad5a2872135bae094afb90839483f2aa2894f3
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.4.0.rc.1

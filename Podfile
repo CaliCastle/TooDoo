@@ -22,13 +22,12 @@ target 'TooDoo' do
   pod 'Peep'
   pod 'ViewAnimator'
   pod 'CropViewController'
-  pod 'Hokusai'
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'
   pod 'SideMenu'
   pod 'PinterestSegment'
   pod 'Gifu'
   pod 'Stellar', :git => 'https://github.com/AugustRush/Stellar.git'
-#  pod 'BTNavigationDropdownMenu', :git => 'https://github.com/zkrige/BTNavigationDropdownMenu.git'
+  pod 'NewPopMenu'
 
 end

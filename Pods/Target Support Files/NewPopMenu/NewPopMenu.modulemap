@@ -1,0 +1,6 @@
+framework module NewPopMenu {
+  umbrella header "NewPopMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}

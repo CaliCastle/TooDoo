@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Hokusai
 import CoreData
 import SideMenu
+import NewPopMenu
 import ViewAnimator
 import DeckTransition
 
@@ -185,6 +185,10 @@ final class ToDoOverviewViewController: UIViewController {
     lazy var motionEffectForCategories: UIMotionEffect = {
         return .twoAxesShift(strength: 28)
     }()
+    
+    fileprivate var popMenuForNew: PopMenuViewController?
+    fileprivate var popMenuForCategory: PopMenuViewController?
+    fileprivate var popMenuForTodo: PopMenuViewController?
     
     // MARK: - View Life Cycle
     
@@ -447,7 +451,7 @@ final class ToDoOverviewViewController: UIViewController {
     @IBAction func navigationItemDidTap(_ sender: UIBarButtonItem) {
         switch sender.tag {
         case NavigationItem.Add.rawValue:
-            showAddNewItem()
+            showAddNewItem(sender)
         case NavigationItem.Search.rawValue:
             /// FIXME
             print("Search!")
@@ -469,20 +473,25 @@ final class ToDoOverviewViewController: UIViewController {
     
     /// Show action sheet for adding a new item.
     
-    fileprivate func showAddNewItem() {
+    fileprivate func showAddNewItem(_ barButtonItem: UIBarButtonItem) {
         // Play click sound and haptic
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.light).generate()
         
-        // Show action sheet
-//        let actionSheet = AlertManager.actionSheet(headline: "actionsheet.create-a".localized)
-//
-//        let _ = actionSheet.addButton("actionsheet.new-todo".localized, target: self, selector: #selector(showAddTodo))
-//        let _ = actionSheet.addButton("actionsheet.new-category".localized, target: self, selector: #selector(showAddCategory))
-//        actionSheet.show()
-        
         // Show pop menu
-        PopMenuManager.shared.present()
+        let popMenu = AlertManager.popMenu(sourceView: nil, actions: [
+            PopMenuDefaultAction(title: "actionsheet.new-todo".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodo.rawValue), color: .flatYellow()),
+            PopMenuDefaultAction(title: "actionsheet.new-category".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon())
+        ])
+        
+        popMenu.delegate = self
+        popMenu.shouldDismissOnSelection = false
+        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
+        popMenu.setBarButtonItemForSourceView(barButtonItem)
+        
+        popMenuForNew = popMenu
+        
+        present(popMenu, animated: true, completion: nil)
     }
     
     /// Show add todo view controller.
@@ -621,7 +630,7 @@ final class ToDoOverviewViewController: UIViewController {
     
 }
 
-// MARK: - Animations.
+// MARK: - Animations
 
 extension ToDoOverviewViewController {
     
@@ -668,7 +677,45 @@ extension ToDoOverviewViewController {
     }
 }
 
-// MARK: - Collection View Delegate and Data Source.
+// MARK: - Pop Menu Delegate
+
+extension ToDoOverviewViewController: PopMenuViewControllerDelegate {
+    
+    func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int) {
+        var handler: (() -> Void)? = nil
+        
+        if popMenuViewController.isEqual(popMenuForCategory) {
+            // Handle category actions.
+            handler = {
+                switch index {
+                case 0:
+                    self.showEditCategory()
+                case 1:
+                    self.showDeleteCategory()
+                default:
+                    self.showReorderCategories(nil)
+                }
+            }
+        }
+        
+        if popMenuViewController.isEqual(popMenuForNew){
+            // Handle create new actions.
+            handler = {
+                switch index {
+                case 0:
+                    self.showAddTodo()
+                default:
+                    self.showAddCategory()
+                }
+            }
+        }
+        
+        popMenuViewController.dismiss(animated: true, completion: handler)
+    }
+    
+}
+
+// MARK: - Collection View Delegate and Data Source
 
 extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -917,15 +964,26 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         SoundManager.play(soundEffect: .Drip)
         
         let category = fetchedResultsController.object(at: selectedIndexPath)
-        // Show action sheet
-        let actionSheet = AlertManager.actionSheet(headline: "\("actionsheet.category.title".localized)\(category.name!)", category: category)
+        let backgroundColor: UIColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
+        let textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true, alpha: 0.8)!
         
-        let _ = actionSheet.addButton("actionsheet.actions.edit-category".localized, target: self, selector: #selector(showEditCategory))
-        let _ = actionSheet.addButton("actionsheet.actions.delete-category".localized, target: self, selector: #selector(showDeleteCategory))
-        let _ = actionSheet.addButton("actionsheet.actions.organize-categories".localized, target: self, selector: #selector(showReorderCategories))
+        // Configure pop menu
+        let popMenu = AlertManager.popMenu(sourceView: cell.categoryNameLabel, actions: [
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-category".localized.replacingOccurrences(of: "$category", with: category.name ?? ""), image: category.categoryIcon()),
+            PopMenuDefaultAction(title: "actionsheet.actions.delete-category".localized.replacingOccurrences(of: "$category", with: category.name ?? ""), image: #imageLiteral(resourceName: "trash-alt-icon")),
+            PopMenuDefaultAction(title: "actionsheet.actions.organize-categories".localized, image: #imageLiteral(resourceName: "organize-icon"))
+        ])
         
-        // Present actions sheet
-        actionSheet.show()
+        popMenu.appearance.popMenuColor.actionColor = .tint(textColor)
+        popMenu.appearance.popMenuColor.backgroundColor = .solid(fill: backgroundColor)
+        popMenu.appearance.popMenuBackgroundStyle = .dimmed(color: .black, opacity: 0.65)
+        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
+        popMenu.shouldDismissOnSelection = false
+        popMenu.delegate = self
+        
+        popMenuForCategory = popMenu
+        // Present pop menu
+        present(popMenu, animated: true, completion: nil)
     }
     
     /// Show category edit controller.
@@ -990,38 +1048,51 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     
     /// Show menu for todo.
     func showTodoMenu(for todo: ToDo) {
-        let actionSheet = AlertManager.actionSheet(headline: "\("actionsheet.todo.title".localized)\(todo.goal!)", category: todo.category!)
-        
-        // Add edit item button
-        let _ = actionSheet.addButton("actionsheet.actions.edit-todo".localized) {
-            DispatchQueue.main.async {
-                Haptic.selection.generate()
-            }
-            
-            self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
-        }
-        // Add complete button
-        let _ = actionSheet.addButton(todo.completed ? "actionsheet.actions.uncomplete-todo".localized : "actionsheet.actions.complete-todo".localized) {
-            DispatchQueue.main.async {
-                Haptic.selection.generate()
-            }
-            
-            todo.complete(completed: !todo.completed)
-        }
-        // Add delete button
-        let _ = actionSheet.addButton("actionsheet.actions.delete-todo".localized) {
-            DispatchQueue.main.async {
-                Haptic.notification(.success).generate()
-            }
-            
-            todo.moveToTrash()
-        }
-        
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
+
+        // Configure pop menu
+        let popMenu = AlertManager.popMenu(sourceView: nil, actions: [
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-todo".localized, image: #imageLiteral(resourceName: "pencil-icon")),
+            PopMenuDefaultAction(title: (todo.completed ? "actionsheet.actions.uncomplete-todo" : "actionsheet.actions.complete-todo").localized, image: #imageLiteral(resourceName: "trash-alt-icon")),
+            PopMenuDefaultAction(title: "actionsheet.actions.delete-todo".localized, image: #imageLiteral(resourceName: "organize-icon"))
+        ])
         
-        actionSheet.show()
+//        popMenu.appearance.popMenuColor.actionColor = .tint(textColor)
+//        popMenu.appearance.popMenuColor.backgroundColor = .solid(fill: backgroundColor)
+        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
+        popMenu.shouldDismissOnSelection = false
+        popMenu.delegate = self
+        
+        popMenuForTodo = popMenu
+        // Present pop menu
+        present(popMenu, animated: true, completion: nil)
+
+//        // Add edit item button
+//        let _ = actionSheet.addButton("actionsheet.actions.edit-todo".localized) {
+//            DispatchQueue.main.async {
+//                Haptic.selection.generate()
+//            }
+//
+//            self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
+//        }
+//        // Add complete button
+//        let _ = actionSheet.addButton(todo.completed ? "actionsheet.actions.uncomplete-todo".localized : "actionsheet.actions.complete-todo".localized) {
+//            DispatchQueue.main.async {
+//                Haptic.selection.generate()
+//            }
+//
+//            todo.complete(completed: !todo.completed)
+//        }
+//        // Add delete button
+//        let _ = actionSheet.addButton("actionsheet.actions.delete-todo".localized) {
+//            DispatchQueue.main.async {
+//                Haptic.notification(.success).generate()
+//            }
+//
+//            todo.moveToTrash()
+//        }
     }
     
 }

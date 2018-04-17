@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Hokusai
+import NewPopMenu
 import BulletinBoard
 
 final class AlertManager {
@@ -43,24 +43,15 @@ final class AlertManager {
         )
     }
     
-    /// Get action sheet.
+    /// Get default pop menu.
     
-    open class func actionSheet(headline: String, colors: HOKColors = HOKColors(backGroundColor: UIColor.flatBlack(), buttonColor: UIColor.flatYellow(), cancelButtonColor: UIColor(hexString: "3C3C3C"), fontColor: UIColor.flatBlack().withAlphaComponent(0.8)), lightStatusBar: Bool = true, cancelButtonTitle: String = "Cancel", category: Category? = nil) -> Hokusai {
-        // Show action sheet
-        let actionSheet = Hokusai(headline: headline)
+    open class func popMenu(sourceView: UIView?, actions: [PopMenuAction]) -> PopMenuViewController {
+        let popMenu = PopMenuViewController(sourceView: sourceView, actions: actions)
         
-        actionSheet.setStatusBarStyle(lightStatusBar ? .lightContent : .default)
+        popMenu.appearance.popMenuFont = AppearanceManager.font(size: 15, weight: .DemiBold)
+        popMenu.appearance.popMenuBackgroundStyle = .dimmed(color: .black, opacity: 0.65)
         
-        // Set colors accordingly to category color
-        if let category = category {
-            actionSheet.colors = HOKColors(backGroundColor: .flatBlack(), buttonColor: category.categoryColor(), cancelButtonColor: UIColor(hexString: "3C3C3C"), fontColor: UIColor(contrastingBlackOrWhiteColorOn: category.categoryColor(), isFlat: true))
-        } else {
-            actionSheet.colors = colors
-        }
-        
-        actionSheet.cancelButtonTitle = cancelButtonTitle.localized
-        
-        return actionSheet
+        return popMenu
     }
     
     /// Configure photo access bulletin manager.
