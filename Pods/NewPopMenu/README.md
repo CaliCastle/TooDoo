@@ -7,6 +7,7 @@
     <a href="https://cocoapods.org/pods/NewPopMenu"><img src="https://img.shields.io/cocoapods/v/NewPopMenu.svg"></a>
     <a href="https://cocoapods.org/pods/NewPopMenu"><img src="https://img.shields.io/badge/pod%20name-NewPopMenu-5ba36b.svg"></a>
     <a href="https://cocoapods.org/pods/NewPopMenu"><img src="https://img.shields.io/cocoapods/p/NewPopMenu.svg"></a>
+    <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-support-B160B6.svg"></a>
     <a href="https://calicastle.github.io/PopMenu/"><img src="https://img.shields.io/badge/see-Documentation-green.svg"></a>
 </p>
 
@@ -70,7 +71,11 @@ Integrating **PopMenu** is extremely easy with a familiar workflow like presenti
 ### Import Library \(NewPopMenu\)
 
 ```text
+// CocoaPods
 import NewPopMenu
+
+// Carthage
+import PopMenu
 ```
 
 ### Basic Usage
@@ -178,11 +183,78 @@ class ViewController: UIViewController {
 }
 ```
 
+### Source View
+
+By default, `PopMenu` will present in the center of your screen. If you want it to display on the relative position of a view that the user tapped, you can pass the source view in like this:
+
+```swift
+class ViewController: UIViewController {
+
+    @IBOutlet var aButton: UIButton!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        aButton.addTarget()
+    }
+
+    @objc private func presentMenu() {
+        // The manager way
+        let manager = PopMenuManager.default
+        manager.actions = [...]
+        
+        // Pass the UIView in present method
+        manager.present(sourceView: aButton)
+
+
+        // ===== or =====
+
+
+        // The manua way
+        let actions = [...]
+
+        // Pass the UIView in init
+        let menu = PopMenuViewController(sourceView: aButton, actions: actions)
+        present(menu, animated: true, completion: nil)
+    }
+
+}
+```
+
+If you want a `UIBarButtonItem` to be the source view instead (Since `UIBarButtonItem` is not a subclass of `UIView`, we need to
+know the view's frame to make the relative position work), then you'll have to do an extra step before presenting the menu:
+
+```swift
+// The manager way
+manager.barButtonItem = yourBarButtonItem
+
+// The manual way
+menu.setBarButtonItemForSourceView(yourBarButtonItem)
+```
+
 -------
 
-### Action Callback
+### Selection Callback
 
-In order to know which action button is tapped, you'll need to comform to `PopMenuViewControllerDelegate` protocol and then implement the method `popMenuDidSelectItem(at index: Int)` in your view controller:
+In order to know which action button is tapped, there are two ways of doing that:
+- Action Handler
+- Delegate
+
+### Action Handler
+
+Simply pass the handler when instanstiating the action:
+
+```swift
+let action1 = PopMenuDefaultAction(title: "Action 1", handler: { action in
+    // action is a `PopMenuAction`, in this case it's a `PopMenuDefaultAction`
+
+    // Print out: 'Action 1 is tapped'
+    print("\(action.title) is tapped")
+})
+```
+
+### Delegate Method
+ You'll need to comform to `PopMenuViewControllerDelegate` protocol and then implement the method `popMenuDidSelectItem(at index: Int)` in your view controller:
 
 ```swift
 class ViewController: UIViewController {
@@ -217,10 +289,34 @@ extension ViewController: PopMenuViewControllerDelegate {
     
 }
 ```
+### Dismissal Callback
+
+If you'd want more control to do additional steps when the menu is dismssed, you can do it like this:
+
+```swift
+// The manager way
+manager.popMenuDismissalHandler = { selected in
+    // `selected` is a bool indicating if a selection has been made
+
+    if !selected {
+        // When the user tapped outside of the menu
+    }
+}
+```
 
 That's basically it! Congrats!
 
-If you're a customization lover like me, then read along:
+By default, PopMenu has pan gesture enabled, you can toggle it here:
+
+```swift
+// The manager way
+manager.popMenuShouldEnablePanGesture = false
+// The manual way
+menu.shouldEnablePanGesture = false
+```
+
+#### If you're a customization lover like me, then read along:
+
 ----------
 
 ## 🙌🏻 Appearance Customization
@@ -229,7 +325,7 @@ If you're a customization lover like me, then read along:
 
 variable of `PopMenuManager.default` called -> **`manager`**.
 
-**==== Or ====**
+**----- or -----**
 
 variable of `PopMenuViewController` called -> **`menu`**.
 

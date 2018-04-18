@@ -200,9 +200,9 @@
  */
 "actionsheet.new-todo" = "New To-do";
 "actionsheet.new-category" = "New Category";
-"actionsheet.actions.edit-category" = "Edit $category";
-"actionsheet.actions.delete-category" = "Delete $category";
-"actionsheet.actions.organize-categories" = "Organize Categories";
+"actionsheet.actions.edit-category" = "Edit Category";
+"actionsheet.actions.delete-category" = "Delete Category";
+"actionsheet.actions.organize-categories" = "Organize All";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";
 "actionsheet.actions.complete-todo" = "Set Item Completed";

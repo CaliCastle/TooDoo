@@ -54,6 +54,20 @@ final class AlertManager {
         return popMenu
     }
     
+    /// Get a themed pop menu.
+    open class func popMenuThemed(sourceView: UIView?, actions: [PopMenuAction]) -> PopMenuViewController {
+        let backgroundColor: UIColor = AppearanceManager.default.isDarkTheme() ? .flatBlack() : .flatWhite()
+        let textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true, alpha: 0.8)!
+        
+        // Configure pop menu
+        let popMenu = self.popMenu(sourceView: sourceView, actions: actions)
+        
+        popMenu.appearance.popMenuColor.actionColor = .tint(textColor)
+        popMenu.appearance.popMenuColor.backgroundColor = .solid(fill: backgroundColor)
+        
+        return popMenu
+    }
+    
     /// Configure photo access bulletin manager.
     
     open class func photoAccessBulletinManager() -> BulletinManager {

@@ -200,9 +200,9 @@
  */
 "actionsheet.new-todo" = "新待办事项";
 "actionsheet.new-category" = "新分类";
-"actionsheet.actions.edit-category" = "编辑 $category";
-"actionsheet.actions.delete-category" = "删除 $category";
-"actionsheet.actions.organize-categories" = "管理所有分类";
+"actionsheet.actions.edit-category" = "编辑分类";
+"actionsheet.actions.delete-category" = "删除分类";
+"actionsheet.actions.organize-categories" = "管理全部";
 "actionsheet.todo.title" = "待办事项: ";
 "actionsheet.actions.edit-todo" = "编辑事项";
 "actionsheet.actions.complete-todo" = "已完成";

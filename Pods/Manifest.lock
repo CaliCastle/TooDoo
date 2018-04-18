@@ -13,7 +13,7 @@ PODS:
   - Motion (1.3.5):
     - Motion/Core (= 1.3.5)
   - Motion/Core (1.3.5)
-  - NewPopMenu (1.0.1)
+  - NewPopMenu (1.0.2)
   - NotificationBannerSwift (1.6.2):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
@@ -44,6 +44,26 @@ DEPENDENCIES:
   - Typist
   - ViewAnimator
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - ChameleonFramework
+    - CropViewController
+    - DeckTransition
+    - Gifu
+    - LTMorphingLabel
+    - M13Checkbox
+    - MarqueeLabel
+    - Motion
+    - NewPopMenu
+    - NotificationBannerSwift
+    - Peep
+    - PinterestSegment
+    - SideMenu
+    - SnapKit
+    - Typist
+    - ViewAnimator
+
 EXTERNAL SOURCES:
   BulletinBoard:
     :git: https://github.com/CaliCastle/BulletinBoard.git
@@ -69,7 +89,7 @@ SPEC CHECKSUMS:
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
   Motion: 9f74d115d7f72bb5380a8e3cde2f8a1fc898ac36
-  NewPopMenu: b3ff461c313c3ebf3a479a810d32aba0f9f286df
+  NewPopMenu: 6a0d0e8cc62fb627eb5de90abf85a0cb4f9c95cc
   NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
   Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
@@ -81,4 +101,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 75ad5a2872135bae094afb90839483f2aa2894f3
 
-COCOAPODS: 1.4.0.rc.1
+COCOAPODS: 1.5.0

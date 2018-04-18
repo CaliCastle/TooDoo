@@ -1233,7 +1233,6 @@
 				8D4784C11F9077820067E0FE /* Resources */,
 				CEAF5EFCE100A24B52282968 /* [CP] Embed Pods Frameworks */,
 				8D0654B31FB53827008DF1EA /* ShellScript */,
-				C1381CA130320169A8F9D966 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1360,21 +1359,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "KEYWORDS=\"FIXME|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | \\\nxargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | \\\nperl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
-		};
-		C1381CA130320169A8F9D966 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		CEAF5EFCE100A24B52282968 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

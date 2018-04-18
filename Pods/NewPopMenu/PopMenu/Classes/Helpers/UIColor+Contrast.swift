@@ -21,6 +21,7 @@ extension UIColor {
         case 2:
             return (components![0], components![0], components![0], components![1])
         default:
+            // FIXME: Fallback to black
             return (0, 0, 0, 1)
         }
     }

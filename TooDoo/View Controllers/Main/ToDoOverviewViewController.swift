@@ -480,16 +480,20 @@ final class ToDoOverviewViewController: UIViewController {
         
         // Show pop menu
         let popMenu = AlertManager.popMenu(sourceView: nil, actions: [
-            PopMenuDefaultAction(title: "actionsheet.new-todo".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodo.rawValue), color: .flatYellow()),
-            PopMenuDefaultAction(title: "actionsheet.new-category".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon())
+            PopMenuDefaultAction(title: "actionsheet.new-todo".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodo.rawValue), color: .flatYellow(), handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showAddTodo()
+                })
+            }),
+            PopMenuDefaultAction(title: "actionsheet.new-category".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon(), handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showAddCategory()
+                })
+            })
         ])
         
-        popMenu.delegate = self
-        popMenu.shouldDismissOnSelection = false
         popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
         popMenu.setBarButtonItemForSourceView(barButtonItem)
-        
-        popMenuForNew = popMenu
         
         present(popMenu, animated: true, completion: nil)
     }
@@ -675,44 +679,6 @@ extension ToDoOverviewViewController {
     fileprivate func animateTodoCollectionView() {
         todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], delay: 0.1, duration: 0.6)
     }
-}
-
-// MARK: - Pop Menu Delegate
-
-extension ToDoOverviewViewController: PopMenuViewControllerDelegate {
-    
-    func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int) {
-        var handler: (() -> Void)? = nil
-        
-        if popMenuViewController.isEqual(popMenuForCategory) {
-            // Handle category actions.
-            handler = {
-                switch index {
-                case 0:
-                    self.showEditCategory()
-                case 1:
-                    self.showDeleteCategory()
-                default:
-                    self.showReorderCategories(nil)
-                }
-            }
-        }
-        
-        if popMenuViewController.isEqual(popMenuForNew){
-            // Handle create new actions.
-            handler = {
-                switch index {
-                case 0:
-                    self.showAddTodo()
-                default:
-                    self.showAddCategory()
-                }
-            }
-        }
-        
-        popMenuViewController.dismiss(animated: true, completion: handler)
-    }
-    
 }
 
 // MARK: - Collection View Delegate and Data Source
@@ -964,24 +930,30 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         SoundManager.play(soundEffect: .Drip)
         
         let category = fetchedResultsController.object(at: selectedIndexPath)
-        let backgroundColor: UIColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
-        let textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true, alpha: 0.8)!
         
         // Configure pop menu
-        let popMenu = AlertManager.popMenu(sourceView: cell.categoryNameLabel, actions: [
-            PopMenuDefaultAction(title: "actionsheet.actions.edit-category".localized.replacingOccurrences(of: "$category", with: category.name ?? ""), image: category.categoryIcon()),
-            PopMenuDefaultAction(title: "actionsheet.actions.delete-category".localized.replacingOccurrences(of: "$category", with: category.name ?? ""), image: #imageLiteral(resourceName: "trash-alt-icon")),
-            PopMenuDefaultAction(title: "actionsheet.actions.organize-categories".localized, image: #imageLiteral(resourceName: "organize-icon"))
-        ])
+        let actions = [
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-category".localized, image: category.categoryIcon(), handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showEditCategory()
+                })
+            }),
+            PopMenuDefaultAction(title: "actionsheet.actions.delete-category".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showDeleteCategory()
+                })
+            }),
+            PopMenuDefaultAction(title: "actionsheet.actions.organize-categories".localized, image: #imageLiteral(resourceName: "organize-icon"), handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showReorderCategories(nil)
+                })
+            })
+        ]
         
-        popMenu.appearance.popMenuColor.actionColor = .tint(textColor)
-        popMenu.appearance.popMenuColor.backgroundColor = .solid(fill: backgroundColor)
-        popMenu.appearance.popMenuBackgroundStyle = .dimmed(color: .black, opacity: 0.65)
+        let popMenu = AlertManager.popMenuThemed(sourceView: cell.categoryNameLabel, actions: actions)
+        
         popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
-        popMenu.shouldDismissOnSelection = false
-        popMenu.delegate = self
         
-        popMenuForCategory = popMenu
         // Present pop menu
         present(popMenu, animated: true, completion: nil)
     }
@@ -1053,46 +1025,24 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
         Haptic.impact(.medium).generate()
 
         // Configure pop menu
-        let popMenu = AlertManager.popMenu(sourceView: nil, actions: [
-            PopMenuDefaultAction(title: "actionsheet.actions.edit-todo".localized, image: #imageLiteral(resourceName: "pencil-icon")),
-            PopMenuDefaultAction(title: (todo.completed ? "actionsheet.actions.uncomplete-todo" : "actionsheet.actions.complete-todo").localized, image: #imageLiteral(resourceName: "trash-alt-icon")),
-            PopMenuDefaultAction(title: "actionsheet.actions.delete-todo".localized, image: #imageLiteral(resourceName: "organize-icon"))
-        ])
+        let editAction = PopMenuDefaultAction(title: "actionsheet.actions.edit-todo".localized, image: #imageLiteral(resourceName: "pencil-icon"), handler: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
+            })
+        })
+        let completeAction = PopMenuDefaultAction(title: (todo.completed ? "actionsheet.actions.uncomplete-todo" : "actionsheet.actions.complete-todo").localized, image: todo.completed ? #imageLiteral(resourceName: "cancel-button") : #imageLiteral(resourceName: "checkmark-filled-circle-icon"), handler: { _ in
+            todo.complete(completed: !todo.completed)
+        })
+        let deleteAction = PopMenuDefaultAction(title: "actionsheet.actions.delete-todo".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), handler: { _ in
+            todo.moveToTrash()
+        })
         
-//        popMenu.appearance.popMenuColor.actionColor = .tint(textColor)
-//        popMenu.appearance.popMenuColor.backgroundColor = .solid(fill: backgroundColor)
+        let popMenu = AlertManager.popMenuThemed(sourceView: nil, actions: [editAction, completeAction, deleteAction])
+        
         popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
-        popMenu.shouldDismissOnSelection = false
-        popMenu.delegate = self
         
-        popMenuForTodo = popMenu
         // Present pop menu
         present(popMenu, animated: true, completion: nil)
-
-//        // Add edit item button
-//        let _ = actionSheet.addButton("actionsheet.actions.edit-todo".localized) {
-//            DispatchQueue.main.async {
-//                Haptic.selection.generate()
-//            }
-//
-//            self.performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: todo)
-//        }
-//        // Add complete button
-//        let _ = actionSheet.addButton(todo.completed ? "actionsheet.actions.uncomplete-todo".localized : "actionsheet.actions.complete-todo".localized) {
-//            DispatchQueue.main.async {
-//                Haptic.selection.generate()
-//            }
-//
-//            todo.complete(completed: !todo.completed)
-//        }
-//        // Add delete button
-//        let _ = actionSheet.addButton("actionsheet.actions.delete-todo".localized) {
-//            DispatchQueue.main.async {
-//                Haptic.notification(.success).generate()
-//            }
-//
-//            todo.moveToTrash()
-//        }
     }
     
 }

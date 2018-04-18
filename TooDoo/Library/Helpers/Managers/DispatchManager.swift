@@ -187,7 +187,7 @@ final class DispatchManager {
     fileprivate func configureShortcutItems(for application: UIApplication, with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         guard UserDefaultManager.userHasSetup() else { return }
         
-        ApplicationManager.createShortcutItems(for: application)
+        ApplicationManager.createShortcutItems(for: application, forces: true)
     }
     
     // MARK: - Appearance Configuration
