@@ -152,7 +152,6 @@
 		9D27199A207AA01B00B87CFE /* icon-unicorn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */; };
 		9D397AED2080765B00C58037 /* HasSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D397AEC2080765B00C58037 /* HasSegue.swift */; };
 		9D3E9760207C7BA80044E9F8 /* +UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */; };
-		9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E9761207CA03D0044E9F8 /* Colors.xcassets */; };
 		9D3E9764207CA6750044E9F8 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9763207CA6750044E9F8 /* +UILabel.swift */; };
 		9D3E9766207CC0710044E9F8 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E9765207CC0710044E9F8 /* Haptic.swift */; };
 		9DA5D647207DDE24001554A5 /* +UIDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */; };
@@ -333,7 +332,6 @@
 		9D27197E207AA01B00B87CFE /* icon-unicorn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-unicorn@3x.png"; sourceTree = "<group>"; };
 		9D397AEC2080765B00C58037 /* HasSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasSegue.swift; sourceTree = "<group>"; };
 		9D3E975F207C7BA80044E9F8 /* +UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIScrollView.swift"; sourceTree = "<group>"; };
-		9D3E9761207CA03D0044E9F8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		9D3E9763207CA6750044E9F8 /* +UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
 		9D3E9765207CC0710044E9F8 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		9DA5D646207DDE24001554A5 /* +UIDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIDatePicker.swift"; sourceTree = "<group>"; };
@@ -412,7 +410,6 @@
 				9D271955207AA01B00B87CFE /* App Icons */,
 				9DBCB22C2079F77300A8ECF2 /* AppIcons.xcassets */,
 				8D030E111FDBD51600FA5ED5 /* Animations */,
-				9D3E9761207CA03D0044E9F8 /* Colors.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -1286,7 +1283,6 @@
 				9DBCB2402079FF5D00A8ECF2 /* Side_Menu_Slide_In_Out.gif in Resources */,
 				9D271996207AA01B00B87CFE /* icon-rose@3x.png in Resources */,
 				8DCFF0F41FD86D18009532A2 /* due_notification.m4a in Resources */,
-				9D3E9762207CA03D0044E9F8 /* Colors.xcassets in Resources */,
 				9D271989207AA01B00B87CFE /* icon-primary@2x.png in Resources */,
 				9D271991207AA01B00B87CFE /* icon-navy-alt@2x.png in Resources */,
 				8D8D1EE11FD74A7100208896 /* chord.m4a in Resources */,
