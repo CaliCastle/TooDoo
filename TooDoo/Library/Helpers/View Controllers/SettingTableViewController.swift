@@ -85,7 +85,7 @@ open class SettingTableViewController: UITableViewController, LocalizableInterfa
     
     @objc private func doneButtonDidTap(_ sender: UIBarButtonItem) {
         // Generate haptic feedback
-        Haptic.impact(.medium).generate()
+        Haptic.impact(.light).generate()
         
         // Dismiss and update status bar
         navigationController?.dismiss(animated: true, completion: nil)
