@@ -8,7 +8,6 @@
 
 import UIKit
 import Typist
-import ViewAnimator
 
 open class DeckEditorTableViewController: UITableViewController, LocalizableInterface {
 
@@ -146,12 +145,7 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
     }
 
     internal func animateViews() {
-        DispatchQueue.main.async {
-            // Set table view to initially hidden
-            self.tableView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
-            // Fade in and move from bottom animation to table cells
-            self.tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 55)], initialAlpha: 0, finalAlpha: 1, delay: 0.25, duration: 0.46, animationInterval: 0.12)
-        }
+        
     }
     
     /// Keyboard dismissal.

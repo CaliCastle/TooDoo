@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import SideMenu
 import PopMenu
-import ViewAnimator
 import DeckTransition
 
 final class ToDoOverviewViewController: UIViewController {
@@ -676,7 +675,7 @@ extension ToDoOverviewViewController {
     /// Animate todo collection view for categories.
     
     fileprivate func animateTodoCollectionView() {
-        todosCollectionView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 40)], delay: 0.1, duration: 0.6)
+        
     }
 }
 

@@ -33,7 +33,6 @@ PODS:
   - SnapKit (4.0.0)
   - Stellar (0.67)
   - Typist (1.2.1)
-  - ViewAnimator (1.0.5)
 
 DEPENDENCIES:
   - Alamofire
@@ -54,7 +53,6 @@ DEPENDENCIES:
   - SideMenu
   - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
-  - ViewAnimator
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -79,7 +77,6 @@ SPEC REPOS:
     - SideMenu
     - SnapKit
     - Typist
-    - ViewAnimator
 
 EXTERNAL SOURCES:
   BulletinBoard:
@@ -119,8 +116,7 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Stellar: df980becd194eeb62d623af097582da0ef2219b9
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
-  ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: 52c91c0ef75049605554dca957cd85f09724e8e5
+PODFILE CHECKSUM: 8621182d2d72fd4bc46450e0cd7f359d7bb90375
 
 COCOAPODS: 1.5.0

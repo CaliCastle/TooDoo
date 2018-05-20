@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ViewAnimator
 import BulletinBoard
 import CropViewController
 

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ViewAnimator
 
 final class CategoryColorCollectionViewCell: UICollectionViewCell {
     

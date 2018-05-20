@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ViewAnimator
 import DeckTransition
 
 final class AppIconSettingsTableViewController: SettingTableViewController, CALayerDelegate {
