@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NewPopMenu
+import PopMenu
 import BulletinBoard
 
 final class AlertManager {
@@ -45,7 +45,7 @@ final class AlertManager {
     
     /// Get default pop menu.
     
-    open class func popMenu(sourceView: UIView?, actions: [PopMenuAction]) -> PopMenuViewController {
+    open class func popMenu(sourceView: AnyObject?, actions: [PopMenuAction]) -> PopMenuViewController {
         let popMenu = PopMenuViewController(sourceView: sourceView, actions: actions)
         
         popMenu.appearance.popMenuFont = AppearanceManager.font(size: 15, weight: .DemiBold)

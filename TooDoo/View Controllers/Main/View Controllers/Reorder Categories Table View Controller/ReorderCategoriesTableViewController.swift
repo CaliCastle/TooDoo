@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import ViewAnimator
 
 protocol ReorderCategoriesTableViewControllerDelegate {
     func categoriesDoneOrganizing()
@@ -121,7 +120,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     /// Animate views.
     
     private func animateViews() {
-        tableView.animateViews(animations: [AnimationType.from(direction: .bottom, offset: 30)], delay: 0.2, duration: 0.35, animationInterval: 0.09)
+        
     }
     
     /// Light status bar.

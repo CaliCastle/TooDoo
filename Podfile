@@ -20,7 +20,6 @@ target 'TooDoo' do
   pod 'Motion'
   pod 'BulletinBoard', :git => 'https://github.com/CaliCastle/BulletinBoard.git'
   pod 'Peep'
-  pod 'ViewAnimator'
   pod 'CropViewController'
   pod 'DeckTransition'
   pod 'NotificationBannerSwift'

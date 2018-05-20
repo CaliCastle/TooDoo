@@ -166,7 +166,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Stellar/Stellar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Typist/Typist.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
@@ -192,7 +191,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Stellar/Stellar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Typist/Typist.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
