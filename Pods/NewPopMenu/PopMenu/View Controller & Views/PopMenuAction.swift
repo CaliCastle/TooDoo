@@ -24,7 +24,7 @@ import UIKit
     var color: Color? { get }
     
     /// The handler of action.
-    var handler: PopMenuActionHandler? { get }
+    var didSelect: PopMenuActionHandler? { get }
     
     /// Left padding when texts-only.
     static var textLeftPadding: CGFloat { get }
@@ -74,7 +74,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     public let color: Color?
     
     /// Handler of action when selected.
-    public let handler: PopMenuActionHandler?
+    public let didSelect: PopMenuActionHandler?
     
     // MARK: - Computed Properties
     
@@ -152,11 +152,11 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     // MARK: - Initializer
     
     /// Initializer.
-    public init(title: String? = nil, image: UIImage? = nil, color: Color? = nil, handler: PopMenuActionHandler? = nil) {
+    public init(title: String? = nil, image: UIImage? = nil, color: Color? = nil, didSelect: PopMenuActionHandler? = nil) {
         self.title = title
         self.image = image
         self.color = color
-        self.handler = handler
+        self.didSelect = didSelect
         
         view = UIView()
     }
@@ -199,7 +199,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     public func highlightActionView(_ highlight: Bool) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.26, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 9, options: self.highlighted ? .curveEaseIn : .curveEaseOut, animations: {
-                self.view.transform = self.highlighted ? CGAffineTransform.identity.scaledBy(x: 1.11, y: 1.11) : .identity
+                self.view.transform = self.highlighted ? CGAffineTransform.identity.scaledBy(x: 1.09, y: 1.09) : .identity
                 self.view.backgroundColor = self.highlighted ? self.backgroundColor.withAlphaComponent(0.25) : .clear
             }, completion: nil)
         }
@@ -208,7 +208,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     /// When the action is selected.
     public func actionSelected(animated: Bool) {
         // Trigger handler.
-        handler?(self)
+        didSelect?(self)
         
         // Animate selection
         guard animated else { return }

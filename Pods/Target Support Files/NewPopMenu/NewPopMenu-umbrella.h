@@ -12,6 +12,6 @@
 
 #import "PopMenu.h"
 
-FOUNDATION_EXPORT double NewPopMenuVersionNumber;
-FOUNDATION_EXPORT const unsigned char NewPopMenuVersionString[];
+FOUNDATION_EXPORT double PopMenuVersionNumber;
+FOUNDATION_EXPORT const unsigned char PopMenuVersionString[];
 

@@ -9,7 +9,6 @@
 import UIKit
 import Typist
 import CoreData
-import ViewAnimator
 
 final class CategoryTableViewController: DeckEditorTableViewController, CALayerDelegate {
 
@@ -223,10 +222,6 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     override func animateViews() {
         super.animateViews()
         
-        // Set color collection view to initially hidden
-        categoryColorCollectionView.animateViews(animations: [], initialAlpha: 0, finalAlpha: 0, delay: 0, duration: 0, animationInterval: 0, completion: nil)
-        // Fade in and move from right animation to color cells
-        categoryColorCollectionView.animateViews(animations: [AnimationType.from(direction: .right, offset: 20)], initialAlpha: 0, finalAlpha: 1, delay: 0.5, duration: 0.34, animationInterval: 0.035)
     }
     
     /// Register header view for category icons.

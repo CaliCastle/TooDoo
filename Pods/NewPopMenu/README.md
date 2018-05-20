@@ -11,9 +11,23 @@
     <a href="https://calicastle.github.io/PopMenu/"><img src="https://img.shields.io/badge/see-Documentation-green.svg"></a>
 </p>
 
-## ✍🏻 Description
+## Table of Contents
 
-**PopMenu** is designed for a quick _popup_ action menu, much like an action sheet in iOS. If you want an action sheet that looks great, you're in the right place!
+- [✍🏻 Description](#desc)
+
+- [📱 Demo / Example](#demo)
+
+- [⚙️ Installation](#installation)
+
+- [⚠️ Requirements](#requirements)
+
+- [👨🏻‍💻 How to Use](#how-to)
+
+- [🙌🏻 Customization](#customization)
+
+## <a name="desc"></a> ✍🏻 Description
+
+**PopMenu** is designed as a quick _popup_ action menu, much like an action sheet in iOS. If you want an action sheet that looks great, you're in the right place!
 
 **PopMenu** has the abilities of:
 
@@ -21,11 +35,11 @@
 
 - Full customization (icons, fonts, colors, background, styles, corners, height, status bar... you name it).
 
-- Swipe gesture control.
+- Pan gesture control. (like 3D touch shortcuts on apps in home screen)
 
-- Haptics enabled for selection or swipe gesture.
+- Haptics enabled for selection or pan gesture.
 
-## 📱 Demo / Example
+## <a name="demo"></a> 📱 Demo / Example
 
 #### Download or fork the repo and open the given `Example` Xcode project to try it out yourself!
 
@@ -38,13 +52,13 @@ What's a better way to know what `PopMenu` offers than some screenshots? Here's 
 ![Demo3](https://raw.githubusercontent.com/CaliCastle/PopMenu/master/.assets/FeatureScreenShot_3.png)
 ![Demo4](https://raw.githubusercontent.com/CaliCastle/PopMenu/master/.assets/FeatureScreenShot_4.png)
 
-## ⚙️ Installation
+## <a name="installation"></a> ⚙️ Installation
 
 ### For CocoaPods
 
 Install **PopMenu** using [**CocoaPods**](https://cocoapods.org), add it to your **Podfile**:
 
-> `PopMenu` was actually taken so let's call it `NewPopMenu` 'cause why not?
+> ‼️ `PopMenu` was actually taken so let's call it `NewPopMenu` 'cause why not?
 
 ```ruby
 pod 'NewPopMenu'
@@ -54,27 +68,23 @@ pod 'NewPopMenu'
 
 Install **PopMenu** using [**Carthage**](https://github.com/Carthage/Carthage), add it to your **Cartfile**:
 
-```text
+```ruby
 github "CaliCastle/PopMenu"
 ```
 
-## ⚠️ Requirements
+## <a name="requirements"></a> ⚠️ Requirements
 
 * Xcode 8.0 +
 * iOS 9.0 +
 * Swift 4.0 +
 
-## 👨🏻‍💻 How to Use
+## <a name="how-to"></a> 👨🏻‍💻 How to Use
 
 Integrating **PopMenu** is extremely easy with a familiar workflow like presenting `UIAlertController` with `UIAlertAction`
 
-### Import Library \(NewPopMenu\)
+### Import Library
 
-```text
-// CocoaPods
-import NewPopMenu
-
-// Carthage
+```swift
 import PopMenu
 ```
 
@@ -119,11 +129,11 @@ manager.actions = [
 ]
 ```
 
-Or if you prefer the good ol' way to present a `UIAlertController` with `actionSheet` type, you can add each action like this:
+Or if you prefer the good ol' way similar to presenting a `UIAlertController` with `UIAlertAction`, you can add each action like that:
 
 ```swift
-let action1 = PopMenuDefaultAction(title: "Action Title 1", image: UIImage(named: "icon")
-let action2 = PopMenuDefaultAction(title: "Action Title 2", image: UIImage(named: "icon")
+let action1 = PopMenuDefaultAction(title: "Action Title 1", image: UIImage(named: "icon"))
+let action2 = PopMenuDefaultAction(title: "Action Title 2", image: UIImage(named: "icon"))
 
 manager.addAction(action1)
 manager.addAction(action2)
@@ -210,7 +220,7 @@ class ViewController: UIViewController {
         // ===== or =====
 
 
-        // The manua way
+        // The manual way
         let actions = [...]
 
         // Pass the UIView in init
@@ -219,17 +229,6 @@ class ViewController: UIViewController {
     }
 
 }
-```
-
-If you want a `UIBarButtonItem` to be the source view instead (Since `UIBarButtonItem` is not a subclass of `UIView`, we need to
-know the view's frame to make the relative position work), then you'll have to do an extra step before presenting the menu:
-
-```swift
-// The manager way
-manager.barButtonItem = yourBarButtonItem
-
-// The manual way
-menu.setBarButtonItemForSourceView(yourBarButtonItem)
 ```
 
 -------
@@ -245,7 +244,7 @@ In order to know which action button is tapped, there are two ways of doing that
 Simply pass the handler when instanstiating the action:
 
 ```swift
-let action1 = PopMenuDefaultAction(title: "Action 1", handler: { action in
+let action1 = PopMenuDefaultAction(title: "Action 1", didSelect: { action in
     // action is a `PopMenuAction`, in this case it's a `PopMenuDefaultAction`
 
     // Print out: 'Action 1 is tapped'
@@ -295,7 +294,7 @@ If you'd want more control to do additional steps when the menu is dismssed, you
 
 ```swift
 // The manager way
-manager.popMenuDismissalHandler = { selected in
+manager.popMenuDidDismiss = { selected in
     // `selected` is a bool indicating if a selection has been made
 
     if !selected {
@@ -304,7 +303,7 @@ manager.popMenuDismissalHandler = { selected in
 }
 ```
 
-That's basically it! Congrats!
+### Configurations
 
 By default, PopMenu has pan gesture enabled, you can toggle it here:
 
@@ -314,12 +313,23 @@ manager.popMenuShouldEnablePanGesture = false
 // The manual way
 menu.shouldEnablePanGesture = false
 ```
+By default, PopMenu has haptics enabled, you can toggle it here:
+
+```swift
+// The manager way
+manager.popMenuShouldEnableHaptics = false
+// The manual way
+menu.shouldEnableHaptics = false
+```
+
+
+That's basically it! Congrats!
 
 #### If you're a customization lover like me, then read along:
 
 ----------
 
-## 🙌🏻 Appearance Customization
+## <a name="customization"></a> 🙌🏻 Customization
 
 ### Before moving on, customization should be applied before presenting the menu, and assume that you already have a:
 
@@ -447,6 +457,21 @@ manager.popMenuAppearance.popMenuActionHeight = 65
 menu.appearance.popMenuActionHeight = 65
 ```
 
+Action Item Separator // Default: none
+---------
+
+To set the action item separator:
+
+```swift
+// The manager way
+manager.popMenuAppearance.popMenuItemSeparator = .none()
+manager.popMenuAppearance.popMenuItemSeparator = .fill() // Default height of 0.5, white color with 0.5 opacity
+manager.popMenuAppearance.popMenuItemSeparator = .fill(.yellow, height: 1) // Or set it yourself
+
+// The manual way
+menu.appearance.popMenuItemSeparator = ...
+```
+
 Status Bar Style // Default: automatic detection based on background color
 ---------
 
@@ -464,7 +489,7 @@ More customization coming, stay tuned...
 
 Thank you if you are interested in contributing to the project, I appreaciate it!
 
-Before committing any changes, please make sure to read the [Contribution Guidelines](https://github.com/CaliCastle/PopMenu/CONTRIBUTING.md) first, thank you!
+Before committing any changes, please make sure to read the [Contribution Guidelines](https://github.com/CaliCastle/PopMenu/blob/master/CONTRIBUTING.md) first, thank you!
 
 ## 📗 Check Documentation
 

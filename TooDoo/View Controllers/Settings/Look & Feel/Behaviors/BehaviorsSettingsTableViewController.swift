@@ -8,7 +8,6 @@
 
 import UIKit
 import SideMenu
-import ViewAnimator
 
 final class BehaviorsSettingsTableViewController: SettingTableViewController, CALayerDelegate {
 

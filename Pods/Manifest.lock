@@ -1,32 +1,42 @@
 PODS:
   - Alamofire (4.7.2)
+  - Bond (6.8.3):
+    - Differ (~> 1.0)
+    - ReactiveKit (~> 3.9)
   - BulletinBoard (1.3.0)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - CropViewController (2.3.6)
   - DeckTransition (2.0.0)
+  - Differ (1.2.3)
   - Gifu (3.0.0)
   - LTMorphingLabel (0.5.6)
   - M13Checkbox (3.2.2)
   - MarqueeLabel/Swift (3.1.4)
-  - Motion (1.3.5):
-    - Motion/Core (= 1.3.5)
-  - Motion/Core (1.3.5)
-  - NewPopMenu (1.0.2)
-  - NotificationBannerSwift (1.6.2):
+  - Motion (1.4.0):
+    - Motion/Core (= 1.4.0)
+  - Motion/Core (1.4.0)
+  - NewPopMenu (1.1.2)
+  - NotificationBannerSwift (1.6.3):
     - MarqueeLabel/Swift
     - SnapKit (~> 4.0)
-  - Peep (2.0.0)
+  - Peep (2.0.1)
   - PinterestSegment (1.2.0)
+  - ReactiveKit (3.9.5)
+  - Realm (3.5.0):
+    - Realm/Headers (= 3.5.0)
+  - Realm/Headers (3.5.0)
+  - RealmSwift (3.5.0):
+    - Realm (= 3.5.0)
   - SideMenu (3.1.5)
   - SnapKit (4.0.0)
   - Stellar (0.67)
   - Typist (1.2.1)
-  - ViewAnimator (1.0.5)
 
 DEPENDENCIES:
   - Alamofire
+  - Bond
   - BulletinBoard (from `https://github.com/CaliCastle/BulletinBoard.git`)
   - ChameleonFramework/Swift
   - CropViewController
@@ -39,17 +49,19 @@ DEPENDENCIES:
   - NotificationBannerSwift
   - Peep
   - PinterestSegment
+  - RealmSwift
   - SideMenu
   - Stellar (from `https://github.com/AugustRush/Stellar.git`)
   - Typist
-  - ViewAnimator
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Bond
     - ChameleonFramework
     - CropViewController
     - DeckTransition
+    - Differ
     - Gifu
     - LTMorphingLabel
     - M13Checkbox
@@ -59,10 +71,12 @@ SPEC REPOS:
     - NotificationBannerSwift
     - Peep
     - PinterestSegment
+    - ReactiveKit
+    - Realm
+    - RealmSwift
     - SideMenu
     - SnapKit
     - Typist
-    - ViewAnimator
 
 EXTERNAL SOURCES:
   BulletinBoard:
@@ -80,25 +94,29 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Bond: d6d25c0cb90459b9d27197251405c6db254da4cf
   BulletinBoard: 3821a6d58d01be12d4ca2b9e5517d52848574b3c
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
   DeckTransition: 2300694f94fbeca2c103f365dc9dc09ffae14a4f
+  Differ: 061f3298ea9408494c43b530c44583e555884daf
   Gifu: 6543ca2056a3d697097c09fe543ef49348ccc892
   LTMorphingLabel: bdb51d4682e9822da89da6f567bd8aa456fd6650
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   MarqueeLabel: bf768455fe88d427f71476ebb23f9092b660f40b
-  Motion: 9f74d115d7f72bb5380a8e3cde2f8a1fc898ac36
-  NewPopMenu: 6a0d0e8cc62fb627eb5de90abf85a0cb4f9c95cc
-  NotificationBannerSwift: 4eceb2add9d5eaa0596c63d49690b4d6476e74ec
-  Peep: b3071f836746e37a4395ee8c83f5d7ab86746093
+  Motion: 6d812ce71efcaac170d7f98bd6bcea847426f59e
+  NewPopMenu: 42c2fbd46c7fcb7d7c1c3289c8675afd1877ffc8
+  NotificationBannerSwift: b231e4c3244848ef300e1c53ce027b9756b9b06f
+  Peep: 57d1d2bf5621e885efbfe05cd4fe88745bd1e4bf
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
+  ReactiveKit: 5dcd9e2f32227e6a02e7ca649f52b63f68e6421d
+  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
+  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Stellar: df980becd194eeb62d623af097582da0ef2219b9
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
-  ViewAnimator: d87d691fbcaf994db7ee8fc632afa3073bd3b851
 
-PODFILE CHECKSUM: 75ad5a2872135bae094afb90839483f2aa2894f3
+PODFILE CHECKSUM: 8621182d2d72fd4bc46450e0cd7f359d7bb90375
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2

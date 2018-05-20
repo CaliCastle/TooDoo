@@ -9,7 +9,6 @@
 import UIKit
 import Typist
 import CoreData
-import ViewAnimator
 
 protocol ToDoCategoryOverviewCollectionViewCellDelegate {
 

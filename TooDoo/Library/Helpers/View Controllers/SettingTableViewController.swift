@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ViewAnimator
 
 open class SettingTableViewController: UITableViewController, LocalizableInterface {
     
