@@ -29,5 +29,7 @@ target 'TooDoo' do
   pod 'Gifu'
   pod 'Stellar', :git => 'https://github.com/AugustRush/Stellar.git'
   pod 'NewPopMenu'
+  pod 'RealmSwift'
+  pod 'Bond'
 
 end

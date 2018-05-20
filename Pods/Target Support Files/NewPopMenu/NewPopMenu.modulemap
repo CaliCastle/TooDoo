@@ -1,4 +1,4 @@
-framework module NewPopMenu {
+framework module PopMenu {
   umbrella header "NewPopMenu-umbrella.h"
 
   export *
