@@ -30,7 +30,7 @@
 		8D38562C20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38562B20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift */; };
 		8D38562E200025E2001F4C3B /* SettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38562D200025E2001F4C3B /* SettingModels.swift */; };
 		8D3924FB1FC8F29D0085186A /* RecolorableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3924FA1FC8F29D0085186A /* RecolorableView.swift */; };
-		8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Category Icons.plist */; };
+		8D3AA14B1FC76DE300862C4C /* Todo List Icons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA14A1FC76DE300862C4C /* Todo List Icons.plist */; };
 		8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */; };
 		8D3AA1501FC79E2900862C4C /* CategoryIconHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */; };
 		8D3AA1521FC7BDB100862C4C /* CategoryIconHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D3AA1511FC7BDB100862C4C /* CategoryIconHeaderView.xib */; };
@@ -193,7 +193,7 @@
 		8D38562B20002134001F4C3B /* TimeoutLockSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutLockSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8D38562D200025E2001F4C3B /* SettingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModels.swift; sourceTree = "<group>"; };
 		8D3924FA1FC8F29D0085186A /* RecolorableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecolorableView.swift; sourceTree = "<group>"; };
-		8D3AA14A1FC76DE300862C4C /* Category Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Category Icons.plist"; sourceTree = "<group>"; };
+		8D3AA14A1FC76DE300862C4C /* Todo List Icons.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Todo List Icons.plist"; sourceTree = "<group>"; };
 		8D3AA14D1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFloatingHeaderLayout.swift; sourceTree = "<group>"; };
 		8D3AA14F1FC79E2900862C4C /* CategoryIconHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIconHeaderView.swift; sourceTree = "<group>"; };
 		8D3AA1511FC7BDB100862C4C /* CategoryIconHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryIconHeaderView.xib; sourceTree = "<group>"; };
@@ -267,6 +267,7 @@
 		8DBA558D1FC37B490012B941 /* MenuTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableHeaderView.swift; sourceTree = "<group>"; };
 		8DBA55911FC430F80012B941 /* +UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITextView.swift"; sourceTree = "<group>"; };
 		8DBE2D551FE8FC520011D326 /* LockAppSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockAppSettingsTableViewController.swift; sourceTree = "<group>"; };
+		8DC56CF220B33BC8004D074D /* TooDoo 1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TooDoo 1.2.xcdatamodel"; sourceTree = "<group>"; };
 		8DCBEA5E1FB2A6A800AD34D9 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		8DCBEA601FB2E69D00AD34D9 /* +UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UINavigationController.swift"; sourceTree = "<group>"; };
 		8DCC7EF81FCBA09B000E99BA /* +UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UITableViewCell.swift"; sourceTree = "<group>"; };
@@ -549,7 +550,7 @@
 				8D030E0F1FDBD50700FA5ED5 /* Assets */,
 				8D589F6F1FC19DCE00039610 /* i18n */,
 				8DCBEA561FB2A5DA00AD34D9 /* Sounds */,
-				8D3AA14A1FC76DE300862C4C /* Category Icons.plist */,
+				8D3AA14A1FC76DE300862C4C /* Todo List Icons.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1301,7 +1302,7 @@
 				8DCC7EF71FCB9B73000E99BA /* Settings.storyboard in Resources */,
 				9D271980207AA01B00B87CFE /* icon-blush@3x.png in Resources */,
 				9D271981207AA01B00B87CFE /* icon-bumblebee@2x.png in Resources */,
-				8D3AA14B1FC76DE300862C4C /* Category Icons.plist in Resources */,
+				8D3AA14B1FC76DE300862C4C /* Todo List Icons.plist in Resources */,
 				9D271987207AA01B00B87CFE /* icon-flamingo@2x.png in Resources */,
 				9D271992207AA01B00B87CFE /* icon-navy-alt@3x.png in Resources */,
 				8D3AA1521FC7BDB100862C4C /* CategoryIconHeaderView.xib in Resources */,
@@ -1814,10 +1815,11 @@
 		8D4784CD1F9077820067E0FE /* TooDoo.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8DC56CF220B33BC8004D074D /* TooDoo 1.2.xcdatamodel */,
 				8D51942C1FCD932F00110B59 /* TooDoo 1.1.xcdatamodel */,
 				8D4784CE1F9077820067E0FE /* TooDoo.xcdatamodel */,
 			);
-			currentVersion = 8D51942C1FCD932F00110B59 /* TooDoo 1.1.xcdatamodel */;
+			currentVersion = 8DC56CF220B33BC8004D074D /* TooDoo 1.2.xcdatamodel */;
 			path = TooDoo.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -39,7 +39,7 @@ extension Category {
     class func createDefault(context: NSManagedObjectContext) {
         let personalCategory = self.init(context: context)
         
-        personalCategory.name = "setup.default-category".localized
+        personalCategory.name = "setup.default-list".localized
         personalCategory.color = CategoryColor.defaultColorsString.first!
         personalCategory.icon = "progress"
         personalCategory.createdAt = Date()
@@ -52,7 +52,7 @@ extension Category {
         getStartedTodo.created()
         
         let workCategory = self.init(context: context)
-        workCategory.name = "setup.default-category-alt".localized
+        workCategory.name = "setup.default-list-alt".localized
         workCategory.color = CategoryColor.defaultColorsString[1]
         workCategory.icon = "briefcase"
         workCategory.createdAt = Date()
@@ -104,7 +104,7 @@ extension Category {
     func categoryIcon() -> UIImage {
         guard let icon = icon else { return UIImage() }
         
-        return UIImage(named: "category-icon-\(icon)")!
+        return UIImage(named: "\(ToDoListIcon.iconsPrefix)\(icon)")!
     }
     
     /// Set color property.

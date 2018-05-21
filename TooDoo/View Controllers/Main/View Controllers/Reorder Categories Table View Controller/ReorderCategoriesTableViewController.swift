@@ -33,7 +33,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     
     lazy var newCategoryButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 80))
-        button.setTitle("  \("shortcut.items.add-category".localized)", for: .normal)
+        button.setTitle("  \("shortcut.items.add-list".localized)", for: .normal)
         button.setImage(#imageLiteral(resourceName: "plus-button"), for: .normal)
         button.titleLabel?.font = AppearanceManager.font(size: 17, weight: .Medium)
         
@@ -71,7 +71,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     /// Localize interface.
     
     @objc internal func localizeInterface() {
-        title = "manage-categories.title".localized
+        title = "manage-todolist.title".localized
     }
     
     fileprivate func configureFetchedResultsController() -> NSFetchedResultsController<Category> {
@@ -113,7 +113,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-category".localized, type: .danger)
+            NotificationManager.showBanner(title: "alert.error-fetching-todolist".localized, type: .danger)
         }
     }
     

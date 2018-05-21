@@ -504,7 +504,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     
     private func validateCategory() -> Bool {
         guard let _ = category else {
-            NotificationManager.showBanner(title: "notification.no-selected-category".localized, type: .warning)
+            NotificationManager.showBanner(title: "notification.no-list-selected".localized, type: .warning)
             performSegue(withIdentifier: Segue.SelectCategory.rawValue, sender: nil)
             
             return false

@@ -132,12 +132,12 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     override func localizeInterface() {
         super.localizeInterface()
         
-        title = isAdding ? "actionsheet.new-category".localized : "actionsheet.actions.edit-category".localized
+        title = isAdding ? "actionsheet.new-todolist".localized : "actionsheet.actions.edit-todolist".localized
         
-        categoryNameTextField.placeholder = "category-table.name.placeholder".localized
-        nameLabel.text = "category-table.name".localized
-        chooseColorLabel.text = "category-table.choose-color".localized
-        chooseIconLabel.text = "category-table.choose-icon".localized
+        categoryNameTextField.placeholder = "todolist-table.name.placeholder".localized
+        nameLabel.text = "todolist-table.name".localized
+        chooseColorLabel.text = "todolist-table.choose-color".localized
+        chooseIconLabel.text = "todolist-table.choose-icon".localized
     }
     
     /// Additional views setup.

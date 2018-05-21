@@ -103,7 +103,7 @@ final class ApplicationManager {
         let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "shortcut.items.add-todo".localized, localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)
         
         let addCategoryIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddCategory.rawValue)
-        let addCategoryItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddCategory), localizedTitle: "shortcut.items.add-category".localized, localizedSubtitle: nil, icon: addCategoryIcon, userInfo: nil)
+        let addCategoryItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddCategory), localizedTitle: "shortcut.items.add-list".localized, localizedSubtitle: nil, icon: addCategoryIcon, userInfo: nil)
         
         let searchIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.Search.rawValue)
         let searchItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Search), localizedTitle: "shortcut.items.search".localized, localizedSubtitle: nil, icon: searchIcon, userInfo: nil)

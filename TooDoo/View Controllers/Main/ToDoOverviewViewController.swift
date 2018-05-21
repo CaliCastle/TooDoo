@@ -484,7 +484,7 @@ final class ToDoOverviewViewController: UIViewController {
                     self.showAddTodo()
                 })
             }),
-            PopMenuDefaultAction(title: "actionsheet.new-category".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon(), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.new-todolist".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showAddCategory()
                 })
@@ -837,7 +837,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             if anObject is Category, let indexPath = indexPath {
                 // If a category has been deleted
                 // Show banner message
-                NotificationManager.showBanner(title: "notification.deleted-category".localized, type: .success)
+                NotificationManager.showBanner(title: "notification.deleted-list".localized, type: .success)
                 // Perform deletion
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.deleteItems(at: [indexPath])
@@ -848,7 +848,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             if anObject is Category, let indexPath = newIndexPath {
                 // If a new category has been inserted
                 // Show banner message
-                NotificationManager.showBanner(title: "\("notification.created-category".localized)\((anObject as! Category).name!)", type: .success)
+                NotificationManager.showBanner(title: "\("notification.created-list".localized)\((anObject as! Category).name!)", type: .success)
                 // Perform insertion to the last category
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.insertItems(at: [indexPath])
@@ -931,17 +931,17 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         // Configure pop menu
         let actions = [
-            PopMenuDefaultAction(title: "actionsheet.actions.edit-category".localized, image: category.categoryIcon(), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: category.categoryIcon(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showEditCategory()
                 })
             }),
-            PopMenuDefaultAction(title: "actionsheet.actions.delete-category".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showDeleteCategory()
                 })
             }),
-            PopMenuDefaultAction(title: "actionsheet.actions.organize-categories".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showReorderCategories(nil)
                 })

@@ -31,7 +31,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "select-category.title".localized
+        title = "select-list.title".localized
         clearsSelectionOnViewWillAppear = false
         
         fetchCategories()

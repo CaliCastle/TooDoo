@@ -82,7 +82,7 @@
  Shortcut Items.
  */
 "shortcut.items.add-todo" = "New To-do";
-"shortcut.items.add-category" = "New Category";
+"shortcut.items.add-list" = "New To-do List";
 "shortcut.items.search" = "Search";
 "shortcut.items.settings" = "Settings";
 
@@ -91,12 +91,12 @@
  */
 "notifications.todo.due.title" = "❗️To-do due in @";
 
-"notification.deleted-category" = "Category Deleted!";
-"notification.created-category" = "Created Category - ";
+"notification.deleted-list" = "Category Deleted!";
+"notification.created-list" = "Created Category - ";
 "notification.empty-goal" = "Goal cannot be empty";
 "notification.empty-name" = "Name cannot be empty";
 "notification.goal-limit-maxed" = "Goal cannot be longer than %d characters";
-"notification.no-selected-category" = "You must select a category first";
+"notification.no-list-selected" = "You must select a category first";
 "notification.name-exists" = "Name already exists";
 "notification.language-changed" = "Language changed";
 "notification.side-menu.animation-changed" = "Side menu animation updated";
@@ -108,9 +108,9 @@
 "setup.complete.custom.title" = "Nice pic!";
 "setup.complete.custom.message" = "And no worries! I don't judge";
 // Personal default category
-"setup.default-category" = "Personal";
+"setup.default-list" = "Personal";
 // Work default category
-"setup.default-category-alt" = "Work";
+"setup.default-list-alt" = "Work";
 
 /*
  ToDo Overview View Controller.
@@ -121,7 +121,6 @@
 "overview.greeting.time.evening" = "Good evening";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "Today is";
-"overview.new-category" = "New Category";
 
 /*
  Category cards interface
@@ -162,7 +161,7 @@
 "todo-table.reminder.presets.8" = "Evening";
 
 // Select category Table View Controller.
-"select-category.title" = "Select Category";
+"select-list.title" = "Select List";
 
 // Repeat todo Table View Controller.
 "repeat-todo.types.0" = "Don't repeat";
@@ -181,36 +180,29 @@
 "repeat-todo.every-frequency" = "Every %d";
 "repeat-todo-after-completion" = "%@ after completion";
 
-/*
- Category Table View Controller.
- */
-"category-table.name" = "Name:";
-"category-table.name.placeholder" = "✎ Category name";
-"category-table.choose-color" = "Choose a color:";
-"category-table.choose-icon" = "Choose an icon:";
+"todolist-table.name" = "Name:";
+"todolist-table.name.placeholder" = "✎ List name";
+"todolist-table.choose-color" = "Choose a color:";
+"todolist-table.choose-icon" = "Choose an icon:";
 
-
-/*
- Reorder Categories Table View Controller.
- */
-"manage-categories.title" = "Manage Categories";
+"manage-todolist.title" = "Manage Todo Lists";
 
 /*
  Action Sheet & Alert
  */
 "actionsheet.new-todo" = "New To-do";
-"actionsheet.new-category" = "New Category";
-"actionsheet.actions.edit-category" = "Edit Category";
-"actionsheet.actions.delete-category" = "Delete Category";
-"actionsheet.actions.organize-categories" = "Organize All";
+"actionsheet.new-todolist" = "New List";
+"actionsheet.actions.edit-todolist" = "Edit List";
+"actionsheet.actions.delete-todolist" = "Delete List";
+"actionsheet.actions.organize-todolists" = "Organize All";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";
 "actionsheet.actions.complete-todo" = "Set Item Completed";
 "actionsheet.actions.uncomplete-todo" = "Set Item Incomplete";
 "actionsheet.actions.delete-todo" = "Delete Item";
 
-"alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";
-"alert.error-fetching-category" = "Unable to fetch categories";
+"alert.delete-todolist" = "Once you delete the list, all of its to-do items will be removed too.";
+"alert.error-fetching-todolist" = "Unable to fetch lists";
 "alert.error-fetching-todo" = "Unable to fetch to-dos";
 "alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";
 "alert.authentication-failed" = "Authentication failed, please try again";
@@ -306,10 +298,10 @@
 /*
  Category icons categories
  */
-"category-icon-lifestyle" = "Lifestyle";
-"category-icon-work" = "Work";
-"category-icon-social" = "Social";
-"category-icon-other" = "Other";
+"todolist-icon-lifestyle" = "Lifestyle";
+"todolist-icon-work" = "Work";
+"todolist-icon-social" = "Social";
+"todolist-icon-other" = "Other";
 
 /*
  App icons

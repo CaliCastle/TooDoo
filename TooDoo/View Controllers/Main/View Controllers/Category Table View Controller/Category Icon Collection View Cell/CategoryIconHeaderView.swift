@@ -41,7 +41,7 @@ final class CategoryIconHeaderView: UICollectionReusableView {
     /// Set text.
     
     open func setText(_ text: String) {
-        sectionTitleLabel.text = "category-icon-\(text)".localized
+        sectionTitleLabel.text = "\(ToDoListIcon.iconsPrefix)\(text)".localized
     }
     
     /// Configure color.
