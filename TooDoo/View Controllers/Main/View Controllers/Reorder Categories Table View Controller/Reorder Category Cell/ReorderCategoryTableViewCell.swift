@@ -16,17 +16,17 @@ final class ReorderCategoryTableViewCell: UITableViewCell {
     
     /// Stored category property.
     
-    var category: Category? {
+    var todoList: ToDoList? {
         didSet {
-            guard let category = category else { return }
-            let primaryColor = category.categoryColor()
+            guard let todoList = todoList else { return }
+            let primaryColor = todoList.listColor()
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
+            categoryIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
             categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
-            categoryNameLabel.text = category.name
+            categoryNameLabel.text = todoList.name
             categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
             // Configure tint color
             tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)

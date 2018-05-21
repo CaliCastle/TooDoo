@@ -58,7 +58,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             isAdding = todo == nil
             
             guard let todo = todo else { return }
-            category = todo.category
+            todoList = todo.list
             goal = todo.goal!
             hasDue = todo.due != nil
             hasReminder = todo.remindAt != nil
@@ -67,7 +67,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     
     /// Stored category property.
     
-    var category: Category?
+    var todoList: ToDoList?
     
     /// Stored has due property.
     
@@ -346,12 +346,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     
     fileprivate func configureCategoryViews() {
         // If no category selected
-        if self.category == nil {
+        if self.todoList == nil {
             // Select default category
-            self.category = Category.default()
+            self.todoList = ToDoList.default()
             
             // No categories at all
-            guard let _ = self.category else {
+            guard let _ = self.todoList else {
                 categoryNameLabel.text = "todo-table.select-category".localized
                 categoryIconImageView.tintColor = .white
                 
@@ -359,18 +359,18 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             }
         }
        
-        let category = self.category!
-        let categoryColor = category.categoryColor()
+        let todoList = self.todoList!
+        let todoListColor = todoList.listColor()
         DispatchQueue.main.async {
             // Set gradient colors
-            self.categoryGradientBackgroundView.startColor = categoryColor.lighten(byPercentage: 0.1)
-            self.categoryGradientBackgroundView.endColor = categoryColor
+            self.categoryGradientBackgroundView.startColor = todoListColor.lighten(byPercentage: 0.1)
+            self.categoryGradientBackgroundView.endColor = todoListColor
             // Set icon
-            self.categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
-            self.categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: false)
+            self.categoryIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
+            self.categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: todoListColor, isFlat: false)
             // Set label
-            self.categoryNameLabel.text = category.name
-            self.categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
+            self.categoryNameLabel.text = todoList.name
+            self.categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: todoListColor, isFlat: true).lighten(byPercentage: 0.1)
         }
     }
     
@@ -455,9 +455,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             // Add created at date
             todo.createdAt = now
         }
-        // Set its category
-        if let category = category {
-            category.addToTodos(todo)
+        // Set its list
+        if let todoList = todoList {
+            todoList.addToTodos(todo)
         }
         // Set due date
         todo.due = dueDate
@@ -503,7 +503,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     /// When user didn't select a category.
     
     private func validateCategory() -> Bool {
-        guard let _ = category else {
+        guard let _ = todoList else {
             NotificationManager.showBanner(title: "notification.no-list-selected".localized, type: .warning)
             performSegue(withIdentifier: Segue.SelectCategory.rawValue, sender: nil)
             
@@ -560,7 +560,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         tableView.endEditing(true)
         
         let dateTimePicker = DateTimePicker.show(selected: dueDate ?? now, minimumDate: now, maximumDate: nil)
-        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.highlightColor = todoList?.listColor() ?? .flatYellow()
         dateTimePicker.includeMonth = true
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
@@ -582,7 +582,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
         
         let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: now)
-        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.highlightColor = todoList?.listColor() ?? .flatYellow()
         dateTimePicker.includeMonth = true
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
@@ -732,7 +732,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         switch id {
         case Segue.SelectCategory.rawValue:
             guard let destination = segue.destination as? SelectCategoryTableViewController else { return }
-            destination.selectedCategory = category
+            destination.selectedList = todoList
             destination.delegate = self
         case Segue.SelectRepeat.rawValue:
             guard let destination = segue.destination as? RepeatTodoTableViewController else { return }
@@ -766,8 +766,8 @@ extension ToDoTableViewController: SelectCategoryTableViewControllerDelegate {
     
     /// Category selected.
     
-    func categorySelected(_ category: Category) {
-        self.category = category
+    func todoListSelected(_ todoList: ToDoList) {
+        self.todoList = todoList
         // Reconfigure views
         configureCategoryViews()
     }

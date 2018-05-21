@@ -34,19 +34,13 @@ final class ToDoOverviewViewController: UIViewController {
     @IBOutlet var menuBarButton: UIBarButtonItem!
     
     /// Storyboard segues.
-    ///
-    /// - ShowCategory: Add/Edit a category
-    /// - ShowReorderCategories: Bulk re-order/delete categories
-    /// - ShowTodo: Add/Edit a todo
-    /// - ShowMenu: Show side menu
-    /// - ShowSettings: Show settings
     
     public enum Segue: String {
-        case ShowCategory = "ShowCategory"
-        case ShowReorderCategories = "ShowReoderCategories"
-        case ShowTodo = "ShowTodo"
-        case ShowMenu = "ShowMenu"
-        case ShowSettings = "ShowSettings"
+        case ShowTodoList
+        case ShowReorderTodoLists
+        case ShowTodo
+        case ShowMenu
+        case ShowSettings
     }
     
     /// Navigation ttems enum.
@@ -63,12 +57,12 @@ final class ToDoOverviewViewController: UIViewController {
     
     /// Fetched results controller for categories fetching.
     
-    private lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
+    private lazy var fetchedResultsController: NSFetchedResultsController<ToDoList> = {
         // Create fetch request
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        let fetchRequest: NSFetchRequest<ToDoList> = ToDoList.fetchRequest()
         
         // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true), NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: true)]
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "categories")
@@ -133,7 +127,7 @@ final class ToDoOverviewViewController: UIViewController {
     /// Pinch gesture recognizer for category bulk re-order.
     
     lazy var pinchForReorderCategoryGesture: UIPinchGestureRecognizer = {
-        let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderCategories))
+        let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderTodoLists))
         
         todosCollectionView.addGestureRecognizer(recognizer)
         
@@ -280,7 +274,7 @@ final class ToDoOverviewViewController: UIViewController {
         listen(for: .ShowAddToDo, then: #selector(showAddTodo))
         listen(for: .ShowSettings, then: #selector(showSettings))
         listen(for: .UserNameChanged, then: #selector(updateName(_:)))
-        listen(for: .ShowAddCategory, then: #selector(showAddCategory))
+        listen(for: .ShowAddToDoList, then: #selector(showAddTodoList))
         listen(for: .UpdateStatusBar, then: #selector(updateStatusBar))
         listen(for: .SettingThemeChanged, then: #selector(themeChanged))
         listen(for: .UserAvatarChanged, then: #selector(updateAvatar(_:)))
@@ -484,9 +478,9 @@ final class ToDoOverviewViewController: UIViewController {
                     self.showAddTodo()
                 })
             }),
-            PopMenuDefaultAction(title: "actionsheet.new-todolist".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddCategory.rawValue), color: .flatWatermelon(), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.new-todolist".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodoList.rawValue), color: .flatWatermelon(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showAddCategory()
+                    self.showAddTodoList()
                 })
             })
         ])
@@ -510,14 +504,14 @@ final class ToDoOverviewViewController: UIViewController {
 
     /// Show add category view controller.
     
-    @objc fileprivate func showAddCategory() {
+    @objc fileprivate func showAddTodoList() {
         DispatchQueue.main.async {
             // Play click sound
             SoundManager.play(soundEffect: .Click)
             Haptic.impact(.medium).generate()
         }
         
-        performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: nil)
+        performSegue(withIdentifier: Segue.ShowTodoList.rawValue, sender: nil)
     }
     
     /// Show settings view controller.
@@ -585,21 +579,21 @@ final class ToDoOverviewViewController: UIViewController {
         guard let id = segue.identifier else { return }
         
         switch id {
-        case Segue.ShowCategory.rawValue:
-            // About to show add/edit category
+        case Segue.ShowTodoList.rawValue:
+            // About to show add/edit todo list
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! CategoryTableViewController
             
-            guard let categories = fetchedResultsController.fetchedObjects else { return }
+            guard let todoLists = fetchedResultsController.fetchedObjects else { return }
             
-            // Show edit category
+            // Show edit todo list
             destinationViewController.delegate = self
             if let _ = sender, let index = currentRelatedCategoryIndex {
-                destinationViewController.category = categories[index.item]
+                destinationViewController.todoList = todoLists[index.item]
             } else {
-                destinationViewController.newCategoryOrder = Int16(categories.count)
+                destinationViewController.newListOrder = Int16(todoLists.count)
             }
-        case Segue.ShowReorderCategories.rawValue:
+        case Segue.ShowReorderTodoLists.rawValue:
             // About to show reorder categories
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ReorderCategoriesTableViewController
@@ -621,10 +615,10 @@ final class ToDoOverviewViewController: UIViewController {
             
             guard let sender = sender as? [String: Any] else { return }
             let goal = sender["goal"] as! String
-            let category = sender["category"] as! Category
+            let todoList = sender["todo-list"] as! ToDoList
             
             destinationViewController.goal = goal
-            destinationViewController.category = category
+            destinationViewController.todoList = todoList
         default:
             break
         }
@@ -720,11 +714,11 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Configure category cell.
     
     fileprivate func configure(cell: ToDoCategoryOverviewCollectionViewCell, at indexPath: IndexPath) {
-        let category = fetchedResultsController.object(at: indexPath)
+        let todoList = fetchedResultsController.object(at: indexPath)
         
         cell.managedObjectContext = managedObjectContext
         cell.delegate = self
-        cell.category = category
+        cell.todoList = todoList
         
         // More rounded corners for iPhone X
         if #available(iOS 11.0, *), screenHasRoundedCorners {
@@ -745,7 +739,7 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isAddCategoryCell(indexPath) {
-            showAddCategory()
+            showAddTodoList()
         } else {
             
         }
@@ -845,16 +839,16 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             }
         case .insert:
             // Item has been inserted
-            if anObject is Category, let indexPath = newIndexPath {
-                // If a new category has been inserted
+            if let todoList = anObject as? ToDoList, let indexPath = newIndexPath {
+                // If a new list has been inserted
                 // Show banner message
-                NotificationManager.showBanner(title: "\("notification.created-list".localized)\((anObject as! Category).name!)", type: .success)
-                // Perform insertion to the last category
+                NotificationManager.showBanner(title: "\("notification.created-list".localized)\(todoList.name!)", type: .success)
+                // Perform insertion to the last todo list
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.insertItems(at: [indexPath])
                 }, completion: {
                     if $0 {
-                        // Once completed, scroll to current category
+                        // Once completed, scroll to current todo list
                         self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                     }
                 })
@@ -910,12 +904,12 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show controller for adding new todo.
-    func showAddNewTodo(goal: String, for category: Category) {
+    func showAddNewTodo(goal: String, for todoList: ToDoList) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
         // Perform segue in storyboard
-        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: ["goal": goal, "category": category])
+        performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: ["goal": goal, "todo-list": todoList])
     }
     
     /// Display category menu.
@@ -927,23 +921,23 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         Haptic.impact(.light).generate()
         SoundManager.play(soundEffect: .Drip)
         
-        let category = fetchedResultsController.object(at: selectedIndexPath)
+        let todoList = fetchedResultsController.object(at: selectedIndexPath)
         
         // Configure pop menu
         let actions = [
-            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: category.categoryIcon(), didSelect: { _ in
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: todoList.listIcon(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showEditCategory()
+                    self.showEditTodoList()
                 })
             }),
             PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showDeleteCategory()
+                    self.showDeleteTodoList()
                 })
             }),
             PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showReorderCategories(nil)
+                    self.showReorderTodoLists(nil)
                 })
             })
         ]
@@ -956,17 +950,17 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         present(popMenu, animated: true, completion: nil)
     }
     
-    /// Show category edit controller.
-    @objc private func showEditCategory() {
+    /// Show todo list edit controller.
+    @objc private func showEditTodoList() {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
         
-        performSegue(withIdentifier: Segue.ShowCategory.rawValue, sender: true)
+        performSegue(withIdentifier: Segue.ShowTodoList.rawValue, sender: true)
     }
     
-    /// Show alert for deleting category.
-    @objc private func showDeleteCategory() {
+    /// Show alert for deleting todo list.
+    @objc private func showDeleteTodoList() {
         guard let index = currentRelatedCategoryIndex else { return }
         
         let category = fetchedResultsController.object(at: index)
@@ -977,12 +971,12 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     }
     
     /// Show reorder categories.
-    @objc private func showReorderCategories(_ sender: Any?) {
+    @objc private func showReorderTodoLists(_ sender: Any?) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
         Haptic.impact(.medium).generate()
         
-        performSegue(withIdentifier: Segue.ShowReorderCategories.rawValue, sender: nil)
+        performSegue(withIdentifier: Segue.ShowReorderTodoLists.rawValue, sender: nil)
     }
     
 }
@@ -992,16 +986,16 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
 extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
     
     /// Validate category with unique name.
-    func validateCategory(_ category: Category?, with name: String) -> Bool {
-        guard var categories = fetchedResultsController.fetchedObjects else { return false }
+    func validate(_ todoList: ToDoList?, with name: String) -> Bool {
+        guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
         // Remove current category from checking if exists
-        if let category = category, let index = categories.index(of: category) {
-            categories.remove(at: index)
+        if let todoList = todoList, let index = todoLists.index(of: todoList) {
+            todoLists.remove(at: index)
         }
         
         var validated = true
         // Go through each and check name
-        let _ = categories.map {
+        let _ = todoLists.map {
             if $0.name! == name {
                 validated = false
             }
@@ -1010,10 +1004,10 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
         return validated
     }
     
-    /// Delete the category.
-    func deleteCategory(_ category: Category) {
+    /// Delete the todo list.
+    func deleteList(_ todoList: ToDoList) {
         // Delete from context
-        managedObjectContext.delete(category)
+        managedObjectContext.delete(todoList)
     }
     
     /// Show menu for todo.
@@ -1072,6 +1066,6 @@ extension ToDoOverviewViewController: FCAlertViewDelegate {
         guard let index = currentRelatedCategoryIndex else { return }
         
         // Delete from results
-        deleteCategory(fetchedResultsController.object(at: index))
+        deleteList(fetchedResultsController.object(at: index))
     }
 }

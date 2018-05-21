@@ -32,19 +32,19 @@ final class ToDoItemTableViewCell: UITableViewCell {
     
     var todo: ToDo? {
         didSet {
-            guard let todo = todo, let category = todo.category else { return }
+            guard let todo = todo, let todoList = todo.list else { return }
             
             let textColor = getTextColor()
-            let categoryColor = category.categoryColor()
+            let listColor = todoList.listColor()
             
             // Set background color
-            backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.15)
+            backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: listColor, isFlat: true).lighten(byPercentage: 0.15)
             // Goal label set up
             todoItemGoalTextView.textColor = textColor
             todoItemGoalTextView.text = todo.goal
             // Check box set up
-            checkBox.tintColor = categoryColor
-            checkBox.secondaryCheckmarkTintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true)
+            checkBox.tintColor = listColor
+            checkBox.secondaryCheckmarkTintColor = UIColor(contrastingBlackOrWhiteColorOn: listColor, isFlat: true)
             // Trash button set up
             moveToTrashButton.tintColor = textColor.withAlphaComponent(0.3)
             // Set completed
@@ -406,10 +406,10 @@ final class ToDoItemTableViewCell: UITableViewCell {
     /// Get text color.
     
     private func getTextColor() -> UIColor {
-        guard let todo = todo, let category = todo.category else { return .clear }
+        guard let todo = todo, let todoList = todo.list else { return .clear }
         
-        let categoryColor = category.categoryColor()
-        let backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true)
+        let listColor = todoList.listColor()
+        let backgroundColor = UIColor(contrastingBlackOrWhiteColorOn: listColor, isFlat: true)
         let textColor = UIColor(contrastingBlackOrWhiteColorOn: backgroundColor, isFlat: true).lighten(byPercentage: 0.1)
         
         return textColor!

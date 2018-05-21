@@ -363,7 +363,7 @@ final class SetupWelcomeViewController: UIViewController {
         
         if identifier == Segue.GetStarted.rawValue {
             // Create default category
-            Category.createDefault(context: managedObjectContext)
+            ToDoList.createDefault(context: managedObjectContext)
         }
     }
     

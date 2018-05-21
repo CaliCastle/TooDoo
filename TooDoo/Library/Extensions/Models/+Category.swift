@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-extension Category {
+extension ToDoList {
     
-    /// Find all categories.
-    class func findAll(in managedObjectContext: NSManagedObjectContext, with sortDescriptors: [NSSortDescriptor]? = nil) -> [Category] {
+    /// Find all todo lists.
+    static func findAll(in managedObjectContext: NSManagedObjectContext, with sortDescriptors: [NSSortDescriptor]? = nil) -> [ToDoList] {
         // Create Fetch Request
-        let request: NSFetchRequest<Category> = fetchRequest()
+        let request: NSFetchRequest<ToDoList> = fetchRequest()
         
         if let descriptors = sortDescriptors {
             request.sortDescriptors = descriptors
@@ -24,48 +24,48 @@ extension Category {
     }
     
     /// Get sort descriptor by order.
-    class func sortByOrder(ascending: Bool = true) -> NSSortDescriptor {
-        return NSSortDescriptor(key: #keyPath(Category.order), ascending: ascending)
+    static func sortByOrder(ascending: Bool = true) -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: ascending)
     }
     
     /// Get sort descriptor by createdAt.
-    class func sortByCreatedAt(ascending: Bool = true) -> NSSortDescriptor {
-        return NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: ascending)
+    static func sortByCreatedAt(ascending: Bool = true) -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: ascending)
     }
 
-    /// Create default `personal` and `work` category.
+    /// Create default `personal` and `work` lists.
     ///
     /// - Parameter context: Managed object context
-    class func createDefault(context: NSManagedObjectContext) {
-        let personalCategory = self.init(context: context)
+    static func createDefault(context: NSManagedObjectContext) {
+        let personalList = self.init(context: context)
         
-        personalCategory.name = "setup.default-list".localized
-        personalCategory.color = CategoryColor.defaultColorsString.first!
-        personalCategory.icon = "progress"
-        personalCategory.createdAt = Date()
-        personalCategory.created()
+        personalList.name = "setup.default-list".localized
+        personalList.color = ToDoListColor.defaultColorsString.first!
+        personalList.icon = "progress"
+        personalList.createdAt = Date()
+        personalList.created()
         
         let getStartedTodo = ToDo(context: context)
         getStartedTodo.goal = "Get started".localized
-        getStartedTodo.category = personalCategory
+        getStartedTodo.list = personalList
         getStartedTodo.createdAt = Date()
         getStartedTodo.created()
         
-        let workCategory = self.init(context: context)
-        workCategory.name = "setup.default-list-alt".localized
-        workCategory.color = CategoryColor.defaultColorsString[1]
-        workCategory.icon = "briefcase"
-        workCategory.createdAt = Date()
-        workCategory.created()
+        let workList = self.init(context: context)
+        workList.name = "setup.default-list-alt".localized
+        workList.color = ToDoListColor.defaultColorsString[1]
+        workList.icon = "briefcase"
+        workList.createdAt = Date()
+        workList.created()
     }
     
-    /// Get default category.
+    /// Get default todo list.
     ///
-    /// - Returns: The default category
-    class func `default`() -> Category? {
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+    /// - Returns: The default todo list
+    static func `default`() -> ToDoList? {
+        let fetchRequest: NSFetchRequest<ToDoList> = ToDoList.fetchRequest()
         
-        fetchRequest.sortDescriptors = [Category.ordered()]
+        fetchRequest.sortDescriptors = [ToDoList.ordered()]
         fetchRequest.fetchLimit = 1
         
         if let categories = try? CoreDataManager.main.persistentContainer.viewContext.fetch(fetchRequest) {
@@ -78,8 +78,8 @@ extension Category {
     /// Newest first sort descriptor.
     ///
     /// - Returns: Sort descriptor for newest first
-    class func ordered() -> NSSortDescriptor {
-        return NSSortDescriptor(key: #keyPath(Category.order), ascending: true)
+    static func ordered() -> NSSortDescriptor {
+        return NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true)
     }
     
     // MARK: - Configurations after creation.
@@ -89,19 +89,19 @@ extension Category {
         uuid = UUID().uuidString
     }
     
-    /// Get category color.
+    /// Get list color.
     ///
     /// - Returns: UIColor color
-    func categoryColor() -> UIColor {
-        guard let color = color else { return CategoryColor.default().first! }
+    func listColor() -> UIColor {
+        guard let color = color else { return ToDoListColor.default().first! }
         
         return UIColor(hexString: color)
     }
     
-    /// Get category icon.
+    /// Get list icon.
     ///
     /// - Returns: UIImage icon
-    func categoryIcon() -> UIImage {
+    func listIcon() -> UIImage {
         guard let icon = icon else { return UIImage() }
         
         return UIImage(named: "\(ToDoListIcon.iconsPrefix)\(icon)")!

@@ -248,8 +248,8 @@ final class LockViewController: UIViewController {
                             switch identifier {
                             case ToDoOverviewViewController.Segue.ShowSettings.rawValue:
                                 NotificationManager.send(notification: .ShowSettings)
-                            case ToDoOverviewViewController.Segue.ShowCategory.rawValue:
-                                NotificationManager.send(notification: .ShowAddCategory)
+                            case ToDoOverviewViewController.Segue.ShowTodoList.rawValue:
+                                NotificationManager.send(notification: .ShowAddToDoList)
                             case ToDoOverviewViewController.Segue.ShowTodo.rawValue:
                                 NotificationManager.send(notification: .ShowAddToDo)
                             default:

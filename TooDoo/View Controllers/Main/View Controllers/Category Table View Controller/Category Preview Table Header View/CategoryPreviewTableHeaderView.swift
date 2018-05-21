@@ -55,7 +55,7 @@ final class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        color = CategoryColor.default().first
+        color = ToDoListColor.default().first
         name = ""
         gradientBackgroundView.shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.3 : 0.18
     }

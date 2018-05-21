@@ -24,20 +24,20 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     // MARK: - Properties
     
     /// Stored category property.
-    var category: Category? {
+    var todoList: ToDoList? {
         didSet {
             isAdding = false
         }
     }
     
     /// Stored new order for category.
-    var newCategoryOrder: Int16 = 0
+    var newListOrder: Int16 = 0
     
     /// Default category colors.
-    let categoryColors: [UIColor] = CategoryColor.default()
+    let todoListColors: [UIColor] = ToDoListColor.default()
     
     /// Default category icons.
-    let categoryIcons: [String: [UIImage]] = CategoryIcon.default()
+    let todoListIcons: [String: [UIImage]] = ToDoListIcon.default()
     
     /// Selected color index.
     var selectedColorIndex: IndexPath = .zero {
@@ -60,10 +60,10 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     // MARK: - Interface Builder Outlets
     
-    @IBOutlet var categoryNameTextField: UITextField!
+    @IBOutlet var nameTextField: UITextField!
     @IBOutlet var categoryRandomColorButton: UIButton!
     @IBOutlet var categoryColorCollectionView: UICollectionView!
-    @IBOutlet var categoryIconSwitch: UISwitch!
+    @IBOutlet var iconSwitch: UISwitch!
     @IBOutlet var categoryIconCollectionView: UICollectionView!
     @IBOutlet var cellLabels: [UILabel]!
     
@@ -115,13 +115,13 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         super.viewDidAppear(animated)
         
         // Set selected indexes for category value
-        if let category = category {
-            if let index = categoryColors.index(of: category.categoryColor()) {
+        if let todoList = todoList {
+            if let index = todoListColors.index(of: todoList.listColor()) {
                 selectedColorIndex = IndexPath(item: index, section: selectedColorIndex.section)
             }
             
-            if let _ = category.icon {
-                selectedIconIndex = CategoryIcon.getIconIndex(for: category.categoryIcon())
+            if let _ = todoList.icon {
+                selectedIconIndex = ToDoListIcon.getIconIndex(for: todoList.listIcon())
             }
         }
         
@@ -134,7 +134,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         
         title = isAdding ? "actionsheet.new-todolist".localized : "actionsheet.actions.edit-todolist".localized
         
-        categoryNameTextField.placeholder = "todolist-table.name.placeholder".localized
+        nameTextField.placeholder = "todolist-table.name.placeholder".localized
         nameLabel.text = "todolist-table.name".localized
         chooseColorLabel.text = "todolist-table.choose-color".localized
         chooseIconLabel.text = "todolist-table.choose-icon".localized
@@ -147,9 +147,9 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         // Configure name text field
         configureNameTextField()
         // Configure icon switch
-        if let category = category {
-            toggleCategoryIcon(enable: category.icon != nil)
-            categoryIconSwitch.setOn(category.icon != nil, animated: false)
+        if let todoList = todoList {
+            toggleIcon(enable: todoList.icon != nil)
+            iconSwitch.setOn(todoList.icon != nil, animated: false)
         }
         
         // Configure gradient masks
@@ -163,11 +163,11 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
         // Configure text field colors
-        categoryNameTextField.tintColor = color
-        categoryNameTextField.textColor = color
-        categoryNameTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
+        nameTextField.tintColor = color
+        nameTextField.textColor = color
+        nameTextField.keyboardAppearance = currentThemeIsDark() ? .dark : .light
         // Change placeholder color to grayish
-        categoryNameTextField.attributedPlaceholder = NSAttributedString(string: categoryNameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.15)])
+        nameTextField.attributedPlaceholder = NSAttributedString(string: nameTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.15)])
         
         categoryRandomColorButton.setImage(#imageLiteral(resourceName: "refresh-icon").withRenderingMode(.alwaysTemplate), for: .normal)
         categoryRandomColorButton.tintColor = currentThemeIsDark() ? .white : .flatBlack()
@@ -182,14 +182,14 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     /// Configure name text field properties.
     fileprivate func configureNameTextField() {
-        if let category = category {
-            // If editing category, fill out text field
-            categoryNameTextField.text = category.name
+        if let todoList = todoList {
+            // If editing todo list, fill out text field
+            nameTextField.text = todoList.name
         }
-        categoryNameTextField.inputAccessoryView = super.configureInputAccessoryView()
+        nameTextField.inputAccessoryView = super.configureInputAccessoryView()
         // Show keyboard after half a second
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(400)) {
-            self.categoryNameTextField.becomeFirstResponder()
+            self.nameTextField.becomeFirstResponder()
         }
     }
     
@@ -200,7 +200,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     /// Select default icon in category icon collection view.
     fileprivate func selectDefaultIcon() {
-        if let _ = category {
+        if let _ = todoList {
             if let indexPath = selectedIconIndex {
                 categoryIconCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             }
@@ -232,7 +232,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     /// Change icon color accordingly.
     fileprivate func changeColors() {
-        let color = categoryColors[selectedColorIndex.item]
+        let color = todoListColors[selectedColorIndex.item]
         
         guard let headerView = tableView.headerView(forSection: 0) as? CategoryPreviewTableHeaderView else { return }
         
@@ -251,15 +251,15 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     /// - Returns: The current icon image
     fileprivate func getCurrentIcon() -> UIImage? {
         guard let selectedIconIndex = selectedIconIndex else { return nil }
-        if let icons = categoryIcons[CategoryIcon.iconCategoryIndexes[selectedIconIndex.section]] {
+        if let icons = todoListIcons[ToDoListIcon.iconCategoryIndexes[selectedIconIndex.section]] {
             return icons[selectedIconIndex.item]
         }
         
-        return categoryIcons.first?.value.first
+        return todoListIcons.first?.value.first
     }
     
     /// Toggle category icon.
-    fileprivate func toggleCategoryIcon(enable: Bool = true) {
+    fileprivate func toggleIcon(enable: Bool = true) {
         categoryIconCollectionView.isUserInteractionEnabled = enable
         categoryIconCollectionView.alpha = enable ? 1 : 0.5
         selectedIconIndex = enable ? .zero : nil
@@ -271,13 +271,13 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     /// Random color did tap.
     @IBAction func randomColorDidTap(_ sender: UIButton) {
-        if let newColor = categoryColors.randomElement() {
+        if let newColor = todoListColors.randomElement() {
             // Play click sound and haptic feedback
             SoundManager.play(soundEffect: .Click)
             Haptic.selection.generate()
             
             var newIndexPath = selectedColorIndex
-            newIndexPath.item = categoryColors.index(of: newColor)!
+            newIndexPath.item = todoListColors.index(of: newColor)!
             categoryColorCollectionView.selectItem(at: newIndexPath, animated: true, scrollPosition: .centeredHorizontally)
             selectedColorIndex = newIndexPath
         }
@@ -285,7 +285,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     
     /// Icon switch did change.
     @IBAction func iconSwitchDidChange(_ sender: UISwitch) {
-        toggleCategoryIcon(enable: sender.isOn)
+        toggleIcon(enable: sender.isOn)
     }
     
     /// Keyboard dismissal on exit.
@@ -309,7 +309,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
             
             NotificationManager.showBanner(title: "notification.empty-name".localized, type: .warning)
             
-            categoryNameTextField.becomeFirstResponder()
+            nameTextField.becomeFirstResponder()
             
             return
         }
@@ -330,7 +330,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     ///
     /// - Returns: Validation passesd or not
     fileprivate func validateUserInput() -> Bool {
-        guard categoryNameTextField.text?.trimmingCharacters(in: .whitespaces).count != 0 else { return false }
+        guard nameTextField.text?.trimmingCharacters(in: .whitespaces).count != 0 else { return false }
         
         return true
     }
@@ -340,29 +340,29 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         // Retreive context
         guard let delegate = delegate else { return }
         // Create or use current category
-        let name = categoryNameTextField.text?.trimmingCharacters(in: .whitespaces)
+        let name = nameTextField.text?.trimmingCharacters(in: .whitespaces)
         
-        guard delegate.validateCategory(self.category, with: name!) else {
+        guard delegate.validate(self.todoList, with: name!) else {
             showValidationError()
             return
         }
         
         // Assign properties
-        let category = self.category ?? Category(context: managedObjectContext)
-        category.name = name
-        category.color(categoryColors[selectedColorIndex.item])
+        let todoList = self.todoList ?? ToDoList(context: managedObjectContext)
+        todoList.name = name
+        todoList.color(todoListColors[selectedColorIndex.item])
         
         if let _ = selectedIconIndex {
-            category.icon = CategoryIcon.getIconName(for: getCurrentIcon()!)
+            todoList.icon = ToDoListIcon.getIconName(for: getCurrentIcon()!)
         } else {
-            category.icon = nil
+            todoList.icon = nil
         }
         
         // Add new order, created date
         if isAdding {
-            category.order = newCategoryOrder
-            category.createdAt = Date()
-            category.created()
+            todoList.order = newListOrder
+            todoList.createdAt = Date()
+            todoList.created()
         }
         
         // Generate haptic feedback and play sound
@@ -371,14 +371,14 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
         // Dismiss controller
         navigationController?.dismiss(animated: true, completion: nil)
         
-        delegate.categoryActionDone?(category)
+        delegate.todoListActionDone?(todoList)
     }
     
     /// Delete current category.
     fileprivate func deleteCategory() {
-        guard let category = category else { return }
+        guard let todoList = todoList else { return }
         
-        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
+        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.Category".localized)?")
     }
     
     /// Show validation error banner.
@@ -411,10 +411,10 @@ extension CategoryTableViewController {
         guard let headerView = Bundle.main.loadNibNamed(CategoryPreviewTableHeaderView.nibName, owner: self, options: nil)?.first as? CategoryPreviewTableHeaderView else { return nil }
         
         // Preset attributes
-        if let category = category {
-            headerView.name = category.name
-            headerView.color = category.categoryColor()
-            headerView.icon = category.categoryIcon()
+        if let todoList = todoList {
+            headerView.name = todoList.name
+            headerView.color = todoList.listColor()
+            headerView.icon = todoList.listIcon()
         }
         
         headerView.backgroundColor = .clear
@@ -432,14 +432,14 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard collectionView.isEqual(categoryIconCollectionView) else { return 1 }
 
-        return categoryIcons.count
+        return todoListIcons.count
     }
     
     /// How many items each section.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard collectionView.isEqual(categoryIconCollectionView) else { return categoryColors.count }
+        guard collectionView.isEqual(categoryIconCollectionView) else { return todoListColors.count }
         
-        return categoryIcons[CategoryIcon.iconCategoryIndexes[section]]!.count
+        return todoListIcons[ToDoListIcon.iconCategoryIndexes[section]]!.count
     }
     
     /// Get each item for collection view.
@@ -468,11 +468,11 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
         case CategoryCollectionType.Icon.rawValue:
             guard let cell = cell as? CategoryIconCollectionViewCell else { return }
             
-            cell.icon = categoryIcons[CategoryIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
+            cell.icon = todoListIcons[ToDoListIcon.iconCategoryIndexes[indexPath.section]]![indexPath.item]
         case CategoryCollectionType.Color.rawValue:
             guard let cell = cell as? CategoryColorCollectionViewCell else { return }
             
-            cell.color = categoryColors[indexPath.item]
+            cell.color = todoListColors[indexPath.item]
         default:
             return
         }
@@ -519,7 +519,7 @@ extension CategoryTableViewController: UICollectionViewDelegate, UICollectionVie
         switch kind {
         case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CategoryIconHeaderView.identifier, for: indexPath) as! CategoryIconHeaderView
-            headerView.setText(CategoryIcon.iconCategoryIndexes[indexPath.section])
+            headerView.setText(ToDoListIcon.iconCategoryIndexes[indexPath.section])
             
             return headerView
         default:
@@ -570,7 +570,7 @@ extension CategoryTableViewController: FCAlertViewDelegate {
     
     /// Delete button clicked.
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
-        guard let category = category, let delegate = delegate else {
+        guard let todoList = todoList, let delegate = delegate else {
             navigationController?.dismiss(animated: true, completion: nil)
             return
         }
@@ -580,7 +580,7 @@ extension CategoryTableViewController: FCAlertViewDelegate {
         // Dismiss controller
         navigationController?.dismiss(animated: true, completion: {
             // Delete category from context
-            delegate.deleteCategory?(category)
+            delegate.deleteList?(todoList)
         })
     }
     

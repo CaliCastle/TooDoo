@@ -14,19 +14,19 @@ final class SelectCategoryTableViewCell: UITableViewCell {
     
     static let identifier = "SelectCategoryCell"
     
-    /// Stored category property.
+    /// Stored todo list property.
     
-    var category: Category? {
+    var todoList: ToDoList? {
         didSet {
-            guard let category = category else { return }
-            let primaryColor = category.categoryColor()
+            guard let todoList = todoList else { return }
+            let primaryColor = todoList.listColor()
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = category.categoryIcon()
+            categoryIconImageView.image = todoList.listIcon()
             categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
-            categoryNameLabel.text = category.name
+            categoryNameLabel.text = todoList.name
             categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
             // Set tint color
             tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)

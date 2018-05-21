@@ -71,9 +71,9 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         }
     }
     
-    /// Stored category property.
+    /// Stored todo list property.
     
-    var category: Category?
+    var todoList: ToDoList?
     
     // MARK: - Interface Builder Outlets.
     
@@ -115,8 +115,8 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         todo.setDefaultDueDate()
         
         // Set its category
-        if let category = category {
-            category.addToTodos(todo)
+        if let todoList = todoList {
+            todoList.addToTodos(todo)
         }
         // Created to-do
         todo.created()
