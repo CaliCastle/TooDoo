@@ -378,7 +378,7 @@ final class CategoryTableViewController: DeckEditorTableViewController, CALayerD
     fileprivate func deleteCategory() {
         guard let todoList = todoList else { return }
         
-        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.Category".localized)?")
+        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
     }
     
     /// Show validation error banner.

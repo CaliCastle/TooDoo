@@ -193,7 +193,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
             configureTodoListCount(todoList)
         }
         
-        addTodoButton.setTitle("category-cards.add-todo".localized, for: .normal)
+        addTodoButton.setTitle("todolist-cards.add-todo".localized, for: .normal)
     }
     
     /// Set shadow opacity.

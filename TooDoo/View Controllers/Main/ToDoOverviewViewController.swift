@@ -473,12 +473,12 @@ final class ToDoOverviewViewController: UIViewController {
         
         // Show pop menu
         let popMenu = AlertManager.popMenu(sourceView: barButtonItem, actions: [
-            PopMenuDefaultAction(title: "actionsheet.new-todo".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodo.rawValue), color: .flatYellow(), didSelect: { _ in
+            PopMenuDefaultAction(title: "shortcut.items.add-todo".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodo.rawValue), color: .flatYellow(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showAddTodo()
                 })
             }),
-            PopMenuDefaultAction(title: "actionsheet.new-todolist".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodoList.rawValue), color: .flatWatermelon(), didSelect: { _ in
+            PopMenuDefaultAction(title: "shortcut.items.add-list".localized, image: UIImage(named: ApplicationManager.ShortcutItemIcon.AddTodoList.rawValue), color: .flatWatermelon(), didSelect: { _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
                     self.showAddTodoList()
                 })
@@ -967,7 +967,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         // Play click sound
         SoundManager.play(soundEffect: .Click)
-        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
+        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.ToDoList".localized)?")
     }
     
     /// Show reorder categories.

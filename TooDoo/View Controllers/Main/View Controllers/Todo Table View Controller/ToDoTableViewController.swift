@@ -240,7 +240,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         
         goalTextField.placeholder = "todo-table-goal-placeholder".localized
         todoGoalLabel.text = "todo-table.todo-goal".localized
-        categoryLabel.text = "todo-table.category".localized
+        categoryLabel.text = "todo-table.todolist".localized
         dueDateLabel.text = "todo-table.due-date".localized
         dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal)
         remindMeLabel.text = "todo-table.remind-me".localized
@@ -352,7 +352,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             
             // No categories at all
             guard let _ = self.todoList else {
-                categoryNameLabel.text = "todo-table.select-category".localized
+                categoryNameLabel.text = "todo-table.select-todolist".localized
                 categoryIconImageView.tintColor = .white
                 
                 return

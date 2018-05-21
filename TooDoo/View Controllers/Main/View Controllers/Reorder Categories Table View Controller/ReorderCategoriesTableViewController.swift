@@ -238,7 +238,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
             let todoList = fetchedResultsController.object(at: indexPath)
             deletingList = todoList
             
-            AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.Category".localized)?")
+            AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
         }
     }
     
