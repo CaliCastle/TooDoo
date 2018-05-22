@@ -1,5 +1,5 @@
 //
-//  ToDoCategoryOverviewCollectionViewCell.swift
+//  ToDoListOverviewCollectionViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/9/17.
@@ -10,9 +10,9 @@ import UIKit
 import Typist
 import CoreData
 
-protocol ToDoCategoryOverviewCollectionViewCellDelegate {
+protocol ToDoListOverviewCollectionViewCellDelegate {
 
-    func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell)
+    func showTodoListMenu(cell: ToDoListOverviewCollectionViewCell)
 
     func newTodoBeganEditing()
 
@@ -24,11 +24,11 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
     
 }
 
-final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
+final class ToDoListOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
 
     /// Reuse identifier.
     
-    static let identifier = "ToDoCategoryOverviewCell"
+    static let identifier = "ToDoListOverviewCell"
 
     override var reuseIdentifier: String? {
         return type(of: self).identifier
@@ -38,9 +38,9 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     @IBOutlet var cardContainerView: UIView!
     
-    @IBOutlet var categoryNameLabel: UILabel!
-    @IBOutlet var categoryIconImageView: UIImageView!
-    @IBOutlet var categoryTodosCountLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var countLabel: UILabel!
     @IBOutlet var buttonGradientBackgroundView: GradientView!
     @IBOutlet var addTodoButton: UIButton!
 
@@ -69,7 +69,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         return setupFetchedResultsController()
     }()
     
-    // Stored category property.
+    // Stored todo list property.
     
     var todoList: ToDoList? {
         didSet {
@@ -91,22 +91,22 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         }
     }
     
-    var delegate: ToDoCategoryOverviewCollectionViewCellDelegate?
+    var delegate: ToDoListOverviewCollectionViewCellDelegate?
     
-    /// Tap gesture recognizer for editing category.
+    /// Tap gesture recognizer for editing list.
     
     lazy var tapGestureForName: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(categoryTappedForEdit))
-        categoryNameLabel.addGestureRecognizer(recognizer)
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(todoListTappedForEdit))
+        nameLabel.addGestureRecognizer(recognizer)
         
         return recognizer
     }()
     
-    /// Tap gesture recognizer for editing category.
+    /// Tap gesture recognizer for editing list.
     
     lazy var tapGestureForIcon: UITapGestureRecognizer = {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(categoryTappedForEdit))
-        categoryIconImageView.addGestureRecognizer(recognizer)
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(todoListTappedForEdit))
+        iconImageView.addGestureRecognizer(recognizer)
         
         return recognizer
     }()
@@ -138,10 +138,10 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     /// Called when the cell is double tapped.
     
-    @objc private func categoryTappedForEdit(recognizer: UITapGestureRecognizer!) {
+    @objc private func todoListTappedForEdit(recognizer: UITapGestureRecognizer!) {
         guard let delegate = delegate else { return }
         
-        delegate.showCategoryMenu(cell: self)
+        delegate.showTodoListMenu(cell: self)
     }
     
     /// Called when the view is being dragged while adding new todo.
@@ -164,8 +164,8 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         super.awakeFromNib()
         
         // Configure tap recognizers
-        categoryNameLabel.addGestureRecognizer(tapGestureForName)
-        categoryIconImageView.addGestureRecognizer(tapGestureForIcon)
+        nameLabel.addGestureRecognizer(tapGestureForName)
+        iconImageView.addGestureRecognizer(tapGestureForIcon)
         // Configure long press recognizer
         addTodoButton.addGestureRecognizer(longPressGestureRecognizerForAddTodo)
         
@@ -246,26 +246,26 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         cardContainerView.backgroundColor = contrastColor
     }
     
-    /// Configure category name.
+    /// Configure todo list name.
     
     fileprivate func configureTodoListName(_ todoList: ToDoList, _ primaryColor: UIColor) {
         // Set name text and color
-        categoryNameLabel.text = todoList.name
-        categoryNameLabel.textColor = primaryColor
+        nameLabel.text = todoList.name
+        nameLabel.textColor = primaryColor
     }
     
-    /// Configure category icon.
+    /// Configure todo list icon.
     
     fileprivate func configureTodoListIcon(_ todoList: ToDoList, _ primaryColor: UIColor) {
         // Set icon image and colors
-        categoryIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
-        categoryIconImageView.tintColor = primaryColor
+        iconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
+        iconImageView.tintColor = primaryColor
     }
     
-    /// Configure category todo count.
+    /// Configure todo list todo count.
     
     fileprivate func configureTodoListCount(_ todoList: ToDoList) {
-        categoryTodosCountLabel.text = "%d todo(s) remaining".localizedPlural(todoList.validTodos().count)
+        countLabel.text = "%d todo(s) remaining".localizedPlural(todoList.validTodos().count)
     }
     
     /// Configure add todo button.
@@ -335,7 +335,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
 }
 
-extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
+extension ToDoListOverviewCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     /// Number of sections for todos.
     
@@ -403,7 +403,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     
 }
 
-extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
+extension ToDoListOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
     
     /// When the content will be changed.
     
@@ -426,7 +426,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // A todo item is changed
         if anObject is ToDo {
-            // Check if category is still valid
+            // Check if todo list is still valid
             guard let todo = anObject as? ToDo, let _ = todo.list else { return }
             
             if isAdding { isAdding = false }
@@ -517,7 +517,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
 
 // MARK: - To Do Item Table View Cell Delegate Methods.
 
-extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate {
+extension ToDoListOverviewCollectionViewCell: ToDoItemTableViewCellDelegate {
     
     /// Delete todo.
 
@@ -543,14 +543,14 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoItemTableViewCellDelegate 
 
 // MARK: - To Do Add Item Table View Cell Delegate Methods.
 
-extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelegate {
+extension ToDoListOverviewCollectionViewCell: ToDoAddItemTableViewCellDelegate {
     
     /// Began adding new todo.
     
     func newTodoBeganEditing() {
         // Add swipe dismissal gesture
         swipeForDismissalGestureRecognizer.isEnabled = true
-        // Disable category edit gesture
+        // Disable todo list edit gesture
         tapGestureForName.isEnabled = false
         tapGestureForIcon.isEnabled = false
         // Disable scroll
@@ -570,7 +570,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         
         // Remove swipe dismissal gesture
         swipeForDismissalGestureRecognizer.isEnabled = false
-        // Restore category edit gesture
+        // Restore todo list edit gesture
         tapGestureForName.isEnabled = true
         tapGestureForIcon.isEnabled = true
         // Enable scroll

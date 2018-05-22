@@ -1,5 +1,5 @@
 //
-//  SelectCategoryTableViewCell.swift
+//  SelectToDoListTableViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/18/17.
@@ -12,7 +12,7 @@ final class SelectToDoListTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     
-    static let identifier = "SelectToDoListCell"
+    static let identifier = "SelectTodoListCell"
     
     /// Stored todo list property.
     
@@ -49,15 +49,10 @@ final class SelectToDoListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-        if selected {
-            accessoryType = .checkmark
-        } else {
-            accessoryType = .none
+    
+    override var isSelected: Bool {
+        didSet {
+            accessoryType = isSelected ? .checkmark : .none
         }
     }
 
