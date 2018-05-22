@@ -14,10 +14,10 @@
 		8D030E0E1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D030E0D1FDBCFF900FA5ED5 /* SideMenuAnimationCollectionViewCell.swift */; };
 		8D05144C1FC5637500AC45CE /* LockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144B1FC5637500AC45CE /* LockViewController.swift */; };
 		8D05144E1FC57E6C00AC45CE /* +UIMotionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */; };
-		8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */; };
+		8D0654B21FB5278C008DF1EA /* AddToDoListOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0654B11FB5278C008DF1EA /* AddToDoListOverviewCollectionViewCell.swift */; };
 		8D1599051FAAE7220004846F /* Setup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1599031FAAE7220004846F /* Setup.storyboard */; };
 		8D1599081FAAEE310004846F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1599071FAAEE310004846F /* GradientView.swift */; };
-		8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */; };
+		8D1642D61FB4F2F5004F306F /* ToDoListOverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1642D51FB4F2F5004F306F /* ToDoListOverviewCollectionViewCell.swift */; };
 		8D1F6A821FB64F6F004709E3 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A811FB64F6F004709E3 /* ApplicationManager.swift */; };
 		8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */; };
 		8D1F6A871FB679C8004709E3 /* ToDoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F6A861FB679C8004709E3 /* ToDoListTableViewController.swift */; };
@@ -177,10 +177,10 @@
 		8D05144D1FC57E6C00AC45CE /* +UIMotionEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIMotionEffect.swift"; sourceTree = "<group>"; };
 		8D0514501FC593AE00AC45CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		8D0514551FC593B300AC45CE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
-		8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D0654B11FB5278C008DF1EA /* AddToDoListOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoListOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D1599041FAAE7220004846F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Setup.storyboard; sourceTree = "<group>"; };
 		8D1599071FAAEE310004846F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCategoryOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		8D1642D51FB4F2F5004F306F /* ToDoListOverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListOverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8D1F6A811FB64F6F004709E3 /* ApplicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		8D1F6A831FB65DC4004709E3 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		8D1F6A861FB679C8004709E3 /* ToDoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListTableViewController.swift; sourceTree = "<group>"; };
@@ -427,8 +427,8 @@
 			isa = PBXGroup;
 			children = (
 				8DB49E5D1FB97304003240E1 /* Table View Cell */,
-				8D1642D51FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift */,
-				8D0654B11FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift */,
+				8D1642D51FB4F2F5004F306F /* ToDoListOverviewCollectionViewCell.swift */,
+				8D0654B11FB5278C008DF1EA /* AddToDoListOverviewCollectionViewCell.swift */,
 			);
 			path = "Collection View Cell";
 			sourceTree = "<group>";
@@ -713,21 +713,21 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */ = {
+		8DAC56281FC0A6CD00F6956F /* Select Todo List Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */,
+				8DAC562B1FC0C5FA00F6956F /* Select Todo List Table View Cell */,
 				8DAC56291FC0A6E600F6956F /* SelectToDoListTableViewController.swift */,
 			);
-			path = "Select Category Table View Controller";
+			path = "Select Todo List Table View Controller";
 			sourceTree = "<group>";
 		};
-		8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */ = {
+		8DAC562B1FC0C5FA00F6956F /* Select Todo List Table View Cell */ = {
 			isa = PBXGroup;
 			children = (
 				8DAC562C1FC0C61900F6956F /* SelectToDoListTableViewCell.swift */,
 			);
-			path = "Select Category Table View Cell";
+			path = "Select Todo List Table View Cell";
 			sourceTree = "<group>";
 		};
 		8DB277F41FD5D49A00EB774B /* UI */ = {
@@ -964,7 +964,7 @@
 			isa = PBXGroup;
 			children = (
 				8D8C7E721FE121F9007F3C7A /* Repeat Table View Controller */,
-				8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */,
+				8DAC56281FC0A6CD00F6956F /* Select Todo List Table View Controller */,
 				8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */,
 			);
 			path = "Todo Table View Controller";
@@ -1478,7 +1478,7 @@
 				8D4E2BC71FC65C4E00195D5C /* RecolorableNavigationBar.swift in Sources */,
 				8DBE2D561FE8FC520011D326 /* LockAppSettingsTableViewController.swift in Sources */,
 				8D38562E200025E2001F4C3B /* SettingModels.swift in Sources */,
-				8D0654B21FB5278C008DF1EA /* AddCategoryOverviewCollectionViewCell.swift in Sources */,
+				8D0654B21FB5278C008DF1EA /* AddToDoListOverviewCollectionViewCell.swift in Sources */,
 				8D1F6A891FB67CA7004709E3 /* +UIViewController.swift in Sources */,
 				8DD7E93B1FE1E5CD005A865F /* ToDoModels.swift in Sources */,
 				8D8C7E741FE12214007F3C7A /* RepeatTodoTableViewController.swift in Sources */,
@@ -1520,7 +1520,7 @@
 				8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */,
 				8D3AA14E1FC7995E00862C4C /* HorizontalFloatingHeaderLayout.swift in Sources */,
 				8DBA558F1FC37B490012B941 /* MenuTableHeaderView.swift in Sources */,
-				8D1642D61FB4F2F5004F306F /* ToDoCategoryOverviewCollectionViewCell.swift in Sources */,
+				8D1642D61FB4F2F5004F306F /* ToDoListOverviewCollectionViewCell.swift in Sources */,
 				8DE4D6591FDDC6C300B504C8 /* DeckEditorTableViewController.swift in Sources */,
 				8DD3D6DB1FB79C8B00BE4FEF /* +ToDoList.swift in Sources */,
 				8D4784E51F9078450067E0FE /* RPCircularProgress.swift in Sources */,

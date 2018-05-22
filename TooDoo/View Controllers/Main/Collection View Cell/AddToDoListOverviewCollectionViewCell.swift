@@ -1,5 +1,5 @@
 //
-//  AddCategoryOverviewCollectionViewCell.swift
+//  AddToDoListOverviewCollectionViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/9/17.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
+final class AddToDoListOverviewCollectionViewCell: UICollectionViewCell, LocalizableInterface {
     
     /// Reuse identifier.
     
-    static let identifier = "AddCategoryOverviewCell"
+    static let identifier = "AddTodoListOverviewCell"
     
     override var reuseIdentifier: String? {
         return type(of: self).identifier
@@ -21,7 +21,7 @@ final class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, Localiz
     // MARK: - Interface Builder Outlets
     
     @IBOutlet var cardContainerView: UIView!
-    @IBOutlet var newCategoryLabel: UILabel!
+    @IBOutlet var newTodoListLabel: UILabel!
     
     /// Initialization.
     
@@ -48,14 +48,14 @@ final class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, Localiz
     /// Localize interface.
     
     @objc internal func localizeInterface() {
-        newCategoryLabel.text = "shortcut.items.add-list".localized
+        newTodoListLabel.text = "shortcut.items.add-list".localized
     }
     
     /// Set up views.
     
     fileprivate func setupViews() {
         cardContainerView.shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.4 : 0.1
-        newCategoryLabel.textColor = AppearanceManager.default.theme == .Dark ? .white : .flatBlack()
+        newTodoListLabel.textColor = AppearanceManager.default.theme == .Dark ? .white : .flatBlack()
     }
     
     /// When the theme has changed.

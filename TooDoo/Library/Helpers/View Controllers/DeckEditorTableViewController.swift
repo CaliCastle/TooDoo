@@ -64,7 +64,7 @@ open class DeckEditorTableViewController: UITableViewController, LocalizableInte
     }
     
     internal func setupViews() {
-        // Remove delete button when creating new category
+        // Remove delete button when creating new todo list
         if isAdding, let items = toolbarItems {
             setToolbarItems(items.filter({ return $0.tag != 0 }), animated: false)
         }
