@@ -13,13 +13,10 @@ import BulletinBoard
 final class ToDoTableViewController: DeckEditorTableViewController {
 
     /// Segue enum.
-    ///
-    /// - SelectTodoList: Show select a todo list
-    /// - SelectRepeat: Show select repeat type
     
     private enum Segue: String {
-        case SelectTodoList = "SelectTodoList"
-        case SelectRepeat = "SelectRepeat"
+        case SelectTodoList
+        case SelectRepeat
     }
     
     /// Due presets.

@@ -713,21 +713,21 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */ = {
+		8DAC56281FC0A6CD00F6956F /* Select Todo List Table View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */,
+				8DAC562B1FC0C5FA00F6956F /* Select Todo List Table View Cell */,
 				8DAC56291FC0A6E600F6956F /* SelectToDoListTableViewController.swift */,
 			);
-			path = "Select Category Table View Controller";
+			path = "Select Todo List Table View Controller";
 			sourceTree = "<group>";
 		};
-		8DAC562B1FC0C5FA00F6956F /* Select Category Table View Cell */ = {
+		8DAC562B1FC0C5FA00F6956F /* Select Todo List Table View Cell */ = {
 			isa = PBXGroup;
 			children = (
 				8DAC562C1FC0C61900F6956F /* SelectToDoListTableViewCell.swift */,
 			);
-			path = "Select Category Table View Cell";
+			path = "Select Todo List Table View Cell";
 			sourceTree = "<group>";
 		};
 		8DB277F41FD5D49A00EB774B /* UI */ = {
@@ -964,7 +964,7 @@
 			isa = PBXGroup;
 			children = (
 				8D8C7E721FE121F9007F3C7A /* Repeat Table View Controller */,
-				8DAC56281FC0A6CD00F6956F /* Select Category Table View Controller */,
+				8DAC56281FC0A6CD00F6956F /* Select Todo List Table View Controller */,
 				8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */,
 			);
 			path = "Todo Table View Controller";

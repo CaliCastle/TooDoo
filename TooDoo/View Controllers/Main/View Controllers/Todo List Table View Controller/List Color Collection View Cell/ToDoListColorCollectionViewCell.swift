@@ -35,7 +35,7 @@ final class ToDoListColorCollectionViewCell: UICollectionViewCell {
     
     fileprivate func configureColorView(selected: Bool = true) {
         UIView.animate(withDuration: 0.28) {
-            self.colorView.layer.cornerRadius = selected ? 18 : 12
+            self.colorView.layer.cornerRadius = selected ? (self.colorView.bounds.width / 2) : 12
             self.colorView.layer.borderWidth = selected ? 4 : 0
             self.colorView.layer.borderColor = selected ? self.color.cgColor : UIColor.clear.cgColor
             self.colorView.backgroundColor = selected ? .clear : self.color

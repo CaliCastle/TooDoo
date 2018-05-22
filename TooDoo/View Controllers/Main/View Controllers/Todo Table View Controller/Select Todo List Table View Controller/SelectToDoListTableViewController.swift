@@ -20,8 +20,6 @@ final class SelectToDoListTableViewController: UITableViewController {
     
     var selectedList: ToDoList?
     
-    /// Fetched results controller.
-    
     private var todoLists: [ToDoList] = []
     
     var delegate: SelectToDoListTableViewControllerDelegate?
@@ -71,9 +69,13 @@ final class SelectToDoListTableViewController: UITableViewController {
         let currentList = todoLists[indexPath.row]
         
         cell.todoList = currentList
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let currentList = todoLists[indexPath.row]
         
-        if let selectedList = selectedList {
-            cell.setSelected(currentList == selectedList, animated: false)
+        if let cell = cell as? SelectToDoListTableViewCell, let selectedList = selectedList {
+            cell.isSelected = currentList.objectID == selectedList.objectID
         }
     }
     
@@ -81,8 +83,11 @@ final class SelectToDoListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate = delegate else { return }
+
+        Haptic.selection.generate()
         
         delegate.todoListSelected(todoLists[indexPath.row])
+
         // Pop view controller
         let _ = navigationController?.popViewController(animated: true)
     }
