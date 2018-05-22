@@ -1,5 +1,5 @@
 //
-//  CategoryIconHeaderView.swift
+//  ToDoListIconHeaderView.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/23/17.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-final class CategoryIconHeaderView: UICollectionReusableView {
+final class ToDoListIconHeaderView: UICollectionReusableView {
     
     /// Reusable identifier.
     
-    static let identifier = "CategoryIconHeaderView"
+    static let identifier = "ToDoListIconHeaderView"
     
     /// Nib file name.
     
-    static let nibName = String(describing: CategoryIconHeaderView.self)
+    static let nibName = String(describing: ToDoListIconHeaderView.self)
     
     // MARK: - Interface Builder Outlets.
     
@@ -41,7 +41,7 @@ final class CategoryIconHeaderView: UICollectionReusableView {
     /// Set text.
     
     open func setText(_ text: String) {
-        sectionTitleLabel.text = "category-icon-\(text)".localized
+        sectionTitleLabel.text = "\(ToDoListIcon.iconsPrefix)\(text)".localized
     }
     
     /// Configure color.

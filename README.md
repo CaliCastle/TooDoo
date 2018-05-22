@@ -17,8 +17,8 @@ TooDoo is a beautiful and simple to-do list app that helps you manage tasks on a
 ![Welcome Showcase](https://github.com/CaliCastle/TooDoo/raw/master/Images/TooDoo_Welcome_ShowCase.gif)
 
 ## Features list:
-- [x] Add/Update/Delete categories
-- [x] Reorder categories
+- [x] Add/Update/Delete todo lists
+- [x] Reorder todo lists
 - [x] Add/Complete/Delete todos
 - [x] Scheduled notification for todos that have due time
 - [x] Localization support:

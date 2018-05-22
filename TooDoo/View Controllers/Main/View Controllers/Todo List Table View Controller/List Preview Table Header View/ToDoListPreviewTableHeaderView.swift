@@ -1,5 +1,5 @@
 //
-//  CategoryPreviewTableHeaderView.swift
+//  ToDoListPreviewTableHeaderView.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/13/17.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
+final class ToDoListPreviewTableHeaderView: UITableViewHeaderFooterView {
 
     /// Nib file name.
     
-    static let nibName = String(describing: CategoryPreviewTableHeaderView.self)
+    static let nibName = String(describing: ToDoListPreviewTableHeaderView.self)
     
     /// Manipulation of preview icon.
     
@@ -55,7 +55,7 @@ final class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        color = CategoryColor.default().first
+        color = ToDoListColor.default().first
         name = ""
         gradientBackgroundView.shadowOpacity = AppearanceManager.default.theme == .Dark ? 0.3 : 0.18
     }

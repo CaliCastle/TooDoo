@@ -8,26 +8,26 @@
 
 import UIKit
 
-final class SelectCategoryTableViewCell: UITableViewCell {
+final class SelectToDoListTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     
-    static let identifier = "SelectCategoryCell"
+    static let identifier = "SelectToDoListCell"
     
-    /// Stored category property.
+    /// Stored todo list property.
     
-    var category: Category? {
+    var todoList: ToDoList? {
         didSet {
-            guard let category = category else { return }
-            let primaryColor = category.categoryColor()
+            guard let todoList = todoList else { return }
+            let primaryColor = todoList.listColor()
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = category.categoryIcon()
-            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
+            iconImageView.image = todoList.listIcon()
+            iconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
-            categoryNameLabel.text = category.name
-            categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
+            nameLabel.text = todoList.name
+            nameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
             // Set tint color
             tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         }
@@ -35,14 +35,14 @@ final class SelectCategoryTableViewCell: UITableViewCell {
     
     // MARK: - Interface Builder Outlets.
     
-    @IBOutlet var categoryIconImageView: UIImageView!
-    @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
     
     /// Prepare for reuse.
     
     override func prepareForReuse() {
-        categoryNameLabel.text = ""
-        categoryIconImageView.image = UIImage()
+        nameLabel.text = ""
+        iconImageView.image = UIImage()
     }
     
     override func awakeFromNib() {

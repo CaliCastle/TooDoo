@@ -29,53 +29,38 @@ final class NotificationManager {
     static let center = NotificationCenter.default
     
     /// Defined Notifications for KVO.
-    ///
-    /// - UserHasSetup: When the user finished the setup
-    /// - UserNameChanged: When the user changed the name
-    /// - UserAvatarChanged: When the user changed avatar
-    /// - UserAuthenticated: When the user passes authentication with biometric Touch ID, Face ID or Passcode
-    /// - UserAuthenticationRedirect: When the user uses 3D Touch or other shortcuts trying to perform an action,
-    ///                               but need to be authenticated first through lock page
-    /// - ShowAddCategory: Show add category
-    /// - ShowAddToDo: Show add todo
-    /// - ShowSettings: Show settings
-    /// - DraggedWhileAddingTodo: When the user swiped/dragged while adding a new todo
-    /// - UpdateStatusBar: Update the status bar
-    /// - SettingMotionEffectsChanged: When the motion effect setting is changed
-    /// - SettingThemeChanged: When the user changed color theme
-    /// - SettingLocaleChanged: When the user changed language.
     
     public enum Notifications: String, NotificationName {
         /*
          Events
          */
-        case UserHasSetup = "user-has-setup"
-        case UserNameChanged = "user-name-changed"
-        case UserAvatarChanged = "user-avatar-changed"
-        case UserAuthenticated = "user-authenticated"
-        case UserAuthenticationRedirect = "user-authentication-redirect"
+        case UserHasSetup
+        case UserNameChanged
+        case UserAvatarChanged
+        case UserAuthenticated
+        case UserAuthenticationRedirect
         
         /*
          Show page
          */
-        case ShowAddCategory = "show-add-category"
-        case ShowAddToDo = "show-add-todo"
-        case ShowSettings = "show-settings"
+        case ShowAddToDoList
+        case ShowAddToDo
+        case ShowSettings
         
         /*
          Status change
          */
-        case DraggedWhileAddingTodo = "dragged-while-adding-todo"
-        case UpdateStatusBar = "update-status-bar"
+        case DraggedWhileAddingTodo
+        case UpdateStatusBar
         
         /*
          Settings
          */
-        case SettingMotionEffectsChanged = "setting-motion-effects-changed"
-        case SettingThemeChanged = "setting-theme-changed"
-        case SettingLocaleChanged = "setting-locale-changed"
-        case SettingAppIconChanged = "setting-app-icon-changed"
-        case SettingPasscodeSetup = "setting-passcode-setup"
+        case SettingMotionEffectsChanged
+        case SettingThemeChanged
+        case SettingLocaleChanged
+        case SettingAppIconChanged
+        case SettingPasscodeSetup
     }
     
     /// Local Notifications.
@@ -83,7 +68,7 @@ final class NotificationManager {
     /// - TodoDue: Todo is due
     
     public enum LocalNotifications: String {
-        case TodoDue = "TODO_DUE"
+        case TodoDue
     }
     
     // MARK: - Functions.
@@ -143,7 +128,7 @@ final class NotificationManager {
             content.title = "notifications.todo.due.title".localized
         }
         
-        content.title = content.title.replacingOccurrences(of: "@", with: todo.category!.name!)
+        content.title = content.title.replacingOccurrences(of: "@", with: todo.list!.name!)
         content.categoryIdentifier = LocalNotifications.TodoDue.rawValue
         content.body = todo.goal!
         content.sound = UNNotificationSound(named: SoundManager.SoundEffect.DueNotification.fileName())

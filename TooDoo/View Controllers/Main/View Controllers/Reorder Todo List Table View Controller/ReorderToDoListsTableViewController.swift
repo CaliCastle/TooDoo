@@ -1,5 +1,5 @@
 //
-//  ReorderCategoriesTableViewController.swift
+//  ReorderToDoListsTableViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/14/17.
@@ -9,31 +9,31 @@
 import UIKit
 import CoreData
 
-protocol ReorderCategoriesTableViewControllerDelegate {
-    func categoriesDoneOrganizing()
+protocol ReorderToDoListsTableViewControllerDelegate {
+    func todoListsDoneOrganizing()
 }
 
-final class ReorderCategoriesTableViewController: UITableViewController, LocalizableInterface {
+final class ReorderToDoListsTableViewController: UITableViewController, LocalizableInterface {
     
     fileprivate enum Segue: String {
-        case AddCategory
+        case AddTodoList
     }
     
     /// Fetched Results Controller.
     
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Category> = {
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<ToDoList> = {
         return configureFetchedResultsController()
     }()
     
-    var delegate: ReorderCategoriesTableViewControllerDelegate?
+    var delegate: ReorderToDoListsTableViewControllerDelegate?
     
-    /// The category to be deleted.
+    /// The todo list to be deleted.
     
-    var deletingCategory: Category?
+    var deletingList: ToDoList?
     
-    lazy var newCategoryButton: UIButton = {
+    lazy var newButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 80))
-        button.setTitle("  \("shortcut.items.add-category".localized)", for: .normal)
+        button.setTitle("  \("shortcut.items.add-list".localized)", for: .normal)
         button.setImage(#imageLiteral(resourceName: "plus-button"), for: .normal)
         button.titleLabel?.font = AppearanceManager.font(size: 17, weight: .Medium)
         
@@ -41,7 +41,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         button.setTitleColor(color, for: .normal)
         button.tintColor = color
         
-        button.addTarget(self, action: #selector(newCategoryDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(newDidTap), for: .touchUpInside)
         
         return button
     }()
@@ -55,7 +55,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         modalPresentationCapturesStatusBarAppearance = true
         
         setupViews()
-        fetchCategories()
+        fetchTodoLists()
         animateViews()
     }
     
@@ -71,15 +71,15 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     /// Localize interface.
     
     @objc internal func localizeInterface() {
-        title = "manage-categories.title".localized
+        title = "manage-todolist.title".localized
     }
     
-    fileprivate func configureFetchedResultsController() -> NSFetchedResultsController<Category> {
+    fileprivate func configureFetchedResultsController() -> NSFetchedResultsController<ToDoList> {
         // Create fetch request
-        let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+        let fetchRequest: NSFetchRequest<ToDoList> = ToDoList.fetchRequest()
         
         // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Category.order), ascending: true), NSSortDescriptor(key: #keyPath(Category.createdAt), ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true), NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: true)]
         
         // Create controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -92,7 +92,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     private func setupViews() {
         navigationItem.rightBarButtonItem = editButtonItem
 
-        tableView.tableFooterView = newCategoryButton
+        tableView.tableFooterView = newButton
         
         // Set theme color
         navigationController?.navigationBar.barTintColor = currentThemeIsDark() ? .flatBlack() : .flatWhite()
@@ -109,11 +109,11 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
     }
     
-    private func fetchCategories() {
+    private func fetchTodoLists() {
         do {
             try fetchedResultsController.performFetch()
         } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-category".localized, type: .danger)
+            NotificationManager.showBanner(title: "alert.error-fetching-todolist".localized, type: .danger)
         }
     }
     
@@ -141,8 +141,8 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         return true
     }
     
-    @objc fileprivate func newCategoryDidTap() {
-        performSegue(withIdentifier: Segue.AddCategory.rawValue, sender: nil)
+    @objc fileprivate func newDidTap() {
+        performSegue(withIdentifier: Segue.AddTodoList.rawValue, sender: nil)
     }
     
     /// User tapped cancel.
@@ -154,7 +154,7 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         tableView.endEditing(true)
         
         navigationController?.dismiss(animated: true) {
-            self.delegate?.categoriesDoneOrganizing()
+            self.delegate?.todoListsDoneOrganizing()
         }
     }
     
@@ -162,13 +162,13 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
         guard let id = segue.identifier else { return }
         
         switch id {
-        case Segue.AddCategory.rawValue:
+        case Segue.AddTodoList.rawValue:
             let destination = segue.destination as! UINavigationController
-            if let destinationViewController = destination.viewControllers.first as? CategoryTableViewController {
-                guard let categories = fetchedResultsController.fetchedObjects else { return }
+            if let destinationViewController = destination.viewControllers.first as? ToDoListTableViewController {
+                guard let todoLists = fetchedResultsController.fetchedObjects else { return }
                 
                 destinationViewController.delegate = self
-                destinationViewController.newCategoryOrder = Int16(categories.count)
+                destinationViewController.newListOrder = Int16(todoLists.count)
             }
         default:
             break
@@ -210,11 +210,11 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
     /// Configure cell.
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReorderCategoryTableViewCell.identifier, for: indexPath) as? ReorderCategoryTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReorderToDoListTableViewCell.identifier, for: indexPath) as? ReorderToDoListTableViewCell else { return UITableViewCell() }
 
         // Configure the cell...
-        let category = fetchedResultsController.object(at: indexPath)
-        cell.category = category
+        let todoList = fetchedResultsController.object(at: indexPath)
+        cell.todoList = todoList
         
         return cell
     }
@@ -235,23 +235,23 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
  
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let category = fetchedResultsController.object(at: indexPath)
-            deletingCategory = category
+            let todoList = fetchedResultsController.object(at: indexPath)
+            deletingList = todoList
             
-            AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.Category".localized)?")
+            AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
         }
     }
     
     /// Support rearranging the table view.
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        guard var categories = fetchedResultsController.fetchedObjects else { return }
+        guard var lists = fetchedResultsController.fetchedObjects else { return }
         
-        // Re-arrange category from source to destination
-        categories.insert(categories.remove(at: fromIndexPath.item), at: to.item)
+        // Re-arrange todo list from source to destination
+        lists.insert(lists.remove(at: fromIndexPath.item), at: to.item)
         // Save to order attribute
-        let _ = categories.map {
-            let newOrder = Int16(categories.index(of: $0)!)
+        let _ = lists.map {
+            let newOrder = Int16(lists.index(of: $0)!)
             
             if $0.order != newOrder {
                 $0.order = newOrder
@@ -267,18 +267,18 @@ final class ReorderCategoriesTableViewController: UITableViewController, Localiz
 
 }
 
-extension ReorderCategoriesTableViewController: CategoryTableViewControllerDelegate {
+extension ReorderToDoListsTableViewController: ToDoListTableViewControllerDelegate {
     
-    func validateCategory(_ category: Category?, with name: String) -> Bool {
-        guard var categories = fetchedResultsController.fetchedObjects else { return false }
-        // Remove current category from checking if exists
-        if let category = category, let index = categories.index(of: category) {
-            categories.remove(at: index)
+    func validate(_ todoList: ToDoList?, with name: String) -> Bool {
+        guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
+        // Remove current todo list from checking if exists
+        if let todoList = todoList, let index = todoLists.index(of: todoList) {
+            todoLists.remove(at: index)
         }
         
         var validated = true
         // Go through each and check name
-        let _ = categories.map {
+        let _ = todoLists.map {
             if $0.name! == name {
                 validated = false
             }
@@ -289,7 +289,7 @@ extension ReorderCategoriesTableViewController: CategoryTableViewControllerDeleg
     
 }
 
-extension ReorderCategoriesTableViewController: NSFetchedResultsControllerDelegate {
+extension ReorderToDoListsTableViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
@@ -316,22 +316,22 @@ extension ReorderCategoriesTableViewController: NSFetchedResultsControllerDelega
     
 }
 
-extension ReorderCategoriesTableViewController: FCAlertViewDelegate {
+extension ReorderToDoListsTableViewController: FCAlertViewDelegate {
     
     /// Alert dismissal.
     func alertView(alertView: FCAlertView, clickedButtonIndex index: Int, buttonTitle title: String) {
         alertView.dismissAlertView()
-        // Reset deleting category
-        deletingCategory = nil
+        // Reset deleting todo list
+        deletingList = nil
     }
     
     /// Alert confirmed.
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
-        guard let category = deletingCategory else { return }
-        // Delete category from context
-        managedObjectContext.delete(category)
-        // Reset deleting category
-        deletingCategory = nil
+        guard let todoList = deletingList else { return }
+        // Delete todo list from context
+        managedObjectContext.delete(todoList)
+        // Reset deleting todo list
+        deletingList = nil
     }
     
 }

@@ -17,7 +17,7 @@
 "Delete" = "Delete";
 "Nope" = "Nope";
 "Never mind" = "Never mind";
-"Model.Category" = "Category";
+"Model.ToDoList" = "Todo List";
 "Give access" = "Give access";
 "Not now" = "Not now";
 "Todos" = "Todos";
@@ -82,7 +82,7 @@
  Shortcut Items.
  */
 "shortcut.items.add-todo" = "New To-do";
-"shortcut.items.add-category" = "New Category";
+"shortcut.items.add-list" = "New To-do List";
 "shortcut.items.search" = "Search";
 "shortcut.items.settings" = "Settings";
 
@@ -91,12 +91,12 @@
  */
 "notifications.todo.due.title" = "❗️To-do due in @";
 
-"notification.deleted-category" = "Category Deleted!";
-"notification.created-category" = "Created Category - ";
+"notification.deleted-list" = "Todo List Deleted!";
+"notification.created-list" = "Created Todo List - ";
 "notification.empty-goal" = "Goal cannot be empty";
 "notification.empty-name" = "Name cannot be empty";
 "notification.goal-limit-maxed" = "Goal cannot be longer than %d characters";
-"notification.no-selected-category" = "You must select a category first";
+"notification.no-list-selected" = "You must select a todo list first";
 "notification.name-exists" = "Name already exists";
 "notification.language-changed" = "Language changed";
 "notification.side-menu.animation-changed" = "Side menu animation updated";
@@ -107,10 +107,10 @@
 "setup.complete.skipped" = "Let's start using TooDoo";
 "setup.complete.custom.title" = "Nice pic!";
 "setup.complete.custom.message" = "And no worries! I don't judge";
-// Personal default category
-"setup.default-category" = "Personal";
-// Work default category
-"setup.default-category-alt" = "Work";
+// Personal default list
+"setup.default-list" = "Personal";
+// Work default list
+"setup.default-list-alt" = "Work";
 
 /*
  ToDo Overview View Controller.
@@ -121,19 +121,18 @@
 "overview.greeting.time.evening" = "Good evening";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "Today is";
-"overview.new-category" = "New Category";
 
 /*
- Category cards interface
+ Todo List cards interface
  */
-"category-cards.add-todo" = "Add To-do";
+"todolist-cards.add-todo" = "Add To-do";
 
 /*
  ToDo Table View Controller.
  */
 "todo-table.todo-goal" = "Todo goal:";
 "todo-table-goal-placeholder" = "✎ Set your to-do goal";
-"todo-table.category" = "Category:";
+"todo-table.todolist" = "Todo List:";
 "todo-table.due-date" = "Due date";
 "todo-table.remind-me" = "Remind me";
 "todo-table.repeat" = "Repeat";
@@ -141,7 +140,7 @@
 "todo-table.select-reminder" = "Set reminder";
 "todo-table.add-todo" = "Add To-do";
 "todo-table.edit-todo" = "Edit To-do";
-"todo-table.select-category" = "Select a category";
+"todo-table.select-todolist" = "Select a todo list";
 "todo-table.due.presets.0" = "Clear";
 "todo-table.due.presets.1" = "Today";
 "todo-table.due.presets.2" = "+1 hour";
@@ -161,8 +160,8 @@
 "todo-table.reminder.presets.7" = "Noon";
 "todo-table.reminder.presets.8" = "Evening";
 
-// Select category Table View Controller.
-"select-category.title" = "Select Category";
+// Select todo list Table View Controller.
+"select-list.title" = "Select Todo List";
 
 // Repeat todo Table View Controller.
 "repeat-todo.types.0" = "Don't repeat";
@@ -181,36 +180,27 @@
 "repeat-todo.every-frequency" = "Every %d";
 "repeat-todo-after-completion" = "%@ after completion";
 
-/*
- Category Table View Controller.
- */
-"category-table.name" = "Name:";
-"category-table.name.placeholder" = "✎ Category name";
-"category-table.choose-color" = "Choose a color:";
-"category-table.choose-icon" = "Choose an icon:";
+"todolist-table.name" = "Name:";
+"todolist-table.name.placeholder" = "✎ List name";
+"todolist-table.choose-color" = "Choose a color:";
+"todolist-table.choose-icon" = "Choose an icon:";
 
-
-/*
- Reorder Categories Table View Controller.
- */
-"manage-categories.title" = "Manage Categories";
+"manage-todolist.title" = "Manage Todo Lists";
 
 /*
  Action Sheet & Alert
  */
-"actionsheet.new-todo" = "New To-do";
-"actionsheet.new-category" = "New Category";
-"actionsheet.actions.edit-category" = "Edit Category";
-"actionsheet.actions.delete-category" = "Delete Category";
-"actionsheet.actions.organize-categories" = "Organize All";
+"actionsheet.actions.edit-todolist" = "Edit";
+"actionsheet.actions.delete-todolist" = "Delete";
+"actionsheet.actions.organize-todolists" = "Organize All";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";
 "actionsheet.actions.complete-todo" = "Set Item Completed";
 "actionsheet.actions.uncomplete-todo" = "Set Item Incomplete";
 "actionsheet.actions.delete-todo" = "Delete Item";
 
-"alert.delete-category" = "Once you've deleted the category, all of its to-do items will be removed too.";
-"alert.error-fetching-category" = "Unable to fetch categories";
+"alert.delete-todolist" = "Once you delete the list, all of its to-do items will be removed too.";
+"alert.error-fetching-todolist" = "Unable to fetch lists";
 "alert.error-fetching-todo" = "Unable to fetch to-dos";
 "alert.unable-to-fetch-request" = "Unable to Execute Fetch Request";
 "alert.authentication-failed" = "Authentication failed, please try again";
@@ -264,7 +254,7 @@
 "settings.headers.privacy" = "Privacy";
 
 // Setting Notifications
-"settings.notifications.footer" = "Use @ for the category name as the placeholder. (eg. a todo item in Work category, 'Todo due in @' will appear as 'Todo due in Work')";
+"settings.notifications.footer" = "Use @ for the todo list name as the placeholder. (eg. a todo item in Work todo list, 'Todo due in @' will appear as 'Todo due in Work')";
 "settings.notifications.header" = "To enable/disable notification, go to System Settings";
 "Fxl-qE-KWK.text" = "Enable notifications";
 "dUh-Si-LBV.text" = "Notification message:";
@@ -304,12 +294,13 @@
 "settings.lock-app.timeout.thirty-minutes" = "30 minutes";
 
 /*
- Category icons categories
+ Todo list icons categories
  */
-"category-icon-lifestyle" = "Lifestyle";
-"category-icon-work" = "Work";
-"category-icon-social" = "Social";
-"category-icon-other" = "Other";
+
+"todolist-icon-lifestyle" = "Lifestyle";
+"todolist-icon-work" = "Work";
+"todolist-icon-social" = "Social";
+"todolist-icon-other" = "Other";
 
 /*
  App icons

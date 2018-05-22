@@ -32,7 +32,7 @@ final class NotificationSettingsTableViewController: SettingTableViewController 
             // Check if empty string
             guard notificationMessage.trimmingCharacters(in: .whitespacesAndNewlines) != "" else {
                 messageTextField.text = defaultMessage
-                notificationWidgetMessageLabel.text = defaultMessage.replacingOccurrences(of: "@", with: "Model.Category".localized)
+                notificationWidgetMessageLabel.text = defaultMessage.replacingOccurrences(of: "@", with: "Model.ToDoList".localized)
                 
                 return
             }
@@ -42,7 +42,7 @@ final class NotificationSettingsTableViewController: SettingTableViewController 
                     self.messageTextField.text = self.notificationMessage
                 }
                 
-                self.notificationWidgetMessageLabel.text = self.notificationMessage.replacingOccurrences(of: "@", with: "Model.Category".localized)
+                self.notificationWidgetMessageLabel.text = self.notificationMessage.replacingOccurrences(of: "@", with: "Model.ToDoList".localized)
             }
         }
     }

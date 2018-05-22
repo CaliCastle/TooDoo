@@ -1,5 +1,5 @@
 //
-//  CategoryIconCollectionViewCell.swift
+//  ToDoListIconCollectionViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/11/17.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-final class CategoryIconCollectionViewCell: UICollectionViewCell {
+final class ToDoListIconCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
-    static let identifier = "CategoryIconCell"
+    static let identifier = "ToDoListIconCell"
     
     override var reuseIdentifier: String? {
         return type(of: self).identifier

@@ -1,5 +1,5 @@
 //
-//  CategoryModels.swift
+//  ToDoListModels.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/11/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CategoryColor {
+final class ToDoListColor {
     
     /// Default colors as string
     
@@ -22,7 +22,7 @@ final class CategoryColor {
         "FFA800", "D45C9F", "99ABD5", "14A085"
     ]
     
-    /// Get default colors for category.
+    /// Get default colors for lists.
     ///
     /// - Returns: Default colors
     
@@ -37,13 +37,13 @@ final class CategoryColor {
     }
 }
 
-final class CategoryIcon {
+final class ToDoListIcon {
     
     /// Icons plist file name.
-    internal static let iconsFileName = "Category Icons"
+    internal static let iconsFileName = "Todo List Icons"
     
     /// Icons prefix name.
-    internal static let iconsPrefix = "category-icon-"
+    internal static let iconsPrefix = "todolist-icon-"
     
     /// Icons category indexes.
     open static let iconCategoryIndexes = [
@@ -64,7 +64,7 @@ final class CategoryIcon {
         return [:]
     }()
     
-    /// Get default icons for category.
+    /// Get default icons for ToDoList.
     ///
     /// - Returns: Default icons
     class func `default`() -> [String: [UIImage]] {
@@ -81,7 +81,6 @@ final class CategoryIcon {
         return icons
     }
     
-    /// Get category icon index.
     class func getIconIndex(for icon: UIImage) -> IndexPath {
         let icons = defaultIcons
         var item = 0
@@ -101,7 +100,6 @@ final class CategoryIcon {
         return .zero
     }
     
-    /// Get category icon name suffix.
     class func getIconName(for icon: UIImage) -> String {
         for iconCategory in defaultIcons {
             for iconName in iconCategory.value {

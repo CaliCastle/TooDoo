@@ -14,11 +14,11 @@ final class ToDoTableViewController: DeckEditorTableViewController {
 
     /// Segue enum.
     ///
-    /// - SelectCategory: Show select a category
+    /// - SelectTodoList: Show select a todo list
     /// - SelectRepeat: Show select repeat type
     
     private enum Segue: String {
-        case SelectCategory = "SelectCategory"
+        case SelectTodoList = "SelectTodoList"
         case SelectRepeat = "SelectRepeat"
     }
     
@@ -58,16 +58,16 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             isAdding = todo == nil
             
             guard let todo = todo else { return }
-            category = todo.category
+            todoList = todo.list
             goal = todo.goal!
             hasDue = todo.due != nil
             hasReminder = todo.remindAt != nil
         }
     }
     
-    /// Stored category property.
+    /// Stored todo list property.
     
-    var category: Category?
+    var todoList: ToDoList?
     
     /// Stored has due property.
     
@@ -92,9 +92,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     // MARK: - Interface Builder Outlets.
     
     @IBOutlet var goalTextField: UITextField!
-    @IBOutlet var categoryGradientBackgroundView: GradientView!
-    @IBOutlet var categoryIconImageView: UIImageView!
-    @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var todoListGradientBackgroundView: GradientView!
+    @IBOutlet var todoListIconImageView: UIImageView!
+    @IBOutlet var todoListNameLabel: UILabel!
     @IBOutlet var dueTimeButton: UIButton!
     @IBOutlet var reminderTimeButton: UIButton!
     @IBOutlet var repeatLabel: UILabel!
@@ -110,7 +110,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     // MARK: - Localizable Outlets.
     
     @IBOutlet var todoGoalLabel: UILabel!
-    @IBOutlet var categoryLabel: UILabel!
+    @IBOutlet var todoListLabel: UILabel!
     @IBOutlet var dueDateLabel: UILabel!
     @IBOutlet var remindMeLabel: UILabel!
     @IBOutlet var reminderPresetTipsLabel: UILabel!
@@ -240,7 +240,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         
         goalTextField.placeholder = "todo-table-goal-placeholder".localized
         todoGoalLabel.text = "todo-table.todo-goal".localized
-        categoryLabel.text = "todo-table.category".localized
+        todoListLabel.text = "todo-table.todolist".localized
         dueDateLabel.text = "todo-table.due-date".localized
         dueTimeButton.setTitle("todo-table.select-due-time".localized, for: .normal)
         remindMeLabel.text = "todo-table.remind-me".localized
@@ -262,7 +262,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         super.setupViews()
         
         configureGoalTextField()
-        configureCategoryViews()
+        configureTodoListViews()
         configureDueDate()
         configureReminder()
         configureRepeatInfo()
@@ -288,7 +288,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         goalTextField.attributedPlaceholder = NSAttributedString(string: goalTextField.placeholder!, attributes: [.foregroundColor: color.withAlphaComponent(0.15)])
         
         // Configure label colors
-        categoryNameLabel.textColor = color
+        todoListNameLabel.textColor = color
         
         let lighterBackground = (currentThemeIsDark() ? UIColor.flatBlack() : UIColor.flatWhite())?.lighten(byPercentage: 0.038)
         dueTimeButton.setTitleColor(color, for: .normal)
@@ -342,35 +342,35 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
     }
     
-    /// Configure category related views.
+    /// Configure todo list related views.
     
-    fileprivate func configureCategoryViews() {
-        // If no category selected
-        if self.category == nil {
-            // Select default category
-            self.category = Category.default()
+    fileprivate func configureTodoListViews() {
+        // If no list selected
+        if self.todoList == nil {
+            // Select default todo list
+            self.todoList = ToDoList.default()
             
-            // No categories at all
-            guard let _ = self.category else {
-                categoryNameLabel.text = "todo-table.select-category".localized
-                categoryIconImageView.tintColor = .white
+            // No lists at all
+            guard let _ = self.todoList else {
+                todoListNameLabel.text = "todo-table.select-todolist".localized
+                todoListIconImageView.tintColor = .white
                 
                 return
             }
         }
        
-        let category = self.category!
-        let categoryColor = category.categoryColor()
+        let todoList = self.todoList!
+        let todoListColor = todoList.listColor()
         DispatchQueue.main.async {
             // Set gradient colors
-            self.categoryGradientBackgroundView.startColor = categoryColor.lighten(byPercentage: 0.1)
-            self.categoryGradientBackgroundView.endColor = categoryColor
+            self.todoListGradientBackgroundView.startColor = todoListColor.lighten(byPercentage: 0.1)
+            self.todoListGradientBackgroundView.endColor = todoListColor
             // Set icon
-            self.categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
-            self.categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: false)
+            self.todoListIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
+            self.todoListIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: todoListColor, isFlat: false)
             // Set label
-            self.categoryNameLabel.text = category.name
-            self.categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: categoryColor, isFlat: true).lighten(byPercentage: 0.1)
+            self.todoListNameLabel.text = todoList.name
+            self.todoListNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: todoListColor, isFlat: true).lighten(byPercentage: 0.1)
         }
     }
     
@@ -433,8 +433,8 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         guard validateUserInput(text: goalTextField.text!) else { return }
         // If longer than length limit
         guard validateGoalLength(text: goalTextField.text!) else { return }
-        // If no category selected, show alert
-        guard validateCategory() else { return }
+        // If no list selected, show alert
+        guard validateTodoList() else { return }
         
         saveTodo()
         
@@ -455,9 +455,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             // Add created at date
             todo.createdAt = now
         }
-        // Set its category
-        if let category = category {
-            category.addToTodos(todo)
+        // Set its list
+        if let todoList = todoList {
+            todoList.addToTodos(todo)
         }
         // Set due date
         todo.due = dueDate
@@ -500,12 +500,12 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         return true
     }
     
-    /// When user didn't select a category.
+    /// When user didn't select a todo list.
     
-    private func validateCategory() -> Bool {
-        guard let _ = category else {
-            NotificationManager.showBanner(title: "notification.no-selected-category".localized, type: .warning)
-            performSegue(withIdentifier: Segue.SelectCategory.rawValue, sender: nil)
+    private func validateTodoList() -> Bool {
+        guard let _ = todoList else {
+            NotificationManager.showBanner(title: "notification.no-list-selected".localized, type: .warning)
+            performSegue(withIdentifier: Segue.SelectTodoList.rawValue, sender: nil)
             
             return false
         }
@@ -560,7 +560,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         tableView.endEditing(true)
         
         let dateTimePicker = DateTimePicker.show(selected: dueDate ?? now, minimumDate: now, maximumDate: nil)
-        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.highlightColor = todoList?.listColor() ?? .flatYellow()
         dateTimePicker.includeMonth = true
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
@@ -582,7 +582,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         }
         
         let dateTimePicker = DateTimePicker.show(selected: selectedDate, minimumDate: now)
-        dateTimePicker.highlightColor = category == nil ? .flatYellow() : category!.categoryColor()
+        dateTimePicker.highlightColor = todoList?.listColor() ?? .flatYellow()
         dateTimePicker.includeMonth = true
         dateTimePicker.cancelButtonTitle = "Cancel".localized
         dateTimePicker.doneButtonTitle = "Done".localized
@@ -730,9 +730,9 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         guard let id = segue.identifier else { return }
         
         switch id {
-        case Segue.SelectCategory.rawValue:
-            guard let destination = segue.destination as? SelectCategoryTableViewController else { return }
-            destination.selectedCategory = category
+        case Segue.SelectTodoList.rawValue:
+            guard let destination = segue.destination as? SelectToDoListTableViewController else { return }
+            destination.selectedList = todoList
             destination.delegate = self
         case Segue.SelectRepeat.rawValue:
             guard let destination = segue.destination as? RepeatTodoTableViewController else { return }
@@ -762,14 +762,14 @@ final class ToDoTableViewController: DeckEditorTableViewController {
 
 }
 
-extension ToDoTableViewController: SelectCategoryTableViewControllerDelegate {
+extension ToDoTableViewController: SelectToDoListTableViewControllerDelegate {
     
-    /// Category selected.
+    /// Todo list selected.
     
-    func categorySelected(_ category: Category) {
-        self.category = category
+    func todoListSelected(_ todoList: ToDoList) {
+        self.todoList = todoList
         // Reconfigure views
-        configureCategoryViews()
+        configureTodoListViews()
     }
     
 }

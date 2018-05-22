@@ -17,7 +17,7 @@
 "Delete" = "删除";
 "Nope" = "算了";
 "Never mind" = "晚点再说";
-"Model.Category" = "分类";
+"Model.ToDoList" = "待办列表";
 "Give access" = "去设置";
 "Not now" = "残忍拒绝";
 "Todos" = "个待办事项";
@@ -82,7 +82,7 @@
  Shortcut Items.
  */
 "shortcut.items.add-todo" = "新建待办事项";
-"shortcut.items.add-category" = "新建分类";
+"shortcut.items.add-list" = "新建待办列表";
 "shortcut.items.search" = "搜索";
 "shortcut.items.settings" = "设置";
 
@@ -91,12 +91,12 @@
  */
 "notifications.todo.due.title" = "❗️你有一个@的待办事项";
 
-"notification.deleted-category" = "分类已删除！";
-"notification.created-category" = "成功创建分类 - ";
+"notification.deleted-list" = "列表已删除！";
+"notification.created-list" = "成功创建列表 - ";
 "notification.empty-goal" = "待办事项不能为空";
 "notification.empty-name" = "名字不能为空";
 "notification.goal-limit-maxed" = "待办事项不能超过%d个字符";
-"notification.no-selected-category" = "必须选择一个分类";
+"notification.no-list-selected" = "必须选择一个列表";
 "notification.name-exists" = "名字已存在";
 "notification.language-changed" = "语言已更改";
 "notification.side-menu.animation-changed" = "侧边栏动画已更新";
@@ -107,10 +107,10 @@
 "setup.complete.skipped" = "开始使用TooDoo吧";
 "setup.complete.custom.title" = "照片不错！";
 "setup.complete.custom.message" = "别担心，我会捍卫你的隐私!";
-// Personal default category
-"setup.default-category" = "个人";
-// Work default category
-"setup.default-category-alt" = "工作";
+// Personal default list
+"setup.default-list" = "个人";
+// Work default list
+"setup.default-list-alt" = "工作";
 
 /*
  ToDo Overview View Controller.
@@ -121,19 +121,18 @@
 "overview.greeting.time.evening" = "晚上好";
 // Today is {Monday, Nov 20}
 "overview.message.today" = "今天是";
-"overview.new-category" = "新建分类";
 
 /*
  Category cards interface
  */
-"category-cards.add-todo" = "添加待办事项";
+"todolist-cards.add-todo" = "添加待办事项";
 
 /*
  ToDo Table View Controller.
  */
 "todo-table.todo-goal" = "待办目标:";
 "todo-table-goal-placeholder" = "✎ 输入目标";
-"todo-table.category" = "类别:";
+"todo-table.category" = "待办列表:";
 "todo-table.due-date" = "截止日期";
 "todo-table.remind-me" = "提醒通知";
 "todo-table.repeat" = "重复事项";
@@ -141,7 +140,7 @@
 "todo-table.select-reminder" = "设置提醒时间";
 "todo-table.add-todo" = "添加待办";
 "todo-table.edit-todo" = "编辑待办";
-"todo-table.select-category" = "选择所属分类";
+"todo-table.select-todolist" = "选择所属列表";
 "todo-table.due.presets.0" = "重置";
 "todo-table.due.presets.1" = "今天";
 "todo-table.due.presets.2" = "+1小时";
@@ -161,8 +160,7 @@
 "todo-table.reminder.presets.7" = "正午";
 "todo-table.reminder.presets.8" = "傍晚";
 
-// Select category Table View Controller.
-"select-category.title" = "选择分类";
+"select-list.title" = "选择待办列表";
 
 // Repeat todo Table View Controller.
 "repeat-todo.types.0" = "不重复";
@@ -181,36 +179,29 @@
 "repeat-todo.every-frequency" = "每%d";
 "repeat-todo-after-completion" = "完成后%@重复";
 
-/*
- Category Table View Controller.
- */
-"category-table.name" = "名称:";
-"category-table.name.placeholder" = "✎ 类别名称";
-"category-table.choose-color" = "选择颜色:";
-"category-table.choose-icon" = "选择图标:";
 
-/*
- Reorder Categories Table View Controller.
- */
-"manage-categories.title" = "分类管理";
+"todolist-table.name" = "名称:";
+"todolist-table.name.placeholder" = "✎ 列表名称";
+"todolist-table.choose-color" = "选择颜色:";
+"todolist-table.choose-icon" = "选择图标:";
+
+"manage-todolist.title" = "待办列表管理";
 
 
 /*
  Action Sheet & Alert
  */
-"actionsheet.new-todo" = "新待办事项";
-"actionsheet.new-category" = "新分类";
-"actionsheet.actions.edit-category" = "编辑分类";
-"actionsheet.actions.delete-category" = "删除分类";
-"actionsheet.actions.organize-categories" = "管理全部";
+"actionsheet.actions.edit-todolist" = "编辑";
+"actionsheet.actions.delete-todolist" = "删除";
+"actionsheet.actions.organize-todolists" = "管理全部";
 "actionsheet.todo.title" = "待办事项: ";
 "actionsheet.actions.edit-todo" = "编辑事项";
 "actionsheet.actions.complete-todo" = "已完成";
 "actionsheet.actions.uncomplete-todo" = "设为未完成";
 "actionsheet.actions.delete-todo" = "删除事项";
 
-"alert.delete-category" = "一旦分类被删除，其分类下的所有待办事项也会被删除";
-"alert.error-fetching-category" = "无法读取分类";
+"alert.delete-todolist" = "一旦待办列表被删除，其下的所有事项也会被删除";
+"alert.error-fetching-todolist" = "无法读取待办列表";
 "alert.error-fetching-todo" = "无法读取待办事项";
 "alert.unable-to-fetch-request" = "无法读取数据";
 "alert.authentication-failed" = "身份信息验证失败，请重试";
@@ -263,7 +254,7 @@
 "settings.headers.privacy" = "隐私";
 
 // Setting Notifications
-"settings.notifications.footer" = "使用 @ 来代替类别名称。(比如： 一个在'工作'类别里的待办事项, '你有一个@的待办事项' 会显示成 '你有一个工作的待办事项')";
+"settings.notifications.footer" = "使用 @ 来代替列表名称。(比如： 一个在'工作'列表里的待办事项, '你有一个@的待办事项' 会显示成 '你有一个工作的待办事项')";
 "settings.notifications.header" = "若想开启/关闭通知提醒, 请前往系统设置中修改";
 "Fxl-qE-KWK.text" = "开启通知提醒";
 "dUh-Si-LBV.text" = "通知标题:";
@@ -306,10 +297,10 @@
 /*
  Category icons categories
  */
-"category-icon-lifestyle" = "生活";
-"category-icon-work" = "工作";
-"category-icon-social" = "社交";
-"category-icon-other" = "其他";
+"todolist-icon-lifestyle" = "生活";
+"todolist-icon-work" = "工作";
+"todolist-icon-social" = "社交";
+"todolist-icon-other" = "其他";
 
 /*
  App icons

@@ -15,13 +15,13 @@ final class ApplicationManager {
     /// Shortcut item icons.
     ///
     /// - AddTodo: Add a todo item
-    /// - AddCategory: Add a category
+    /// - AddTodoList: Add a todo list
     /// - Search: Search query
     /// - Settings: Open settings
     
     public enum ShortcutItemIcon: String {
         case AddTodo = "todo-item-icon"
-        case AddCategory = "category-icon"
+        case AddTodoList = "category-icon"
         case Search = "search-todo-icon"
         case Settings = "settings-icon"
     }
@@ -29,15 +29,15 @@ final class ApplicationManager {
     /// Shortcut item type suffixes.
     ///
     /// - AddTodo: Add a todo item
-    /// - AddCategory: Add a category
+    /// - AddTodoList: Add a todo list
     /// - Search: Search query
     /// - Settings: Open settings
     
     private enum ShortcutItemTypeSuffix: String {
-        case AddTodo = "addtodo"
-        case AddCategory = "addcategory"
-        case Search = "search"
-        case Settings = "settings"
+        case AddTodo
+        case AddTodoList
+        case Search
+        case Settings
     }
     
     /// Prefix for icon names.
@@ -102,8 +102,8 @@ final class ApplicationManager {
         let checkmarkIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddTodo.rawValue)
         let addTodoItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodo), localizedTitle: "shortcut.items.add-todo".localized, localizedSubtitle: nil, icon: checkmarkIcon, userInfo: nil)
         
-        let addCategoryIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddCategory.rawValue)
-        let addCategoryItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddCategory), localizedTitle: "shortcut.items.add-category".localized, localizedSubtitle: nil, icon: addCategoryIcon, userInfo: nil)
+        let addTodoListIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.AddTodoList.rawValue)
+        let addTodoListItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.AddTodoList), localizedTitle: "shortcut.items.add-list".localized, localizedSubtitle: nil, icon: addTodoListIcon, userInfo: nil)
         
         let searchIcon = UIApplicationShortcutIcon(templateImageName: ShortcutItemIcon.Search.rawValue)
         let searchItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Search), localizedTitle: "shortcut.items.search".localized, localizedSubtitle: nil, icon: searchIcon, userInfo: nil)
@@ -112,7 +112,7 @@ final class ApplicationManager {
         let settingsItem = UIApplicationShortcutItem(type: shortcutItemType(ShortcutItemTypeSuffix.Settings), localizedTitle: "shortcut.items.settings".localized, localizedSubtitle: nil, icon: settingsIcon, userInfo: nil)
         
         // Register items
-        application.shortcutItems = [addTodoItem, addCategoryItem, searchItem, settingsItem]
+        application.shortcutItems = [addTodoItem, addTodoListItem, searchItem, settingsItem]
     }
     
     /// Get shortcut item type name.
@@ -138,10 +138,10 @@ final class ApplicationManager {
     
     class func triggered(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
         switch shortcutItem.type {
-        case shortcutItemType(.AddCategory):
-            // Add category
+        case shortcutItemType(.AddTodoList):
+            // Add todo list
             // Send notification
-            NotificationManager.send(notification: .ShowAddCategory)
+            NotificationManager.send(notification: .ShowAddToDoList)
         case shortcutItemType(.AddTodo):
             // Add todo
             // Send notification

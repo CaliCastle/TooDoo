@@ -18,7 +18,7 @@ protocol ToDoCategoryOverviewCollectionViewCellDelegate {
 
     func newTodoDoneEditing()
 
-    func showAddNewTodo(goal: String, for category: Category)
+    func showAddNewTodo(goal: String, for todoList: ToDoList)
     
     func showTodoMenu(for todo: ToDo)
     
@@ -71,17 +71,17 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     // Stored category property.
     
-    var category: Category? {
+    var todoList: ToDoList? {
         didSet {
-            guard let category = category else { return }
-            let primaryColor = category.categoryColor()
+            guard let todoList = todoList else { return }
+            let primaryColor = todoList.listColor()
             let contrastColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.15)
             
             localizeInterface()
             configureCardContainerView(contrastColor)
-            configureCategoryName(category, primaryColor)
-            configureCategoryIcon(category, primaryColor)
-            configureCategoryTodoCount(category)
+            configureTodoListName(todoList, primaryColor)
+            configureTodoListIcon(todoList, primaryColor)
+            configureTodoListCount(todoList)
             configureAddTodoButton(primaryColor, contrastColor)
             
             configureTodoItems()
@@ -189,11 +189,11 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     /// Localize interface.
     
     @objc internal func localizeInterface() {
-        if let category = category {
-            configureCategoryTodoCount(category)
+        if let todoList = todoList {
+            configureTodoListCount(todoList)
         }
         
-        addTodoButton.setTitle("category-cards.add-todo".localized, for: .normal)
+        addTodoButton.setTitle("todolist-cards.add-todo".localized, for: .normal)
     }
     
     /// Set shadow opacity.
@@ -215,7 +215,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
         
         // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "(category.uuid == %@) AND (movedToTrashAt = nil)", (category?.uuid)!)
+        fetchRequest.predicate = NSPredicate(format: "(list.uuid == %@) AND (movedToTrashAt = nil)", (todoList?.uuid)!)
         
         // Configure fetch request sort method
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.completedAt), ascending: true), NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
@@ -248,24 +248,24 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
     
     /// Configure category name.
     
-    fileprivate func configureCategoryName(_ category: Category, _ primaryColor: UIColor) {
+    fileprivate func configureTodoListName(_ todoList: ToDoList, _ primaryColor: UIColor) {
         // Set name text and color
-        categoryNameLabel.text = category.name
+        categoryNameLabel.text = todoList.name
         categoryNameLabel.textColor = primaryColor
     }
     
     /// Configure category icon.
     
-    fileprivate func configureCategoryIcon(_ category: Category, _ primaryColor: UIColor) {
+    fileprivate func configureTodoListIcon(_ todoList: ToDoList, _ primaryColor: UIColor) {
         // Set icon image and colors
-        categoryIconImageView.image = category.categoryIcon().withRenderingMode(.alwaysTemplate)
+        categoryIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
         categoryIconImageView.tintColor = primaryColor
     }
     
     /// Configure category todo count.
     
-    fileprivate func configureCategoryTodoCount(_ category: Category) {
-        categoryTodosCountLabel.text = "%d todo(s) remaining".localizedPlural(category.validTodos().count)
+    fileprivate func configureTodoListCount(_ todoList: ToDoList) {
+        categoryTodosCountLabel.text = "%d todo(s) remaining".localizedPlural(todoList.validTodos().count)
     }
     
     /// Configure add todo button.
@@ -340,7 +340,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of sections for todos.
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let _ = category else { return 0 }
+        guard let _ = todoList else { return 0 }
         guard let sections = fetchedResultsController.sections else { return 0 }
 
         return sections.count
@@ -349,7 +349,7 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
     /// Number of rows.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard category != nil else { return 0 }
+        guard todoList != nil else { return 0 }
         guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
         guard isAdding && section == 0 else { return sectionInfo.numberOfObjects }
         
@@ -364,9 +364,9 @@ extension ToDoCategoryOverviewCollectionViewCell: UITableViewDelegate, UITableVi
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
             
             cell.delegate = self
-            cell.category = category
+            cell.todoList = todoList
             cell.managedObjectContext = managedObjectContext
-            cell.primaryColor = category!.categoryColor()
+            cell.primaryColor = todoList!.listColor()
             
             return cell
         }
@@ -427,7 +427,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
         // A todo item is changed
         if anObject is ToDo {
             // Check if category is still valid
-            guard let todo = anObject as? ToDo, let _ = todo.category else { return }
+            guard let todo = anObject as? ToDo, let _ = todo.list else { return }
             
             if isAdding { isAdding = false }
             
@@ -509,7 +509,7 @@ extension ToDoCategoryOverviewCollectionViewCell: NSFetchedResultsControllerDele
             }
             
             // Re-configure todo count
-            configureCategoryTodoCount(category!)
+            configureTodoListCount(todoList!)
         }
     }
     
@@ -608,7 +608,7 @@ extension ToDoCategoryOverviewCollectionViewCell: ToDoAddItemTableViewCellDelega
         newTodoDoneEditing(todo: nil)
         isAdding = false
         // Show add new todo
-        delegate.showAddNewTodo(goal: goal, for: category!)
+        delegate.showAddNewTodo(goal: goal, for: todoList!)
     }
     
     /// Calculate for animating card up when keyboard is shown.

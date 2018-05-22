@@ -1,5 +1,5 @@
 //
-//  SelectCategoryTableViewController.swift
+//  SelectToDoListTableViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/18/17.
@@ -10,37 +10,37 @@ import UIKit
 import CoreData
 import DeckTransition
 
-protocol SelectCategoryTableViewControllerDelegate {
-    func categorySelected(_ category: Category)
+protocol SelectToDoListTableViewControllerDelegate {
+    func todoListSelected(_ todoList: ToDoList)
 }
 
-final class SelectCategoryTableViewController: UITableViewController {
+final class SelectToDoListTableViewController: UITableViewController {
  
-    /// Selected category.
+    /// Selected todo list.
     
-    var selectedCategory: Category?
+    var selectedList: ToDoList?
     
     /// Fetched results controller.
     
-    private var categories: [Category] = []
+    private var todoLists: [ToDoList] = []
     
-    var delegate: SelectCategoryTableViewControllerDelegate?
+    var delegate: SelectToDoListTableViewControllerDelegate?
     
     // MARK: - View Life Cycle.
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "select-category.title".localized
+        title = "select-list.title".localized
         clearsSelectionOnViewWillAppear = false
         
-        fetchCategories()
+        fetchTodoLists()
     }
     
-    /// Fetch categories.
+    /// Fetch todo lists.
     
-    private func fetchCategories() {
-        categories = Category.findAll(in: managedObjectContext, with: [Category.sortByOrder(), Category.sortByCreatedAt()])
+    private func fetchTodoLists() {
+        todoLists = ToDoList.findAll(in: managedObjectContext, with: [ToDoList.sortByOrder(), ToDoList.sortByCreatedAt()])
     }
 
     // MARK: - Table view data source
@@ -50,13 +50,13 @@ final class SelectCategoryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return todoLists.count
     }
     
     /// Dequeue cells.
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectCategoryTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectToDoListTableViewCell.identifier, for: indexPath)
 
         // Configure the cell...
         configureCell(cell, for: indexPath)
@@ -67,13 +67,13 @@ final class SelectCategoryTableViewController: UITableViewController {
     /// Configure cell for index path.
     
     private func configureCell(_ cell: UITableViewCell, for indexPath: IndexPath) {
-        guard let cell = cell as? SelectCategoryTableViewCell else { return }
-        let currentCategory = categories[indexPath.row]
+        guard let cell = cell as? SelectToDoListTableViewCell else { return }
+        let currentList = todoLists[indexPath.row]
         
-        cell.category = currentCategory
+        cell.todoList = currentList
         
-        if let selectedCategory = selectedCategory {
-            cell.setSelected(currentCategory == selectedCategory, animated: false)
+        if let selectedList = selectedList {
+            cell.setSelected(currentList == selectedList, animated: false)
         }
     }
     
@@ -82,7 +82,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate = delegate else { return }
         
-        delegate.categorySelected(categories[indexPath.row])
+        delegate.todoListSelected(todoLists[indexPath.row])
         // Pop view controller
         let _ = navigationController?.popViewController(animated: true)
     }

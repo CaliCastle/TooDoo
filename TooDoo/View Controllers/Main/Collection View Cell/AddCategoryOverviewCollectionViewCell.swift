@@ -48,7 +48,7 @@ final class AddCategoryOverviewCollectionViewCell: UICollectionViewCell, Localiz
     /// Localize interface.
     
     @objc internal func localizeInterface() {
-        newCategoryLabel.text = "overview.new-category".localized
+        newCategoryLabel.text = "shortcut.items.add-list".localized
     }
     
     /// Set up views.
