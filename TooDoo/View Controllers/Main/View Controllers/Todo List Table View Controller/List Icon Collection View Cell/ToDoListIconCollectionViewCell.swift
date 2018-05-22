@@ -11,7 +11,7 @@ import UIKit
 final class ToDoListIconCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
-    static let identifier = "CategoryIconCell"
+    static let identifier = "ToDoListIconCell"
     
     override var reuseIdentifier: String? {
         return type(of: self).identifier

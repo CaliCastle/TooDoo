@@ -12,7 +12,7 @@ final class ToDoListColorCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     
-    static let identifier = "CategoryColorCell"
+    static let identifier = "ToDoListColorCell"
     
     override var reuseIdentifier: String? {
         return type(of: self).identifier
@@ -27,38 +27,24 @@ final class ToDoListColorCollectionViewCell: UICollectionViewCell {
     var color: UIColor = .white {
         didSet {
             // Once set, change background color accordingly
-            if isSelected {
-                colorView.backgroundColor = .clear
-                colorView.layer.borderColor = color.cgColor
-                colorView.layer.borderWidth = 4
-            } else {
-                colorView.backgroundColor = color
-                colorView.layer.borderColor = UIColor.clear.cgColor
-                colorView.layer.borderWidth = 0
-            }
+            configureColorView(selected: isSelected)
         }
     }
     
     /// Set selected style.
     
+    fileprivate func configureColorView(selected: Bool = true) {
+        UIView.animate(withDuration: 0.28) {
+            self.colorView.layer.cornerRadius = selected ? 18 : 12
+            self.colorView.layer.borderWidth = selected ? 4 : 0
+            self.colorView.layer.borderColor = selected ? self.color.cgColor : UIColor.clear.cgColor
+            self.colorView.backgroundColor = selected ? .clear : self.color
+        }
+    }
+    
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                // Once selected, add border around it
-                UIView.animate(withDuration: 0.3) {
-                    self.colorView.layer.borderWidth = 4
-                    self.colorView.layer.borderColor = self.color.cgColor
-                    self.colorView.backgroundColor = .clear
-                }
-            } else {
-                // Not selected, change back to normal color
-                colorView.backgroundColor = color
-                
-                UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn, animations: {
-                    self.colorView.layer.borderColor = UIColor.clear.cgColor
-                    self.colorView.layer.borderWidth = 0
-                }, completion: nil)
-            }
+            configureColorView(selected: isSelected)
         }
     }
 }

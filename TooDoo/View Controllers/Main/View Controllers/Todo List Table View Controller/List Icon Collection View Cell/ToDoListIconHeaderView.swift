@@ -12,7 +12,7 @@ final class ToDoListIconHeaderView: UICollectionReusableView {
     
     /// Reusable identifier.
     
-    static let identifier = "CategoryIconHeaderView"
+    static let identifier = "ToDoListIconHeaderView"
     
     /// Nib file name.
     

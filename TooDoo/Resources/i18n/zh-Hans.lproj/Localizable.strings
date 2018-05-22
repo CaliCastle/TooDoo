@@ -191,9 +191,9 @@
 /*
  Action Sheet & Alert
  */
-"actionsheet.actions.edit-todolist" = "编辑列表";
-"actionsheet.actions.delete-todolist" = "删除列表";
-"actionsheet.actions.organize-todolists" = "管理全部列表";
+"actionsheet.actions.edit-todolist" = "编辑";
+"actionsheet.actions.delete-todolist" = "删除";
+"actionsheet.actions.organize-todolists" = "管理全部";
 "actionsheet.todo.title" = "待办事项: ";
 "actionsheet.actions.edit-todo" = "编辑事项";
 "actionsheet.actions.complete-todo" = "已完成";
