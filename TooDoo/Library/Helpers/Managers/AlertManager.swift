@@ -14,7 +14,7 @@ final class AlertManager {
     
     /// Show caregory deletion alert.
     
-    open class func showCategoryDeleteAlert(in controller: FCAlertViewDelegate, title: String) {
+    open class func showTodoListDeleteAlert(in controller: FCAlertViewDelegate, title: String) {
         showAlert(in: controller, title: title, subtitle: "alert.delete-todolist".localized, doneButtonTitle: "Delete".localized, buttons: ["Nope".localized])
     }
     

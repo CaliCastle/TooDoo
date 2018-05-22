@@ -1,5 +1,5 @@
 //
-//  CategoryPreviewTableHeaderView.swift
+//  ToDoListPreviewTableHeaderView.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/13/17.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class CategoryPreviewTableHeaderView: UITableViewHeaderFooterView {
+final class ToDoListPreviewTableHeaderView: UITableViewHeaderFooterView {
 
     /// Nib file name.
     
-    static let nibName = String(describing: CategoryPreviewTableHeaderView.self)
+    static let nibName = String(describing: ToDoListPreviewTableHeaderView.self)
     
     /// Manipulation of preview icon.
     

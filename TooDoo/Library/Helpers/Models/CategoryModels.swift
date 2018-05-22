@@ -40,7 +40,7 @@ final class ToDoListColor {
 final class ToDoListIcon {
     
     /// Icons plist file name.
-    internal static let iconsFileName = "Category Icons"
+    internal static let iconsFileName = "Todo List Icons"
     
     /// Icons prefix name.
     internal static let iconsPrefix = "todolist-icon-"

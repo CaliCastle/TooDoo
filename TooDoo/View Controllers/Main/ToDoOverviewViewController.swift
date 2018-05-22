@@ -582,7 +582,7 @@ final class ToDoOverviewViewController: UIViewController {
         case Segue.ShowTodoList.rawValue:
             // About to show add/edit todo list
             let destination = segue.destination as! UINavigationController
-            let destinationViewController = destination.viewControllers.first as! CategoryTableViewController
+            let destinationViewController = destination.viewControllers.first as! ToDoListTableViewController
             
             guard let todoLists = fetchedResultsController.fetchedObjects else { return }
             
@@ -596,7 +596,7 @@ final class ToDoOverviewViewController: UIViewController {
         case Segue.ShowReorderTodoLists.rawValue:
             // About to show reorder categories
             let destination = segue.destination as! UINavigationController
-            let destinationViewController = destination.viewControllers.first as! ReorderCategoriesTableViewController
+            let destinationViewController = destination.viewControllers.first as! ReorderToDoListsTableViewController
 
             destinationViewController.delegate = self
             
@@ -967,7 +967,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         
         // Play click sound
         SoundManager.play(soundEffect: .Click)
-        AlertManager.showCategoryDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.ToDoList".localized)?")
+        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.ToDoList".localized)?")
     }
     
     /// Show reorder categories.
@@ -983,7 +983,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
 
 // MARK: - Category Table View Controller Delegate Methods.
 
-extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
+extension ToDoOverviewViewController: ToDoListTableViewControllerDelegate {
     
     /// Validate category with unique name.
     func validate(_ todoList: ToDoList?, with name: String) -> Bool {
@@ -1041,10 +1041,10 @@ extension ToDoOverviewViewController: CategoryTableViewControllerDelegate {
 
 // MARK: - Reorder Categories Table View Controller Delegate Methods.
 
-extension ToDoOverviewViewController: ReorderCategoriesTableViewControllerDelegate {
+extension ToDoOverviewViewController: ReorderToDoListsTableViewControllerDelegate {
     
-    /// Once categories have been done organizing.
-    func categoriesDoneOrganizing() {
+    /// Once todo lists have been done organizing.
+    func todoListsDoneOrganizing() {
         guard let index = currentRelatedCategoryIndex else { return }
         // Reload current item
         todosCollectionView.reloadItems(at: [index])

@@ -651,7 +651,7 @@
                         <outlet property="userAvatarContainerView" destination="ukM-SL-0bF" id="lQ4-Iy-bMo"/>
                         <outlet property="userAvatarImageView" destination="dWF-fQ-j50" id="xaC-2F-GXP"/>
                         <segue destination="C1K-bA-8mE" kind="presentation" identifier="ShowTodoList" customClass="DeckSegue" customModule="DeckTransition" id="bdR-2i-j7a"/>
-                        <segue destination="wuV-Aj-Fd1" kind="presentation" identifier="ShowReoderTodoLists" customClass="DeckSegue" customModule="DeckTransition" id="IMr-dO-nDM"/>
+                        <segue destination="wuV-Aj-Fd1" kind="presentation" identifier="ShowReorderTodoLists" customClass="DeckSegue" customModule="DeckTransition" id="IMr-dO-nDM"/>
                         <segue destination="TlB-gP-We0" kind="presentation" identifier="ShowTodo" customClass="DeckSegue" customModule="DeckTransition" id="9d0-1F-3Es"/>
                         <segue destination="oY9-Te-YqK" kind="presentation" identifier="ShowSettings" customClass="DeckSegue" customModule="DeckTransition" id="bqB-vw-t2H"/>
                     </connections>
@@ -697,10 +697,10 @@
             </objects>
             <point key="canvasLocation" x="1761" y="-432"/>
         </scene>
-        <!--New Category-->
+        <!--New Todo List-->
         <scene sceneID="s1N-DG-Dt2">
             <objects>
-                <tableViewController storyboardIdentifier="ShowTodoList" id="w4P-w9-vgK" customClass="CategoryTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ShowTodoList" id="w4P-w9-vgK" customClass="ToDoListTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="28" id="qzg-D8-B4l" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -770,7 +770,7 @@
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryColorCell" id="brB-26-tQF" customClass="CategoryColorCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryColorCell" id="brB-26-tQF" customClass="ToDoListColorCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -868,7 +868,7 @@
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryIconCell" id="6gp-mW-3h1" customClass="CategoryIconCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryIconCell" id="6gp-mW-3h1" customClass="ToDoListIconCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -968,17 +968,17 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="New Category" id="fr8-v1-isn"/>
+                    <navigationItem key="navigationItem" title="New Todo List" id="fr8-v1-isn"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="categoryColorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
-                        <outlet property="categoryIconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
-                        <outlet property="categoryRandomColorButton" destination="HFe-X7-vv4" id="xdl-WC-ndF"/>
                         <outlet property="chooseColorLabel" destination="AEL-2z-JMy" id="CgN-cy-pyI"/>
                         <outlet property="chooseIconLabel" destination="Dti-RI-Fq8" id="gXy-pg-Axe"/>
+                        <outlet property="colorCollectionView" destination="2bh-Lf-iJH" id="aJG-UO-v5g"/>
+                        <outlet property="iconCollectionView" destination="GcC-Fk-PNE" id="BHO-0G-4MO"/>
                         <outlet property="iconSwitch" destination="gnT-M0-KBa" id="zQC-uY-aZ0"/>
                         <outlet property="nameLabel" destination="Ymz-fk-4yv" id="kW9-iQ-Jmm"/>
                         <outlet property="nameTextField" destination="XYe-b2-iVD" id="IEM-ey-qcF"/>
+                        <outlet property="randomColorButton" destination="HFe-X7-vv4" id="xdl-WC-ndF"/>
                         <outletCollection property="cellLabels" destination="Ymz-fk-4yv" collectionClass="NSMutableArray" id="eIB-Fb-MX5"/>
                         <outletCollection property="cellLabels" destination="AEL-2z-JMy" collectionClass="NSMutableArray" id="YPp-Lx-Sqc"/>
                         <outletCollection property="cellLabels" destination="Dti-RI-Fq8" collectionClass="NSMutableArray" id="QfR-AE-Tbq"/>
@@ -988,16 +988,16 @@
             </objects>
             <point key="canvasLocation" x="2548" y="-433"/>
         </scene>
-        <!--Categories-->
+        <!--Todo Lists-->
         <scene sceneID="kn9-7i-Uta">
             <objects>
-                <tableViewController id="RhY-rL-gt5" customClass="ReorderCategoriesTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="RhY-rL-gt5" customClass="ReorderToDoListsTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="LfC-ie-FnL" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReorderCategoryCell" rowHeight="60" id="Z8d-gH-FLo" customClass="ReorderCategoryTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReorderToDoListCell" rowHeight="60" id="Z8d-gH-FLo" customClass="ReorderToDoListTableViewCell" customModule="TooDoo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z8d-gH-FLo" id="CuV-0W-yVX">
@@ -1031,8 +1031,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="categoryIconImageView" destination="IFg-dZ-HzE" id="eFT-Zs-7U2"/>
-                                    <outlet property="categoryNameLabel" destination="Wp1-tJ-ec5" id="Y04-UM-PrU"/>
+                                    <outlet property="iconImageView" destination="IFg-dZ-HzE" id="Fq7-nf-EnE"/>
+                                    <outlet property="nameLabel" destination="Wp1-tJ-ec5" id="kz6-Rk-ZgV"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1044,7 +1044,7 @@
                             <outlet property="delegate" destination="RhY-rL-gt5" id="HR4-C8-iLC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Categories" id="ycy-I5-cbe">
+                    <navigationItem key="navigationItem" title="Todo Lists" id="ycy-I5-cbe">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="FhS-NW-fKK">
                             <color key="tintColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -1878,7 +1878,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8m0-IR-9ED" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2497" y="913"/>
+            <point key="canvasLocation" x="2527" y="935"/>
         </scene>
         <!--Repeat-->
         <scene sceneID="AnE-Y7-exj">
@@ -2164,7 +2164,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3DL-Wx-I1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2496.8000000000002" y="1562.807881773399"/>
+            <point key="canvasLocation" x="2503" y="1611"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qh6-GS-mVE">
@@ -2219,6 +2219,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="ZkO-cV-wbj"/>
         <segue reference="8yd-2R-K4r"/>
-        <segue reference="bdR-2i-j7a"/>
+        <segue reference="wpw-r0-NkR"/>
     </inferredMetricsTieBreakers>
 </document>

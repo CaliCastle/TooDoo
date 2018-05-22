@@ -1,5 +1,5 @@
 //
-//  CategoryColorCollectionViewCell.swift
+//  ToDoListColorCollectionViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/11/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CategoryColorCollectionViewCell: UICollectionViewCell {
+final class ToDoListColorCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     

@@ -190,9 +190,9 @@
 /*
  Action Sheet & Alert
  */
-"actionsheet.actions.edit-todolist" = "Edit List";
-"actionsheet.actions.delete-todolist" = "Delete List";
-"actionsheet.actions.organize-todolists" = "Organize All";
+"actionsheet.actions.edit-todolist" = "Edit Todo List";
+"actionsheet.actions.delete-todolist" = "Delete Todo List";
+"actionsheet.actions.organize-todolists" = "Organize All Todo Lists";
 "actionsheet.todo.title" = "To-do: ";
 "actionsheet.actions.edit-todo" = "Edit Item";
 "actionsheet.actions.complete-todo" = "Set Item Completed";

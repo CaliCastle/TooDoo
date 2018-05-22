@@ -1,5 +1,5 @@
 //
-//  CategoryIconHeaderView.swift
+//  ToDoListIconHeaderView.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/23/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CategoryIconHeaderView: UICollectionReusableView {
+final class ToDoListIconHeaderView: UICollectionReusableView {
     
     /// Reusable identifier.
     
@@ -16,7 +16,7 @@ final class CategoryIconHeaderView: UICollectionReusableView {
     
     /// Nib file name.
     
-    static let nibName = String(describing: CategoryIconHeaderView.self)
+    static let nibName = String(describing: ToDoListIconHeaderView.self)
     
     // MARK: - Interface Builder Outlets.
     

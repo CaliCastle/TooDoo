@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public protocol CategoryTableViewControllerDelegate {
+@objc public protocol ToDoListTableViewControllerDelegate {
     
     func validate(_ todoList: ToDoList?, with name: String) -> Bool
     

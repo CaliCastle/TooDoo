@@ -215,7 +215,7 @@ final class ToDoCategoryOverviewCollectionViewCell: UICollectionViewCell, Locali
         let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
         
         // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "(category.uuid == %@) AND (movedToTrashAt = nil)", (todoList?.uuid)!)
+        fetchRequest.predicate = NSPredicate(format: "(list.uuid == %@) AND (movedToTrashAt = nil)", (todoList?.uuid)!)
         
         // Configure fetch request sort method
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.completedAt), ascending: true), NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CategoryIconCollectionViewCell: UICollectionViewCell {
+final class ToDoListIconCollectionViewCell: UICollectionViewCell {
     
     /// Reuse identifier.
     static let identifier = "CategoryIconCell"

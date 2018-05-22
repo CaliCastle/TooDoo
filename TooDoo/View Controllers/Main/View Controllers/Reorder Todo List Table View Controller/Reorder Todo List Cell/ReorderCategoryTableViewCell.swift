@@ -1,5 +1,5 @@
 //
-//  ReorderCategoryTableViewCell.swift
+//  ReorderToDoListTableViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/14/17.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-final class ReorderCategoryTableViewCell: UITableViewCell {
+final class ReorderToDoListTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     
-    static let identifier = "ReorderCategoryCell"
+    static let identifier = "ReorderToDoListCell"
     
-    /// Stored category property.
+    /// Stored todo list property.
     
     var todoList: ToDoList? {
         didSet {
@@ -23,11 +23,11 @@ final class ReorderCategoryTableViewCell: UITableViewCell {
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
-            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
+            iconImageView.image = todoList.listIcon().withRenderingMode(.alwaysTemplate)
+            iconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
-            categoryNameLabel.text = todoList.name
-            categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
+            nameLabel.text = todoList.name
+            nameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true)
             // Configure tint color
             tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         }
@@ -35,8 +35,8 @@ final class ReorderCategoryTableViewCell: UITableViewCell {
     
     // MARK: - Interface Builder Outlets.
     
-    @IBOutlet var categoryIconImageView: UIImageView!
-    @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
