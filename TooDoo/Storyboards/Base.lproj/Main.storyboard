@@ -145,7 +145,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToDoCategoryOverviewCell" id="ZdY-Vh-DQU" customClass="ToDoCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToDoListOverviewCell" id="ZdY-Vh-DQU" customClass="ToDoListOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="21" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -517,13 +517,13 @@
                                             <outlet property="addTodoButton" destination="T4s-2G-4VL" id="Yh1-aw-uuF"/>
                                             <outlet property="buttonGradientBackgroundView" destination="nGz-ZA-aUL" id="teX-Zw-Lpx"/>
                                             <outlet property="cardContainerView" destination="PLK-Jl-fkn" id="wyx-R4-JUm"/>
-                                            <outlet property="categoryIconImageView" destination="wau-5q-WVn" id="42s-qw-2l1"/>
-                                            <outlet property="categoryNameLabel" destination="bYp-9c-1G8" id="JN2-2H-FLf"/>
-                                            <outlet property="categoryTodosCountLabel" destination="0zk-Dj-DM1" id="q6T-tu-oPG"/>
+                                            <outlet property="countLabel" destination="0zk-Dj-DM1" id="q6T-tu-oPG"/>
+                                            <outlet property="iconImageView" destination="wau-5q-WVn" id="42s-qw-2l1"/>
+                                            <outlet property="nameLabel" destination="bYp-9c-1G8" id="JN2-2H-FLf"/>
                                             <outlet property="todoItemsTableView" destination="943-gG-flz" id="NKY-Ea-ZRC"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddCategoryOverviewCell" id="5fz-jR-nQi" customClass="AddCategoryOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddTodoListOverviewCell" id="5fz-jR-nQi" customClass="AddToDoListOverviewCollectionViewCell" customModule="TooDoo" customModuleProvider="target">
                                         <rect key="frame" x="330" y="21" width="320" height="400"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -579,7 +579,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="cardContainerView" destination="nDh-Bm-FQI" id="Pbt-u3-vF9"/>
-                                            <outlet property="newCategoryLabel" destination="O0a-3Q-COc" id="xLO-Fm-dGs"/>
+                                            <outlet property="newTodoListLabel" destination="O0a-3Q-COc" id="xLO-Fm-dGs"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

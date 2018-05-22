@@ -55,7 +55,7 @@ final class ToDoOverviewViewController: UIViewController {
         case Add
     }
     
-    /// Fetched results controller for categories fetching.
+    /// Fetched results controller for todo lists fetching.
     
     private lazy var fetchedResultsController: NSFetchedResultsController<ToDoList> = {
         // Create fetch request
@@ -65,7 +65,7 @@ final class ToDoOverviewViewController: UIViewController {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true), NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: true)]
         
         // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "categories")
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "Todo Lists")
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -101,22 +101,14 @@ final class ToDoOverviewViewController: UIViewController {
         return fetchedResultsController
     }()
     
-    /// Has categories or not.
+    /// Current related todo list index.
     
-    private var hasCategories: Bool {
-        guard let fetchedObjects = fetchedResultsController.fetchedObjects else { return false }
-        
-        return fetchedObjects.count > 0
-    }
+    private var currentRelatedTodoListIndex: IndexPath?
     
-    /// Current related category index.
+    /// Long press gesture recognizer for re-ordering.
     
-    private var currentRelatedCategoryIndex: IndexPath?
-    
-    /// Long press gesture recognizer for category re-order.
-    
-    lazy var longPressForReorderCategoryGesture: UILongPressGestureRecognizer = {
-        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(categoryLongPressed))
+    lazy var longPressForReorderGesture: UILongPressGestureRecognizer = {
+        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(todoListLongPressed))
         recognizer.minimumPressDuration = 0.55
         
         todosCollectionView.addGestureRecognizer(recognizer)
@@ -124,9 +116,9 @@ final class ToDoOverviewViewController: UIViewController {
         return recognizer
     }()
     
-    /// Pinch gesture recognizer for category bulk re-order.
+    /// Pinch gesture recognizer for bulk re-order.
     
-    lazy var pinchForReorderCategoryGesture: UIPinchGestureRecognizer = {
+    lazy var pinchForReorderGesture: UIPinchGestureRecognizer = {
         let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderTodoLists))
         
         todosCollectionView.addGestureRecognizer(recognizer)
@@ -173,9 +165,9 @@ final class ToDoOverviewViewController: UIViewController {
         return .twoAxesShift(strength: -10)
     }()
     
-    /// Motion effect for category collection cells.
+    /// Motion effect for todo list collection cells.
     
-    lazy var motionEffectForCategories: UIMotionEffect = {
+    lazy var motionEffectForTodoLists: UIMotionEffect = {
         return .twoAxesShift(strength: 28)
     }()
     
@@ -191,7 +183,7 @@ final class ToDoOverviewViewController: UIViewController {
         // Localize interface
         localizeInterface()
         // Start fetching data
-        fetchCategories()
+        fetchTodoLists()
         fetchTodos()
         // Set up views
         setupViews()
@@ -248,7 +240,7 @@ final class ToDoOverviewViewController: UIViewController {
     
     /// Fetch categories from core data.
     
-    private func fetchCategories() {
+    private func fetchTodoLists() {
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -257,7 +249,7 @@ final class ToDoOverviewViewController: UIViewController {
         }
     }
     
-    /// Fetch categories from core data.
+    /// Fetch from core data.
     
     private func fetchTodos() {
         do {
@@ -379,8 +371,8 @@ final class ToDoOverviewViewController: UIViewController {
         
         // Configure gestures
         todosCollectionView.addGestureRecognizer(menuPanGesture)
-        todosCollectionView.addGestureRecognizer(longPressForReorderCategoryGesture)
-        todosCollectionView.addGestureRecognizer(pinchForReorderCategoryGesture)
+        todosCollectionView.addGestureRecognizer(longPressForReorderGesture)
+        todosCollectionView.addGestureRecognizer(pinchForReorderGesture)
     }
     
     /// Set up side menu screen edge pan gesture.
@@ -502,7 +494,7 @@ final class ToDoOverviewViewController: UIViewController {
         performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: nil)
     }
 
-    /// Show add category view controller.
+    /// Show add todo list view controller.
     
     @objc fileprivate func showAddTodoList() {
         DispatchQueue.main.async {
@@ -557,12 +549,12 @@ final class ToDoOverviewViewController: UIViewController {
             backgroundGradientView.addMotionEffect(motionEffectForBackground)
             userAvatarContainerView.addMotionEffect(motionEffectForAvatar)
             greetingLabel.addMotionEffect(motionEffectForGreeting)
-            todosCollectionView.addMotionEffect(motionEffectForCategories)
+            todosCollectionView.addMotionEffect(motionEffectForTodoLists)
         } else {
             backgroundGradientView.removeMotionEffect(motionEffectForBackground)
             userAvatarContainerView.removeMotionEffect(motionEffectForAvatar)
             greetingLabel.removeMotionEffect(motionEffectForGreeting)
-            todosCollectionView.removeMotionEffect(motionEffectForCategories)
+            todosCollectionView.removeMotionEffect(motionEffectForTodoLists)
         }
     }
     
@@ -588,13 +580,13 @@ final class ToDoOverviewViewController: UIViewController {
             
             // Show edit todo list
             destinationViewController.delegate = self
-            if let _ = sender, let index = currentRelatedCategoryIndex {
+            if let _ = sender, let index = currentRelatedTodoListIndex {
                 destinationViewController.todoList = todoLists[index.item]
             } else {
                 destinationViewController.newListOrder = Int16(todoLists.count)
             }
         case Segue.ShowReorderTodoLists.rawValue:
-            // About to show reorder categories
+            // About to show reorder
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ReorderToDoListsTableViewController
 
@@ -666,7 +658,7 @@ extension ToDoOverviewViewController {
         }, completion: nil)
     }
     
-    /// Animate todo collection view for categories.
+    /// Animate todo collection view.
     
     fileprivate func animateTodoCollectionView() {
         
@@ -690,20 +682,20 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let section = fetchedResultsController.sections?[section] else { return 0 }
         
-        // One more for adding category
+        // One more for adding todo list
         return section.numberOfObjects + 1
     }
     
     /// Configure each collection view cell.
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard !isAddCategoryCell(indexPath) else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? AddCategoryOverviewCollectionViewCell else { return UICollectionViewCell() }
+        guard !isAddCell(indexPath) else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToDoListOverviewCollectionViewCell.identifier, for: indexPath) as? AddToDoListOverviewCollectionViewCell else { return UICollectionViewCell() }
             
             return cell
         }
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoCategoryOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoCategoryOverviewCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ToDoListOverviewCollectionViewCell.identifier, for: indexPath) as? ToDoListOverviewCollectionViewCell else { return UICollectionViewCell() }
         
         // Configure cell
         configure(cell: cell, at: indexPath)
@@ -711,9 +703,9 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         return cell
     }
     
-    /// Configure category cell.
+    /// Configure todo list cell.
     
-    fileprivate func configure(cell: ToDoCategoryOverviewCollectionViewCell, at indexPath: IndexPath) {
+    fileprivate func configure(cell: ToDoListOverviewCollectionViewCell, at indexPath: IndexPath) {
         let todoList = fetchedResultsController.object(at: indexPath)
         
         cell.managedObjectContext = managedObjectContext
@@ -726,28 +718,28 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
         }
     }
     
-    /// Detect if the index path corresponds to add category cell.
+    /// Detect if the index path corresponds to add todo list cell.
     ///
     /// - Parameter indexPath: The index path
-    /// - Returns: Is add category cell for the index path or not.
+    /// - Returns: Is add todo list cell for the index path or not.
     
-    fileprivate func isAddCategoryCell(_ indexPath: IndexPath) -> Bool {
+    fileprivate func isAddCell(_ indexPath: IndexPath) -> Bool {
         return indexPath.item == (todosCollectionView.numberOfItems(inSection: 0) - 1)
     }
     
     /// Select item for collection view.
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isAddCategoryCell(indexPath) {
+        if isAddCell(indexPath) {
             showAddTodoList()
         } else {
             
         }
     }
     
-    /// Enable re-order ability for category that has been long pressed.
+    /// Enable re-order ability for todo list that has been long pressed.
     
-    @objc func categoryLongPressed(recognizer: UILongPressGestureRecognizer!) {
+    @objc func todoListLongPressed(recognizer: UILongPressGestureRecognizer!) {
         switch recognizer.state {
         case .began:
             guard let selectedIndexPath = todosCollectionView.indexPathForItem(at: recognizer.location(in: todosCollectionView)) else { break }
@@ -765,29 +757,29 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Is the cell movable or not.
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryCell(indexPath) && collectionView.numberOfItems(inSection: 0) > 2
+        return !isAddCell(indexPath) && collectionView.numberOfItems(inSection: 0) > 2
     }
     
     /// Move cell to a new location.
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard var categories = fetchedResultsController.fetchedObjects, sourceIndexPath != destinationIndexPath, !isAddCategoryCell(destinationIndexPath) else {
+        guard var todoLists = fetchedResultsController.fetchedObjects, sourceIndexPath != destinationIndexPath, !isAddCell(destinationIndexPath) else {
             // Scroll back if anything went wrong
             todosCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
             
             return
         }
-        // Re-arrange category from source to destination
-        categories.insert(categories.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
+        // Re-arrange todo list from source to destination
+        todoLists.insert(todoLists.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
         // Save to order attribute
-        let _ = categories.map {
-            let newOrder = Int16(categories.index(of: $0)!)
+        let _ = todoLists.map {
+            let newOrder = Int16(todoLists.index(of: $0)!)
             
             if $0.order != newOrder {
                 $0.order = newOrder
             }
         }
-        // If the category is re-ordered, scroll to that category
+        // If the todo list is re-ordered, scroll to that
         collectionView.scrollToItem(at: destinationIndexPath, at: .centeredHorizontally, animated: true)
     }
 
@@ -828,8 +820,8 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .delete:
             // Item has been deleted
-            if anObject is Category, let indexPath = indexPath {
-                // If a category has been deleted
+            if anObject is ToDoList, let indexPath = indexPath {
+                // If a list has been deleted
                 // Show banner message
                 NotificationManager.showBanner(title: "notification.deleted-list".localized, type: .success)
                 // Perform deletion
@@ -855,8 +847,8 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
             }
         case .update:
             // Item has been updated
-            if anObject is Category, let indexPath = indexPath {
-                // If a category has been updated
+            if anObject is ToDoList, let indexPath = indexPath {
+                // If a list has been updated
                 var indexPaths: [IndexPath] = [indexPath]
                 // If new index exists, append it
                 if let newIndexPath = newIndexPath, newIndexPath != indexPath {
@@ -868,7 +860,7 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
                 })
             }
         default:
-            if anObject is Category, let indexPath = indexPath, let newIndexPath = newIndexPath {
+            if anObject is ToDoList, let indexPath = indexPath, let newIndexPath = newIndexPath {
                 todosCollectionView.performBatchUpdates({
                     todosCollectionView.reloadItems(at: [indexPath, newIndexPath])
                 }, completion: nil)
@@ -879,16 +871,16 @@ extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
     
 }
 
-// MARK: - Handle Category Actions.
+// MARK: - Handle Todo List Actions.
 
-extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDelegate {
+extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate {
     
     /// Began adding new todo.
     func newTodoBeganEditing() {
         // Remove reorder gesture
-        longPressForReorderCategoryGesture.isEnabled = false
+        longPressForReorderGesture.isEnabled = false
         // Remove pinch gesture
-        pinchForReorderCategoryGesture.isEnabled = false
+        pinchForReorderGesture.isEnabled = false
         // Disable collection view to be scrollable
         todosCollectionView.isScrollEnabled = false
     }
@@ -896,9 +888,9 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     /// Done adding new todo.
     func newTodoDoneEditing() {
         // Restore reorder gesture
-        longPressForReorderCategoryGesture.isEnabled = true
+        longPressForReorderGesture.isEnabled = true
         // Restore pinch gesture
-        pinchForReorderCategoryGesture.isEnabled = true
+        pinchForReorderGesture.isEnabled = true
         // Enable collection view to be scrollable
         todosCollectionView.isScrollEnabled = true
     }
@@ -912,10 +904,10 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
         performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: ["goal": goal, "todo-list": todoList])
     }
     
-    /// Display category menu.
-    func showCategoryMenu(cell: ToDoCategoryOverviewCollectionViewCell) {
+    /// Display todo list menu.
+    func showTodoListMenu(cell: ToDoListOverviewCollectionViewCell) {
         guard let selectedIndexPath = todosCollectionView.indexPath(for: cell) else { return }
-        currentRelatedCategoryIndex = selectedIndexPath
+        currentRelatedTodoListIndex = selectedIndexPath
         
         // Generate haptic feedback and play a sound
         Haptic.impact(.light).generate()
@@ -942,7 +934,7 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
             })
         ]
         
-        let popMenu = AlertManager.popMenuThemed(sourceView: cell.categoryNameLabel, actions: actions)
+        let popMenu = AlertManager.popMenuThemed(sourceView: cell.nameLabel, actions: actions)
         
         popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
         
@@ -961,16 +953,16 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
     /// Show alert for deleting todo list.
     @objc private func showDeleteTodoList() {
-        guard let index = currentRelatedCategoryIndex else { return }
+        guard let index = currentRelatedTodoListIndex else { return }
         
-        let category = fetchedResultsController.object(at: index)
+        let todoList = fetchedResultsController.object(at: index)
         
         // Play click sound
         SoundManager.play(soundEffect: .Click)
-        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(category.name ?? "Model.ToDoList".localized)?")
+        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
     }
     
-    /// Show reorder categories.
+    /// Show reorder todo lists.
     @objc private func showReorderTodoLists(_ sender: Any?) {
         // Play click sound and haptic feedback
         SoundManager.play(soundEffect: .Click)
@@ -981,14 +973,14 @@ extension ToDoOverviewViewController: ToDoCategoryOverviewCollectionViewCellDele
     
 }
 
-// MARK: - Category Table View Controller Delegate Methods.
+// MARK: - Todo List Table View Controller Delegate Methods.
 
 extension ToDoOverviewViewController: ToDoListTableViewControllerDelegate {
     
-    /// Validate category with unique name.
+    /// Validate todo list with unique name.
     func validate(_ todoList: ToDoList?, with name: String) -> Bool {
         guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
-        // Remove current category from checking if exists
+        // Remove current todo list from checking if exists
         if let todoList = todoList, let index = todoLists.index(of: todoList) {
             todoLists.remove(at: index)
         }
@@ -1039,13 +1031,13 @@ extension ToDoOverviewViewController: ToDoListTableViewControllerDelegate {
     
 }
 
-// MARK: - Reorder Categories Table View Controller Delegate Methods.
+// MARK: - Reorder Todo Lists Table View Controller Delegate Methods.
 
 extension ToDoOverviewViewController: ReorderToDoListsTableViewControllerDelegate {
     
     /// Once todo lists have been done organizing.
     func todoListsDoneOrganizing() {
-        guard let index = currentRelatedCategoryIndex else { return }
+        guard let index = currentRelatedTodoListIndex else { return }
         // Reload current item
         todosCollectionView.reloadItems(at: [index])
     }
@@ -1063,7 +1055,7 @@ extension ToDoOverviewViewController: FCAlertViewDelegate {
     
     /// Confirmation of alert.
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
-        guard let index = currentRelatedCategoryIndex else { return }
+        guard let index = currentRelatedTodoListIndex else { return }
         
         // Delete from results
         deleteList(fetchedResultsController.object(at: index))
