@@ -1,5 +1,5 @@
 //
-//  SelectCategoryTableViewController.swift
+//  SelectToDoListTableViewController.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/18/17.
@@ -10,11 +10,11 @@ import UIKit
 import CoreData
 import DeckTransition
 
-protocol SelectCategoryTableViewControllerDelegate {
+protocol SelectToDoListTableViewControllerDelegate {
     func todoListSelected(_ todoList: ToDoList)
 }
 
-final class SelectCategoryTableViewController: UITableViewController {
+final class SelectToDoListTableViewController: UITableViewController {
  
     /// Selected todo list.
     
@@ -24,7 +24,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     
     private var todoLists: [ToDoList] = []
     
-    var delegate: SelectCategoryTableViewControllerDelegate?
+    var delegate: SelectToDoListTableViewControllerDelegate?
     
     // MARK: - View Life Cycle.
     
@@ -34,12 +34,12 @@ final class SelectCategoryTableViewController: UITableViewController {
         title = "select-list.title".localized
         clearsSelectionOnViewWillAppear = false
         
-        fetchCategories()
+        fetchTodoLists()
     }
     
-    /// Fetch categories.
+    /// Fetch todo lists.
     
-    private func fetchCategories() {
+    private func fetchTodoLists() {
         todoLists = ToDoList.findAll(in: managedObjectContext, with: [ToDoList.sortByOrder(), ToDoList.sortByCreatedAt()])
     }
 
@@ -56,7 +56,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     /// Dequeue cells.
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectCategoryTableViewCell.identifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectToDoListTableViewCell.identifier, for: indexPath)
 
         // Configure the cell...
         configureCell(cell, for: indexPath)
@@ -67,7 +67,7 @@ final class SelectCategoryTableViewController: UITableViewController {
     /// Configure cell for index path.
     
     private func configureCell(_ cell: UITableViewCell, for indexPath: IndexPath) {
-        guard let cell = cell as? SelectCategoryTableViewCell else { return }
+        guard let cell = cell as? SelectToDoListTableViewCell else { return }
         let currentList = todoLists[indexPath.row]
         
         cell.todoList = currentList

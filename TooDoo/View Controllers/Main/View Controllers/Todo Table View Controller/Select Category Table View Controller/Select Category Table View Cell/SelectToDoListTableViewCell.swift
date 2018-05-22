@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class SelectCategoryTableViewCell: UITableViewCell {
+final class SelectToDoListTableViewCell: UITableViewCell {
 
     /// Reuse identifier.
     
-    static let identifier = "SelectCategoryCell"
+    static let identifier = "SelectToDoListCell"
     
     /// Stored todo list property.
     
@@ -23,11 +23,11 @@ final class SelectCategoryTableViewCell: UITableViewCell {
             
             backgroundColor = primaryColor
             // Configure icon
-            categoryIconImageView.image = todoList.listIcon()
-            categoryIconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
+            iconImageView.image = todoList.listIcon()
+            iconImageView.tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
             // Configure name label
-            categoryNameLabel.text = todoList.name
-            categoryNameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
+            nameLabel.text = todoList.name
+            nameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: true).lighten(byPercentage: 0.1)
             // Set tint color
             tintColor = UIColor(contrastingBlackOrWhiteColorOn: primaryColor, isFlat: false)
         }
@@ -35,14 +35,14 @@ final class SelectCategoryTableViewCell: UITableViewCell {
     
     // MARK: - Interface Builder Outlets.
     
-    @IBOutlet var categoryIconImageView: UIImageView!
-    @IBOutlet var categoryNameLabel: UILabel!
+    @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
     
     /// Prepare for reuse.
     
     override func prepareForReuse() {
-        categoryNameLabel.text = ""
-        categoryIconImageView.image = UIImage()
+        nameLabel.text = ""
+        iconImageView.image = UIImage()
     }
     
     override func awakeFromNib() {

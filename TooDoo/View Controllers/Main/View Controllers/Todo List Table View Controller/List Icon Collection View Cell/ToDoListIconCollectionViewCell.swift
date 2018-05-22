@@ -1,5 +1,5 @@
 //
-//  CategoryIconCollectionViewCell.swift
+//  ToDoListIconCollectionViewCell.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/11/17.

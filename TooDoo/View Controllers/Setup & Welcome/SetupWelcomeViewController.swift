@@ -362,7 +362,7 @@ final class SetupWelcomeViewController: UIViewController {
         guard let identifier = segue.identifier else { return }
         
         if identifier == Segue.GetStarted.rawValue {
-            // Create default category
+            // Create default todo lists
             ToDoList.createDefault(context: managedObjectContext)
         }
     }

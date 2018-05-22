@@ -1,5 +1,5 @@
 //
-//  +Category.swift
+//  +ToDoList.swift
 //  TooDoo
 //
 //  Created by Cali Castle  on 11/11/17.
@@ -68,8 +68,8 @@ extension ToDoList {
         fetchRequest.sortDescriptors = [ToDoList.ordered()]
         fetchRequest.fetchLimit = 1
         
-        if let categories = try? CoreDataManager.main.persistentContainer.viewContext.fetch(fetchRequest) {
-            return categories.first
+        if let todoLists = try? CoreDataManager.main.persistentContainer.viewContext.fetch(fetchRequest) {
+            return todoLists.first
         }
         
         return nil

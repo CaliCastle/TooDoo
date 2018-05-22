@@ -15,7 +15,7 @@ final class ApplicationManager {
     /// Shortcut item icons.
     ///
     /// - AddTodo: Add a todo item
-    /// - AddCategory: Add a category
+    /// - AddTodoList: Add a todo list
     /// - Search: Search query
     /// - Settings: Open settings
     
@@ -29,7 +29,7 @@ final class ApplicationManager {
     /// Shortcut item type suffixes.
     ///
     /// - AddTodo: Add a todo item
-    /// - AddCategory: Add a category
+    /// - AddTodoList: Add a todo list
     /// - Search: Search query
     /// - Settings: Open settings
     
@@ -139,7 +139,7 @@ final class ApplicationManager {
     class func triggered(shortcutItem: UIApplicationShortcutItem, for application: UIApplication) {
         switch shortcutItem.type {
         case shortcutItemType(.AddTodoList):
-            // Add category
+            // Add todo list
             // Send notification
             NotificationManager.send(notification: .ShowAddToDoList)
         case shortcutItemType(.AddTodo):

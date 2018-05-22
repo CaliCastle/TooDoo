@@ -1767,10 +1767,6 @@
                     <navigationItem key="navigationItem" title="Add Todo" id="Vs2-HY-QQw"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
-                        <outlet property="categoryGradientBackgroundView" destination="7La-da-whW" id="hXj-lE-gki"/>
-                        <outlet property="categoryIconImageView" destination="IiF-sx-vug" id="LT8-aL-vhn"/>
-                        <outlet property="categoryLabel" destination="6Em-EM-2uI" id="5Fz-R3-DQe"/>
-                        <outlet property="categoryNameLabel" destination="8zA-aa-c2W" id="LEl-Gh-yJC"/>
                         <outlet property="dueDateLabel" destination="Xop-1P-BWD" id="Eiw-5E-q2V"/>
                         <outlet property="dueImageView" destination="DqH-bO-R67" id="TAp-aR-lAX"/>
                         <outlet property="dueSwitch" destination="tg8-Jh-Icg" id="91u-mh-mWB"/>
@@ -1784,6 +1780,10 @@
                         <outlet property="repeatCellLabel" destination="CXM-rx-Ykz" id="8EF-yD-qXU"/>
                         <outlet property="repeatLabel" destination="9I4-z1-x06" id="PY1-H1-AVq"/>
                         <outlet property="todoGoalLabel" destination="anl-Mc-eRf" id="vOl-fr-Q4x"/>
+                        <outlet property="todoListGradientBackgroundView" destination="7La-da-whW" id="hXj-lE-gki"/>
+                        <outlet property="todoListIconImageView" destination="IiF-sx-vug" id="LT8-aL-vhn"/>
+                        <outlet property="todoListLabel" destination="6Em-EM-2uI" id="5Fz-R3-DQe"/>
+                        <outlet property="todoListNameLabel" destination="8zA-aa-c2W" id="LEl-Gh-yJC"/>
                         <outletCollection property="cellLabels" destination="anl-Mc-eRf" collectionClass="NSMutableArray" id="pr7-cj-Pds"/>
                         <outletCollection property="cellLabels" destination="6Em-EM-2uI" collectionClass="NSMutableArray" id="N5A-6C-YCk"/>
                         <outletCollection property="cellLabels" destination="Xop-1P-BWD" collectionClass="NSMutableArray" id="5Ng-rB-xjj"/>
@@ -1826,13 +1826,13 @@
         <!--Select Category-->
         <scene sceneID="oBN-GC-bHN">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="W45-Ee-kwV" customClass="SelectCategoryTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="W45-Ee-kwV" customClass="SelectToDoListTableViewController" customModule="TooDoo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vDD-0P-eKv" customClass="RecolorableTableView" customModule="TooDoo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectCategoryCell" rowHeight="50" id="Bdq-uT-AWr" customClass="SelectCategoryTableViewCell" customModule="TooDoo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectCategoryCell" rowHeight="50" id="Bdq-uT-AWr" customClass="SelectToDoListTableViewCell" customModule="TooDoo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bdq-uT-AWr" id="dfe-Bc-S3P">
@@ -1863,8 +1863,8 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="categoryIconImageView" destination="1mx-Gy-zA6" id="9j0-Mx-5UP"/>
-                                    <outlet property="categoryNameLabel" destination="gY2-nf-kaY" id="pvq-K2-J79"/>
+                                    <outlet property="iconImageView" destination="1mx-Gy-zA6" id="9j0-Mx-5UP"/>
+                                    <outlet property="nameLabel" destination="gY2-nf-kaY" id="pvq-K2-J79"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
