@@ -13,13 +13,13 @@ struct Settings: Codable {
     /// Timeout Lock Setting
     
     enum TimeoutLock: String, Codable {
-        case thirtySeconds = "thirty-secs"
-        case oneMinute = "one-minute"
-        case twoMinutes = "two-minutes"
-        case threeMinutes = "three-minutes"
-        case fiveMinutes = "five-minutes"
-        case tenMinutes = "ten-minutes"
-        case thirtyMinutes = "thirty-minutes"
+        case thirtySeconds
+        case oneMinute
+        case twoMinutes
+        case threeMinutes
+        case fiveMinutes
+        case tenMinutes
+        case thirtyMinutes
         
         static func all() -> [TimeoutLock] {
             return [

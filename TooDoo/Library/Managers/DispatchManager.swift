@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 /// Manager for Dispatching Operations.
 
@@ -145,16 +144,6 @@ final class DispatchManager {
         guard let identifier = notification.object as? String else { return }
         
         redirectSegueIdentifier = identifier
-    }
-    
-    // MARK: - Core Data Manager Configuration
-    
-    fileprivate func configureCoreDataManager() -> NSManagedObjectContext {
-        // Instanstiate and listen for notifications
-        let coreDataManager = CoreDataManager.main
-        
-        // Create new private context with concurrency
-        return coreDataManager.persistentContainer.viewContext
     }
     
     // MARK: - View Controller Configuration

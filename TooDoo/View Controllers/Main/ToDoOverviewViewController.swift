@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import SideMenu
 import PopMenu
 import DeckTransition
@@ -54,52 +53,6 @@ final class ToDoOverviewViewController: UIViewController {
         case Search
         case Add
     }
-    
-    /// Fetched results controller for todo lists fetching.
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController<ToDoList> = {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<ToDoList> = ToDoList.fetchRequest()
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true), NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: true)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "Todo Lists")
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
-    }()
-    
-    /// Fetched results controller for todos fetching.
-    
-    private lazy var todosFetchedResultsController: NSFetchedResultsController<ToDo> = {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        
-        // Get the current calendar with local time zone
-        var calendar = Calendar.current
-        calendar.timeZone = NSTimeZone.local
-        
-        // Get today's beginning & end
-        let dateFrom = calendar.startOfDay(for: Date()) // eg. 2016-10-10 00:00:00
-        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: dateFrom)
-        components.day! += 1
-        
-        let dateTo = calendar.date(from: components)! // eg. 2016-10-11 00:00:00
-        
-        // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "(%@ <= due) AND (due < %@) AND (completed == NO) AND (movedToTrashAt = nil)", argumentArray: [dateFrom, dateTo])
-        
-        // Configure fetch request sort
-        fetchRequest.sortDescriptors = []
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: "todos")
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
-    }()
     
     /// Current related todo list index.
     
@@ -229,35 +182,19 @@ final class ToDoOverviewViewController: UIViewController {
     
     private func saveData() {
         // Save data
-        if fetchedResultsController.managedObjectContext.hasChanges {
-            do {
-                try fetchedResultsController.managedObjectContext.save()
-            } catch {
-                NotificationManager.showBanner(title: "Cannot save data", type: .danger)
-            }
-        }
+        
     }
     
     /// Fetch categories from core data.
     
     private func fetchTodoLists() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            NotificationManager.showBanner(title: "alert.unable-to-fetch-request".localized, type: .danger)
-            print("\(error), \(error.localizedDescription)")
-        }
+//            NotificationManager.showBanner(title: "alert.unable-to-fetch-request".localized, type: .danger)
     }
     
     /// Fetch from core data.
     
     private func fetchTodos() {
-        do {
-            try todosFetchedResultsController.performFetch()
-        } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
-            print("\(error), \(error.localizedDescription)")
-        }
+//            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
     }
     
     /// Set up notification handling.
@@ -353,9 +290,7 @@ final class ToDoOverviewViewController: UIViewController {
     fileprivate func setupMessageLabel() {
         var todosCount = 0
         // Get todos count number
-        if let todos = todosFetchedResultsController.fetchedObjects {
-            todosCount = todos.count
-        }
+//        todosCount = todos.count
         // Set todos count label accordingly
         let todosCountLabel = "%d todo(s) due today".localizedPlural(todosCount)
         
@@ -576,14 +511,14 @@ final class ToDoOverviewViewController: UIViewController {
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ToDoListTableViewController
             
-            guard let todoLists = fetchedResultsController.fetchedObjects else { return }
+//            guard let todoLists = fetchedResultsController.fetchedObjects else { return }
             
             // Show edit todo list
             destinationViewController.delegate = self
             if let _ = sender, let index = currentRelatedTodoListIndex {
-                destinationViewController.todoList = todoLists[index.item]
+//                destinationViewController.todoList = todoLists[index.item]
             } else {
-                destinationViewController.newListOrder = Int16(todoLists.count)
+//                destinationViewController.newListOrder = Int16(todoLists.count)
             }
         case Segue.ShowReorderTodoLists.rawValue:
             // About to show reorder
@@ -672,18 +607,15 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Number of sections.
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let section = fetchedResultsController.sections else { return 0 }
-        
-        return section.count
+        // FIXME: Fix this
+        return 0
     }
     
     /// Number of items in section.
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = fetchedResultsController.sections?[section] else { return 0 }
-        
-        // One more for adding todo list
-        return section.numberOfObjects + 1
+        // FIXME: Fix this
+        return 0
     }
     
     /// Configure each collection view cell.
@@ -706,11 +638,11 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Configure todo list cell.
     
     fileprivate func configure(cell: ToDoListOverviewCollectionViewCell, at indexPath: IndexPath) {
-        let todoList = fetchedResultsController.object(at: indexPath)
+//        let todoList = fetchedResultsController.object(at: indexPath)
         
         cell.managedObjectContext = managedObjectContext
         cell.delegate = self
-        cell.todoList = todoList
+//        cell.todoList = todoList
         
         // More rounded corners for iPhone X
         if #available(iOS 11.0, *), screenHasRoundedCorners {
@@ -763,24 +695,24 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Move cell to a new location.
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard var todoLists = fetchedResultsController.fetchedObjects, sourceIndexPath != destinationIndexPath, !isAddCell(destinationIndexPath) else {
-            // Scroll back if anything went wrong
-            todosCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
-            
-            return
-        }
+//        guard var todoLists = fetchedResultsController.fetchedObjects, sourceIndexPath != destinationIndexPath, !isAddCell(destinationIndexPath) else {
+//            // Scroll back if anything went wrong
+//            todosCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: true)
+//
+//            return
+//        }
         // Re-arrange todo list from source to destination
-        todoLists.insert(todoLists.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
-        // Save to order attribute
-        let _ = todoLists.map {
-            let newOrder = Int16(todoLists.index(of: $0)!)
-            
-            if $0.order != newOrder {
-                $0.order = newOrder
-            }
-        }
-        // If the todo list is re-ordered, scroll to that
-        collectionView.scrollToItem(at: destinationIndexPath, at: .centeredHorizontally, animated: true)
+//        todoLists.insert(todoLists.remove(at: sourceIndexPath.item), at: destinationIndexPath.item)
+//        // Save to order attribute
+//        let _ = todoLists.map {
+//            let newOrder = Int16(todoLists.index(of: $0)!)
+//
+//            if $0.order != newOrder {
+//                $0.order = newOrder
+//            }
+//        }
+//        // If the todo list is re-ordered, scroll to that
+//        collectionView.scrollToItem(at: destinationIndexPath, at: .centeredHorizontally, animated: true)
     }
 
 }
@@ -809,65 +741,64 @@ extension ToDoOverviewViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Handle Fetched Results Controller Delegate Methods.
 
-extension ToDoOverviewViewController: NSFetchedResultsControllerDelegate {
+extension ToDoOverviewViewController {
     
     /// When the content did change with delete, insert, move and update type.
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        if anObject is ToDo {
-            setupMessageLabel()
-        }
-        
-        switch type {
-        case .delete:
-            // Item has been deleted
-            if anObject is ToDoList, let indexPath = indexPath {
-                // If a list has been deleted
-                // Show banner message
-                NotificationManager.showBanner(title: "notification.deleted-list".localized, type: .success)
-                // Perform deletion
-                todosCollectionView.performBatchUpdates({
-                    todosCollectionView.deleteItems(at: [indexPath])
-                })
-            }
-        case .insert:
-            // Item has been inserted
-            if let todoList = anObject as? ToDoList, let indexPath = newIndexPath {
-                // If a new list has been inserted
-                // Show banner message
-                NotificationManager.showBanner(title: "\("notification.created-list".localized)\(todoList.name!)", type: .success)
-                // Perform insertion to the last todo list
-                todosCollectionView.performBatchUpdates({
-                    todosCollectionView.insertItems(at: [indexPath])
-                }, completion: {
-                    if $0 {
-                        // Once completed, scroll to current todo list
-                        self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                    }
-                })
-            }
-        case .update:
-            // Item has been updated
-            if anObject is ToDoList, let indexPath = indexPath {
-                // If a list has been updated
-                var indexPaths: [IndexPath] = [indexPath]
-                // If new index exists, append it
-                if let newIndexPath = newIndexPath, newIndexPath != indexPath {
-                    indexPaths.append(newIndexPath)
-                }
-                // Re-configure the cell
-                todosCollectionView.performBatchUpdates({
-                    todosCollectionView.reloadItems(at: indexPaths)
-                })
-            }
-        default:
-            if anObject is ToDoList, let indexPath = indexPath, let newIndexPath = newIndexPath {
-                todosCollectionView.performBatchUpdates({
-                    todosCollectionView.reloadItems(at: [indexPath, newIndexPath])
-                }, completion: nil)
-            }
-            break
-        }
-    }
+    
+//        if anObject is ToDo {
+//            setupMessageLabel()
+//        }
+//
+//        switch type {
+//        case .delete:
+//            // Item has been deleted
+//            if anObject is ToDoList, let indexPath = indexPath {
+//                // If a list has been deleted
+//                // Show banner message
+//                NotificationManager.showBanner(title: "notification.deleted-list".localized, type: .success)
+//                // Perform deletion
+//                todosCollectionView.performBatchUpdates({
+//                    todosCollectionView.deleteItems(at: [indexPath])
+//                })
+//            }
+//        case .insert:
+//            // Item has been inserted
+//            if let todoList = anObject as? ToDoList, let indexPath = newIndexPath {
+//                // If a new list has been inserted
+//                // Show banner message
+//                NotificationManager.showBanner(title: "\("notification.created-list".localized)\(todoList.name!)", type: .success)
+//                // Perform insertion to the last todo list
+//                todosCollectionView.performBatchUpdates({
+//                    todosCollectionView.insertItems(at: [indexPath])
+//                }, completion: {
+//                    if $0 {
+//                        // Once completed, scroll to current todo list
+//                        self.todosCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//                    }
+//                })
+//            }
+//        case .update:
+//            // Item has been updated
+//            if anObject is ToDoList, let indexPath = indexPath {
+//                // If a list has been updated
+//                var indexPaths: [IndexPath] = [indexPath]
+//                // If new index exists, append it
+//                if let newIndexPath = newIndexPath, newIndexPath != indexPath {
+//                    indexPaths.append(newIndexPath)
+//                }
+//                // Re-configure the cell
+//                todosCollectionView.performBatchUpdates({
+//                    todosCollectionView.reloadItems(at: indexPaths)
+//                })
+//            }
+//        default:
+//            if anObject is ToDoList, let indexPath = indexPath, let newIndexPath = newIndexPath {
+//                todosCollectionView.performBatchUpdates({
+//                    todosCollectionView.reloadItems(at: [indexPath, newIndexPath])
+//                }, completion: nil)
+//            }
+//            break
+//        }
     
 }
 
@@ -913,33 +844,33 @@ extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate
         Haptic.impact(.light).generate()
         SoundManager.play(soundEffect: .Drip)
         
-        let todoList = fetchedResultsController.object(at: selectedIndexPath)
-        
-        // Configure pop menu
-        let actions = [
-            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: todoList.listIcon(), didSelect: { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showEditTodoList()
-                })
-            }),
-            PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showDeleteTodoList()
-                })
-            }),
-            PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-                    self.showReorderTodoLists(nil)
-                })
-            })
-        ]
-        
-        let popMenu = AlertManager.popMenuThemed(sourceView: cell.nameLabel, actions: actions)
-        
-        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
-        
-        // Present pop menu
-        present(popMenu, animated: true, completion: nil)
+//        let todoList = fetchedResultsController.object(at: selectedIndexPath)
+//
+//        // Configure pop menu
+//        let actions = [
+//            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: todoList.listIcon(), didSelect: { _ in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+//                    self.showEditTodoList()
+//                })
+//            }),
+//            PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+//                    self.showDeleteTodoList()
+//                })
+//            }),
+//            PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+//                    self.showReorderTodoLists(nil)
+//                })
+//            })
+//        ]
+//
+//        let popMenu = AlertManager.popMenuThemed(sourceView: cell.nameLabel, actions: actions)
+//
+//        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
+//
+//        // Present pop menu
+//        present(popMenu, animated: true, completion: nil)
     }
     
     /// Show todo list edit controller.
@@ -955,11 +886,11 @@ extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate
     @objc private func showDeleteTodoList() {
         guard let index = currentRelatedTodoListIndex else { return }
         
-        let todoList = fetchedResultsController.object(at: index)
-        
-        // Play click sound
-        SoundManager.play(soundEffect: .Click)
-        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
+//        let todoList = fetchedResultsController.object(at: index)
+//
+//        // Play click sound
+//        SoundManager.play(soundEffect: .Click)
+//        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
     }
     
     /// Show reorder todo lists.
@@ -979,27 +910,28 @@ extension ToDoOverviewViewController: ToDoListTableViewControllerDelegate {
     
     /// Validate todo list with unique name.
     func validate(_ todoList: ToDoList?, with name: String) -> Bool {
-        guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
-        // Remove current todo list from checking if exists
-        if let todoList = todoList, let index = todoLists.index(of: todoList) {
-            todoLists.remove(at: index)
-        }
-        
-        var validated = true
-        // Go through each and check name
-        let _ = todoLists.map {
-            if $0.name! == name {
-                validated = false
-            }
-        }
-        
-        return validated
+//        guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
+//        // Remove current todo list from checking if exists
+//        if let todoList = todoList, let index = todoLists.index(of: todoList) {
+//            todoLists.remove(at: index)
+//        }
+//
+//        var validated = true
+//        // Go through each and check name
+//        let _ = todoLists.map {
+//            if $0.name! == name {
+//                validated = false
+//            }
+//        }
+//
+//        return validated
+        return true
     }
     
     /// Delete the todo list.
     func deleteList(_ todoList: ToDoList) {
         // Delete from context
-        managedObjectContext.delete(todoList)
+        
     }
     
     /// Show menu for todo.
@@ -1058,6 +990,6 @@ extension ToDoOverviewViewController: FCAlertViewDelegate {
         guard let index = currentRelatedTodoListIndex else { return }
         
         // Delete from results
-        deleteList(fetchedResultsController.object(at: index))
+//        deleteList(fetchedResultsController.object(at: index))
     }
 }
