@@ -11,16 +11,22 @@ import RealmSwift
 
 final class DatabaseManager {
     
-    lazy var database: Realm = {
+    static let main = DatabaseManager()
+    
+    private static let databaseConfig = Realm.Configuration(
+        // Get the URL to the bundled file
+        fileURL: Bundle.main.url(forResource: "database", withExtension: "realm"),
+        // Open the file in read-only mode as application bundles are not writeable
+        readOnly: true)
+    
+    public private(set) lazy var database: Realm = {
         do {
-            if let realm = try? Realm() {
-                return realm
-            }
-            
-            fatalError("Error when loading the realm database")
-        } catch (error) {
-            fatalError("Error when loading the realm database")
+            return try Realm()
+        } catch let error as NSError {
+            fatalError("Error when loading the realm database\n\(error.localizedDescription)")
         }
     }()
+    
+    private init() {}
     
 }

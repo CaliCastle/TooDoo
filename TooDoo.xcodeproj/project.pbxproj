@@ -127,6 +127,7 @@
 		8DF35D681FBEE0B7001877F4 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF35D671FBEE0B7001877F4 /* ToDoTableViewController.swift */; };
 		8DF55B2D1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */; };
 		8DF64CF3207FDB4500233E23 /* +UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF64CF2207FDB4500233E23 /* +UIPickerView.swift */; };
+		8DF6BF1920B77F2400F9199D /* AUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF6BF1820B77F2400F9199D /* AUUID.swift */; };
 		8DF7B04E1FC502A100162996 /* MenuTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0501FC502A100162996 /* MenuTableHeaderView.xib */; };
 		8DF7B0551FC5074D00162996 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DF7B0571FC5074D00162996 /* Menu.storyboard */; };
 		8DF7B0601FC50DE400162996 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7B05F1FC50DE400162996 /* SettingsTableViewController.swift */; };
@@ -309,6 +310,7 @@
 		8DF55B291FCAE85900A1DA95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		8DF55B2C1FCAED3E00A1DA95 /* NotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
 		8DF64CF2207FDB4500233E23 /* +UIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIPickerView.swift"; sourceTree = "<group>"; };
+		8DF6BF1820B77F2400F9199D /* AUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AUUID.swift; sourceTree = "<group>"; };
 		8DF7B04F1FC502A100162996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuTableHeaderView.xib; sourceTree = "<group>"; };
 		8DF7B0521FC502A600162996 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MenuTableHeaderView.strings; sourceTree = "<group>"; };
 		8DF7B0541FC502A800162996 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MenuTableHeaderView.strings"; sourceTree = "<group>"; };
@@ -1197,6 +1199,7 @@
 			isa = PBXGroup;
 			children = (
 				9D397AEB2080763B00C58037 /* Segue */,
+				8DF6BF1820B77F2400F9199D /* AUUID.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1596,6 +1599,7 @@
 				8D6A13A51F93ED23004238D8 /* ToDoOverviewViewController.swift in Sources */,
 				8D6A139F1F93E2FC004238D8 /* UserDefaultManager.swift in Sources */,
 				8D2C7E4020B4D0F10030DF30 /* ToDoList.swift in Sources */,
+				8DF6BF1920B77F2400F9199D /* AUUID.swift in Sources */,
 				8DAC8F861FB041F4006207F6 /* CornerRadiusView.swift in Sources */,
 				8D2C7E4A20B4D8D40030DF30 /* ReusableView.swift in Sources */,
 				8D1F6A841FB65DC4004709E3 /* NotificationManager.swift in Sources */,

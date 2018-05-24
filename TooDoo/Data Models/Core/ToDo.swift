@@ -34,6 +34,18 @@ public class ToDo: Object {
         return "id"
     }
     
+    @objc dynamic var list: ToDoList?
+    
+    /// Make a fresh instance with additional steps
+    ///
+    /// - Returns: new instance
+    public static func make() -> ToDo {
+        let todo = self.init()
+        todo.id = AUUID().idString
+        
+        return todo
+    }
+    
 }
 
 extension ToDo: Timestampable {}

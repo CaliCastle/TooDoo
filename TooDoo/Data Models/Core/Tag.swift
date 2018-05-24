@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
-class Tag: NSObject {
+class Tag: Object {
+    
+    
     
 }
