@@ -363,7 +363,7 @@ final class SetupWelcomeViewController: UIViewController {
         
         if identifier == Segue.GetStarted.rawValue {
             // Create default todo lists
-            ToDoList.createDefault(context: managedObjectContext)
+            ToDoList.createDefault()
         }
     }
     
