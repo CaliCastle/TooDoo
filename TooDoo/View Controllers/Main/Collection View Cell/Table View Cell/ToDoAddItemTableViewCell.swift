@@ -105,20 +105,18 @@ final class ToDoAddItemTableViewCell: UITableViewCell {
         creating = true
         
         // Create new todo
-        let todo = ToDo(context: managedObjectContext!)
+        let todo = ToDo.make()
         let goal = (sender.text?.trimmingCharacters(in: .whitespaces))!
         // Configure attributes
         todo.goal = goal
-        todo.createdAt = Date()
-        todo.updatedAt = Date()
         // Set default due date
         todo.setDefaultDueDate()
         
-        // Set its todo list
+        // FIXME: Set its todo list
         if let todoList = todoList {
-            todoList.addToTodos(todo)
+//            todoList.addToTodos(todo)
         }
-        // Created to-do
+        
         todo.created()
         
         // Notify delegate

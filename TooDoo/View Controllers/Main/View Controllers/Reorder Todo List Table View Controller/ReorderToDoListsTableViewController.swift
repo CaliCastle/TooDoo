@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 protocol ReorderToDoListsTableViewControllerDelegate {
     func todoListsDoneOrganizing()
@@ -18,12 +18,6 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
     fileprivate enum Segue: String {
         case AddTodoList
     }
-    
-    /// Fetched Results Controller.
-    
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<ToDoList> = {
-        return configureFetchedResultsController()
-    }()
     
     var delegate: ReorderToDoListsTableViewControllerDelegate?
     
@@ -74,20 +68,6 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
         title = "manage-todolist.title".localized
     }
     
-    fileprivate func configureFetchedResultsController() -> NSFetchedResultsController<ToDoList> {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<ToDoList> = ToDoList.fetchRequest()
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDoList.order), ascending: true), NSSortDescriptor(key: #keyPath(ToDoList.createdAt), ascending: true)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
-    }
-    
     /// Setup views.
     private func setupViews() {
         navigationItem.rightBarButtonItem = editButtonItem
@@ -109,12 +89,10 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
         tableView.indicatorStyle = currentThemeIsDark() ? .white : .black
     }
     
+    fileprivate var todoLists: Results<ToDoList>?
+    
     private func fetchTodoLists() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-todolist".localized, type: .danger)
-        }
+        todoLists = DatabaseManager.main.database.objects(ToDoList.self)
     }
     
     /// Animate views.
@@ -165,10 +143,10 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
         case Segue.AddTodoList.rawValue:
             let destination = segue.destination as! UINavigationController
             if let destinationViewController = destination.viewControllers.first as? ToDoListTableViewController {
-                guard let todoLists = fetchedResultsController.fetchedObjects else { return }
+                guard let todoLists = todoLists else { return }
                 
                 destinationViewController.delegate = self
-                destinationViewController.newListOrder = Int16(todoLists.count)
+                destinationViewController.newListOrder = todoLists.count
             }
         default:
             break
@@ -188,17 +166,15 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
     /// Number of sections.
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
-        
-        return sections.count
+        return 1
     }
 
     /// Number of rows.
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
+        guard let todoLists = todoLists else { return 0 }
         
-        return sections[section].numberOfObjects
+        return todoLists.count
     }
     
     /// Height for each row.
@@ -213,8 +189,7 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ReorderToDoListTableViewCell.identifier, for: indexPath) as? ReorderToDoListTableViewCell else { return UITableViewCell() }
 
         // Configure the cell...
-        let todoList = fetchedResultsController.object(at: indexPath)
-        cell.todoList = todoList
+        cell.todoList = todoLists?[indexPath.row]
         
         return cell
     }
@@ -234,29 +209,29 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
     // Commit editing for deletion.
  
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let todoList = fetchedResultsController.object(at: indexPath)
+        if editingStyle == .delete, let todoList = todoLists?[indexPath.row] {
             deletingList = todoList
             
-            AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
+            AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name.isEmpty ? "Model.ToDoList".localized : todoList.name)?")
         }
     }
     
     /// Support rearranging the table view.
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        guard var lists = fetchedResultsController.fetchedObjects else { return }
-        
+        guard var lists = todoLists else { return }
+
+        // FIXME:
         // Re-arrange todo list from source to destination
-        lists.insert(lists.remove(at: fromIndexPath.item), at: to.item)
-        // Save to order attribute
-        let _ = lists.map {
-            let newOrder = Int16(lists.index(of: $0)!)
-            
-            if $0.order != newOrder {
-                $0.order = newOrder
-            }
-        }
+//        lists.insert(lists.remove(at: fromIndexPath.item), at: to.item)
+//        // Save to order attribute
+//        let _ = lists.map {
+//            let newOrder = Int16(lists.index(of: $0)!)
+//
+//            if $0.order != newOrder {
+//                $0.order = newOrder
+//            }
+//        }
     }
 
     /// Support conditional rearranging of the table view.
@@ -270,48 +245,21 @@ final class ReorderToDoListsTableViewController: UITableViewController, Localiza
 extension ReorderToDoListsTableViewController: ToDoListTableViewControllerDelegate {
     
     func validate(_ todoList: ToDoList?, with name: String) -> Bool {
-        guard var todoLists = fetchedResultsController.fetchedObjects else { return false }
+        guard var todoLists = todoList else { return false }
         // Remove current todo list from checking if exists
-        if let todoList = todoList, let index = todoLists.index(of: todoList) {
-            todoLists.remove(at: index)
-        }
+//        if let todoList = todoList, let index = todoLists.index(ofAccessibilityElement: ) {
+//            todoLists.remove(at: index)
+//        }
         
         var validated = true
         // Go through each and check name
-        let _ = todoLists.map {
-            if $0.name! == name {
-                validated = false
-            }
-        }
+//        let _ = todoLists.map {
+//            if $0.name! == name {
+//                validated = false
+//            }
+//        }
         
         return validated
-    }
-    
-}
-
-extension ReorderToDoListsTableViewController: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .middle)
-            }
-        case .insert:
-            if let _ = newIndexPath {
-                tableView.reloadSections([0], with: .automatic)
-            }
-        default:
-            break
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
     
 }
@@ -328,8 +276,8 @@ extension ReorderToDoListsTableViewController: FCAlertViewDelegate {
     /// Alert confirmed.
     func FCAlertDoneButtonClicked(alertView: FCAlertView) {
         guard let todoList = deletingList else { return }
-        // Delete todo list from context
-        managedObjectContext.delete(todoList)
+        // FIXME: Delete todo list from context
+        
         // Reset deleting todo list
         deletingList = nil
     }

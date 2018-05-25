@@ -56,8 +56,8 @@ final class ToDoTableViewController: DeckEditorTableViewController {
             
             guard let todo = todo else { return }
             todoList = todo.list
-            goal = todo.goal!
-            hasDue = todo.due != nil
+            goal = todo.goal
+            hasDue = todo.dueAt != nil
             hasReminder = todo.remindAt != nil
         }
     }
@@ -380,7 +380,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
         dueImageView.tintColor = currentThemeIsDark() ? .white : .flatBlack()
         
         if let todo = todo {
-            dueDate = todo.due
+            dueDate = todo.dueAt
         } else {
             dueDate = nil
         }
@@ -442,22 +442,19 @@ final class ToDoTableViewController: DeckEditorTableViewController {
 
     private func saveTodo() {
         // Create new todo
-        let todo = self.todo ?? ToDo(context: managedObjectContext)
+        let todo = self.todo ?? ToDo.make()
         let goal = (goalTextField.text?.trimmingCharacters(in: .whitespaces))!
         // Configure attributes
         todo.goal = goal
-        todo.updatedAt = now
+        // FIXME:
+//        todo.updatedAt = now
         
-        if isAdding {
-            // Add created at date
-            todo.createdAt = now
-        }
-        // Set its list
+        // FIXME: Set its list
         if let todoList = todoList {
-            todoList.addToTodos(todo)
+//            todoList.addToTodos(todo)
         }
         // Set due date
-        todo.due = dueDate
+        todo.dueAt = dueDate
         // Set reminder
         todo.setReminder(remindDate)
         // Set repeat info

@@ -144,7 +144,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
     /// Configure stack view constraints.
     
     public func configureStackViewConstraints() {
-        if let todo = todo, todo.due == nil && todo.remindAt == nil {
+        if let todo = todo, todo.dueAt == nil && todo.remindAt == nil {
             // Remove info stack view if no due, no reminder and no repeat
             if todo.repeatInfo == nil {
                 removeInfoStackView()
@@ -166,7 +166,7 @@ final class ToDoItemTableViewCell: UITableViewCell {
     
     fileprivate func configureTodoDue(_ todo: ToDo) {
         // Has due date
-        if let due = todo.due {
+        if let due = todo.dueAt {
             // Set due time label
             let dateFormatter = DateFormatter.localized()
             dateFormatter.dateFormat = "MMM d yyyy".localized

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Tag: Object {
+public final class Tag: Object {
     
     
     

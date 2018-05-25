@@ -31,7 +31,7 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
     }
     
     /// Stored new order for todo list.
-    var newListOrder: Int16 = 0
+    var newListOrder: Int = 0
     
     /// Default list colors.
     let todoListColors: [UIColor] = ToDoListColor.default()
@@ -348,8 +348,8 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
         }
         
         // Assign properties
-        let todoList = self.todoList ?? ToDoList(context: managedObjectContext)
-        todoList.name = name
+        let todoList = self.todoList ?? ToDoList.make()
+        todoList.name = name!
         todoList.color(todoListColors[selectedColorIndex.item])
         
         if let _ = selectedIconIndex {
@@ -360,9 +360,7 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
         
         // Add new order, created date
         if isAdding {
-            todoList.order = newListOrder
-            todoList.createdAt = Date()
-            todoList.created()
+            todoList.order.value = newListOrder
         }
         
         // Generate haptic feedback and play sound
@@ -378,7 +376,7 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
     fileprivate func deleteTodoList() {
         guard let todoList = todoList else { return }
         
-        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
+        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name.isEmpty ? "Model.ToDoList".localized : todoList.name)?")
     }
     
     /// Show validation error banner.

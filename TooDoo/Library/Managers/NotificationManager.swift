@@ -128,15 +128,15 @@ final class NotificationManager {
             content.title = "notifications.todo.due.title".localized
         }
         
-        content.title = content.title.replacingOccurrences(of: "@", with: todo.list!.name!)
+        content.title = content.title.replacingOccurrences(of: "@", with: todo.list!.name)
         content.categoryIdentifier = LocalNotifications.TodoDue.rawValue
-        content.body = todo.goal!
+        content.body = todo.goal
         content.sound = UNNotificationSound(named: SoundManager.SoundEffect.DueNotification.fileName())
   
         // Create trigger
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-        // Generate request
-        let request = UNNotificationRequest(identifier: todo.identifier(), content: content, trigger: trigger)
+        // FIXME: Generate request
+        let request = UNNotificationRequest(identifier: todo.id, content: content, trigger: trigger)
         
         // Add request for scheduling
         let center = UNUserNotificationCenter.current()
@@ -155,6 +155,6 @@ final class NotificationManager {
         guard todo.completed || todo.isMovedToTrash() else { return }
         
         let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [todo.identifier()])
+        center.removePendingNotificationRequests(withIdentifiers: [todo.id])
     }
 }

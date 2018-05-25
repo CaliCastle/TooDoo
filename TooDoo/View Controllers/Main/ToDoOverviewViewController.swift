@@ -9,17 +9,15 @@
 import UIKit
 import SideMenu
 import PopMenu
+import RealmSwift
 import DeckTransition
 
 final class ToDoOverviewViewController: UIViewController {
 
     /// Storyboard identifier
-    
     static let identifier = "ToDoOverview"
     
-    // MARK: - Properties
-    
-    /// Interface builder outlets
+    // MARK: - Interface builder outlets
     @IBOutlet var backgroundGradientView: GradientView!
     @IBOutlet var userAvatarContainerView: DesignableView!
     @IBOutlet var userAvatarImageView: UIImageView!
@@ -33,7 +31,6 @@ final class ToDoOverviewViewController: UIViewController {
     @IBOutlet var menuBarButton: UIBarButtonItem!
     
     /// Storyboard segues.
-    
     public enum Segue: String {
         case ShowTodoList
         case ShowReorderTodoLists
@@ -47,7 +44,6 @@ final class ToDoOverviewViewController: UIViewController {
     /// - Menu: Menu bar button
     /// - Search: Search bar button
     /// - Add: Add bar button
-    
     private enum NavigationItem: Int {
         case Menu
         case Search
@@ -55,11 +51,9 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Current related todo list index.
-    
     private var currentRelatedTodoListIndex: IndexPath?
     
     /// Long press gesture recognizer for re-ordering.
-    
     lazy var longPressForReorderGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(todoListLongPressed))
         recognizer.minimumPressDuration = 0.55
@@ -70,7 +64,6 @@ final class ToDoOverviewViewController: UIViewController {
     }()
     
     /// Pinch gesture recognizer for bulk re-order.
-    
     lazy var pinchForReorderGesture: UIPinchGestureRecognizer = {
         let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(showReorderTodoLists))
         
@@ -79,20 +72,7 @@ final class ToDoOverviewViewController: UIViewController {
         return recognizer
     }()
     
-    /// Timer for saving core data updates just in case if any crash happens.
-
-    lazy var timer: Timer = {
-        // 1 minute timer
-        let timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-            self.saveData()
-            self.setupTimeLabel()
-        })
-        
-        return timer
-    }()
-    
     /// Display side menu when swiping left.
-    
     lazy var menuPanGesture: UIScreenEdgePanGestureRecognizer = {
         let gestureRecognizer = UIScreenEdgePanGestureRecognizer()
         gestureRecognizer.edges = .left
@@ -101,28 +81,26 @@ final class ToDoOverviewViewController: UIViewController {
     }()
     
     /// Motion effect for background view.
-    
     lazy var motionEffectForBackground: UIMotionEffect = {
         return .twoAxesShift(strength: -10)
     }()
     
     /// Motion effect for avatar view.
-    
     lazy var motionEffectForAvatar: UIMotionEffect = {
         return .twoAxesShift(strength: 10)
     }()
     
     /// Motion effect for greeting label.
-    
     lazy var motionEffectForGreeting: UIMotionEffect = {
         return .twoAxesShift(strength: -10)
     }()
     
     /// Motion effect for todo list collection cells.
-    
     lazy var motionEffectForTodoLists: UIMotionEffect = {
         return .twoAxesShift(strength: 28)
     }()
+    
+    // MARK: - Pop Menu Instances
     
     fileprivate var popMenuForNew: PopMenuViewController?
     fileprivate var popMenuForCategory: PopMenuViewController?
@@ -133,22 +111,17 @@ final class ToDoOverviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Localize interface
-        localizeInterface()
         // Start fetching data
         fetchTodoLists()
         fetchTodos()
-        // Set up views
+        
         setupViews()
         configureColors()
+        localizeInterface()
         startAnimations()
         
         handleNotifications()
-        // Auto update time label
-        timer.fire()
     }
-    
-    /// View will appear.
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -156,17 +129,12 @@ final class ToDoOverviewViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    /// Release memory.
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        // Stop the timer
-        timer.invalidate()
     }
     
     /// Localize interface.
-    
     @objc internal func localizeInterface(_ notification: Notification? = nil) {
         // Set up user data
         configureUserSettings()
@@ -178,26 +146,21 @@ final class ToDoOverviewViewController: UIViewController {
         }
     }
     
-    /// Save context changes.
+    // MARK: - Database Operations
     
-    private func saveData() {
-        // Save data
-        
-    }
+    fileprivate var todoLists: Results<ToDoList>!
     
-    /// Fetch categories from core data.
+    fileprivate var todos: Results<ToDo>!
     
+    /// Fetch todo lists to display from database.
     private func fetchTodoLists() {
-//            NotificationManager.showBanner(title: "alert.unable-to-fetch-request".localized, type: .danger)
+        todoLists = DatabaseManager.main.database.objects(ToDoList.self)
     }
     
-    /// Fetch from core data.
-    
+    /// Fetch todos info from database.
     private func fetchTodos() {
-//            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
+        todos = DatabaseManager.main.database.objects(ToDo.self)
     }
-    
-    /// Set up notification handling.
     
     fileprivate func handleNotifications() {
         listen(for: .ShowAddToDo, then: #selector(showAddTodo))
@@ -209,7 +172,7 @@ final class ToDoOverviewViewController: UIViewController {
         listen(for: .UserAvatarChanged, then: #selector(updateAvatar(_:)))
         listen(for: .SettingLocaleChanged, then: #selector(localizeInterface(_:)))
         listen(for: .SettingMotionEffectsChanged, then: #selector(motionEffectSettingChanged(_:)))
-        // Reset time label when is about to enter foreground
+        // Reset time label when will enter foreground
         listenTo(.UIApplicationWillEnterForeground, { (_) in
             self.setupTimeLabel()
         })
@@ -220,8 +183,6 @@ final class ToDoOverviewViewController: UIViewController {
         })
     }
     
-    /// Set up views properties.
-    
     fileprivate func setupViews() {
         setupTimeLabel()
         setupTodayLabel()
@@ -230,8 +191,6 @@ final class ToDoOverviewViewController: UIViewController {
         setupNavigationItems()
         setupTodosCollectionView()
     }
-    
-    /// Configure colors.
     
     fileprivate func configureColors() {
         let color: UIColor = currentThemeIsDark() ? .white : .flatBlack()
@@ -253,8 +212,7 @@ final class ToDoOverviewViewController: UIViewController {
         addBarButton.tintColor = currentThemeIsDark() ? .flatYellow() : .flatBlue()
     }
     
-    /// Set up greetingWithTimeLabel.
-    
+    /// Set up greeting time label.
     fileprivate func setupTimeLabel() {
         let now = Date()
         let todayCompnents = Calendar.current.dateComponents([.hour], from: now)
@@ -275,8 +233,6 @@ final class ToDoOverviewViewController: UIViewController {
         }
     }
     
-    /// Set up today label.
-    
     fileprivate func setupTodayLabel() {
         let dateFormatter = DateFormatter.localized()
         // Format date to 'Monday, Nov 6'
@@ -285,19 +241,15 @@ final class ToDoOverviewViewController: UIViewController {
         todayLabel.text = "\("overview.message.today".localized) \(dateFormatter.string(from: Date()))"
     }
     
-    /// Set up todoMessageLabel.
-    
     fileprivate func setupMessageLabel() {
         var todosCount = 0
         // Get todos count number
-//        todosCount = todos.count
+        todosCount = todos.count
         // Set todos count label accordingly
         let todosCountLabel = "%d todo(s) due today".localizedPlural(todosCount)
         
         todoMessageLabel.text = "\(todosCountLabel.replacingOccurrences(of: "%count%", with: "\(todosCount)"))"
     }
-    
-    /// Set up todos collection view properties.
     
     fileprivate func setupTodosCollectionView() {
         (todosCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: todosCollectionView.bounds.width * 0.8, height: todosCollectionView.bounds.height)
@@ -311,7 +263,6 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Set up side menu screen edge pan gesture.
-    
     fileprivate func setupSideMenuGesture() {
         let menuController = StoryboardManager.storyboardInstance(name: .Menu).instantiateInitialViewController()
         
@@ -324,8 +275,6 @@ final class ToDoOverviewViewController: UIViewController {
         menuPanGesture.addTarget(SideMenuManager.default.transition, action: #selector(SideMenuTransition.handlePresentMenuLeftScreenEdge))
     }
     
-    /// Set up navigation items.
-    
     fileprivate func setupNavigationItems() {
         // Fix when below iOS 11, bar button squashed
         if #available(iOS 11, *) {
@@ -336,7 +285,6 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Configure user information to the designated views.
-    
     fileprivate func configureUserSettings() {
         guard let userName = UserDefaultManager.string(forKey: .UserName) else { return }
         guard let userAvatar = UserDefaultManager.image(forKey: .UserAvatar) else { return }
@@ -348,19 +296,16 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Theme adjusted status bar.
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return themeStatusBarStyle()
     }
     
     /// Status bar animation.
-    
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
     
     /// Auto hide home indicator
-    
     @available(iOS 11, *)
     override func prefersHomeIndicatorAutoHidden() -> Bool {
         return true
@@ -380,8 +325,7 @@ final class ToDoOverviewViewController: UIViewController {
         }
     }
     
-    /// Show menu for more options.
-    
+    /// Show side menu for more options.
     @IBAction fileprivate func showSideMenu() {
         // Play click sound
         SoundManager.play(soundEffect: .Click)
@@ -391,8 +335,7 @@ final class ToDoOverviewViewController: UIViewController {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
-    /// Show action sheet for adding a new item.
-    
+    /// Show popmenu for adding a new item.
     fileprivate func showAddNewItem(_ barButtonItem: UIBarButtonItem) {
         // Play click sound and haptic
         SoundManager.play(soundEffect: .Click)
@@ -417,8 +360,7 @@ final class ToDoOverviewViewController: UIViewController {
         present(popMenu, animated: true, completion: nil)
     }
     
-    /// Show add todo view controller.
-    
+    /// Present add todo view controller.
     @objc fileprivate func showAddTodo() {
         DispatchQueue.main.async {
             // Play click sound
@@ -429,8 +371,7 @@ final class ToDoOverviewViewController: UIViewController {
         performSegue(withIdentifier: Segue.ShowTodo.rawValue, sender: nil)
     }
 
-    /// Show add todo list view controller.
-    
+    /// Present add todo list view controller.
     @objc fileprivate func showAddTodoList() {
         DispatchQueue.main.async {
             // Play click sound
@@ -442,7 +383,6 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Show settings view controller.
-    
     @objc fileprivate func showSettings() {
         DispatchQueue.main.async {
             Haptic.impact(.medium).generate()
@@ -452,7 +392,6 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Update user avatar.
-    
     @objc fileprivate func updateAvatar(_ notification: Notification) {
         guard let avatar = notification.object as? UIImage else { return }
         // Update image view
@@ -462,7 +401,6 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// Update user name.
-    
     @objc fileprivate func updateName(_ notification: Notification) {
         guard let newName = notification.object as? String else { return }
         // Update name label
@@ -472,13 +410,11 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// User has changed motion effect setting.
-    
     @objc fileprivate func motionEffectSettingChanged(_ notification: Notification) {
         setMotionEffects()
     }
     
     /// Set motion effects to views.
-    
     private func setMotionEffects() {
         if UserDefaultManager.bool(forKey: .MotionEffects) {
             backgroundGradientView.addMotionEffect(motionEffectForBackground)
@@ -494,14 +430,12 @@ final class ToDoOverviewViewController: UIViewController {
     }
     
     /// When the theme changed.
-    
     @objc fileprivate func themeChanged() {
         configureColors()
         setupTimeLabel()
     }
     
     /// Additional preparation for storyboard segue.
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let id = segue.identifier else { return }
         
@@ -511,14 +445,14 @@ final class ToDoOverviewViewController: UIViewController {
             let destination = segue.destination as! UINavigationController
             let destinationViewController = destination.viewControllers.first as! ToDoListTableViewController
             
-//            guard let todoLists = fetchedResultsController.fetchedObjects else { return }
+            guard let todoLists = todoLists else { return }
             
             // Show edit todo list
             destinationViewController.delegate = self
             if let _ = sender, let index = currentRelatedTodoListIndex {
-//                destinationViewController.todoList = todoLists[index.item]
+                destinationViewController.todoList = todoLists[index.item]
             } else {
-//                destinationViewController.newListOrder = Int16(todoLists.count)
+                destinationViewController.newListOrder = todoLists.count
             }
         case Segue.ShowReorderTodoLists.rawValue:
             // About to show reorder
@@ -557,15 +491,11 @@ final class ToDoOverviewViewController: UIViewController {
 
 extension ToDoOverviewViewController {
     
-    /// Start animations
-    
     fileprivate func startAnimations() {
         animateNavigationBar()
         animateUserViews()
         animateTodoCollectionView()
     }
-    
-    /// Animate user related views.
     
     fileprivate func animateUserViews() {
         // Fade in and move from up animation to `user avatar`
@@ -593,11 +523,10 @@ extension ToDoOverviewViewController {
         }, completion: nil)
     }
     
-    /// Animate todo collection view.
-    
     fileprivate func animateTodoCollectionView() {
         
     }
+    
 }
 
 // MARK: - Collection View Delegate and Data Source
@@ -607,15 +536,13 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Number of sections.
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // FIXME: Fix this
-        return 0
+        return 1
     }
     
     /// Number of items in section.
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // FIXME: Fix this
-        return 0
+        return todoLists.count + 1
     }
     
     /// Configure each collection view cell.
@@ -638,12 +565,12 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     /// Configure todo list cell.
     
     fileprivate func configure(cell: ToDoListOverviewCollectionViewCell, at indexPath: IndexPath) {
-//        let todoList = fetchedResultsController.object(at: indexPath)
+        let todoList = todoLists[indexPath.item]
         
-        cell.managedObjectContext = managedObjectContext
         cell.delegate = self
-//        cell.todoList = todoList
+        cell.todoList = todoList
         
+        // FIXME: Refactor this
         // More rounded corners for iPhone X
         if #available(iOS 11.0, *), screenHasRoundedCorners {
             cell.cardContainerView.cornerRadius = 28
@@ -654,8 +581,9 @@ extension ToDoOverviewViewController: UICollectionViewDelegate, UICollectionView
     ///
     /// - Parameter indexPath: The index path
     /// - Returns: Is add todo list cell for the index path or not.
-    
     fileprivate func isAddCell(_ indexPath: IndexPath) -> Bool {
+        guard todosCollectionView.numberOfItems(inSection: 0) != 0 else { return true }
+        
         return indexPath.item == (todosCollectionView.numberOfItems(inSection: 0) - 1)
     }
     
@@ -886,11 +814,11 @@ extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate
     @objc private func showDeleteTodoList() {
         guard let index = currentRelatedTodoListIndex else { return }
         
-//        let todoList = fetchedResultsController.object(at: index)
-//
-//        // Play click sound
-//        SoundManager.play(soundEffect: .Click)
-//        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
+        let todoList = todoLists[index.item]
+
+        // Play click sound
+        SoundManager.play(soundEffect: .Click)
+        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
     }
     
     /// Show reorder todo lists.

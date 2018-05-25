@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 import DeckTransition
 
 protocol SelectToDoListTableViewControllerDelegate {
@@ -20,7 +20,7 @@ final class SelectToDoListTableViewController: UITableViewController {
     
     var selectedList: ToDoList?
     
-    private var todoLists: [ToDoList] = []
+    private var todoLists: Results<ToDoList>!
     
     var delegate: SelectToDoListTableViewControllerDelegate?
     
@@ -35,10 +35,8 @@ final class SelectToDoListTableViewController: UITableViewController {
         fetchTodoLists()
     }
     
-    /// Fetch todo lists.
-    
     private func fetchTodoLists() {
-        todoLists = ToDoList.findAll(in: managedObjectContext, with: [ToDoList.sortByOrder(), ToDoList.sortByCreatedAt()])
+        todoLists = DatabaseManager.main.database.objects(ToDoList.self)
     }
 
     // MARK: - Table view data source
@@ -75,7 +73,7 @@ final class SelectToDoListTableViewController: UITableViewController {
         let currentList = todoLists[indexPath.row]
         
         if let cell = cell as? SelectToDoListTableViewCell, let selectedList = selectedList {
-            cell.isSelected = currentList.objectID == selectedList.objectID
+            cell.isSelected = currentList.id == selectedList.id
         }
     }
     

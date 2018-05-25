@@ -8,7 +8,6 @@
 
 import UIKit
 import Typist
-import CoreData
 
 protocol ToDoListOverviewCollectionViewCellDelegate {
 
@@ -46,12 +45,7 @@ final class ToDoListOverviewCollectionViewCell: UICollectionViewCell, Localizabl
 
     @IBOutlet var todoItemsTableView: UITableView!
     
-    /// Managed Object Context.
-    
-    var managedObjectContext: NSManagedObjectContext?
-    
     /// Is currently adding todo.
-    
     open var isAdding = false {
         didSet {
             if todoItemsTableView.numberOfSections == 0 && isAdding {
@@ -63,14 +57,7 @@ final class ToDoListOverviewCollectionViewCell: UICollectionViewCell, Localizabl
         }
     }
     
-    /// Fetched Results Controller.
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController<ToDo> = {
-        return setupFetchedResultsController()
-    }()
-    
     // Stored todo list property.
-    
     var todoList: ToDoList? {
         didSet {
             guard let todoList = todoList else { return }
@@ -208,36 +195,6 @@ final class ToDoListOverviewCollectionViewCell: UICollectionViewCell, Localizabl
         setShadowOpacity()
     }
     
-    /// Set up fetched results controller.
-    
-    private func setupFetchedResultsController() -> NSFetchedResultsController<ToDo> {
-        // Create fetch request
-        let fetchRequest: NSFetchRequest<ToDo> = ToDo.fetchRequest()
-        
-        // Set relationship predicate
-        fetchRequest.predicate = NSPredicate(format: "(list.uuid == %@) AND (movedToTrashAt = nil)", (todoList?.uuid)!)
-        
-        // Configure fetch request sort method
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ToDo.completedAt), ascending: true), NSSortDescriptor(key: #keyPath(ToDo.updatedAt), ascending: false), NSSortDescriptor(key: #keyPath(ToDo.createdAt), ascending: false)]
-        
-        // Create controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
-        
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
-    }
-    
-    /// Perform fetch todos.
-    
-    private func fetchTodos() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            NotificationManager.showBanner(title: "alert.error-fetching-todo".localized, type: .danger)
-        }
-    }
-    
     /// Configure card container view.
     
     fileprivate func configureCardContainerView(_ contrastColor: UIColor?) {
@@ -290,10 +247,6 @@ final class ToDoListOverviewCollectionViewCell: UICollectionViewCell, Localizabl
     /// Configure todo items.
     
     fileprivate func configureTodoItems() {
-        // Fetch todos
-        fetchedResultsController = setupFetchedResultsController()
-        fetchTodos()
-        
         if !isAdding {
             todoItemsTableView.reloadData()
         }
@@ -341,19 +294,17 @@ extension ToDoListOverviewCollectionViewCell: UITableViewDelegate, UITableViewDa
     
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let _ = todoList else { return 0 }
-        guard let sections = fetchedResultsController.sections else { return 0 }
-
-        return sections.count
+        
+        return 1
     }
     
     /// Number of rows.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard todoList != nil else { return 0 }
-        guard let sectionInfo = fetchedResultsController.sections?[section] else { return 0 }
-        guard isAdding && section == 0 else { return sectionInfo.numberOfObjects }
+        guard let todoList = todoList else { return 0 }
+        guard isAdding && section == 0 else { return todoList.todos.count }
         
-        return sectionInfo.numberOfObjects + 1
+        return todoList.todos.count + 1
     }
     
     /// Configure cell.
@@ -361,12 +312,11 @@ extension ToDoListOverviewCollectionViewCell: UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure add todo item cell
         if isAdding && indexPath == .zero {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier) as? ToDoAddItemTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoAddItemTableViewCell.identifier) as? ToDoAddItemTableViewCell, let todoList = todoList else { return UITableViewCell() }
             
             cell.delegate = self
             cell.todoList = todoList
-            cell.managedObjectContext = managedObjectContext
-            cell.primaryColor = todoList!.listColor()
+            cell.primaryColor = todoList.listColor()
             
             return cell
         }
@@ -377,8 +327,7 @@ extension ToDoListOverviewCollectionViewCell: UITableViewDelegate, UITableViewDa
         
         cell.delegate = self
         
-        let todo = fetchedResultsController.object(at: index)
-        cell.todo = todo
+        cell.todo = todoList?.todos[index.row]
         
         return cell
     }
@@ -396,122 +345,102 @@ extension ToDoListOverviewCollectionViewCell: UITableViewDelegate, UITableViewDa
     /// Select an item.
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard !isAdding else { return }
+        guard !isAdding, let todoList = todoList else { return }
         
-        showTodoMenu(for: fetchedResultsController.object(at: indexPath))
+        showTodoMenu(for: todoList.todos[indexPath.row])
     }
     
 }
 
-extension ToDoListOverviewCollectionViewCell: NSFetchedResultsControllerDelegate {
+extension ToDoListOverviewCollectionViewCell {
     
-    /// When the content will be changed.
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if #available(iOS 11, *) {} else {
-            todoItemsTableView.beginUpdates()
-        }
-    }
-    
-    /// When the content has changed.
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if #available(iOS 11, *) {} else {
-            todoItemsTableView.endUpdates()
-        }
-    }
-    
-    /// When the content did change.
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         // A todo item is changed
-        if anObject is ToDo {
-            // Check if todo list is still valid
-            guard let todo = anObject as? ToDo, let _ = todo.list else { return }
-            
-            if isAdding { isAdding = false }
-            
-            let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
-            let controllerRows = (controller.fetchedObjects?.count)!
-            
-            // Prevent core data objects with table rows async crash
-            switch type {
-            case .insert, .delete:
-                // If equal, exit
-                guard tableRows != controllerRows else { return }
-            case .update, .move:
-                // If inequal, exit (moving doesn't insert of delete)
-                guard tableRows == controllerRows else { return }
-            }
-            
-            switch type {
-            case .delete:
-                // Moved a todo to trash
-                if let indexPath = indexPath {
-                    // Delete from table row
-                    if #available(iOS 11, *) {
-                        todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.deleteRows(at: [indexPath], with: .top)
-                        })
-                    } else {
-                        // Fallback on earlier versions
-                        todoItemsTableView.deleteRows(at: [indexPath], with: .top)
-                    }
-                }
-            case .insert:
-                if let indexPath = newIndexPath {
-                    // A new todo has been inserted
-                    // Reload the inserted row
-                    if #available(iOS 11, *) {
-                        todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.insertRows(at: [indexPath], with: .top)
-                        })
-                    } else {
-                        // Fallback on earlier versions
-                        todoItemsTableView.insertRows(at: [indexPath], with: .top)
-                    }
-                }
-            case .move:
-                if let indexPath = indexPath, let newIndexPath = newIndexPath {
-                    if #available(iOS 11, *) {
-                        todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
-                        })
-                    } else {
-                        // Fallback on earlier versions
-                        todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
-                    }
-                    
-                    // Reconfigure cells
-                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
-                        cell.todo = fetchedResultsController.object(at: indexPath)
-                    }
-                    if let cell = todoItemsTableView.cellForRow(at: newIndexPath) as? ToDoItemTableViewCell {
-                        cell.todo = fetchedResultsController.object(at: newIndexPath)
-                    }
-                }
-            default:
-                if let indexPath = indexPath {
-                    if #available(iOS 11, *) {
-                        todoItemsTableView.performBatchUpdates({
-                            todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
-                        }, completion: nil)
-                    } else {
-                        // Fallback on earlier versions
-                        todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
-                    
-                    // Reconfigure cell
-                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
-                        cell.todo = fetchedResultsController.object(at: indexPath)
-                    }
-                }
-            }
-            
-            // Re-configure todo count
-            configureTodoListCount(todoList!)
-        }
-    }
+//        if anObject is ToDo {
+//            // Check if todo list is still valid
+//            guard let todo = anObject as? ToDo, let _ = todo.list else { return }
+//
+//            if isAdding { isAdding = false }
+//
+//            let tableRows = todoItemsTableView.numberOfRows(inSection: 0)
+//            let controllerRows = (controller.fetchedObjects?.count)!
+//
+//            // Prevent core data objects with table rows async crash
+//            switch type {
+//            case .insert, .delete:
+//                // If equal, exit
+//                guard tableRows != controllerRows else { return }
+//            case .update, .move:
+//                // If inequal, exit (moving doesn't insert of delete)
+//                guard tableRows == controllerRows else { return }
+//            }
+//
+//            switch type {
+//            case .delete:
+//                // Moved a todo to trash
+//                if let indexPath = indexPath {
+//                    // Delete from table row
+//                    if #available(iOS 11, *) {
+//                        todoItemsTableView.performBatchUpdates({
+//                            todoItemsTableView.deleteRows(at: [indexPath], with: .top)
+//                        })
+//                    } else {
+//                        // Fallback on earlier versions
+//                        todoItemsTableView.deleteRows(at: [indexPath], with: .top)
+//                    }
+//                }
+//            case .insert:
+//                if let indexPath = newIndexPath {
+//                    // A new todo has been inserted
+//                    // Reload the inserted row
+//                    if #available(iOS 11, *) {
+//                        todoItemsTableView.performBatchUpdates({
+//                            todoItemsTableView.insertRows(at: [indexPath], with: .top)
+//                        })
+//                    } else {
+//                        // Fallback on earlier versions
+//                        todoItemsTableView.insertRows(at: [indexPath], with: .top)
+//                    }
+//                }
+//            case .move:
+//                if let indexPath = indexPath, let newIndexPath = newIndexPath {
+//                    if #available(iOS 11, *) {
+//                        todoItemsTableView.performBatchUpdates({
+//                            todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
+//                        })
+//                    } else {
+//                        // Fallback on earlier versions
+//                        todoItemsTableView.moveRow(at: indexPath, to: newIndexPath)
+//                    }
+//
+//                    // Reconfigure cells
+//                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
+//                        cell.todo = fetchedResultsController.object(at: indexPath)
+//                    }
+//                    if let cell = todoItemsTableView.cellForRow(at: newIndexPath) as? ToDoItemTableViewCell {
+//                        cell.todo = fetchedResultsController.object(at: newIndexPath)
+//                    }
+//                }
+//            default:
+//                if let indexPath = indexPath {
+//                    if #available(iOS 11, *) {
+//                        todoItemsTableView.performBatchUpdates({
+//                            todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+//                        }, completion: nil)
+//                    } else {
+//                        // Fallback on earlier versions
+//                        todoItemsTableView.reloadRows(at: [indexPath], with: .automatic)
+//                    }
+//
+//                    // Reconfigure cell
+//                    if let cell = todoItemsTableView.cellForRow(at: indexPath) as? ToDoItemTableViewCell {
+//                        cell.todo = fetchedResultsController.object(at: indexPath)
+//                    }
+//                }
+//            }
+//
+//            // Re-configure todo count
+//            configureTodoListCount(todoList!)
+//        }
     
 }
 

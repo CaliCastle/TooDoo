@@ -10,9 +10,9 @@ import EventKit
 import Foundation
 import RealmSwift
 
-public class ToDo: Object {
+public final class ToDo: Object {
     
-    @objc dynamic private(set) var id: String?
+    @objc dynamic private(set) var id: String = AUUID().idString
     
     /// Dates
     @objc dynamic private(set) var createdAt: Date = Date()
@@ -41,9 +41,12 @@ public class ToDo: Object {
     /// - Returns: new instance
     public static func make() -> ToDo {
         let todo = self.init()
-        todo.id = AUUID().idString
         
         return todo
+    }
+    
+    public var completed: Bool {
+        return completedAt != nil
     }
     
 }
@@ -83,8 +86,6 @@ extension ToDo {
     // MARK: - Configurations after creation.
     
     func created() {
-        // Assign UUID
-        id = UUID().uuidString
         // Set repeat info to none.
         if repeatInfo == nil {
             setRepeatInfo(info: ToDo.Repeat(type: .None, frequency: 1, unit: .Day, endDate: nil))
