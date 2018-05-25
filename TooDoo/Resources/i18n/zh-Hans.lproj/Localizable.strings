@@ -81,8 +81,8 @@
 /*
  Shortcut Items.
  */
-"shortcut.items.add-todo" = "新建待办事项";
-"shortcut.items.add-list" = "新建待办列表";
+"shortcut.items.add-todo" = "新事项";
+"shortcut.items.add-list" = "新列表";
 "shortcut.items.search" = "搜索";
 "shortcut.items.settings" = "设置";
 

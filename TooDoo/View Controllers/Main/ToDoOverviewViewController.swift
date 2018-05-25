@@ -106,6 +106,9 @@ final class ToDoOverviewViewController: UIViewController {
     fileprivate var popMenuForCategory: PopMenuViewController?
     fileprivate var popMenuForTodo: PopMenuViewController?
     
+    /// Realm observation token.
+    fileprivate var notificationToken: NotificationToken?
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
@@ -121,6 +124,12 @@ final class ToDoOverviewViewController: UIViewController {
         startAnimations()
         
         handleNotifications()
+        
+        observeDatabaseChange()
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,6 +169,27 @@ final class ToDoOverviewViewController: UIViewController {
     /// Fetch todos info from database.
     private func fetchTodos() {
         todos = DatabaseManager.main.database.objects(ToDo.self)
+    }
+    
+    fileprivate func observeDatabaseChange() {
+        notificationToken = todoLists.observe { [weak self] change in
+            switch change {
+            case .update(_, let deletions, let insertions, let modifications):
+                self?.todosCollectionView.performBatchUpdates({
+                    self?.todosCollectionView.deleteItems(at: deletions.map({ .default($0) }))
+                    self?.todosCollectionView.insertItems(at: insertions.map({ .default($0) }))
+                    self?.todosCollectionView.reloadItems(at: modifications.map({ .default($0) }))
+                }, completion: {
+                    if $0, let index = insertions.last {
+                        self?.todosCollectionView.scrollToItem(at: .default(index), at: .centeredHorizontally, animated: true)
+                    }
+                })
+                
+            default:
+                // FIXME:
+                print("Hey")
+            }
+        }
     }
     
     fileprivate func handleNotifications() {
@@ -772,33 +802,33 @@ extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate
         Haptic.impact(.light).generate()
         SoundManager.play(soundEffect: .Drip)
         
-//        let todoList = fetchedResultsController.object(at: selectedIndexPath)
-//
-//        // Configure pop menu
-//        let actions = [
-//            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: todoList.listIcon(), didSelect: { _ in
-//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-//                    self.showEditTodoList()
-//                })
-//            }),
-//            PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
-//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-//                    self.showDeleteTodoList()
-//                })
-//            }),
-//            PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
-//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
-//                    self.showReorderTodoLists(nil)
-//                })
-//            })
-//        ]
-//
-//        let popMenu = AlertManager.popMenuThemed(sourceView: cell.nameLabel, actions: actions)
-//
-//        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
-//
-//        // Present pop menu
-//        present(popMenu, animated: true, completion: nil)
+        let todoList = todoLists[selectedIndexPath.row]
+
+        // Configure pop menu
+        let actions = [
+            PopMenuDefaultAction(title: "actionsheet.actions.edit-todolist".localized, image: todoList.listIcon(), didSelect: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showEditTodoList()
+                })
+            }),
+            PopMenuDefaultAction(title: "actionsheet.actions.delete-todolist".localized, image: #imageLiteral(resourceName: "trash-alt-icon"), didSelect: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showDeleteTodoList()
+                })
+            }),
+            PopMenuDefaultAction(title: "actionsheet.actions.organize-todolists".localized, image: #imageLiteral(resourceName: "organize-icon"), didSelect: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: {
+                    self.showReorderTodoLists(nil)
+                })
+            })
+        ]
+
+        let popMenu = AlertManager.popMenuThemed(sourceView: cell.nameLabel, actions: actions)
+
+        popMenu.appearance.popMenuStatusBarStyle = preferredStatusBarStyle
+
+        // Present pop menu
+        present(popMenu, animated: true, completion: nil)
     }
     
     /// Show todo list edit controller.
@@ -818,7 +848,7 @@ extension ToDoOverviewViewController: ToDoListOverviewCollectionViewCellDelegate
 
         // Play click sound
         SoundManager.play(soundEffect: .Click)
-        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name ?? "Model.ToDoList".localized)?")
+        AlertManager.showTodoListDeleteAlert(in: self, title: "\("Delete".localized) \(todoList.name.isEmpty ? "Model.ToDoList".localized : todoList.name)?")
     }
     
     /// Show reorder todo lists.
@@ -918,6 +948,9 @@ extension ToDoOverviewViewController: FCAlertViewDelegate {
         guard let index = currentRelatedTodoListIndex else { return }
         
         // Delete from results
-//        deleteList(fetchedResultsController.object(at: index))
+        let database = DatabaseManager.main.database
+        try? database.write {
+            database.delete(todoLists[index.row])
+        }
     }
 }

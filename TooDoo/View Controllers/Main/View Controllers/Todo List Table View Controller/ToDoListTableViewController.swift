@@ -363,6 +363,12 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
             todoList.order.value = newListOrder
         }
         
+        // Persist to database
+        let database = DatabaseManager.main.database
+        try? database.write {
+            database.add(todoList, update: !isAdding)
+        }
+        
         // Generate haptic feedback and play sound
         Haptic.notification(.success).generate()
         SoundManager.play(soundEffect: .Success)

@@ -11,5 +11,9 @@ import Foundation
 extension IndexPath {
     
     static let zero: IndexPath = IndexPath(item: 0, section: 0)
+ 
+    static func `default`(_ index: Int) -> IndexPath {
+        return IndexPath(row: index, section: 0)
+    }
     
 }
