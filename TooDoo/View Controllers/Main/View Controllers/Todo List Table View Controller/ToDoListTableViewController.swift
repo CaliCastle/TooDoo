@@ -335,38 +335,34 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
         return true
     }
     
+    fileprivate var name: String {
+        return (nameTextField.text?.trimmingCharacters(in: .whitespaces))!
+    }
+    
     /// Save todo list to Core Data.
     fileprivate func saveTodoList() {
         // Retreive context
         guard let delegate = delegate else { return }
-        // Create or use current todo list
-        let name = nameTextField.text?.trimmingCharacters(in: .whitespaces)
         
-        guard delegate.validate(self.todoList, with: name!) else {
+        guard delegate.validate(self.todoList, with: name) else {
             showValidationError()
             return
         }
         
-        // Assign properties
-        let todoList = self.todoList ?? ToDoList.make()
-        todoList.name = name!
-        todoList.color(todoListColors[selectedColorIndex.item])
-        
-        if let _ = selectedIconIndex {
-            todoList.icon = ToDoListIcon.getIconName(for: getCurrentIcon()!)
-        } else {
-            todoList.icon = nil
-        }
-        
-        // Add new order, created date
-        if isAdding {
-            todoList.order.value = newListOrder
-        }
+        let database = DatabaseManager.main.database
         
         // Persist to database
-        let database = DatabaseManager.main.database
-        try? database.write {
-            database.add(todoList, update: !isAdding)
+        if isAdding {
+            let todoList = ToDoList.make()
+            configureTodoList(todoList)
+            
+            try? database.write {
+                database.add(todoList)
+            }
+        } else {
+            try? database.write {
+                configureTodoList(todoList)
+            }
         }
         
         // Generate haptic feedback and play sound
@@ -376,6 +372,23 @@ final class ToDoListTableViewController: DeckEditorTableViewController, CALayerD
         navigationController?.dismiss(animated: true, completion: nil)
         
         delegate.todoListActionDone?(todoList)
+    }
+    
+    fileprivate func configureTodoList(_ todoList: ToDoList?) {
+        guard let todoList = todoList else { return }
+        
+        todoList.name = name
+        todoList.color(todoListColors[selectedColorIndex.item])
+        
+        if let _ = selectedIconIndex {
+            todoList.icon = ToDoListIcon.getIconName(for: getCurrentIcon()!)
+        } else {
+            todoList.icon = nil
+        }
+        
+        if isAdding {
+            todoList.order.value = newListOrder
+        }
     }
     
     /// Delete current todo list.
