@@ -409,7 +409,7 @@ final class ToDoTableViewController: DeckEditorTableViewController {
     /// Update reminder preset buttons.
     
     fileprivate func updateReminderPresetButtons() {
-        let _ = reminderPresetButtons.map {
+        let _ = reminderPresetButtons.compactMap {
             if $0.tag != ReminderPreset.Clear.rawValue {
                 $0.isEnabled = dueDate != nil
                 $0.alpha = dueDate != nil ? 1 : 0.5

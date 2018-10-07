@@ -24,11 +24,11 @@ PODS:
   - Peep (2.0.1)
   - PinterestSegment (1.2.0)
   - ReactiveKit (3.9.5)
-  - Realm (3.5.0):
-    - Realm/Headers (= 3.5.0)
-  - Realm/Headers (3.5.0)
-  - RealmSwift (3.5.0):
-    - Realm (= 3.5.0)
+  - Realm (3.11.0):
+    - Realm/Headers (= 3.11.0)
+  - Realm/Headers (3.11.0)
+  - RealmSwift (3.11.0):
+    - Realm (= 3.11.0)
   - SideMenu (3.1.5)
   - SnapKit (4.0.0)
   - Stellar (0.67)
@@ -110,13 +110,13 @@ SPEC CHECKSUMS:
   Peep: 57d1d2bf5621e885efbfe05cd4fe88745bd1e4bf
   PinterestSegment: d589fce6c62141466b9f36ea8ab0a16fde9ac8f4
   ReactiveKit: 5dcd9e2f32227e6a02e7ca649f52b63f68e6421d
-  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
-  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  Realm: 92f09a102692b96a9a10e9617f214f15c5ab85fc
+  RealmSwift: 5f0481cd658bb751c509314b964a35eaa264d2cf
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Stellar: df980becd194eeb62d623af097582da0ef2219b9
   Typist: 88b462c1c5adc6d4e8601773fcb0b7d7113d18af
 
-PODFILE CHECKSUM: 8621182d2d72fd4bc46450e0cd7f359d7bb90375
+PODFILE CHECKSUM: bbb2dc6f74d90b515f3611dc905792af3854b9f8
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.6.0.beta.1
