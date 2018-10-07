@@ -1363,7 +1363,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TooDoo/Pods-TooDoo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bond/Bond.framework",
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework",
@@ -1416,7 +1416,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TooDoo/Pods-TooDoo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TooDoo/Pods-TooDoo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E606A7382D84B486B27A513C /* [CP] Check Pods Manifest.lock */ = {
@@ -1759,11 +1759,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LAAKXKAVC9;
+				DEVELOPMENT_TEAM = YVWBF6EZN8;
 				INFOPLIST_FILE = "$(SRCROOT)/TooDoo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDoo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDooApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1777,11 +1777,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LAAKXKAVC9;
+				DEVELOPMENT_TEAM = YVWBF6EZN8;
 				INFOPLIST_FILE = "$(SRCROOT)/TooDoo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDoo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.calicastle.TooDooApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8CD9FC035D83AD9BA719108E6A9A694F"
+               BlueprintIdentifier = "32DBC8C3BB5EC5CB5C65E65D73216089"
                BuildableName = "M13Checkbox.framework"
                BlueprintName = "M13Checkbox"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8CD9FC035D83AD9BA719108E6A9A694F"
+            BlueprintIdentifier = "32DBC8C3BB5EC5CB5C65E65D73216089"
             BuildableName = "M13Checkbox.framework"
             BlueprintName = "M13Checkbox"
             ReferencedContainer = "container:Pods.xcodeproj">

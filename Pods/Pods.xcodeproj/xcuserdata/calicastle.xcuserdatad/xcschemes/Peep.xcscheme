@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "359E77D4E000AA42ECAC99F46947F627"
+               BlueprintIdentifier = "B4C09C8A9D7001B7D143099B000BDD9E"
                BuildableName = "Peep.framework"
                BlueprintName = "Peep"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "359E77D4E000AA42ECAC99F46947F627"
+            BlueprintIdentifier = "B4C09C8A9D7001B7D143099B000BDD9E"
             BuildableName = "Peep.framework"
             BlueprintName = "Peep"
             ReferencedContainer = "container:Pods.xcodeproj">

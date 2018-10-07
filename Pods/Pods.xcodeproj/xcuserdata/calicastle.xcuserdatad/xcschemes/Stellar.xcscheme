@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0940"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCD2B40CFDD509A2B8CF073ED3E1F2BC"
+               BlueprintIdentifier = "4D5ECDBACF0E2BF85757A0BB7A25B11D"
                BuildableName = "Stellar.framework"
                BlueprintName = "Stellar"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DCD2B40CFDD509A2B8CF073ED3E1F2BC"
+            BlueprintIdentifier = "4D5ECDBACF0E2BF85757A0BB7A25B11D"
             BuildableName = "Stellar.framework"
             BlueprintName = "Stellar"
             ReferencedContainer = "container:Pods.xcodeproj">
